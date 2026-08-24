@@ -33,7 +33,7 @@ export function TaskNotificationsTable({
           )}
         >
           <Link
-            to="/tasks"
+            to="/tasks-calendar"
             className="min-w-0 truncate text-sm font-medium text-foreground hover:text-primary hover:underline"
           >
             {notification.title}

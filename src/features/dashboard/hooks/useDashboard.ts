@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { fetchProjects, type Project } from "@/services/projectsService";
-import { fetchTasks, createTask, updateTask, type Task } from "@/services/tasksService";
+import { fetchTasks, createTask, updateTask, deleteTask, type Task } from "@/services/tasksService";
+import { DEFAULT_TASK_TIME } from "@/features/tasks/constants/tasksCalendar";
 import { isClosedTaskStatus } from "@/features/tasks/constants/taskStatus";
 import { showToast } from "@/shared/utils/showToast";
 import type { DateFiltersFilterState } from "@/shared/types/components";
@@ -23,6 +24,15 @@ export function useDashboard(filter: DateFiltersFilterState) {
   const [loading, setLoading] = useState(true);
   const [quickTaskTitle, setQuickTaskTitle] = useState("");
   const [creating, setCreating] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskDesc, setTaskDesc] = useState("");
+  const [taskPriority, setTaskPriority] = useState<Task["priority"]>("medium");
+  const [taskStatus, setTaskStatus] = useState<Task["status"]>("todo");
+  const [taskDueDate, setTaskDueDate] = useState("");
+  const [taskDueTime, setTaskDueTime] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const loadData = useCallback(async () => {
     if (!user) return;
@@ -56,22 +66,66 @@ export function useDashboard(filter: DateFiltersFilterState) {
     [tasks, resolvedRange],
   );
 
-  const handleToggleTaskStatus = async (taskId: string, currentStatus: Task["status"]) => {
-    const nextStatus = currentStatus === "done" ? "todo" : "done";
+  const handleOpenEditDialog = (task: Task) => {
+    setEditingTask(task);
+    setTaskTitle(task.title);
+    setTaskDesc(task.description || "");
+    setTaskPriority(task.priority);
+    setTaskStatus(task.status);
+    setTaskDueDate(task.due_date || "");
+    setTaskDueTime(task.due_time || "");
+    setDialogOpen(true);
+  };
+
+  const handleDueDateChange = (nextDate: string) => {
+    setTaskDueDate(nextDate);
+    if (!nextDate) {
+      setTaskDueTime("");
+      return;
+    }
+    if (!taskDueTime) {
+      setTaskDueTime(DEFAULT_TASK_TIME);
+    }
+  };
+
+  const handleClearDueDateTime = () => {
+    setTaskDueDate("");
+    setTaskDueTime("");
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!user || !taskTitle.trim() || !editingTask) return;
+
     try {
-      // Optimistic update
-      setTasks((prev) =>
-        prev.map((t) => (t.id === taskId ? { ...t, status: nextStatus } : t))
-      );
-      await updateTask(taskId, { status: nextStatus });
-      showToast("success", `Task marked as ${nextStatus === "done" ? "completed" : "pending"}`);
+      setSubmitting(true);
+      const updated = await updateTask(editingTask.id, {
+        title: taskTitle.trim(),
+        description: taskDesc.trim() || null,
+        priority: taskPriority,
+        status: taskStatus,
+        due_date: taskDueDate || null,
+        due_time: taskDueDate ? taskDueTime || null : null,
+      });
+      setTasks((prev) => prev.map((task) => (task.id === editingTask.id ? updated : task)));
+      setDialogOpen(false);
+      showToast("success", "Task updated successfully");
     } catch (e) {
       console.error(e);
-      showToast("error", "Failed to update task status");
-      // Revert on error
-      setTasks((prev) =>
-        prev.map((t) => (t.id === taskId ? { ...t, status: currentStatus } : t))
-      );
+      showToast("error", "Failed to save task");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDeleteTask = async (id: string) => {
+    try {
+      await deleteTask(id);
+      setTasks((prev) => prev.filter((task) => task.id !== id));
+      showToast("success", "Task deleted permanently");
+    } catch (e) {
+      console.error(e);
+      showToast("error", "Failed to delete task");
     }
   };
 
@@ -131,7 +185,26 @@ export function useDashboard(filter: DateFiltersFilterState) {
     setQuickTaskTitle,
     creating,
     handleCreateQuickTask,
-    handleToggleTaskStatus,
+    dialogOpen,
+    setDialogOpen,
+    editingTask,
+    taskTitle,
+    setTaskTitle,
+    taskDesc,
+    setTaskDesc,
+    taskPriority,
+    setTaskPriority,
+    taskStatus,
+    setTaskStatus,
+    taskDueDate,
+    taskDueTime,
+    setTaskDueTime,
+    submitting,
+    handleOpenEditDialog,
+    handleDueDateChange,
+    handleClearDueDateTime,
+    handleSubmit,
+    handleDeleteTask,
     refresh: loadData,
   };
 }

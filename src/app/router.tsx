@@ -26,11 +26,6 @@ const ProjectDetailPage = lazyRoutePage(
   "ProjectDetailPage",
 );
 
-const TasksPage = lazyRoutePage(
-  () => import("@/features/tasks/pages/TasksPage"),
-  "TasksPage",
-);
-
 const TasksCalendarPage = lazyRoutePage(
   () => import("@/features/tasks/pages/TasksCalendarPage"),
   "TasksCalendarPage",
@@ -92,7 +87,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/tasks",
-            element: <TasksPage />,
+            element: <Navigate to="/tasks-calendar" replace />,
           },
           {
             path: "/tasks-calendar",

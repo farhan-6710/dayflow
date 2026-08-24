@@ -10,15 +10,7 @@ const sidebarConfig: ShellSidebarConfig = {
   nav: [
     { label: "Dashboard", to: "/dashboard", icon: "dashboard" },
     { label: "Projects", to: "/projects", icon: "projects" },
-    {
-      label: "Tasks",
-      to: "/tasks",
-      icon: "tasks",
-      children: [
-        { label: "Task List", to: "/tasks" },
-        { label: "Calendar", to: "/tasks-calendar" },
-      ],
-    },
+    { label: "Tasks Calendar", to: "/tasks-calendar", icon: "tasks" },
     { label: "Reminders", to: "/reminders", icon: "reminders" },
     { label: "Notifications", to: "/notifications", icon: "notifications" },
     { label: "Analytics", to: "/analytics", icon: "analytics" },

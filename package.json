@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed:dummy": "bun scripts/seed-dummy-data.ts",
+    "seed:task-months": "bun scripts/seed-task-months.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",

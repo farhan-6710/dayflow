@@ -91,7 +91,7 @@ export function TasksCalendarPage() {
     <PageContent>
       <PageHeader
         heading="Tasks Calendar"
-        description="Browse tasks month by month. Open any day to add a task or edit an existing one."
+        description="Browse and manage tasks by day. Open any date to add a task or edit an existing one."
         actions={
           <Button
             className="gap-2 rounded-full px-5 shadow-sm"

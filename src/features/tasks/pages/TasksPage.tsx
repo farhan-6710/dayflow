@@ -2,12 +2,11 @@ import { Calendar, Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 
-import { TaskDateTimePicker } from "@/features/tasks/components/TaskDateTimePicker";
+import { TaskFormDialog } from "@/features/tasks/components/TaskFormDialog";
 import { TaskListItem } from "@/features/tasks/components/TaskListItem";
 import { TASK_STATUS_OPTIONS } from "@/features/tasks/constants/taskStatus";
 import { tasksDirectoryConfig } from "@/features/tasks/constants/tasksDirectory";
 import { useTasksManagement } from "@/features/tasks/hooks/useTasksManagement";
-import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
 import {
   compactDropdownClassName,
   containMinWidthClassName,
@@ -20,14 +19,6 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { MultiSelect } from "@/shared/ui/MultiSelect";
 import { cn } from "@/shared/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/dialog";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 
 const PRIORITY_OPTIONS = [
@@ -168,86 +159,26 @@ export function TasksPage() {
         </DirectoryTable>
       </PageContent>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{editingTask ? "Edit Task" : "Create Task"}</DialogTitle>
-            <DialogDescription>
-              Personal tasks are standalone — no project required. Change status
-              from here when you need to.
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
-            <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>Task Title</label>
-              <Input
-                placeholder="What needs to be done?"
-                value={taskTitle}
-                onChange={(e) => setTaskTitle(e.target.value)}
-                required
-                disabled={submitting}
-              />
-            </div>
-
-            <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>Description (Optional)</label>
-              <Input
-                placeholder="Add more details..."
-                value={taskDesc}
-                onChange={(e) => setTaskDesc(e.target.value)}
-                disabled={submitting}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className={formFieldGroupClassName}>
-                <label className={formLabelClassName}>Priority</label>
-                <OptionDropdown
-                  value={taskPriority}
-                  onChange={(value) => setTaskPriority(value as typeof taskPriority)}
-                  options={PRIORITY_OPTIONS}
-                  disabled={submitting}
-                />
-              </div>
-
-              <div className={formFieldGroupClassName}>
-                <label className={formLabelClassName}>Status</label>
-                <OptionDropdown
-                  value={taskStatus}
-                  onChange={(value) => setTaskStatus(value as typeof taskStatus)}
-                  options={TASK_STATUS_OPTIONS}
-                  disabled={submitting}
-                />
-              </div>
-            </div>
-
-            <TaskDateTimePicker
-              label="Due Date (Optional)"
-              dateValue={taskDueDate}
-              timeValue={taskDueTime}
-              onDateChange={handleDueDateChange}
-              onTimeChange={setTaskDueTime}
-              onClear={handleClearDueDateTime}
-              disabled={submitting}
-            />
-
-            <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setDialogOpen(false)}
-                disabled={submitting}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={submitting || !taskTitle.trim()}>
-                {editingTask ? "Save Changes" : "Create Task"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <TaskFormDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        isEditing={Boolean(editingTask)}
+        submitting={submitting}
+        title={taskTitle}
+        description={taskDesc}
+        priority={taskPriority}
+        status={taskStatus}
+        dueDate={taskDueDate}
+        dueTime={taskDueTime}
+        onTitleChange={setTaskTitle}
+        onDescriptionChange={setTaskDesc}
+        onPriorityChange={setTaskPriority}
+        onStatusChange={setTaskStatus}
+        onDueDateChange={handleDueDateChange}
+        onDueTimeChange={setTaskDueTime}
+        onClearDueDateTime={handleClearDueDateTime}
+        onSubmit={(event) => void handleSubmit(event)}
+      />
 
       <ConfirmationModal
         open={deleteConfirmOpen}

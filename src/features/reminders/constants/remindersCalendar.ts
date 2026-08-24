@@ -42,9 +42,9 @@ function formatHourLabel(hour24: number, minute: number): string {
 
 function buildReminderAvailableTimes(): string[] {
   const times: string[] = [];
-  for (let hour = 6; hour <= 22; hour += 1) {
+  for (let hour = 6; hour <= 23; hour += 1) {
     times.push(formatHourLabel(hour, 0));
-    if (hour < 22) {
+    if (hour < 23) {
       times.push(formatHourLabel(hour, 30));
     }
   }

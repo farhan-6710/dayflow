@@ -12,10 +12,6 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 
-const reminderDayLookup = new Map(
-  REMINDER_DAY_OPTIONS.map((day) => [day.key, day]),
-);
-
 function formatReminderDays(daysOfWeek: string[]) {
   if (daysOfWeek.length === REMINDER_DAY_OPTIONS.length) {
     return "Every day";
@@ -36,9 +32,6 @@ export function RemindersManagementPage() {
 
   useReminderChecker(reminders);
 
-  const disabledCount = reminders.filter((reminder) => reminder.is_disabled).length;
-  const activeCount = reminders.length - disabledCount;
-
   return (
     <div className="space-y-6">
       <PageHeader
@@ -53,38 +46,6 @@ export function RemindersManagementPage() {
       />
 
       <PageContent>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-2xs">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Active
-            </p>
-            <p className="mt-3 text-2xl font-semibold text-foreground">{activeCount}</p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Currently sending on their scheduled days.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-2xs">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Paused
-            </p>
-            <p className="mt-3 text-2xl font-semibold text-foreground">{disabledCount}</p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Disabled reminders stay muted until re-enabled.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-2xs sm:col-span-2 xl:col-span-1">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Repeating Flow
-            </p>
-            <p className="mt-3 text-sm font-semibold text-foreground">
-              Build habits around weekdays, not dates.
-            </p>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              Date-based planning now lives in the task calendar so reminders can stay lightweight.
-            </p>
-          </div>
-        </div>
-
         {error ? <ErrorBanner message={error} /> : null}
 
         {loading ? (
@@ -178,18 +139,17 @@ export function RemindersManagementPage() {
                 )}
 
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {reminder.days_of_week.map((dayKey) => {
-                    const day = reminderDayLookup.get(dayKey);
-                    if (!day) return null;
+                  {REMINDER_DAY_OPTIONS.map((day) => {
+                    const isSelected = reminder.days_of_week.includes(day.key);
 
                     return (
                       <span
                         key={day.key}
                         className={cn(
                           "inline-flex size-9 items-center justify-center rounded-full border text-xs font-semibold",
-                          reminder.is_disabled
-                            ? "border-border bg-background/60 text-muted-foreground"
-                            : "border-primary/15 bg-primary/5 text-primary",
+                          isSelected && !reminder.is_disabled
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border bg-background/60 text-muted-foreground",
                         )}
                         title={day.label}
                       >

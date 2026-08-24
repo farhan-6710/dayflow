@@ -1,12 +1,16 @@
-import { CheckCircle2, Circle, Clock, CheckCircle } from "lucide-react";
+import { CheckCircle2, Clock, CheckCircle } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 
+import { FocusListItem } from "@/features/dashboard/components/FocusListItem";
 import { TaskCompletionChart } from "@/features/dashboard/components/TaskCompletionChart";
 import { useDashboard } from "@/features/dashboard/hooks/useDashboard";
+import { TaskFormDialog } from "@/features/tasks/components/TaskFormDialog";
 import { PageContent } from "@/shared/components/PageContent";
 import { DateFilters } from "@/shared/components/DateFilters";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { useDateFilters } from "@/shared/hooks/useDateFilters";
 import {
@@ -25,8 +29,43 @@ export function DashboardPage() {
     stats,
     tasks,
     urgentTasks,
-    handleToggleTaskStatus,
+    handleOpenEditDialog,
+    handleDeleteTask,
+    dialogOpen,
+    setDialogOpen,
+    editingTask,
+    taskTitle,
+    setTaskTitle,
+    taskDesc,
+    setTaskDesc,
+    taskPriority,
+    setTaskPriority,
+    taskStatus,
+    setTaskStatus,
+    taskDueDate,
+    taskDueTime,
+    setTaskDueTime,
+    submitting,
+    handleDueDateChange,
+    handleClearDueDateTime,
+    handleSubmit,
   } = useDashboard(filter);
+
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
+
+  const confirmDelete = (id: string) => {
+    setTaskToDelete(id);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (taskToDelete) {
+      await handleDeleteTask(taskToDelete);
+    }
+    setDeleteConfirmOpen(false);
+    setTaskToDelete(null);
+  };
 
   const greetingName = profile?.display_name || "there";
   const isAll = periodLabel === "All";
@@ -41,7 +80,7 @@ export function DashboardPage() {
       description: isAll
         ? "Tasks left to complete across all time"
         : `Tasks left to complete in ${periodDescription}`,
-      href: "/tasks",
+      href: "/tasks-calendar",
       sparklineData: employeesSparklineData,
       sparklineColor: "var(--primary)",
     },
@@ -53,7 +92,7 @@ export function DashboardPage() {
       description: isAll
         ? "Tasks past their due date across all time"
         : `Tasks past their due date in ${periodDescription}`,
-      href: "/tasks",
+      href: "/tasks-calendar",
       sparklineData: missedPostsSparklineData,
       sparklineColor: "var(--accent)",
     },
@@ -77,7 +116,7 @@ export function DashboardPage() {
       description: isAll
         ? "Tasks finished successfully across all time"
         : `Tasks finished successfully in ${periodDescription}`,
-      href: "/tasks",
+      href: "/tasks-calendar",
       sparklineData: totalPostsSparklineData,
       sparklineColor: "var(--accent)",
     },
@@ -107,8 +146,8 @@ export function DashboardPage() {
                   <h3 className="text-lg font-semibold tracking-tight">Focus List</h3>
                   <p className="mt-1 text-sm text-muted-foreground">Your active upcoming action items.</p>
                 </div>
-                <Link to="/tasks" className="text-xs font-semibold text-primary hover:underline">
-                  View All Tasks
+                <Link to="/tasks-calendar" className="text-xs font-semibold text-primary hover:underline">
+                  View Tasks Calendar
                 </Link>
               </div>
 
@@ -118,56 +157,18 @@ export function DashboardPage() {
                 ) : urgentTasks.length === 0 ? (
                   <div className="py-8 text-center">
                     <p className="text-sm text-muted-foreground">All caught up! No tasks left.</p>
-                    <Link to="/tasks" className="mt-2 inline-block text-xs font-semibold text-primary hover:underline">
+                    <Link to="/tasks-calendar" className="mt-2 inline-block text-xs font-semibold text-primary hover:underline">
                       Create a Task
                     </Link>
                   </div>
                 ) : (
                   urgentTasks.map((task) => (
-                    <div key={task.id} className="flex min-w-0 items-center justify-between py-3">
-                      <div className="flex min-w-0 items-start gap-3">
-                        <button
-                          onClick={() => void handleToggleTaskStatus(task.id, task.status)}
-                          className="mt-0.5 shrink-0 text-muted-foreground transition hover:text-primary"
-                        >
-                          {task.status === "done" ? (
-                            <CheckCircle2 className="size-5 fill-primary/10 text-primary" />
-                          ) : (
-                            <Circle className="size-5" />
-                          )}
-                        </button>
-                        <div className="min-w-0">
-                          <span
-                            className={cn(
-                              "block truncate text-sm font-medium text-foreground",
-                            )}
-                          >
-                            {task.title}
-                          </span>
-                          {task.description && (
-                            <span className="block truncate text-xs text-muted-foreground">{task.description}</span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="ml-4 flex shrink-0 items-center gap-2">
-                        {task.due_date && (
-                          <span className="rounded-md bg-secondary px-2 py-0.5 text-2xs font-semibold text-secondary-foreground">
-                            {task.due_date}
-                          </span>
-                        )}
-                        <span
-                          className={cn(
-                            "rounded-md px-2 py-0.5 text-2xs font-bold tracking-wider uppercase",
-                            task.priority === "high" && "bg-destructive/10 text-destructive",
-                            task.priority === "medium" && "bg-accent/10 text-accent",
-                            task.priority === "low" && "bg-secondary text-secondary-foreground",
-                          )}
-                        >
-                          {task.priority}
-                        </span>
-                      </div>
-                    </div>
+                    <FocusListItem
+                      key={task.id}
+                      task={task}
+                      onEdit={() => handleOpenEditDialog(task)}
+                      onDelete={() => confirmDelete(task.id)}
+                    />
                   ))
                 )}
               </div>
@@ -175,6 +176,37 @@ export function DashboardPage() {
           </div>
         </div>
       </PageContent>
+
+      <TaskFormDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        isEditing={Boolean(editingTask)}
+        submitting={submitting}
+        title={taskTitle}
+        description={taskDesc}
+        priority={taskPriority}
+        status={taskStatus}
+        dueDate={taskDueDate}
+        dueTime={taskDueTime}
+        onTitleChange={setTaskTitle}
+        onDescriptionChange={setTaskDesc}
+        onPriorityChange={setTaskPriority}
+        onStatusChange={setTaskStatus}
+        onDueDateChange={handleDueDateChange}
+        onDueTimeChange={setTaskDueTime}
+        onClearDueDateTime={handleClearDueDateTime}
+        onSubmit={(event) => void handleSubmit(event)}
+      />
+
+      <ConfirmationModal
+        open={deleteConfirmOpen}
+        onOpenChange={setDeleteConfirmOpen}
+        title="Delete Task?"
+        description="This action is irreversible. The task will be deleted permanently."
+        confirmLabel="Delete permanently"
+        confirmVariant="destructive"
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

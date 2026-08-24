@@ -1,5 +1,5 @@
 import { TrendingDown, TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import { useTaskCompletionChart } from "@/features/dashboard/hooks/useTaskCompletionChart";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
@@ -90,10 +90,12 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
           </div>
         ) : (
           <ChartContainer config={chartConfig} className="aspect-auto h-full w-full">
-            <LineChart
+            <BarChart
               accessibilityLayer
               data={chart.points}
-              margin={{ top: 5, right: 10, left: -20, bottom: 0 }}
+              margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
+              barCategoryGap="18%"
+              barGap={2}
             >
               <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border/50" />
               <XAxis
@@ -101,6 +103,8 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
+                interval={1}
+                minTickGap={8}
                 className="font-medium text-muted-foreground"
               />
               <YAxis
@@ -111,27 +115,23 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
                 className="font-medium text-muted-foreground"
               />
               <ChartTooltip
-                cursor={{ stroke: "var(--border)", strokeWidth: 1 }}
+                cursor={{ fill: "var(--muted)", opacity: 0.45 }}
                 content={<ChartTooltipContent />}
               />
-              <Line
+              <Bar
                 dataKey="currentMonth"
-                type="monotone"
-                stroke="var(--color-currentMonth)"
-                strokeWidth={3}
-                dot={{ r: 3, fill: "var(--color-currentMonth)", strokeWidth: 0 }}
-                activeDot={{ r: 5, strokeWidth: 0 }}
+                fill="var(--color-currentMonth)"
+                radius={[4, 4, 0, 0]}
+                maxBarSize={14}
               />
-              <Line
+              <Bar
                 dataKey="previousMonth"
-                type="monotone"
-                stroke="var(--color-previousMonth)"
-                strokeWidth={3}
-                dot={{ r: 3, fill: "var(--color-previousMonth)", strokeWidth: 0 }}
-                activeDot={{ r: 5, strokeWidth: 0 }}
+                fill="var(--color-previousMonth)"
+                radius={[4, 4, 0, 0]}
+                maxBarSize={14}
               />
               <ChartLegend content={<ChartLegendContent />} />
-            </LineChart>
+            </BarChart>
           </ChartContainer>
         )}
       </div>

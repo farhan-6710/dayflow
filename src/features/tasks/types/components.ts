@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import type { Task, TaskStatus } from "@/services/tasksService";
 
 export type TaskTimeSelectProps = {
@@ -22,6 +23,27 @@ export type TaskListItemProps = {
   task: Task;
   onEdit: () => void;
   onDelete: () => void;
+};
+
+export type TaskFormDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  isEditing: boolean;
+  submitting: boolean;
+  title: string;
+  description: string;
+  priority: Task["priority"];
+  status: TaskStatus;
+  dueDate: string;
+  dueTime: string;
+  onTitleChange: (value: string) => void;
+  onDescriptionChange: (value: string) => void;
+  onPriorityChange: (value: Task["priority"]) => void;
+  onStatusChange: (value: TaskStatus) => void;
+  onDueDateChange: (value: string) => void;
+  onDueTimeChange: (value: string) => void;
+  onClearDueDateTime: () => void;
+  onSubmit: (event: FormEvent) => void;
 };
 
 export type TasksWeekDayCellProps = {
