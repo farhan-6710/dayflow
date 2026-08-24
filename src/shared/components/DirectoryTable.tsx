@@ -31,7 +31,7 @@ export function DirectoryTable({
         <div className={DIRECTORY_TABLE_MIN_WIDTH_CLASS}>
           <div
             className={cn(
-              "grid text-xs font-semibold tracking-wider text-muted-foreground max-sm:hidden bg-muted px-6",
+              "grid w-full items-center text-xs font-semibold tracking-wider text-muted-foreground max-sm:hidden bg-muted px-6",
               divided
                 ? "items-stretch divide-x divide-border border-b border-border"
                 : "gap-4 py-3",

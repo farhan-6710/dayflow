@@ -101,7 +101,13 @@ export function MonthSelector({
                   role="gridcell"
                   aria-selected={isSelected}
                   onClick={() => {
-                    onSelect(new Date(viewYear, monthIndex, 1));
+                    const today = new Date();
+                    const day =
+                      viewYear === today.getFullYear() &&
+                      monthIndex === today.getMonth()
+                        ? today.getDate()
+                        : 1;
+                    onSelect(new Date(viewYear, monthIndex, day));
                     setOpen(false);
                   }}
                   className={cn(

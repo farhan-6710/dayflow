@@ -131,6 +131,28 @@ export type AppShellLayoutProps = {
   mobileNavDescription: string;
 };
 
+export type MultiSelectOption = {
+  value: string;
+  label: string;
+};
+
+export type MultiSelectProps = {
+  id?: string;
+  value: string[];
+  onChange: (value: string[]) => void;
+  options: MultiSelectOption[];
+  isLoading?: boolean;
+  disabled?: boolean;
+  label?: string;
+  placeholder?: string;
+  emptyMessage?: string;
+  excludeValues?: string[];
+  /** Shown on selected chips when the option label is not in `options` yet. */
+  fallbackSelectedLabel?: string;
+  onOpenChange?: (open: boolean) => void;
+  className?: string;
+};
+
 export type DatePickerProps = {
   id?: string;
   label?: string;

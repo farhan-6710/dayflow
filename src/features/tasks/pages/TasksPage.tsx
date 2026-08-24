@@ -1,21 +1,24 @@
-import { Calendar, Plus, Search, ClipboardList } from "lucide-react";
+import { Calendar, Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 
 import { TaskDateTimePicker } from "@/features/tasks/components/TaskDateTimePicker";
 import { TaskListItem } from "@/features/tasks/components/TaskListItem";
 import { TASK_STATUS_OPTIONS } from "@/features/tasks/constants/taskStatus";
+import { tasksDirectoryConfig } from "@/features/tasks/constants/tasksDirectory";
 import { useTasksManagement } from "@/features/tasks/hooks/useTasksManagement";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
 import {
   compactDropdownClassName,
   containMinWidthClassName,
 } from "@/shared/constants/layoutStyles";
+import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { MultiSelect } from "@/shared/ui/MultiSelect";
 import { cn } from "@/shared/lib/utils";
 import {
   Dialog,
@@ -36,11 +39,6 @@ const PRIORITY_OPTIONS = [
 const FILTER_PRIORITY_OPTIONS = [
   { value: "", label: "All Priorities" },
   ...PRIORITY_OPTIONS,
-];
-
-const FILTER_STATUS_OPTIONS = [
-  { value: "", label: "All Statuses" },
-  ...TASK_STATUS_OPTIONS,
 ];
 
 export function TasksPage() {
@@ -117,17 +115,19 @@ export function TasksPage() {
       />
 
       <PageContent>
-        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-          <div className="flex flex-col gap-3 border-b border-border px-4 py-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-5">
-            <div className="min-w-0">
-              <h2 className="text-sm font-semibold text-foreground">All Tasks</h2>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                {loading
-                  ? "Loading…"
-                  : `${tasks.length} task${tasks.length === 1 ? "" : "s"}`}
-              </p>
-            </div>
-
+        <DirectoryTable
+          title="All Tasks"
+          description={
+            loading
+              ? "Loading…"
+              : `${tasks.length} task${tasks.length === 1 ? "" : "s"}`
+          }
+          gridClass={tasksDirectoryConfig.gridClass}
+          columns={[...tasksDirectoryConfig.columns]}
+          isLoading={loading}
+          isEmpty={!loading && tasks.length === 0}
+          emptyMessage="No tasks found. Try clearing filters or add a new task."
+          headerAside={
             <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
               <div className={cn("relative", containMinWidthClassName, "sm:w-56")}>
                 <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
@@ -147,50 +147,25 @@ export function TasksPage() {
                 placeholder="All Priorities"
                 className={cn(compactDropdownClassName, "sm:w-36")}
               />
-              <OptionDropdown
+              <MultiSelect
                 value={filterStatus}
                 onChange={setFilterStatus}
-                options={FILTER_STATUS_OPTIONS}
+                options={TASK_STATUS_OPTIONS}
                 placeholder="All Statuses"
-                className={cn(compactDropdownClassName, "sm:w-36")}
+                className="min-w-36 shrink-0"
               />
             </div>
-          </div>
-
-          {loading ? (
-            <div className="px-5 py-14 text-center text-sm text-muted-foreground">
-              Loading tasks…
-            </div>
-          ) : tasks.length === 0 ? (
-            <div className="px-5 py-14 text-center">
-              <ClipboardList className="mx-auto size-10 text-muted-foreground/50" />
-              <h3 className="mt-3 text-sm font-semibold text-foreground">
-                No tasks found
-              </h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Try clearing filters or add a new task.
-              </p>
-              <Button
-                className="mt-4 gap-2 rounded-full"
-                onClick={() => handleOpenCreateDialog()}
-              >
-                <Plus className="size-4" />
-                Add Task
-              </Button>
-            </div>
-          ) : (
-            <div className="divide-y divide-border">
-              {tasks.map((task) => (
-                <TaskListItem
-                  key={task.id}
-                  task={task}
-                  onEdit={() => handleOpenEditDialog(task)}
-                  onDelete={() => confirmDelete(task.id)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+          }
+        >
+          {tasks.map((task) => (
+            <TaskListItem
+              key={task.id}
+              task={task}
+              onEdit={() => handleOpenEditDialog(task)}
+              onDelete={() => confirmDelete(task.id)}
+            />
+          ))}
+        </DirectoryTable>
       </PageContent>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>

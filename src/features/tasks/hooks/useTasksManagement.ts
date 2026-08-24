@@ -21,7 +21,7 @@ export function useTasksManagement() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterPriority, setFilterPriority] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
+  const [filterStatus, setFilterStatus] = useState<string[]>([]);
 
   const loadData = useCallback(async () => {
     if (!user) return;
@@ -128,7 +128,8 @@ export function useTasksManagement() {
         task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (task.description || "").toLowerCase().includes(searchTerm.toLowerCase());
       const matchPriority = filterPriority ? task.priority === filterPriority : true;
-      const matchStatus = filterStatus ? task.status === filterStatus : true;
+      const matchStatus =
+        filterStatus.length === 0 || filterStatus.includes(task.status);
       return matchSearch && matchPriority && matchStatus;
     });
   }, [tasks, searchTerm, filterPriority, filterStatus]);

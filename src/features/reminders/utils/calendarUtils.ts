@@ -131,7 +131,7 @@ export function buildCalendarDateSearchParams(
   current: URLSearchParams,
 ): URLSearchParams {
   const next = new URLSearchParams(current);
-  const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-01`;
+  const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
   next.set("date", value);
   return next;
 }

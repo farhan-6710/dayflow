@@ -140,7 +140,6 @@ export function DashboardPage() {
                           <span
                             className={cn(
                               "block truncate text-sm font-medium text-foreground",
-                              task.status === "done" && "text-muted-foreground line-through",
                             )}
                           >
                             {task.title}
