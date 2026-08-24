@@ -1,0 +1,26 @@
+import { createContext } from "react";
+import type { AuthError, User } from "@supabase/supabase-js";
+import type { Profile } from "@/services/profilesService";
+
+export type AuthContextValue = {
+  user: User | null;
+  profile: Profile | null;
+  loading: boolean;
+  /** True after the user opens a password-reset email link. */
+  isPasswordRecovery: boolean;
+  clearPasswordRecovery: () => void;
+  refreshProfile: () => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<AuthError | null>;
+  signUpWithEmail: (
+    email: string,
+    password: string,
+    fullName: string,
+  ) => Promise<AuthError | null>;
+  signInWithOAuthProvider: (
+    provider: string,
+    options?: { isSignup?: boolean },
+  ) => Promise<AuthError | null>;
+  signOut: () => Promise<void>;
+};
+
+export const AuthContext = createContext<AuthContextValue | null>(null);
