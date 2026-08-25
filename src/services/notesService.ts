@@ -28,6 +28,17 @@ export async function fetchNotes(userId: string): Promise<Note[]> {
   return (data as Note[]) ?? [];
 }
 
+export async function fetchNoteById(id: string): Promise<Note | null> {
+  const { data, error } = await supabase
+    .from(DB.NOTES.TABLE)
+    .select(DB.NOTES.SELECT)
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) throw error;
+  return (data as Note | null) ?? null;
+}
+
 export async function fetchNotesByProject(projectId: string): Promise<Note[]> {
   const { data, error } = await supabase
     .from(DB.NOTES.TABLE)

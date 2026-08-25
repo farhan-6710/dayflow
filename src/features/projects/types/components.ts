@@ -36,3 +36,23 @@ export type ProjectNotesWorkspaceProps = {
   onDelete: (noteId: string) => Promise<void>;
   onDiscard: () => void;
 };
+
+export type ProjectNotesTableProps = {
+  projectId: string;
+  notes: Note[];
+  isLoading: boolean;
+  onDeleteNote: (note: Note) => void | Promise<void>;
+};
+
+export type ProjectNotesTableRowProps = {
+  projectId: string;
+  note: Note;
+  onDeleteNote: (note: Note) => void;
+};
+
+export type ProjectForSelectProps = {
+  value: string;
+  onChange: (value: string) => void;
+  clients: import("@/features/clients-management/types/types").Client[];
+  disabled?: boolean;
+};

@@ -1,5 +1,7 @@
 import { Folder, FolderArchive, MoreVertical, Plus, Trash2, Edit, Archive } from "lucide-react";
 import { useProjectsManagement } from "@/features/projects/hooks/useProjectsManagement";
+import { ProjectForSelect } from "@/features/projects/components/ProjectForSelect";
+import { PROJECT_FOR_LABEL } from "@/features/projects/constants/projectFor";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { Button } from "@/shared/ui/button";
@@ -36,6 +38,7 @@ const COLOR_PRESETS = [
 export function ProjectsManagementPage() {
   const {
     projects,
+    clients,
     loading,
     dialogOpen,
     setDialogOpen,
@@ -43,6 +46,8 @@ export function ProjectsManagementPage() {
     setProjectName,
     projectColor,
     setProjectColor,
+    projectFor,
+    setProjectFor,
     submitting,
     editingProject,
     handleOpenCreateDialog,
@@ -74,7 +79,7 @@ export function ProjectsManagementPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        heading="Projects"
+        heading="Projects Management"
         description="Organize notes into project folders — tasks stay standalone."
         actions={
           <Button onClick={handleOpenCreateDialog}>
@@ -111,7 +116,7 @@ export function ProjectsManagementPage() {
                 >
                   <div className="flex items-start justify-between">
                     <Link
-                      to={`/projects/${project.id}`}
+                      to={`/projects-management/${project.id}`}
                       className="flex items-center gap-3 min-w-0"
                     >
                       <span
@@ -133,7 +138,7 @@ export function ProjectsManagementPage() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => handleOpenEditDialog(project)}>
-                          <Edit className="mr-2 size-4" /> Rename
+                          <Edit className="mr-2 size-4" /> Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => void handleToggleArchive(project)}>
                           <Archive className="mr-2 size-4" /> Archive
@@ -149,9 +154,9 @@ export function ProjectsManagementPage() {
                   </div>
 
                   <div className="mt-6 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Active Folder</span>
+                    <span>{PROJECT_FOR_LABEL}: {project.project_for_label}</span>
                     <Link
-                      to={`/projects/${project.id}`}
+                      to={`/projects-management/${project.id}`}
                       className="text-primary font-semibold hover:underline"
                     >
                       Open Project →
@@ -181,9 +186,14 @@ export function ProjectsManagementPage() {
                       <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground font-bold">
                         <Folder className="size-5" />
                       </span>
-                      <span className="block truncate font-medium text-muted-foreground">
-                        {project.name}
-                      </span>
+                      <div className="min-w-0">
+                        <span className="block truncate font-medium text-muted-foreground">
+                          {project.name}
+                        </span>
+                        <span className="mt-1 block truncate text-xs">
+                          {PROJECT_FOR_LABEL}: {project.project_for_label}
+                        </span>
+                      </div>
                     </div>
 
                     <DropdownMenu>
@@ -216,7 +226,7 @@ export function ProjectsManagementPage() {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{editingProject ? "Rename Project" : "New Project"}</DialogTitle>
+            <DialogTitle>{editingProject ? "Edit Project" : "New Project"}</DialogTitle>
             <DialogDescription>
               Create a custom workspace folder with a specific highlight color.
             </DialogDescription>
@@ -232,6 +242,18 @@ export function ProjectsManagementPage() {
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
                 required
+                disabled={submitting}
+              />
+            </div>
+
+            <div className={formFieldGroupClassName}>
+              <label className={formLabelClassName}>
+                {PROJECT_FOR_LABEL}
+              </label>
+              <ProjectForSelect
+                value={projectFor}
+                onChange={setProjectFor}
+                clients={clients}
                 disabled={submitting}
               />
             </div>

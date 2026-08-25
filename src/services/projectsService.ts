@@ -1,3 +1,4 @@
+import { resolveProjectForLabel } from "@/features/projects/utils/projectFor";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 
@@ -7,6 +8,8 @@ export type Project = {
   name: string;
   color_hex: string;
   is_archived: boolean;
+  project_for: string | null;
+  project_for_label: string;
   created_at: string;
   updated_at: string;
 };
@@ -14,7 +17,32 @@ export type Project = {
 export type CreateProjectInput = {
   name: string;
   color_hex?: string;
+  project_for?: string | null;
 };
+
+type ProjectRow = Omit<Project, "project_for_label"> & {
+  project_for_client?: { client_name: string } | { client_name: string }[] | null;
+};
+
+function clientNameFromJoin(
+  related: ProjectRow["project_for_client"],
+): string | null {
+  if (!related) return null;
+  const client = Array.isArray(related) ? related[0] : related;
+  return client?.client_name ?? null;
+}
+
+function mapProject(row: ProjectRow): Project {
+  const { project_for_client: related, ...project } = row;
+  return {
+    ...project,
+    project_for: project.project_for ?? null,
+    project_for_label: resolveProjectForLabel(
+      project.project_for ?? null,
+      clientNameFromJoin(related),
+    ),
+  };
+}
 
 export async function fetchProjects(userId: string): Promise<Project[]> {
   const { data, error } = await supabase
@@ -24,7 +52,7 @@ export async function fetchProjects(userId: string): Promise<Project[]> {
     .order("created_at", { ascending: false });
 
   if (error) throw error;
-  return (data as Project[]) ?? [];
+  return ((data as ProjectRow[]) ?? []).map(mapProject);
 }
 
 export async function fetchProjectById(id: string): Promise<Project | null> {
@@ -35,7 +63,7 @@ export async function fetchProjectById(id: string): Promise<Project | null> {
     .maybeSingle();
 
   if (error) throw error;
-  return (data as Project | null) ?? null;
+  return data ? mapProject(data as ProjectRow) : null;
 }
 
 export async function createProject(userId: string, input: CreateProjectInput): Promise<Project> {
@@ -45,18 +73,19 @@ export async function createProject(userId: string, input: CreateProjectInput): 
       user_id: userId,
       name: input.name,
       color_hex: input.color_hex ?? "#ff7e21",
+      project_for: input.project_for ?? null,
       is_archived: false,
     })
     .select(DB.PROJECTS.SELECT)
     .single();
 
   if (error) throw error;
-  return data as Project;
+  return mapProject(data as ProjectRow);
 }
 
 export async function updateProject(
   id: string,
-  updates: Partial<Pick<Project, "name" | "color_hex" | "is_archived">>
+  updates: Partial<Pick<Project, "name" | "color_hex" | "is_archived" | "project_for">>,
 ): Promise<Project> {
   const { data, error } = await supabase
     .from(DB.PROJECTS.TABLE)
@@ -66,7 +95,7 @@ export async function updateProject(
     .single();
 
   if (error) throw error;
-  return data as Project;
+  return mapProject(data as ProjectRow);
 }
 
 export async function deleteProject(id: string): Promise<void> {

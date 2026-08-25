@@ -111,7 +111,7 @@
   --background: oklch(0.10 0 0); /* Pure obsidian black-gray */
   --foreground: oklch(0.95 0 0);  /* Pure light gray-white */
 
-  --card: oklch(15.984% 0.00864 274.307);        /* Deep neutral gray card background */
+  --card: oklch(0.15 0 0);        /* Deep neutral gray card background */
   --card-foreground: oklch(0.95 0 0);
 
   --popover: oklch(0.15 0 0);
@@ -120,7 +120,7 @@
   --secondary: oklch(0.18 0 0);   /* Secondary dark gray containers */
   --secondary-foreground: oklch(0.90 0 0);
 
-  --muted: oklch(0.16 0 0);       /* Muted neutral elements */
+  --muted: oklch(16.842% 0.00002 271.152);      /* Sit with card — no gray slab on tables */
   --muted-foreground: oklch(0.65 0 0);
 
   --destructive: #953333;

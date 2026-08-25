@@ -1,5 +1,5 @@
 import { TrendingDown, TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import { useTaskCompletionChart } from "@/features/dashboard/hooks/useTaskCompletionChart";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
@@ -25,6 +25,7 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
   const { primary, compare, setPrimary, setCompare, chart } = useTaskCompletionChart(tasks);
   const growthLabel = formatGrowthLabel(chart.growthPercent, chart.previousMonthLabel);
   const isUp = (chart.growthPercent ?? 0) >= 0;
+  const gradientId = `task-completion-${primary.year}-${primary.month}-${compare.year}-${compare.month}`;
 
   const chartConfig = {
     currentMonth: {
@@ -90,13 +91,21 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
           </div>
         ) : (
           <ChartContainer config={chartConfig} className="aspect-auto h-full w-full">
-            <BarChart
+            <AreaChart
               accessibilityLayer
               data={chart.points}
-              margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
-              barCategoryGap="18%"
-              barGap={2}
+              margin={{ top: 8, right: 10, left: -16, bottom: 0 }}
             >
+              <defs>
+                <linearGradient id={`${gradientId}-current`} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--color-currentMonth)" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="var(--color-currentMonth)" stopOpacity={0.02} />
+                </linearGradient>
+                <linearGradient id={`${gradientId}-previous`} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--color-previousMonth)" stopOpacity={0.28} />
+                  <stop offset="95%" stopColor="var(--color-previousMonth)" stopOpacity={0.02} />
+                </linearGradient>
+              </defs>
               <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border/50" />
               <XAxis
                 dataKey="day"
@@ -115,23 +124,29 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
                 className="font-medium text-muted-foreground"
               />
               <ChartTooltip
-                cursor={{ fill: "var(--muted)", opacity: 0.45 }}
+                cursor={{ stroke: "var(--border)", strokeWidth: 1 }}
                 content={<ChartTooltipContent />}
               />
-              <Bar
-                dataKey="currentMonth"
-                fill="var(--color-currentMonth)"
-                radius={[4, 4, 0, 0]}
-                maxBarSize={14}
-              />
-              <Bar
+              <Area
                 dataKey="previousMonth"
-                fill="var(--color-previousMonth)"
-                radius={[4, 4, 0, 0]}
-                maxBarSize={14}
+                type="natural"
+                stroke="var(--color-previousMonth)"
+                strokeWidth={2}
+                fill={`url(#${gradientId}-previous)`}
+                fillOpacity={1}
+                activeDot={{ r: 4, strokeWidth: 0 }}
+              />
+              <Area
+                dataKey="currentMonth"
+                type="natural"
+                stroke="var(--color-currentMonth)"
+                strokeWidth={2.5}
+                fill={`url(#${gradientId}-current)`}
+                fillOpacity={1}
+                activeDot={{ r: 5, strokeWidth: 0 }}
               />
               <ChartLegend content={<ChartLegendContent />} />
-            </BarChart>
+            </AreaChart>
           </ChartContainer>
         )}
       </div>

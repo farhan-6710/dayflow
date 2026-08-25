@@ -1,5 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { MYSELF_PROJECT_FOR_VALUE } from "@/features/projects/constants/projectFor";
+import {
+  projectForToSelectValue,
+  selectValueToProjectFor,
+} from "@/features/projects/utils/projectFor";
+import type { Client } from "@/features/clients-management/types/types";
+import { fetchClients } from "@/services/clientsService";
 import {
   fetchProjects,
   createProject,
@@ -12,10 +19,12 @@ import { showToast } from "@/shared/utils/showToast";
 export function useProjectsManagement() {
   const { user } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectColor, setProjectColor] = useState("#ff7e21");
+  const [projectFor, setProjectFor] = useState(MYSELF_PROJECT_FOR_VALUE);
   const [submitting, setSubmitting] = useState(false);
   
   // For editing
@@ -25,8 +34,12 @@ export function useProjectsManagement() {
     if (!user) return;
     try {
       setLoading(true);
-      const data = await fetchProjects(user.id);
+      const [data, clientRows] = await Promise.all([
+        fetchProjects(user.id),
+        fetchClients(user.id),
+      ]);
       setProjects(data);
+      setClients(clientRows);
     } catch (e) {
       console.error(e);
       showToast("error", "Failed to load projects");
@@ -43,6 +56,7 @@ export function useProjectsManagement() {
     setEditingProject(null);
     setProjectName("");
     setProjectColor("#ff7e21");
+    setProjectFor(MYSELF_PROJECT_FOR_VALUE);
     setDialogOpen(true);
   };
 
@@ -50,6 +64,7 @@ export function useProjectsManagement() {
     setEditingProject(project);
     setProjectName(project.name);
     setProjectColor(project.color_hex);
+    setProjectFor(projectForToSelectValue(project.project_for));
     setDialogOpen(true);
   };
 
@@ -59,10 +74,12 @@ export function useProjectsManagement() {
 
     try {
       setSubmitting(true);
+      const projectForId = selectValueToProjectFor(projectFor);
       if (editingProject) {
         const updated = await updateProject(editingProject.id, {
           name: projectName.trim(),
           color_hex: projectColor,
+          project_for: projectForId,
         });
         setProjects((prev) => prev.map((p) => (p.id === editingProject.id ? updated : p)));
         showToast("success", "Project updated successfully");
@@ -70,6 +87,7 @@ export function useProjectsManagement() {
         const created = await createProject(user.id, {
           name: projectName.trim(),
           color_hex: projectColor,
+          project_for: projectForId,
         });
         setProjects((prev) => [created, ...prev]);
         showToast("success", "Project created successfully");
@@ -112,6 +130,7 @@ export function useProjectsManagement() {
 
   return {
     projects,
+    clients,
     loading,
     dialogOpen,
     setDialogOpen,
@@ -119,6 +138,8 @@ export function useProjectsManagement() {
     setProjectName,
     projectColor,
     setProjectColor,
+    projectFor,
+    setProjectFor,
     submitting,
     editingProject,
     handleOpenCreateDialog,

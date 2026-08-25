@@ -8,7 +8,13 @@ export const DB = {
   },
   PROJECTS: {
     TABLE: "projects",
-    SELECT: "id, user_id, name, color_hex, is_archived, created_at, updated_at",
+    SELECT:
+      "id, user_id, name, color_hex, is_archived, project_for, created_at, updated_at, project_for_client:clients!project_for(client_name)",
+  },
+  CLIENTS: {
+    TABLE: "clients",
+    SELECT:
+      "id, user_id, client_name, email, primary_contact_name, mobile_number, secondary_contact_name, secondary_mobile_number, website_name, is_active, created_at, updated_at",
   },
   TASKS: {
     TABLE: "tasks",

@@ -35,7 +35,7 @@ export function RemindersManagementPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        heading="Reminders"
+        heading="Daily Reminders"
         description="Manage recurring reminders by weekday and time. Use this space for repeatable nudges, not date-based tasks."
         actions={
           <Button onClick={openAddDialog}>

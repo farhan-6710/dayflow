@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter, Navigate, useParams } from "react-router";
 
 import { lazyRoutePage } from "@/app/lazyRoute";
 import { PublicRoute } from "@/features/auth/components/PublicRoute";
@@ -26,6 +26,16 @@ const ProjectDetailPage = lazyRoutePage(
   "ProjectDetailPage",
 );
 
+const ProjectNotePage = lazyRoutePage(
+  () => import("@/features/projects/pages/ProjectNotePage"),
+  "ProjectNotePage",
+);
+
+const ClientsManagementPage = lazyRoutePage(
+  () => import("@/features/clients-management/pages/ClientsManagementPage"),
+  "ClientsManagementPage",
+);
+
 const TasksCalendarPage = lazyRoutePage(
   () => import("@/features/tasks/pages/TasksCalendarPage"),
   "TasksCalendarPage",
@@ -50,6 +60,11 @@ const SettingsPage = lazyRoutePage(
   () => import("@/features/settings/pages/SettingsPage"),
   "SettingsPage",
 );
+
+function ProjectDetailLegacyRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/projects-management/${id}`} replace />;
+}
 
 export const router = createBrowserRouter([
   {
@@ -78,12 +93,32 @@ export const router = createBrowserRouter([
             element: <DashboardPage />,
           },
           {
-            path: "/projects",
+            path: "/projects-management",
             element: <ProjectsManagementPage />,
           },
           {
-            path: "/projects/:id",
+            path: "/projects-management/:id/notes/:noteId",
+            element: <ProjectNotePage />,
+          },
+          {
+            path: "/projects-management/:id",
             element: <ProjectDetailPage />,
+          },
+          {
+            path: "/projects",
+            element: <Navigate to="/projects-management" replace />,
+          },
+          {
+            path: "/projects/:id",
+            element: <ProjectDetailLegacyRedirect />,
+          },
+          {
+            path: "/clients-management",
+            element: <ClientsManagementPage />,
+          },
+          {
+            path: "/clients",
+            element: <Navigate to="/clients-management" replace />,
           },
           {
             path: "/tasks",
@@ -98,8 +133,12 @@ export const router = createBrowserRouter([
             element: <Navigate to="/tasks-calendar" replace />,
           },
           {
-            path: "/reminders",
+            path: "/daily-reminders",
             element: <RemindersManagementPage />,
+          },
+          {
+            path: "/reminders",
+            element: <Navigate to="/daily-reminders" replace />,
           },
           {
             path: "/notifications",

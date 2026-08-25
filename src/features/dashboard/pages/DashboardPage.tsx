@@ -98,13 +98,13 @@ export function DashboardPage() {
     },
     {
       id: "projects",
-      label: "Projects",
+      label: "Projects Management",
       value: stats.projectsCount,
       icon: CheckCircle2,
       description: isAll
         ? "Note folders in your workspace"
         : `Note folders created in ${periodDescription}`,
-      href: "/projects",
+      href: "/projects-management",
       sparklineData: clientsSparklineData,
       sparklineColor: "var(--primary)",
     },
