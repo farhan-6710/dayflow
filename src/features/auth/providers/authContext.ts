@@ -10,6 +10,8 @@ export type AuthContextValue = {
   isPasswordRecovery: boolean;
   clearPasswordRecovery: () => void;
   refreshProfile: () => Promise<void>;
+  /** Re-fetch auth user from the server (email / new_email). */
+  refreshUser: () => Promise<User | null>;
   signInWithEmail: (email: string, password: string) => Promise<AuthError | null>;
   signUpWithEmail: (
     email: string,

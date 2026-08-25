@@ -98,7 +98,7 @@ export function DashboardPage() {
     },
     {
       id: "projects",
-      label: "Projects Management",
+      label: "Total Projects",
       value: stats.projectsCount,
       icon: CheckCircle2,
       description: isAll

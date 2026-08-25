@@ -6,10 +6,71 @@ import type {
 
 import { supabase } from "@/services/supabaseClient";
 
-// Returns the signed-in user, or null when nobody is logged in.
+// Returns the signed-in user from the Auth server (not a stale JWT cache).
 export async function getCurrentUser(): Promise<User | null> {
-  const { data } = await supabase.auth.getSession();
-  return data.session?.user ?? null;
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data.user) {
+    return null;
+  }
+  return syncAuthUserMetadata(data.user);
+}
+
+/** Re-fetch the user from Supabase Auth so email / new_email are up to date. */
+export async function refreshCurrentUser(): Promise<User | null> {
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data.user) {
+    return null;
+  }
+  return syncAuthUserMetadata(data.user);
+}
+
+/**
+ * Supabase updates `user.email` / identities on email change, but leaves
+ * `user_metadata.email` stale. Align metadata with the confirmed login email.
+ */
+export async function syncAuthUserMetadata(user: User): Promise<User> {
+  // Don't rewrite metadata while an email change is still pending.
+  if (user.new_email) {
+    return user;
+  }
+
+  const loginEmail = user.email?.trim().toLowerCase() ?? "";
+  if (!loginEmail) {
+    return user;
+  }
+
+  const metaEmail =
+    typeof user.user_metadata?.email === "string"
+      ? user.user_metadata.email.trim().toLowerCase()
+      : "";
+
+  if (metaEmail === loginEmail) {
+    return user;
+  }
+
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      email: loginEmail,
+      email_verified: true,
+    },
+  });
+
+  if (error || !data.user) {
+    console.error("Failed to sync auth user_metadata.email:", error);
+    return user;
+  }
+
+  return data.user;
+}
+
+/** Keeps auth `user_metadata.full_name` in sync with the profile display name. */
+export async function updateAuthDisplayName(
+  fullName: string,
+): Promise<AuthError | null> {
+  const { error } = await supabase.auth.updateUser({
+    data: { full_name: fullName.trim() },
+  });
+  return error;
 }
 
 // Runs the callback whenever the user signs in or out (ignores the first replay).
@@ -81,6 +142,23 @@ export async function updatePassword(
     data: { password_set: true },
   });
   return error;
+}
+
+/**
+ * Requests an email change. Supabase emails a confirmation link.
+ * With Secure email change (default), both the current and new inbox must confirm
+ * before `user.email` updates — until then `user.new_email` stays pending.
+ */
+export async function updateEmail(
+  email: string,
+): Promise<{ user: User | null; error: AuthError | null }> {
+  const { data, error } = await supabase.auth.updateUser(
+    { email: email.trim().toLowerCase() },
+    {
+      emailRedirectTo: `${window.location.origin}/settings?email-change=pending`,
+    },
+  );
+  return { user: data.user ?? null, error };
 }
 
 export async function requestPasswordReset(

@@ -139,29 +139,46 @@ export function AnalyticsPage() {
                 <div className="text-sm text-muted-foreground">No task data to display</div>
               ) : (
                 <div className="relative size-full max-w-[280px] max-h-[220px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={statusData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        paddingAngle={4}
-                        dataKey="value"
-                      >
-                        {statusData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <RechartsTooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="pointer-events-none absolute inset-0 z-0 flex flex-col items-center justify-center">
                     <span className="text-2xl font-bold tracking-tight">{taskCompletionRate}%</span>
                     <span className="text-3xs text-muted-foreground uppercase font-bold tracking-wider">
                       Completed
                     </span>
+                  </div>
+                  <div className="relative z-10 size-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={statusData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          paddingAngle={4}
+                          dataKey="value"
+                          nameKey="name"
+                        >
+                          {statusData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <RechartsTooltip
+                          content={({ active, payload }) => {
+                            if (!active || !payload?.length) return null;
+                            const item = payload[0];
+                            return (
+                              <div className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground shadow-xl">
+                                <p className="font-medium">{item.name}</p>
+                                <p className="mt-0.5 text-muted-foreground">
+                                  Tasks :{" "}
+                                  <span className="font-medium text-foreground">{item.value}</span>
+                                </p>
+                              </div>
+                            );
+                          }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
                   </div>
                 </div>
               )}
@@ -211,7 +228,23 @@ export function AnalyticsPage() {
                       tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
                     />
                     <YAxis tick={{ fill: "var(--muted-foreground)", fontSize: 10 }} />
-                    <RechartsTooltip />
+                    <RechartsTooltip
+                      cursor={{ fill: "color-mix(in oklch, var(--foreground) 8%, transparent)" }}
+                      content={({ active, payload, label }) => {
+                        if (!active || !payload?.length) return null;
+                        return (
+                          <div className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground shadow-xl">
+                            <p className="font-medium">{label}</p>
+                            {payload.map((item) => (
+                              <p key={String(item.dataKey)} className="mt-0.5 text-muted-foreground">
+                                {item.name} :{" "}
+                                <span className="font-medium text-foreground">{item.value}</span>
+                              </p>
+                            ))}
+                          </div>
+                        );
+                      }}
+                    />
                     <Bar dataKey="count" name="Notes" fill="#ff7e21" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>

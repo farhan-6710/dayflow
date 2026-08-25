@@ -9,6 +9,7 @@ import type { Profile } from "@/services/profilesService";
 import {
   getCurrentUser,
   onAuthChange,
+  refreshCurrentUser,
   signInWithEmail,
   signInWithOAuthProvider,
   signOut,
@@ -38,6 +39,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user, loadProfile]);
 
+  const refreshUser = useCallback(async () => {
+    const nextUser = await refreshCurrentUser();
+    setUser(nextUser);
+    if (nextUser) {
+      await loadProfile(nextUser);
+    } else {
+      setProfile(null);
+    }
+    return nextUser;
+  }, [loadProfile]);
+
   const clearPasswordRecovery = useCallback(() => {
     setIsPasswordRecovery(false);
   }, []);
@@ -45,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true;
 
-    // 1. Load the current session once on startup.
+    // 1. Load the current session once on startup (server-backed getUser).
     void getCurrentUser().then(async (currentUser) => {
       if (!active) {
         return;
@@ -57,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
-    // 2. React to later sign in / sign out / password recovery.
+    // 2. React to later sign in / sign out / password recovery / user updates.
     const unsubscribe = onAuthChange((nextUser, event) => {
       if (event === "PASSWORD_RECOVERY") {
         setIsPasswordRecovery(true);
@@ -95,6 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isPasswordRecovery,
       clearPasswordRecovery,
       refreshProfile,
+      refreshUser,
       signInWithEmail,
       signUpWithEmail,
       signInWithOAuthProvider: (provider, options) =>
@@ -108,6 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isPasswordRecovery,
     clearPasswordRecovery,
     refreshProfile,
+    refreshUser,
     handleSignOut,
   ]);
 

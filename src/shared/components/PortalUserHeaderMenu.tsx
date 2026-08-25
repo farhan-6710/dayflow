@@ -15,9 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import {
+  getInitialsFromName,
   getUserAvatarUrl,
   getUserDisplayName,
-  getUserInitials,
 } from "@/shared/utils/authUserDisplay";
 import type { PortalUserHeaderMenuProps } from "@/shared/types/components";
 
@@ -25,14 +25,15 @@ export function PortalUserHeaderMenu({
   accountPath,
   settingsPath,
 }: PortalUserHeaderMenuProps) {
-  const { user, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
   const [signOutOpen, setSignOutOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
-  const displayName = getUserDisplayName(user);
-  const initials = getUserInitials(user);
-  const avatarUrl = getUserAvatarUrl(user);
+  const displayName =
+    profile?.display_name?.trim() || getUserDisplayName(user);
+  const initials = getInitialsFromName(displayName);
+  const avatarUrl = profile?.avatar_url || getUserAvatarUrl(user);
 
   async function handleConfirmSignOut() {
     setSigningOut(true);
