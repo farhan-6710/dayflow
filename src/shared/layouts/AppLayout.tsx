@@ -9,9 +9,9 @@ const sidebarConfig: ShellSidebarConfig = {
   brandSubtitle: "Personal Workspace",
   nav: [
     { label: "Dashboard", to: "/dashboard", icon: "dashboard" },
+    { label: "Tasks Calendar", to: "/tasks-calendar", icon: "tasks" },
     { label: "Projects Management", to: "/projects-management", icon: "projects" },
     { label: "Clients Management", to: "/clients-management", icon: "clients" },
-    { label: "Tasks Calendar", to: "/tasks-calendar", icon: "tasks" },
     { label: "Daily Reminders", to: "/daily-reminders", icon: "reminders" },
     { label: "Notifications", to: "/notifications", icon: "notifications" },
     { label: "Analytics", to: "/analytics", icon: "analytics" },

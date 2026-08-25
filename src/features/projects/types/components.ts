@@ -1,4 +1,25 @@
 import type { Note } from "@/services/notesService";
+import type { Project } from "@/services/projectsService";
+import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
+
+export type ProjectsTableProps = {
+  projects: Project[];
+  isLoading: boolean;
+  statusFilter: ActiveStatusFilterId;
+  onStatusFilterChange: (filter: ActiveStatusFilterId) => void;
+  searchQuery: string;
+  onSearchQueryChange: (query: string) => void;
+  onEditProject: (project: Project) => void;
+  onToggleArchive: (project: Project) => void;
+  onDeleteProject: (projectId: string) => void;
+};
+
+export type ProjectsTableRowProps = {
+  project: Project;
+  onEditProject: (project: Project) => void;
+  onToggleArchive: (project: Project) => void;
+  onDeleteProject: (projectId: string) => void;
+};
 
 export type ProjectNoteSavePayload = {
   title: string;

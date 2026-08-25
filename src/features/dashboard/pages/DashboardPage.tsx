@@ -67,7 +67,11 @@ export function DashboardPage() {
     setTaskToDelete(null);
   };
 
-  const greetingName = profile?.display_name || "there";
+  const greetingName = profile?.display_name?.trim() || "there";
+  const isDemoAccount = greetingName === "Demo User";
+  const dashboardHeading = isDemoAccount
+    ? "Welcome to the DayFlow Demo"
+    : `Welcome, ${greetingName}!`;
   const isAll = periodLabel === "All";
   const periodDescription = isAll ? "all time" : periodLabel.toLowerCase();
 
@@ -125,7 +129,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        heading={`Welcome, ${greetingName}!`}
+        heading={dashboardHeading}
         description="Here is your personal workspace summary for today."
         actions={<DateFilters {...dateFilterProps} />}
       />
