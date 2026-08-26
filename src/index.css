@@ -120,7 +120,7 @@
   --secondary: oklch(0.18 0 0);   /* Secondary dark gray containers */
   --secondary-foreground: oklch(0.90 0 0);
 
-  --muted: oklch(16.842% 0.00002 271.152);      /* Sit with card — no gray slab on tables */
+  --muted: oklch(20.019% 0.00002 271.152);      /* Sit with card — no gray slab on tables */
   --muted-foreground: oklch(0.65 0 0);
 
   --destructive: #953333;
