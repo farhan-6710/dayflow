@@ -208,3 +208,12 @@ export type ShellNavSearchProps = {
   placeholder?: string;
   className?: string;
 };
+
+export type DirectoryTableRowProps = {
+  /** Navigate to this path on row activate (page transition). */
+  to?: string;
+  /** Called when the row is activated and `to` is not set (e.g. open edit). */
+  onActivate?: () => void;
+  className?: string;
+  children: ReactNode;
+};

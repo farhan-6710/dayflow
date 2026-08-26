@@ -1,8 +1,10 @@
 import { Archive, Edit, Folder, MoreVertical, Trash2 } from "lucide-react";
-import { Link } from "react-router";
 
 import { PROJECTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/projects/constants/projectsDirectory";
+import { buildProjectDetailPath } from "@/features/projects/constants/routes";
 import type { ProjectsTableRowProps } from "@/features/projects/types/components";
+import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
+import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import {
@@ -21,9 +23,10 @@ export function ProjectsTableRow({
   const isActive = !project.is_archived;
 
   return (
-    <div
+    <DirectoryTableRow
+      to={buildProjectDetailPath(project.id)}
       className={cn(
-        "grid items-center gap-2 px-6 py-4 transition-colors hover:bg-muted/10 sm:gap-4",
+        "grid items-center gap-2 px-6 py-4 sm:gap-4",
         PROJECTS_DIRECTORY_ROW_GRID_CLASS,
         !isActive && "opacity-80",
       )}
@@ -46,12 +49,7 @@ export function ProjectsTableRow({
         <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
           PROJECT NAME
         </span>
-        <Link
-          to={`/projects-management/${project.id}`}
-          className="truncate text-primary hover:underline"
-        >
-          {project.name}
-        </Link>
+        <span className="truncate">{project.name}</span>
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">
@@ -75,7 +73,11 @@ export function ProjectsTableRow({
         </span>
       </div>
 
-      <div className="flex justify-end text-right">
+      <div
+        className="flex justify-end text-right"
+        onClick={stopDirectoryRowNav}
+        onKeyDown={(event) => event.stopPropagation()}
+      >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -94,7 +96,8 @@ export function ProjectsTableRow({
               </DropdownMenuItem>
             ) : null}
             <DropdownMenuItem onClick={() => onToggleArchive(project)}>
-              <Archive className="mr-2 size-4" /> {isActive ? "Archive" : "Restore"}
+              <Archive className="mr-2 size-4" />{" "}
+              {isActive ? "Archive" : "Restore"}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => onDeleteProject(project.id)}
@@ -105,6 +108,6 @@ export function ProjectsTableRow({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
+    </DirectoryTableRow>
   );
 }

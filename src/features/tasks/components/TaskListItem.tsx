@@ -7,6 +7,8 @@ import {
   TASK_STATUS_BADGE_CLASS,
   TASK_STATUS_LABELS,
 } from "@/features/tasks/constants/taskStatus";
+import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
+import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
@@ -24,18 +26,15 @@ export function TaskListItem({
   const isClosed = isClosedTaskStatus(task.status);
 
   return (
-    <div
+    <DirectoryTableRow
+      onActivate={onEdit}
       className={cn(
-        "group grid w-full items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/40",
+        "group grid w-full items-center gap-4 px-6 py-4",
         tasksDirectoryConfig.gridClass,
         isClosed && "bg-muted/20",
       )}
     >
-      <button
-        type="button"
-        onClick={onEdit}
-        className="min-w-0 cursor-pointer text-left"
-      >
+      <div className="min-w-0 text-left">
         <p className="truncate text-sm font-semibold text-foreground">
           {task.title}
         </p>
@@ -44,7 +43,7 @@ export function TaskListItem({
             {task.description}
           </p>
         ) : null}
-      </button>
+      </div>
 
       <div>
         <span
@@ -87,7 +86,11 @@ export function TaskListItem({
         )}
       </div>
 
-      <div className="flex items-center justify-end">
+      <div
+        className="flex items-center justify-end"
+        onClick={stopDirectoryRowNav}
+        onKeyDown={(event) => event.stopPropagation()}
+      >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -115,6 +118,6 @@ export function TaskListItem({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
+    </DirectoryTableRow>
   );
 }

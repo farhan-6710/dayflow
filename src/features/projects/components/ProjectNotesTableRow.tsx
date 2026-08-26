@@ -1,9 +1,11 @@
 import { format } from "date-fns";
-import { Pencil, Trash2 } from "lucide-react";
-import { Link } from "react-router";
+import { Trash2 } from "lucide-react";
 
 import { NOTES_DIRECTORY_ROW_GRID_CLASS } from "@/features/projects/constants/notesDirectory";
+import { buildProjectNotePath } from "@/features/projects/constants/routes";
 import type { ProjectNotesTableRowProps } from "@/features/projects/types/components";
+import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
+import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 
@@ -17,14 +19,15 @@ export function ProjectNotesTableRow({
   note,
   onDeleteNote,
 }: ProjectNotesTableRowProps) {
-  const notePath = `/projects-management/${projectId}/notes/${note.id}`;
+  const notePath = buildProjectNotePath(projectId, note.id);
   const title = note.title.trim() || "Untitled note";
   const description = noteDescriptionPreview(note.body);
 
   return (
-    <div
+    <DirectoryTableRow
+      to={notePath}
       className={cn(
-        "grid items-center gap-2 px-6 py-4 transition-colors hover:bg-muted/10 sm:gap-4",
+        "grid items-center gap-2 px-6 py-4 sm:gap-4",
         NOTES_DIRECTORY_ROW_GRID_CLASS,
       )}
     >
@@ -32,9 +35,7 @@ export function ProjectNotesTableRow({
         <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
           NOTE TITLE
         </span>
-        <Link to={notePath} className="block truncate text-primary hover:underline">
-          {title}
-        </Link>
+        <span className="block truncate">{title}</span>
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">
@@ -63,23 +64,16 @@ export function ProjectNotesTableRow({
         <Button
           variant="ghost"
           size="icon"
-          className="size-8 rounded-lg text-muted-foreground hover:text-foreground"
-          asChild
-        >
-          <Link to={notePath} aria-label={`Edit ${title}`}>
-            <Pencil className="size-3.5" />
-          </Link>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
           className="size-8 rounded-lg text-muted-foreground hover:text-destructive"
-          onClick={() => onDeleteNote(note)}
+          onClick={(event) => {
+            stopDirectoryRowNav(event);
+            onDeleteNote(note);
+          }}
         >
           <Trash2 className="size-3.5" />
           <span className="sr-only">Delete {title}</span>
         </Button>
       </div>
-    </div>
+    </DirectoryTableRow>
   );
 }
