@@ -20,10 +20,12 @@ import {
   totalPostsSparklineData,
 } from "@/shared/fixtures/sparklines";
 import { cn } from "@/shared/lib/utils";
+import { getUserDisplayName } from "@/shared/utils/authUserDisplay";
 
 export function DashboardPage() {
   const { filter, dateFilterProps, periodLabel } = useDateFilters();
   const {
+    user,
     profile,
     loading,
     stats,
@@ -67,7 +69,8 @@ export function DashboardPage() {
     setTaskToDelete(null);
   };
 
-  const greetingName = profile?.display_name?.trim() || "there";
+  const greetingName =
+    profile?.display_name?.trim() || getUserDisplayName(user);
   const isDemoAccount = greetingName === "Demo User";
   const dashboardHeading = isDemoAccount
     ? "Welcome to the DayFlow Demo"
@@ -137,9 +140,15 @@ export function DashboardPage() {
       <PageContent>
         <StatsCards cards={cards} isLoading={loading} />
 
-        <div className={cn("grid grid-cols-1 gap-6 lg:grid-cols-3", containMinWidthClassName)}>
-          <div className={cn("space-y-6 lg:col-span-2", containMinWidthClassName)}>
-
+        <div
+          className={cn(
+            "grid grid-cols-1 gap-6 lg:grid-cols-3",
+            containMinWidthClassName,
+          )}
+        >
+          <div
+            className={cn("space-y-6 lg:col-span-2", containMinWidthClassName)}
+          >
             <TaskCompletionChart tasks={tasks} isLoading={loading} />
           </div>
 
@@ -147,21 +156,35 @@ export function DashboardPage() {
             <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold tracking-tight">Focus List</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">Your active upcoming action items.</p>
+                  <h3 className="text-lg font-semibold tracking-tight">
+                    Focus List
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Your active upcoming action items.
+                  </p>
                 </div>
-                <Link to="/tasks-calendar" className="text-xs font-semibold text-primary hover:underline">
+                <Link
+                  to="/tasks-calendar"
+                  className="text-xs font-semibold text-primary hover:underline"
+                >
                   View Tasks Calendar
                 </Link>
               </div>
 
               <div className="mt-4 divide-y divide-border">
                 {loading ? (
-                  <div className="py-6 text-center text-sm text-muted-foreground">Loading tasks...</div>
+                  <div className="py-6 text-center text-sm text-muted-foreground">
+                    Loading tasks...
+                  </div>
                 ) : urgentTasks.length === 0 ? (
                   <div className="py-8 text-center">
-                    <p className="text-sm text-muted-foreground">All caught up! No tasks left.</p>
-                    <Link to="/tasks-calendar" className="mt-2 inline-block text-xs font-semibold text-primary hover:underline">
+                    <p className="text-sm text-muted-foreground">
+                      All caught up! No tasks left.
+                    </p>
+                    <Link
+                      to="/tasks-calendar"
+                      className="mt-2 inline-block text-xs font-semibold text-primary hover:underline"
+                    >
                       Create a Task
                     </Link>
                   </div>

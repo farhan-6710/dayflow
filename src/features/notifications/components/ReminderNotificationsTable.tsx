@@ -4,8 +4,12 @@ import { Loader2, X } from "lucide-react";
 import { reminderNotificationsDirectoryConfig } from "@/features/notifications/constants/notificationTypes";
 import type { ReminderNotificationsTableProps } from "@/features/notifications/types/components";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
+import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
+
+const REMINDERS_PATH = "/daily-reminders";
 
 export function ReminderNotificationsTable({
   notifications,
@@ -24,8 +28,9 @@ export function ReminderNotificationsTable({
       isEmpty={notifications.length === 0}
     >
       {notifications.map((notification) => (
-        <div
+        <DirectoryTableRow
           key={notification.id}
+          to={REMINDERS_PATH}
           className={cn(
             "grid items-center gap-4 px-6 py-4",
             reminderNotificationsDirectoryConfig.gridClass,
@@ -47,7 +52,10 @@ export function ReminderNotificationsTable({
               variant="ghost"
               disabled={dismissingId === notification.id}
               aria-label="Dismiss notification"
-              onClick={() => onDismiss(notification.id)}
+              onClick={(event) => {
+                stopDirectoryRowNav(event);
+                onDismiss(notification.id);
+              }}
             >
               {dismissingId === notification.id ? (
                 <Loader2 className="size-4 animate-spin" />
@@ -56,7 +64,7 @@ export function ReminderNotificationsTable({
               )}
             </Button>
           </div>
-        </div>
+        </DirectoryTableRow>
       ))}
     </DirectoryTable>
   );

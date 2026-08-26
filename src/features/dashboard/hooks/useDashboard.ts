@@ -177,6 +177,7 @@ export function useDashboard(filter: DateFiltersFilterState) {
 
   return {
     profile,
+    user,
     loading,
     stats,
     tasks,
