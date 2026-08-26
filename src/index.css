@@ -149,6 +149,7 @@
   --sidebar-accent-foreground: oklch(0.568 0.08 199.63);
   --sidebar-border: oklch(0.24 0 0);
   --sidebar-ring: oklch(0.568 0.08 199.63);
+  
 
   /* Muted Status Background for Dark Mode */
   --status-muted: oklch(0.20 0 0);
