@@ -63,6 +63,22 @@ export type ProjectNotesTableProps = {
   notes: Note[];
   isLoading: boolean;
   onDeleteNote: (note: Note) => void | Promise<void>;
+  emptyMessage?: string;
+};
+
+export type ProjectFormDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  isEditing: boolean;
+  submitting: boolean;
+  projectName: string;
+  onProjectNameChange: (value: string) => void;
+  projectColor: string;
+  onProjectColorChange: (value: string) => void;
+  projectFor: string;
+  onProjectForChange: (value: string) => void;
+  clients: import("@/features/clients-management/types/types").Client[];
+  onSubmit: (event: React.FormEvent) => void | Promise<void>;
 };
 
 export type ProjectNotesTableRowProps = {
@@ -76,4 +92,18 @@ export type ProjectForSelectProps = {
   onChange: (value: string) => void;
   clients: import("@/features/clients-management/types/types").Client[];
   disabled?: boolean;
+};
+
+export type ProjectReferenceLinksSectionProps = {
+  referenceLinks: import("@/features/projects/types/referenceLinks").ProjectReferenceLink[];
+  canEdit: boolean;
+  isSaving?: boolean;
+  onAdd: (
+    input: import("@/features/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
+  ) => Promise<void>;
+  onUpdate: (
+    linkId: string,
+    input: import("@/features/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
+  ) => Promise<void>;
+  onDelete: (linkId: string) => Promise<void>;
 };

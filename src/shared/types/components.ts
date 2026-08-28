@@ -14,8 +14,8 @@ export type ConfirmationModalProps = {
 };
 
 export type PageHeaderProps = {
-  heading?: string;
-  description?: string;
+  heading?: ReactNode;
+  description?: ReactNode;
   backButton?: ReactNode;
   actions?: ReactNode;
 };

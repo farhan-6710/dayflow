@@ -1,40 +1,15 @@
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ProjectForSelect } from "@/features/projects/components/ProjectForSelect";
+import { ProjectFormDialog } from "@/features/projects/components/ProjectFormDialog";
 import { ProjectsTable } from "@/features/projects/components/ProjectsTable";
-import { PROJECT_FOR_LABEL } from "@/features/projects/constants/projectFor";
 import { useProjectsManagement } from "@/features/projects/hooks/useProjectsManagement";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
-import {
-  colorSwatchClassName,
-  formFieldGroupClassName,
-  formLabelClassName,
-} from "@/shared/constants/formStyles";
 import { Button } from "@/shared/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/dialog";
-import { Input } from "@/shared/ui/input";
 import { matchesListingSearch } from "@/shared/utils/listingSearch";
-
-const COLOR_PRESETS = [
-  "#ff7e21",
-  "#e25505",
-  "#3b82f6",
-  "#10b981",
-  "#8b5cf6",
-  "#ec4899",
-  "#f59e0b",
-];
 
 function filterProjectsByStatus<T extends { is_archived: boolean }>(
   projects: T[],
@@ -125,70 +100,20 @@ export function ProjectsManagementPage() {
         />
       </PageContent>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{editingProject ? "Edit Project" : "New Project"}</DialogTitle>
-            <DialogDescription>
-              Create a custom workspace folder with a specific highlight color.
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
-            <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>Project Name</label>
-              <Input
-                placeholder="e.g. Work tasks, Side Projects, Fitness"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-                required
-                disabled={submitting}
-              />
-            </div>
-
-            <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>{PROJECT_FOR_LABEL}</label>
-              <ProjectForSelect
-                value={projectFor}
-                onChange={setProjectFor}
-                clients={clients}
-                disabled={submitting}
-              />
-            </div>
-
-            <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>Highlight Color</label>
-              <div className="flex flex-wrap gap-3">
-                {COLOR_PRESETS.map((color) => (
-                  <button
-                    key={color}
-                    type="button"
-                    aria-label={`Select color ${color}`}
-                    aria-pressed={projectColor === color}
-                    onClick={() => setProjectColor(color)}
-                    className={colorSwatchClassName(projectColor === color)}
-                    style={{ backgroundColor: color }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setDialogOpen(false)}
-                disabled={submitting}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={submitting || !projectName.trim()}>
-                {editingProject ? "Save Changes" : "Create Project"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <ProjectFormDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        isEditing={Boolean(editingProject)}
+        submitting={submitting}
+        projectName={projectName}
+        onProjectNameChange={setProjectName}
+        projectColor={projectColor}
+        onProjectColorChange={setProjectColor}
+        projectFor={projectFor}
+        onProjectForChange={setProjectFor}
+        clients={clients}
+        onSubmit={handleSubmit}
+      />
 
       <ConfirmationModal
         open={deleteConfirmOpen}

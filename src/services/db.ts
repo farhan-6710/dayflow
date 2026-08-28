@@ -24,6 +24,10 @@ export const DB = {
     TABLE: "notes",
     SELECT: "id, user_id, project_id, title, body, created_at, updated_at",
   },
+  PROJECT_REFERENCE_LINKS: {
+    TABLE: "project_reference_links",
+    SELECT: "id, project_id, user_id, url, label, created_at, updated_at",
+  },
   REMINDERS: {
     TABLE: "reminders",
     SELECT: "id, user_id, title, description, reminder_time, days_of_week, is_disabled, disabled_until, created_at, updated_at",

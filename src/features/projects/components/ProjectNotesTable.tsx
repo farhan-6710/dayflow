@@ -12,6 +12,7 @@ export function ProjectNotesTable({
   notes,
   isLoading,
   onDeleteNote,
+  emptyMessage,
 }: ProjectNotesTableProps) {
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -23,7 +24,7 @@ export function ProjectNotesTable({
         description={notesDirectoryConfig.description}
         gridClass={notesDirectoryConfig.gridClass}
         columns={[...notesDirectoryConfig.columns]}
-        emptyMessage={notesDirectoryConfig.emptyMessage}
+        emptyMessage={emptyMessage ?? notesDirectoryConfig.emptyMessage}
         isLoading={isLoading}
         isEmpty={notes.length === 0}
       >

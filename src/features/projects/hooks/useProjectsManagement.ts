@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { MYSELF_PROJECT_FOR_VALUE } from "@/features/projects/constants/projectFor";
 import {
+  DEFAULT_PROJECT_COLOR,
+} from "@/features/projects/constants/projectColors";
+import {
   projectForToSelectValue,
   selectValueToProjectFor,
 } from "@/features/projects/utils/projectFor";
@@ -23,7 +26,7 @@ export function useProjectsManagement() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
-  const [projectColor, setProjectColor] = useState("#ff7e21");
+  const [projectColor, setProjectColor] = useState<string>(DEFAULT_PROJECT_COLOR);
   const [projectFor, setProjectFor] = useState(MYSELF_PROJECT_FOR_VALUE);
   const [submitting, setSubmitting] = useState(false);
   
@@ -55,7 +58,7 @@ export function useProjectsManagement() {
   const handleOpenCreateDialog = () => {
     setEditingProject(null);
     setProjectName("");
-    setProjectColor("#ff7e21");
+    setProjectColor(DEFAULT_PROJECT_COLOR);
     setProjectFor(MYSELF_PROJECT_FOR_VALUE);
     setDialogOpen(true);
   };

@@ -13,6 +13,13 @@ export const formLabelClassName =
 
 export const formFieldGroupClassName = "flex flex-col gap-3";
 
+export const formFieldClassName = cn(
+  "mt-2 w-full rounded-lg border border-ring/60 bg-background px-3 py-2 text-sm text-foreground shadow-xs outline-none transition-colors",
+  "placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20",
+  "disabled:cursor-not-allowed disabled:opacity-50",
+  "dark:border-input dark:bg-muted/40",
+);
+
 export function colorSwatchClassName(selected: boolean) {
   return cn(
     "size-8 shrink-0 rounded-full outline-none transition hover:scale-105 cursor-pointer",
