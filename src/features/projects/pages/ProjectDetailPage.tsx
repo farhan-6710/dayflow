@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { ProjectFormDialog } from "@/features/projects/components/ProjectFormDialog";
 import { ProjectNotesTable } from "@/features/projects/components/ProjectNotesTable";
 import { ProjectReferenceLinksSection } from "@/features/projects/components/ProjectReferenceLinksSection";
+import { ClientActivitiesBlock } from "@/features/client-activities/components/ClientActivitiesBlock";
 import { useProjectDetail } from "@/features/projects/hooks/useProjectDetail";
 import {
   buildProjectNotePath,
@@ -50,6 +51,8 @@ export function ProjectDetailPage() {
   }
 
   if (!project) return null;
+
+  const isClientProject = project.project_for !== null;
 
   return (
     <div className="space-y-6">
@@ -116,6 +119,14 @@ export function ProjectDetailPage() {
             onUpdate={handleUpdateReferenceLink}
             onDelete={handleDeleteReferenceLink}
           />
+
+          {isClientProject ? (
+            <ClientActivitiesBlock
+              scope="project"
+              projectId={project.id}
+              canEdit={!project.is_archived}
+            />
+          ) : null}
         </div>
       </PageContent>
 

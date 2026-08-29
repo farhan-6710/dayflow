@@ -66,6 +66,21 @@ export async function fetchProjectById(id: string): Promise<Project | null> {
   return data ? mapProject(data as ProjectRow) : null;
 }
 
+export async function fetchProjectsByClientId(
+  userId: string,
+  clientId: string,
+): Promise<Project[]> {
+  const { data, error } = await supabase
+    .from(DB.PROJECTS.TABLE)
+    .select(DB.PROJECTS.SELECT)
+    .eq("user_id", userId)
+    .eq("project_for", clientId)
+    .order("name", { ascending: true });
+
+  if (error) throw error;
+  return ((data as ProjectRow[]) ?? []).map(mapProject);
+}
+
 export async function createProject(userId: string, input: CreateProjectInput): Promise<Project> {
   const { data, error } = await supabase
     .from(DB.PROJECTS.TABLE)

@@ -41,4 +41,19 @@ export const DB = {
     TABLE: "notifications",
     SELECT: "id, user_id, notification_type, title, message, status, related_id, created_at, read_at",
   },
+  CLIENT_ACTIVITY_TASKS: {
+    TABLE: "client_activity_tasks",
+    SELECT:
+      "id, project_id, title, description, priority, status, eta_date, eta_time, created_at, updated_at",
+  },
+  CLIENT_ACTIVITY_MEETINGS: {
+    TABLE: "client_activity_meetings",
+    SELECT:
+      "id, project_id, title, description, status, from_date, from_time, to_date, to_time, venue, created_at, updated_at",
+  },
+  CLIENT_ACTIVITY_CALLS: {
+    TABLE: "client_activity_calls",
+    SELECT:
+      "id, project_id, title, description, status, start_date, start_time, duration_minutes, created_at, updated_at",
+  },
 } as const;

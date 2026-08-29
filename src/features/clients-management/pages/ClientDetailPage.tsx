@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { ClientChat } from "@/features/clients-management/components/ClientChat";
 import { ClientDetailSummary } from "@/features/clients-management/components/ClientDetailSummary";
 import { ClientDialog } from "@/features/clients-management/components/ClientDialog";
+import { ClientActivitiesBlock } from "@/features/client-activities/components/ClientActivitiesBlock";
 import { CLIENTS_MANAGEMENT_PATH } from "@/features/clients-management/constants/routes";
 import { useClientChat } from "@/features/clients-management/hooks/useClientChat";
 import { useClientDetail } from "@/features/clients-management/hooks/useClientDetail";
@@ -105,6 +106,8 @@ export function ClientDetailPage() {
             isDeleting={isDeleting}
           />
         </div>
+
+        <ClientActivitiesBlock scope="client" clientId={client.id} />
       </PageContent>
 
       <ClientDialog {...dialog} />
