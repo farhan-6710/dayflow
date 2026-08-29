@@ -3,13 +3,13 @@ import { supabase } from "@/services/supabaseClient";
 import type { Client } from "@/features/clients-management/types/types";
 
 export type CreateClientInput = {
-  clientName: string;
-  email?: string | null;
-  primaryContactName?: string | null;
+  companyName: string;
+  clientName?: string | null;
   mobileNumber?: string | null;
+  email?: string | null;
   secondaryContactName?: string | null;
-  secondaryMobileNumber?: string | null;
-  websiteName?: string | null;
+  secondaryContactNumber?: string | null;
+  websiteUrl?: string | null;
 };
 
 export type UpdateClientInput = CreateClientInput & {
@@ -25,14 +25,28 @@ function saveError(error: { code?: string; message?: string }): Error {
 
 function toClientColumns(input: CreateClientInput) {
   return {
-    client_name: input.clientName,
-    email: input.email?.trim().toLowerCase() || null,
-    primary_contact_name: input.primaryContactName?.trim() || null,
+    company_name: input.companyName,
+    client_name: input.clientName?.trim() || null,
     mobile_number: input.mobileNumber?.trim() || null,
+    email: input.email?.trim().toLowerCase() || null,
     secondary_contact_name: input.secondaryContactName?.trim() || null,
-    secondary_mobile_number: input.secondaryMobileNumber?.trim() || null,
-    website_name: input.websiteName?.trim() || null,
+    secondary_contact_number: input.secondaryContactNumber?.trim() || null,
+    website_url: input.websiteUrl?.trim() || null,
   };
+}
+
+export async function fetchClientById(clientId: string): Promise<Client | null> {
+  const { data, error } = await supabase
+    .from(DB.CLIENTS.TABLE)
+    .select(DB.CLIENTS.SELECT)
+    .eq("id", clientId)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return (data as Client | null) ?? null;
 }
 
 export async function fetchClients(userId: string): Promise<Client[]> {
@@ -40,7 +54,7 @@ export async function fetchClients(userId: string): Promise<Client[]> {
     .from(DB.CLIENTS.TABLE)
     .select(DB.CLIENTS.SELECT)
     .eq("user_id", userId)
-    .order("client_name", { ascending: true });
+    .order("company_name", { ascending: true });
 
   if (error) {
     throw error;

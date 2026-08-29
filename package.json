@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "seed:dummy": "bun scripts/seed-dummy-data.ts",
+    "seed:clients": "bun scripts/seed-clients.ts",
     "seed:task-months": "bun scripts/seed-task-months.ts"
   },
   "dependencies": {

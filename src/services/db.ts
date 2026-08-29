@@ -9,12 +9,17 @@ export const DB = {
   PROJECTS: {
     TABLE: "projects",
     SELECT:
-      "id, user_id, name, color_hex, is_archived, project_for, created_at, updated_at, project_for_client:clients!project_for(client_name)",
+      "id, user_id, name, color_hex, is_archived, project_for, created_at, updated_at, project_for_client:clients!project_for(company_name)",
   },
   CLIENTS: {
     TABLE: "clients",
     SELECT:
-      "id, user_id, client_name, email, primary_contact_name, mobile_number, secondary_contact_name, secondary_mobile_number, website_name, is_active, created_at, updated_at",
+      "id, user_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, created_at, updated_at",
+  },
+  CLIENT_CONVERSATION_MESSAGES: {
+    TABLE: "client_conversation_messages",
+    SELECT:
+      "id, client_id, author_admin_id, author_client_id, body, created_at, updated_at, author_admin:profiles!author_admin_id(display_name), author_client:clients!author_client_id(company_name, client_name)",
   },
   TASKS: {
     TABLE: "tasks",

@@ -36,6 +36,11 @@ const ClientsManagementPage = lazyRoutePage(
   "ClientsManagementPage",
 );
 
+const ClientDetailPage = lazyRoutePage(
+  () => import("@/features/clients-management/pages/ClientDetailPage"),
+  "ClientDetailPage",
+);
+
 const TasksCalendarPage = lazyRoutePage(
   () => import("@/features/tasks/pages/TasksCalendarPage"),
   "TasksCalendarPage",
@@ -111,6 +116,10 @@ export const router = createBrowserRouter([
           {
             path: "/projects/:id",
             element: <ProjectDetailLegacyRedirect />,
+          },
+          {
+            path: "/clients-management/:id",
+            element: <ClientDetailPage />,
           },
           {
             path: "/clients-management",

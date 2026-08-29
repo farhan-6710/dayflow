@@ -81,26 +81,26 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
 
     try {
       const payload = {
-        clientName: values.clientName.trim(),
+        companyName: values.companyName.trim(),
+        clientName: values.clientName.trim() || null,
         email: normalizeClientEmail(values.email),
-        primaryContactName: values.primaryContactName.trim() || null,
         mobileNumber: values.mobileNumber.trim() || null,
         secondaryContactName: values.secondaryContactName.trim() || null,
-        secondaryMobileNumber: values.secondaryMobileNumber.trim() || null,
-        websiteName: values.websiteName.trim() || null,
+        secondaryContactNumber: values.secondaryContactNumber.trim() || null,
+        websiteUrl: values.websiteUrl.trim() || null,
       };
 
-      const clientName = values.clientName.trim();
+      const companyName = values.companyName.trim();
 
       if (editingClientId) {
         await updateClient(editingClientId, {
           ...payload,
           isActive: values.isActive,
         });
-        showToast("success", `"${clientName}" updated successfully.`);
+        showToast("success", `"${companyName}" updated successfully.`);
       } else {
         await createClient(user.id, payload);
-        showToast("success", `"${clientName}" added successfully.`);
+        showToast("success", `"${companyName}" added successfully.`);
       }
 
       await reload();
@@ -123,11 +123,11 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
     setError(null);
 
     try {
-      const clientName = values.clientName.trim();
+      const companyName = values.companyName.trim();
       await deleteClient(editingClientId);
       await reload();
       handleDialogOpenChange(false);
-      showToast("success", `"${clientName}" removed successfully.`);
+      showToast("success", `"${companyName}" removed successfully.`);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to delete client.";
       setError(message);
@@ -135,7 +135,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
     } finally {
       setIsSaving(false);
     }
-  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, values.clientName]);
+  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, values.companyName]);
 
   return {
     openAddDialog,

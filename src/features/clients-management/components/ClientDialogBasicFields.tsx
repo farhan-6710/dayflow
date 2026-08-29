@@ -11,8 +11,8 @@ export function ClientDialogBasicFields({
       <label className="block text-xs font-semibold text-muted-foreground sm:col-span-2">
         Company / brand name *
         <Input
-          value={values.clientName}
-          onChange={(event) => onFieldChange("clientName", event.target.value)}
+          value={values.companyName}
+          onChange={(event) => onFieldChange("companyName", event.target.value)}
           placeholder="e.g. Bloom Skincare"
           className="mt-1.5"
           required
@@ -23,8 +23,8 @@ export function ClientDialogBasicFields({
       <label className="block text-xs font-semibold text-muted-foreground">
         Client name
         <Input
-          value={values.primaryContactName}
-          onChange={(event) => onFieldChange("primaryContactName", event.target.value)}
+          value={values.clientName}
+          onChange={(event) => onFieldChange("clientName", event.target.value)}
           placeholder="e.g. Jane Doe"
           className="mt-1.5"
           disabled={disabled}
@@ -67,11 +67,13 @@ export function ClientDialogBasicFields({
       </label>
 
       <label className="block text-xs font-semibold text-muted-foreground">
-        Secondary contact mobile
+        Secondary contact number
         <span className="ml-1 font-normal text-muted-foreground/80">(optional)</span>
         <Input
-          value={values.secondaryMobileNumber}
-          onChange={(event) => onFieldChange("secondaryMobileNumber", event.target.value)}
+          value={values.secondaryContactNumber}
+          onChange={(event) =>
+            onFieldChange("secondaryContactNumber", event.target.value)
+          }
           placeholder="e.g. +1 555-0188"
           className="mt-1.5"
           disabled={disabled}
@@ -81,8 +83,8 @@ export function ClientDialogBasicFields({
       <label className="block text-xs font-semibold text-muted-foreground sm:col-span-2">
         Website name / URL
         <Input
-          value={values.websiteName}
-          onChange={(event) => onFieldChange("websiteName", event.target.value)}
+          value={values.websiteUrl}
+          onChange={(event) => onFieldChange("websiteUrl", event.target.value)}
           placeholder="e.g. bloomskincare.com"
           className="mt-1.5"
           disabled={disabled}

@@ -6,7 +6,7 @@ export const focusRingClassName =
 
 /** Clean, tight focus ring for text inputs and textareas — direct primary border highlight with a soft primary glow. */
 export const formControlFocusRingClassName =
-  "outline-none transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20";
+  "outline-none transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary";
 
 export const formLabelClassName =
   "block text-xs font-semibold uppercase tracking-wider leading-snug text-muted-foreground";

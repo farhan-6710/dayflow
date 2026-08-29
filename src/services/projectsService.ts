@@ -21,15 +21,15 @@ export type CreateProjectInput = {
 };
 
 type ProjectRow = Omit<Project, "project_for_label"> & {
-  project_for_client?: { client_name: string } | { client_name: string }[] | null;
+  project_for_client?: { company_name: string } | { company_name: string }[] | null;
 };
 
-function clientNameFromJoin(
+function companyNameFromJoin(
   related: ProjectRow["project_for_client"],
 ): string | null {
   if (!related) return null;
   const client = Array.isArray(related) ? related[0] : related;
-  return client?.client_name ?? null;
+  return client?.company_name ?? null;
 }
 
 function mapProject(row: ProjectRow): Project {
@@ -39,7 +39,7 @@ function mapProject(row: ProjectRow): Project {
     project_for: project.project_for ?? null,
     project_for_label: resolveProjectForLabel(
       project.project_for ?? null,
-      clientNameFromJoin(related),
+      companyNameFromJoin(related),
     ),
   };
 }

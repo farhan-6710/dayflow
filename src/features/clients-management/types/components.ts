@@ -2,8 +2,46 @@ import type {
   ClientFormField,
   ClientFormValues,
 } from "@/features/clients-management/utils/clientFormUtils";
-import type { Client } from "@/features/clients-management/types/types";
+import type {
+  Client,
+  ClientChatMessage,
+} from "@/features/clients-management/types/types";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
+
+export type ClientDetailSummaryProps = {
+  client: Client;
+};
+
+export type ClientChatMessageProps = {
+  message: ClientChatMessage;
+  isMine: boolean;
+  authorLabel: string;
+  isEditing: boolean;
+  canManage?: boolean;
+  disabled?: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
+};
+
+export type ClientChatProps = {
+  clientContactLabel: string;
+  currentAdminId: string;
+  messages: ClientChatMessage[];
+  draft: string;
+  onDraftChange: (value: string) => void;
+  onSend: () => void;
+  onRefresh: () => void;
+  isSending: boolean;
+  isRefreshing?: boolean;
+  editingMessageId?: string | null;
+  onEditMessage?: (message: ClientChatMessage) => void;
+  onCancelEdit?: () => void;
+  onDeleteMessage?: (messageId: string) => void;
+  deleteConfirmOpen?: boolean;
+  onDeleteConfirmOpenChange?: (open: boolean) => void;
+  onConfirmDelete?: () => void;
+  isDeleting?: boolean;
+};
 
 export type ClientsTableRowProps = {
   client: Client;

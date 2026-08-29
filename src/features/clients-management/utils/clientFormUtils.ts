@@ -1,44 +1,44 @@
 import type { Client } from "@/features/clients-management/types/types";
 
 export type ClientFormValues = {
+  companyName: string;
   clientName: string;
-  email: string;
-  primaryContactName: string;
   mobileNumber: string;
+  email: string;
   secondaryContactName: string;
-  secondaryMobileNumber: string;
-  websiteName: string;
+  secondaryContactNumber: string;
+  websiteUrl: string;
   isActive: boolean;
 };
 
 export type ClientFormField = keyof Omit<ClientFormValues, "isActive">;
 
 export const emptyClientFormValues = (): ClientFormValues => ({
+  companyName: "",
   clientName: "",
-  email: "",
-  primaryContactName: "",
   mobileNumber: "",
+  email: "",
   secondaryContactName: "",
-  secondaryMobileNumber: "",
-  websiteName: "",
+  secondaryContactNumber: "",
+  websiteUrl: "",
   isActive: true,
 });
 
 export function clientToFormValues(client: Client): ClientFormValues {
   return {
-    clientName: client.client_name,
-    email: client.email ?? "",
-    primaryContactName: client.primary_contact_name ?? "",
+    companyName: client.company_name,
+    clientName: client.client_name ?? "",
     mobileNumber: client.mobile_number ?? "",
+    email: client.email ?? "",
     secondaryContactName: client.secondary_contact_name ?? "",
-    secondaryMobileNumber: client.secondary_mobile_number ?? "",
-    websiteName: client.website_name ?? "",
+    secondaryContactNumber: client.secondary_contact_number ?? "",
+    websiteUrl: client.website_url ?? "",
     isActive: client.is_active ?? true,
   };
 }
 
 export function validateClientForm(values: ClientFormValues): string | null {
-  if (!values.clientName.trim()) {
+  if (!values.companyName.trim()) {
     return "Company / brand name is required.";
   }
 

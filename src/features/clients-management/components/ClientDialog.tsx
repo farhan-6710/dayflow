@@ -34,7 +34,7 @@ export function ClientDialog({
     }
   }, [open]);
 
-  const canSave = values.clientName.trim().length > 0;
+  const canSave = values.companyName.trim().length > 0;
 
   return (
     <>

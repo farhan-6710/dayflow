@@ -25,11 +25,11 @@ export function ClientsManagementPage() {
   const filteredClients = useMemo(() => {
     return filterByActiveStatus(clients, statusFilter).filter((client) =>
       matchesListingSearch(searchQuery, [
+        client.company_name,
         client.client_name,
         client.email,
-        client.primary_contact_name,
         client.mobile_number,
-        client.website_name,
+        client.website_url,
       ]),
     );
   }, [clients, searchQuery, statusFilter]);

@@ -28,7 +28,7 @@ export function ProjectForSelect({
         </SelectItem>
         {clients.map((client) => (
           <SelectItem key={client.id} value={client.id}>
-            {client.client_name}
+            {client.company_name}
           </SelectItem>
         ))}
       </SelectContent>
