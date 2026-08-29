@@ -31,25 +31,21 @@ export function ProjectsTableRow({
         !isActive && "opacity-80",
       )}
     >
-      <div>
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
-          COLOR
-        </span>
-        <span
-          className="inline-flex size-9 items-center justify-center rounded-xl text-white shadow-xs"
-          style={{ backgroundColor: project.color_hex }}
-          title={project.color_hex}
-          aria-label={`Project color ${project.color_hex}`}
-        >
-          <Folder className="size-4" />
-        </span>
-      </div>
-
       <div className="min-w-0 text-sm font-medium text-foreground">
         <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
           PROJECT NAME
         </span>
-        <span className="truncate">{project.name}</span>
+        <span className="flex min-w-0 items-center gap-3">
+          <span
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-xl text-white shadow-xs"
+            style={{ backgroundColor: project.color_hex }}
+            title={project.color_hex}
+            aria-label={`Project color ${project.color_hex}`}
+          >
+            <Folder className="size-4" />
+          </span>
+          <span className="truncate">{project.name}</span>
+        </span>
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">

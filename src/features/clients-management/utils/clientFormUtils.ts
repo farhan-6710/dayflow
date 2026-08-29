@@ -39,7 +39,7 @@ export function clientToFormValues(client: Client): ClientFormValues {
 
 export function validateClientForm(values: ClientFormValues): string | null {
   if (!values.clientName.trim()) {
-    return "Client name is required.";
+    return "Company / brand name is required.";
   }
 
   const email = values.email.trim();

@@ -19,5 +19,6 @@ export const clientsDirectoryConfig = {
   description: "Company registry for freelance and work contacts.",
   gridClass: CLIENTS_DIRECTORY_GRID_CLASS,
   columns: clientsDirectoryColumns,
-  emptyMessage: 'No clients found. Click "Add Client" to register your first client.',
+  emptyMessage:
+    'No clients found. Click "Add Client" to register your first client.',
 } as const;

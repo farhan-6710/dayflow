@@ -9,13 +9,35 @@ export function ClientDialogBasicFields({
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <label className="block text-xs font-semibold text-muted-foreground sm:col-span-2">
-        Client name *
+        Company / brand name *
         <Input
           value={values.clientName}
           onChange={(event) => onFieldChange("clientName", event.target.value)}
           placeholder="e.g. Bloom Skincare"
           className="mt-1.5"
           required
+          disabled={disabled}
+        />
+      </label>
+
+      <label className="block text-xs font-semibold text-muted-foreground">
+        Client name
+        <Input
+          value={values.primaryContactName}
+          onChange={(event) => onFieldChange("primaryContactName", event.target.value)}
+          placeholder="e.g. Jane Doe"
+          className="mt-1.5"
+          disabled={disabled}
+        />
+      </label>
+
+      <label className="block text-xs font-semibold text-muted-foreground">
+        Mobile number
+        <Input
+          value={values.mobileNumber}
+          onChange={(event) => onFieldChange("mobileNumber", event.target.value)}
+          placeholder="e.g. +1 555-0199"
+          className="mt-1.5"
           disabled={disabled}
         />
       </label>
@@ -27,28 +49,6 @@ export function ClientDialogBasicFields({
           value={values.email}
           onChange={(event) => onFieldChange("email", event.target.value)}
           placeholder="e.g. contact@brand.com"
-          className="mt-1.5"
-          disabled={disabled}
-        />
-      </label>
-
-      <label className="block text-xs font-semibold text-muted-foreground">
-        Primary contact person
-        <Input
-          value={values.primaryContactName}
-          onChange={(event) => onFieldChange("primaryContactName", event.target.value)}
-          placeholder="e.g. Jane Doe"
-          className="mt-1.5"
-          disabled={disabled}
-        />
-      </label>
-
-      <label className="block text-xs font-semibold text-muted-foreground">
-        Primary mobile number
-        <Input
-          value={values.mobileNumber}
-          onChange={(event) => onFieldChange("mobileNumber", event.target.value)}
-          placeholder="e.g. +1 555-0199"
           className="mt-1.5"
           disabled={disabled}
         />
@@ -67,7 +67,7 @@ export function ClientDialogBasicFields({
       </label>
 
       <label className="block text-xs font-semibold text-muted-foreground">
-        Secondary mobile number
+        Secondary contact mobile
         <span className="ml-1 font-normal text-muted-foreground/80">(optional)</span>
         <Input
           value={values.secondaryMobileNumber}

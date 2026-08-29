@@ -8,7 +8,10 @@ import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 
-export function ClientsTableRow({ client, onEditClient }: ClientsTableRowProps) {
+export function ClientsTableRow({
+  client,
+  onEditClient,
+}: ClientsTableRowProps) {
   const website = client.website_name?.trim();
 
   return (
@@ -39,7 +42,9 @@ export function ClientsTableRow({ client, onEditClient }: ClientsTableRowProps) 
         <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
           MOBILE NUMBER
         </span>
-        {client.mobile_number || <span className="text-muted-foreground/50">—</span>}
+        {client.mobile_number || (
+          <span className="text-muted-foreground/50">—</span>
+        )}
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">
