@@ -53,6 +53,12 @@ export async function syncAuthUserMetadata(user: User): Promise<User> {
     return user;
   }
 
+  // Sign-up only stores full_name; avoid repeated updateUser → USER_UPDATED loops
+  // when provider metadata shape does not mirror login email.
+  if (!metaEmail) {
+    return user;
+  }
+
   const { data, error } = await supabase.auth.updateUser({
     data: {
       email: loginEmail,
@@ -78,14 +84,11 @@ export async function updateAuthDisplayName(
   return error;
 }
 
-// Runs the callback whenever the user signs in or out (ignores the first replay).
+// Runs the callback on every auth state change, including the initial session.
 export function onAuthChange(
   callback: (user: User | null, event: AuthChangeEvent) => void,
 ): () => void {
   const { data } = supabase.auth.onAuthStateChange((event, session) => {
-    if (event === "INITIAL_SESSION") {
-      return;
-    }
     callback(session?.user ?? null, event);
   });
 

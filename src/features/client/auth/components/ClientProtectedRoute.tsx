@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
 import {
@@ -8,44 +8,60 @@ import {
 } from "@/app/constants/clientPortalRoutes";
 import { ClientPortalProvider } from "@/features/client/providers/ClientPortalProvider";
 import type { Client } from "@/features/admin/clients-management/types/types";
-import {
-  fetchClientForAuthUser,
-  linkClientPortalUser,
-} from "@/services/clientPortalService";
+import { resolveClientPortalProfile } from "@/services/clientPortalService";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 export function ClientProtectedRoute() {
   const { loading, user } = useAuth();
   const location = useLocation();
+  const userId = user?.id ?? null;
   const [client, setClient] = useState<Client | null>(null);
   const [checking, setChecking] = useState(true);
+  const [linkError, setLinkError] = useState<string | null>(null);
+  const resolvedUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (loading) {
       return;
     }
 
-    if (!user) {
-      setChecking(false);
+    if (!userId) {
+      resolvedUserIdRef.current = null;
       setClient(null);
+      setLinkError(null);
+      setChecking(false);
+      return;
+    }
+
+    if (resolvedUserIdRef.current === userId) {
+      setChecking(false);
       return;
     }
 
     let active = true;
     void (async () => {
+      setChecking(true);
+      setLinkError(null);
+
       try {
-        setChecking(true);
-        let linked = await fetchClientForAuthUser(user.id);
-        if (!linked && user.email) {
-          linked = await linkClientPortalUser(user.id, user.email);
+        const linked = await resolveClientPortalProfile();
+        if (!active) {
+          return;
         }
-        if (active) {
-          setClient(linked);
+
+        setClient(linked);
+        if (linked) {
+          resolvedUserIdRef.current = userId;
         }
       } catch (err) {
         console.error("Failed to resolve client portal profile:", err);
         if (active) {
           setClient(null);
+          setLinkError(
+            err instanceof Error
+              ? err.message
+              : "Failed to link client profile.",
+          );
         }
       } finally {
         if (active) {
@@ -57,18 +73,30 @@ export function ClientProtectedRoute() {
     return () => {
       active = false;
     };
-  }, [loading, user]);
+  }, [loading, userId]);
 
   if (loading || checking) {
     return <CenteredLoading />;
   }
 
   if (!user) {
-    return <Navigate to={CLIENT_PORTAL_AUTH_PATH} state={{ from: location }} replace />;
+    return (
+      <Navigate
+        to={CLIENT_PORTAL_AUTH_PATH}
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
   if (!client) {
-    return <Navigate to={CLIENT_PORTAL_NOT_A_CLIENT_PATH} replace />;
+    return (
+      <Navigate
+        to={CLIENT_PORTAL_NOT_A_CLIENT_PATH}
+        replace
+        state={{ linkError }}
+      />
+    );
   }
 
   return (

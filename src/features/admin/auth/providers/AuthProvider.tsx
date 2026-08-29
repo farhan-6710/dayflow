@@ -7,13 +7,13 @@ import {
 } from "@/features/admin/auth/providers/authContext";
 import type { Profile } from "@/services/profilesService";
 import {
-  getCurrentUser,
   onAuthChange,
   refreshCurrentUser,
   signInWithEmail,
   signInWithOAuthProvider,
   signOut,
   signUpWithEmail,
+  syncAuthUserMetadata,
 } from "@/services/authService";
 import { fetchProfile } from "@/services/profilesService";
 
@@ -57,33 +57,54 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true;
 
-    // 1. Load the current session once on startup (server-backed getUser).
-    void getCurrentUser().then(async (currentUser) => {
-      if (!active) {
-        return;
-      }
-      setUser(currentUser);
-      if (currentUser) {
-        await loadProfile(currentUser);
-      }
-      setLoading(false);
-    });
-
-    // 2. React to later sign in / sign out / password recovery / user updates.
     const unsubscribe = onAuthChange((nextUser, event) => {
       if (event === "PASSWORD_RECOVERY") {
         setIsPasswordRecovery(true);
       }
+
       if (event === "SIGNED_OUT") {
         setIsPasswordRecovery(false);
+        setUser(null);
+        setProfile(null);
+        setLoading(false);
+        return;
       }
 
-      setUser(nextUser);
-      if (nextUser) {
-        void loadProfile(nextUser);
-      } else {
-        setProfile(null);
+      // Token refresh does not change identity — avoid re-sync loops.
+      if (event === "TOKEN_REFRESHED") {
+        setLoading(false);
+        return;
       }
+
+      if (!nextUser) {
+        if (event === "INITIAL_SESSION" && active) {
+          setUser(null);
+          setProfile(null);
+          setLoading(false);
+        }
+        return;
+      }
+
+      void (async () => {
+        const syncedUser = await syncAuthUserMetadata(nextUser);
+        if (!active) {
+          return;
+        }
+
+        setUser((current) => {
+          if (
+            current?.id === syncedUser.id &&
+            current.email === syncedUser.email &&
+            current.updated_at === syncedUser.updated_at
+          ) {
+            return current;
+          }
+          return syncedUser;
+        });
+
+        await loadProfile(syncedUser);
+        setLoading(false);
+      })();
     });
 
     return () => {
