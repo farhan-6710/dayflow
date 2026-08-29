@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { CLIENTS_MANAGEMENT_PATH } from "@/features/clients-management/constants/routes";
 import { useClientDialog } from "@/features/clients-management/hooks/useClientDialog";
 import type { Client, ClientChatMessage } from "@/features/clients-management/types/types";
 import { fetchClientChatMessages } from "@/services/clientChatMessagesService";
@@ -9,7 +10,7 @@ import { fetchClientById } from "@/services/clientsService";
 import { showToast } from "@/shared/utils/showToast";
 
 export function useClientDetail() {
-  const { user, loading: authLoading } = useAuth();
+  const { user: admin, loading: authLoading } = useAuth();
   const { id: clientId } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [client, setClient] = useState<Client | null>(null);
@@ -18,7 +19,7 @@ export function useClientDetail() {
   const [error, setError] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
-    if (authLoading || !clientId || !user) {
+    if (authLoading || !clientId || !admin) {
       return;
     }
 
@@ -31,9 +32,9 @@ export function useClientDetail() {
         fetchClientChatMessages(clientId),
       ]);
 
-      if (!clientRow || clientRow.user_id !== user.id) {
+      if (!clientRow || clientRow.admin_id !== admin.id) {
         showToast("error", "Client not found.");
-        navigate("/clients-management");
+        navigate(CLIENTS_MANAGEMENT_PATH);
         return;
       }
 
@@ -48,7 +49,7 @@ export function useClientDetail() {
     } finally {
       setLoading(false);
     }
-  }, [authLoading, clientId, navigate, user]);
+  }, [authLoading, clientId, navigate, admin]);
 
   useEffect(() => {
     void reload();

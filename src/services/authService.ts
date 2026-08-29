@@ -5,6 +5,10 @@ import type {
 } from "@supabase/supabase-js";
 
 import { supabase } from "@/services/supabaseClient";
+import {
+  ADMIN_PORTAL_AUTH_PATH,
+  ADMIN_PORTAL_SETTINGS_PATH,
+} from "@/app/constants/adminPortalRoutes";
 
 // Returns the signed-in user from the Auth server (not a stale JWT cache).
 export async function getCurrentUser(): Promise<User | null> {
@@ -155,7 +159,7 @@ export async function updateEmail(
   const { data, error } = await supabase.auth.updateUser(
     { email: email.trim().toLowerCase() },
     {
-      emailRedirectTo: `${window.location.origin}/settings?email-change=pending`,
+      emailRedirectTo: `${window.location.origin}${ADMIN_PORTAL_SETTINGS_PATH}?email-change=pending`,
     },
   );
   return { user: data.user ?? null, error };
@@ -165,7 +169,7 @@ export async function requestPasswordReset(
   email: string,
 ): Promise<AuthError | null> {
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-    redirectTo: `${window.location.origin}/auth?form-type=reset-password`,
+    redirectTo: `${window.location.origin}${ADMIN_PORTAL_AUTH_PATH}?form-type=reset-password`,
   });
   return error;
 }

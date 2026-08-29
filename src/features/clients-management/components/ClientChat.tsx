@@ -74,8 +74,8 @@ export function ClientChat({
         <div className="min-w-0">
           <h3 className="text-sm font-semibold text-foreground">Client chat</h3>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            One-to-one thread with {clientContactLabel}. You send from here;
-            client replies will come from the client portal.
+            One-to-one thread with {clientContactLabel}. Admin messages send
+            from here; client replies come from the client portal.
           </p>
         </div>
         <Button

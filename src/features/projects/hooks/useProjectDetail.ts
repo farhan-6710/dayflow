@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { DEFAULT_PROJECT_COLOR } from "@/features/projects/constants/projectColors";
 import { MYSELF_PROJECT_FOR_VALUE } from "@/features/projects/constants/projectFor";
+import { PROJECTS_MANAGEMENT_PATH } from "@/features/projects/constants/routes";
 import type {
   CreateProjectReferenceLinkInput,
   ProjectReferenceLink,
@@ -56,7 +57,7 @@ export function useProjectDetail() {
       ]);
       if (!proj || proj.user_id !== user.id) {
         showToast("error", "Project not found");
-        navigate("/projects-management");
+        navigate(PROJECTS_MANAGEMENT_PATH);
         return;
       }
       setProject(proj);

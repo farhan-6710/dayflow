@@ -14,7 +14,7 @@ export const DB = {
   CLIENTS: {
     TABLE: "clients",
     SELECT:
-      "id, user_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, created_at, updated_at",
+      "id, admin_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, created_at, updated_at",
   },
   CLIENT_CONVERSATION_MESSAGES: {
     TABLE: "client_conversation_messages",

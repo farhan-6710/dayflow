@@ -2,6 +2,10 @@ import { CheckCircle2, Clock, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 
+import {
+  ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH,
+  ADMIN_PORTAL_TASKS_CALENDAR_PATH,
+} from "@/app/constants/adminPortalRoutes";
 import { FocusListItem } from "@/features/dashboard/components/FocusListItem";
 import { TaskCompletionChart } from "@/features/dashboard/components/TaskCompletionChart";
 import { useDashboard } from "@/features/dashboard/hooks/useDashboard";
@@ -87,7 +91,7 @@ export function DashboardPage() {
       description: isAll
         ? "Tasks left to complete across all time"
         : `Tasks left to complete in ${periodDescription}`,
-      href: "/tasks-calendar",
+      href: ADMIN_PORTAL_TASKS_CALENDAR_PATH,
       sparklineData: employeesSparklineData,
       sparklineColor: "var(--primary)",
     },
@@ -99,7 +103,7 @@ export function DashboardPage() {
       description: isAll
         ? "Tasks past their due date across all time"
         : `Tasks past their due date in ${periodDescription}`,
-      href: "/tasks-calendar",
+      href: ADMIN_PORTAL_TASKS_CALENDAR_PATH,
       sparklineData: missedPostsSparklineData,
       sparklineColor: "var(--accent)",
     },
@@ -111,7 +115,7 @@ export function DashboardPage() {
       description: isAll
         ? "Note folders in your workspace"
         : `Note folders created in ${periodDescription}`,
-      href: "/projects-management",
+      href: ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH,
       sparklineData: clientsSparklineData,
       sparklineColor: "var(--primary)",
     },
@@ -123,7 +127,7 @@ export function DashboardPage() {
       description: isAll
         ? "Tasks finished successfully across all time"
         : `Tasks finished successfully in ${periodDescription}`,
-      href: "/tasks-calendar",
+      href: ADMIN_PORTAL_TASKS_CALENDAR_PATH,
       sparklineData: totalPostsSparklineData,
       sparklineColor: "var(--accent)",
     },
@@ -164,7 +168,7 @@ export function DashboardPage() {
                   </p>
                 </div>
                 <Link
-                  to="/tasks-calendar"
+                  to={ADMIN_PORTAL_TASKS_CALENDAR_PATH}
                   className="text-xs font-semibold text-primary hover:underline"
                 >
                   View Tasks Calendar
@@ -182,7 +186,7 @@ export function DashboardPage() {
                       All caught up! No tasks left.
                     </p>
                     <Link
-                      to="/tasks-calendar"
+                      to={ADMIN_PORTAL_TASKS_CALENDAR_PATH}
                       className="mt-2 inline-block text-xs font-semibold text-primary hover:underline"
                     >
                       Create a Task

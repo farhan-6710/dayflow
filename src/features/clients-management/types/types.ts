@@ -21,7 +21,7 @@ export type ClientChatMessage = {
 
 export type Client = {
   id: string;
-  user_id: string;
+  admin_id: string;
   company_name: string;
   client_name: string | null;
   mobile_number: string | null;

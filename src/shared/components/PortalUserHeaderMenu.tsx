@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { AUTH_HOME } from "@/features/auth/constants/routes";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -40,7 +41,7 @@ export function PortalUserHeaderMenu({
     try {
       await signOut();
       setSignOutOpen(false);
-      navigate("/auth", { replace: true });
+      navigate(AUTH_HOME, { replace: true });
     } finally {
       setSigningOut(false);
     }

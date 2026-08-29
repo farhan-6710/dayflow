@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 
 import { ACCOUNT_PASSWORD_MIN_LENGTH } from "@/shared/constants/accountPassword";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { DASHBOARD_HOME } from "@/features/auth/constants/routes";
 import { updatePassword } from "@/services/authService";
 import { showToast } from "@/shared/utils/showToast";
 
@@ -41,7 +42,7 @@ export function useResetPasswordForm() {
 
       clearPasswordRecovery();
       showToast("success", "Password updated. You can sign in with your new password.");
-      navigate("/dashboard", { replace: true });
+      navigate(DASHBOARD_HOME, { replace: true });
     },
     [password, confirm, clearPasswordRecovery, navigate],
   );

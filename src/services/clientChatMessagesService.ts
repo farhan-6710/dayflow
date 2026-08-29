@@ -6,7 +6,7 @@ import type { ClientChatMessage } from "@/features/clients-management/types/type
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 
-/** Workspace admin app — message from the account owner. */
+/** Admin portal — message from the signed-in admin. */
 export async function createAdminClientChatMessage(input: {
   clientId: string;
   adminId: string;

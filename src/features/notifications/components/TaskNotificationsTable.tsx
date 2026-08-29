@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { Loader2, X } from "lucide-react";
 
+import { ADMIN_PORTAL_TASKS_CALENDAR_PATH } from "@/app/constants/adminPortalRoutes";
 import { taskNotificationsDirectoryConfig } from "@/features/notifications/constants/notificationTypes";
 import type { TaskNotificationsTableProps } from "@/features/notifications/types/components";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
@@ -8,8 +9,6 @@ import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
-
-const TASKS_CALENDAR_PATH = "/tasks-calendar";
 
 export function TaskNotificationsTable({
   notifications,
@@ -30,7 +29,7 @@ export function TaskNotificationsTable({
       {notifications.map((notification) => (
         <DirectoryTableRow
           key={notification.id}
-          to={TASKS_CALENDAR_PATH}
+          to={ADMIN_PORTAL_TASKS_CALENDAR_PATH}
           className={cn(
             "grid items-center gap-4 px-6 py-4",
             taskNotificationsDirectoryConfig.gridClass,

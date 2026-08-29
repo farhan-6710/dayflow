@@ -49,11 +49,11 @@ export async function fetchClientById(clientId: string): Promise<Client | null> 
   return (data as Client | null) ?? null;
 }
 
-export async function fetchClients(userId: string): Promise<Client[]> {
+export async function fetchClients(adminId: string): Promise<Client[]> {
   const { data, error } = await supabase
     .from(DB.CLIENTS.TABLE)
     .select(DB.CLIENTS.SELECT)
-    .eq("user_id", userId)
+    .eq("admin_id", adminId)
     .order("company_name", { ascending: true });
 
   if (error) {
@@ -64,13 +64,13 @@ export async function fetchClients(userId: string): Promise<Client[]> {
 }
 
 export async function createClient(
-  userId: string,
+  adminId: string,
   input: CreateClientInput,
 ): Promise<Client> {
   const { data, error } = await supabase
     .from(DB.CLIENTS.TABLE)
     .insert({
-      user_id: userId,
+      admin_id: adminId,
       ...toClientColumns(input),
       is_active: true,
     })

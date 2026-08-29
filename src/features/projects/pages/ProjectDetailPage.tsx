@@ -6,6 +6,10 @@ import { ProjectNotesTable } from "@/features/projects/components/ProjectNotesTa
 import { ProjectReferenceLinksSection } from "@/features/projects/components/ProjectReferenceLinksSection";
 import { useProjectDetail } from "@/features/projects/hooks/useProjectDetail";
 import {
+  buildProjectNotePath,
+  PROJECTS_MANAGEMENT_PATH,
+} from "@/features/projects/constants/routes";
+import {
   buildProjectDetailDescription,
   buildProjectDetailMeta,
   buildProjectNotesEmptyMessage,
@@ -72,7 +76,7 @@ export function ProjectDetailPage() {
         }
         backButton={
           <Link
-            to="/projects-management"
+            to={PROJECTS_MANAGEMENT_PATH}
             className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="size-4" /> Back to Projects Management
@@ -85,7 +89,7 @@ export function ProjectDetailPage() {
               Edit Project
             </Button>
             <Button asChild>
-              <Link to={`/projects-management/${project.id}/notes/new`}>
+              <Link to={buildProjectNotePath(project.id, "new")}>
                 <Plus className="mr-1 size-4" />
                 Add Note
               </Link>

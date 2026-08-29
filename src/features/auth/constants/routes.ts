@@ -1,4 +1,4 @@
-// Route constants for DayFlow
-
-export const DASHBOARD_HOME = "/dashboard";
-export const AUTH_HOME = "/auth";
+export {
+  ADMIN_PORTAL_AUTH_PATH as AUTH_HOME,
+  ADMIN_PORTAL_DASHBOARD_PATH as DASHBOARD_HOME,
+} from "@/app/constants/adminPortalRoutes";

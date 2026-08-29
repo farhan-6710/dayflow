@@ -2,6 +2,7 @@ import { Calendar, Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 
+import { ADMIN_PORTAL_TASKS_CALENDAR_PATH } from "@/app/constants/adminPortalRoutes";
 import { TaskFormDialog } from "@/features/tasks/components/TaskFormDialog";
 import { TaskListItem } from "@/features/tasks/components/TaskListItem";
 import { TASK_STATUS_OPTIONS } from "@/features/tasks/constants/taskStatus";
@@ -89,7 +90,7 @@ export function TasksPage() {
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Button asChild variant="outline">
-              <Link to="/tasks-calendar">
+              <Link to={ADMIN_PORTAL_TASKS_CALENDAR_PATH}>
                 <Calendar className="mr-1 size-4" />
                 Calendar View
               </Link>

@@ -14,7 +14,7 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { Button } from "@/shared/ui/button";
 
 export function ClientDetailPage() {
-  const { user } = useAuth();
+  const { user: admin } = useAuth();
   const {
     client,
     messages,
@@ -53,7 +53,7 @@ export function ClientDetailPage() {
     );
   }
 
-  if (!client || !user) {
+  if (!client || !admin) {
     return null;
   }
 
@@ -87,7 +87,7 @@ export function ClientDetailPage() {
           <ClientDetailSummary client={client} />
           <ClientChat
             clientContactLabel={clientContactLabel}
-            currentAdminId={user.id}
+            currentAdminId={admin.id}
             messages={messages}
             draft={draft}
             onDraftChange={setDraft}

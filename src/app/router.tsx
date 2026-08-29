@@ -1,5 +1,14 @@
 import { createBrowserRouter, Navigate, useParams } from "react-router";
 
+import { LegacyPathRedirect } from "@/app/components/LegacyPathRedirect";
+import {
+  ADMIN_PORTAL_CLIENTS_MANAGEMENT_PATH,
+  ADMIN_PORTAL_DAILY_REMINDERS_PATH,
+  ADMIN_PORTAL_DASHBOARD_PATH,
+  ADMIN_PORTAL_PREFIX,
+  ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH,
+  ADMIN_PORTAL_TASKS_CALENDAR_PATH,
+} from "@/app/constants/adminPortalRoutes";
 import { lazyRoutePage } from "@/app/lazyRoute";
 import { PublicRoute } from "@/features/auth/components/PublicRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
@@ -68,105 +77,129 @@ const SettingsPage = lazyRoutePage(
 
 function ProjectDetailLegacyRedirect() {
   const { id } = useParams();
-  return <Navigate to={`/projects-management/${id}`} replace />;
+  return (
+    <Navigate to={`${ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH}/${id}`} replace />
+  );
 }
 
 export const router = createBrowserRouter([
   {
-    element: <PublicRoute />,
-    errorElement: <RouteErrorPage />,
-    children: [
-      {
-        path: "/auth",
-        element: <AuthPage />,
-      },
-    ],
+    path: "/",
+    element: <LegacyPathRedirect />,
   },
   {
-    element: <ProtectedRoute />,
+    path: ADMIN_PORTAL_PREFIX,
     errorElement: <RouteErrorPage />,
     children: [
       {
-        element: <AppLayout />,
+        element: <PublicRoute />,
         children: [
           {
-            path: "/",
-            element: <Navigate to="/dashboard" replace />,
+            path: "auth",
+            element: <AuthPage />,
           },
+        ],
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
           {
-            path: "/dashboard",
-            element: <DashboardPage />,
-          },
-          {
-            path: "/projects-management",
-            element: <ProjectsManagementPage />,
-          },
-          {
-            path: "/projects-management/:id/notes/:noteId",
-            element: <ProjectNotePage />,
-          },
-          {
-            path: "/projects-management/:id",
-            element: <ProjectDetailPage />,
-          },
-          {
-            path: "/projects",
-            element: <Navigate to="/projects-management" replace />,
-          },
-          {
-            path: "/projects/:id",
-            element: <ProjectDetailLegacyRedirect />,
-          },
-          {
-            path: "/clients-management/:id",
-            element: <ClientDetailPage />,
-          },
-          {
-            path: "/clients-management",
-            element: <ClientsManagementPage />,
-          },
-          {
-            path: "/clients",
-            element: <Navigate to="/clients-management" replace />,
-          },
-          {
-            path: "/tasks",
-            element: <Navigate to="/tasks-calendar" replace />,
-          },
-          {
-            path: "/tasks-calendar",
-            element: <TasksCalendarPage />,
-          },
-          {
-            path: "/calendar",
-            element: <Navigate to="/tasks-calendar" replace />,
-          },
-          {
-            path: "/daily-reminders",
-            element: <RemindersManagementPage />,
-          },
-          {
-            path: "/reminders",
-            element: <Navigate to="/daily-reminders" replace />,
-          },
-          {
-            path: "/notifications",
-            element: <NotificationsPage />,
-          },
-          {
-            path: "/analytics",
-            element: <AnalyticsPage />,
-          },
-          {
-            path: "/settings",
-            element: <SettingsPage />,
-          },
-          {
-            path: "*",
-            element: <Navigate to="/dashboard" replace />,
+            element: <AppLayout />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="dashboard" replace />,
+              },
+              {
+                path: "dashboard",
+                element: <DashboardPage />,
+              },
+              {
+                path: "projects-management",
+                element: <ProjectsManagementPage />,
+              },
+              {
+                path: "projects-management/:id/notes/:noteId",
+                element: <ProjectNotePage />,
+              },
+              {
+                path: "projects-management/:id",
+                element: <ProjectDetailPage />,
+              },
+              {
+                path: "projects",
+                element: (
+                  <Navigate to={ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH} replace />
+                ),
+              },
+              {
+                path: "projects/:id",
+                element: <ProjectDetailLegacyRedirect />,
+              },
+              {
+                path: "clients-management/:id",
+                element: <ClientDetailPage />,
+              },
+              {
+                path: "clients-management",
+                element: <ClientsManagementPage />,
+              },
+              {
+                path: "clients",
+                element: (
+                  <Navigate to={ADMIN_PORTAL_CLIENTS_MANAGEMENT_PATH} replace />
+                ),
+              },
+              {
+                path: "tasks",
+                element: (
+                  <Navigate to={ADMIN_PORTAL_TASKS_CALENDAR_PATH} replace />
+                ),
+              },
+              {
+                path: "tasks-calendar",
+                element: <TasksCalendarPage />,
+              },
+              {
+                path: "calendar",
+                element: (
+                  <Navigate to={ADMIN_PORTAL_TASKS_CALENDAR_PATH} replace />
+                ),
+              },
+              {
+                path: "daily-reminders",
+                element: <RemindersManagementPage />,
+              },
+              {
+                path: "reminders",
+                element: (
+                  <Navigate to={ADMIN_PORTAL_DAILY_REMINDERS_PATH} replace />
+                ),
+              },
+              {
+                path: "notifications",
+                element: <NotificationsPage />,
+              },
+              {
+                path: "analytics",
+                element: <AnalyticsPage />,
+              },
+              {
+                path: "settings",
+                element: <SettingsPage />,
+              },
+              {
+                path: "*",
+                element: <Navigate to={ADMIN_PORTAL_DASHBOARD_PATH} replace />,
+              },
+            ],
           },
         ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <LegacyPathRedirect />,
   },
 ]);

@@ -53,4 +53,6 @@ function buildReminderAvailableTimes(): string[] {
 
 export const REMINDER_AVAILABLE_TIMES = buildReminderAvailableTimes();
 
-export const REMINDERS_CALENDAR_PATH = "/calendar";
+import { ADMIN_PORTAL_CALENDAR_PATH } from "@/app/constants/adminPortalRoutes";
+
+export const REMINDERS_CALENDAR_PATH = ADMIN_PORTAL_CALENDAR_PATH;

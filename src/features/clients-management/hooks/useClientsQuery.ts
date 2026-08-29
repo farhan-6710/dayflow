@@ -14,7 +14,7 @@ function loadClientsErrorMessage(error: unknown): string {
 }
 
 export function useClientsQuery() {
-  const { user, loading: authLoading } = useAuth();
+  const { user: admin, loading: authLoading } = useAuth();
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export function useClientsQuery() {
       return;
     }
 
-    if (!user) {
+    if (!admin) {
       setClients([]);
       setIsLoading(false);
       return;
@@ -33,7 +33,7 @@ export function useClientsQuery() {
     try {
       setIsLoading(true);
       setError(null);
-      setClients(await fetchClients(user.id));
+      setClients(await fetchClients(admin.id));
     } catch (e) {
       console.error(e);
       const message = loadClientsErrorMessage(e);
@@ -42,7 +42,7 @@ export function useClientsQuery() {
     } finally {
       setIsLoading(false);
     }
-  }, [authLoading, user]);
+  }, [authLoading, admin]);
 
   useEffect(() => {
     void reload();

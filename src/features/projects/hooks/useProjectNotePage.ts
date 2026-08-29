@@ -2,6 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import { DRAFT_PROJECT_NOTE_ID } from "@/features/projects/constants/projectNotes";
+import {
+  buildProjectNotePath,
+  buildProjectPath,
+  PROJECTS_MANAGEMENT_PATH,
+} from "@/features/projects/constants/routes";
 import { useDraftProjectNote } from "@/features/projects/hooks/useDraftProjectNote";
 import type { ProjectNoteSavePayload } from "@/features/projects/types/components";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -29,7 +34,7 @@ export function useProjectNotePage() {
     user?.id,
   );
 
-  const projectPath = `/projects-management/${projectId}`;
+  const projectPath = buildProjectPath(projectId ?? "");
 
   const loadData = useCallback(async () => {
     if (!projectId || !user) return;
@@ -38,7 +43,7 @@ export function useProjectNotePage() {
       const proj = await fetchProjectById(projectId);
       if (!proj || proj.user_id !== user.id) {
         showToast("error", "Project not found");
-        navigate("/projects-management");
+        navigate(PROJECTS_MANAGEMENT_PATH);
         return;
       }
       setProject(proj);
@@ -93,7 +98,7 @@ export function useProjectNotePage() {
           });
           discardDraft();
           showToast("success", "Note created successfully");
-          navigate(`/projects-management/${projectId}/notes/${created.id}`, {
+          navigate(buildProjectNotePath(projectId, created.id), {
             replace: true,
           });
           return;
@@ -125,7 +130,7 @@ export function useProjectNotePage() {
           body: source.body,
         });
         showToast("success", "Note duplicated");
-        navigate(`/projects-management/${projectId}/notes/${duplicated.id}`);
+        navigate(buildProjectNotePath(projectId, duplicated.id));
       } catch (e) {
         console.error(e);
         showToast("error", "Failed to duplicate note");

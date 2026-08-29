@@ -25,7 +25,7 @@ type UseClientDialogOptions = {
 };
 
 export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
-  const { user } = useAuth();
+  const { user: admin } = useAuth();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingClientId, setEditingClientId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -66,7 +66,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
   }, []);
 
   const saveClient = useCallback(async () => {
-    if (isSaving || !user) {
+    if (isSaving || !admin) {
       return;
     }
 
@@ -99,7 +99,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
         });
         showToast("success", `"${companyName}" updated successfully.`);
       } else {
-        await createClient(user.id, payload);
+        await createClient(admin.id, payload);
         showToast("success", `"${companyName}" added successfully.`);
       }
 
@@ -112,7 +112,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
     } finally {
       setIsSaving(false);
     }
-  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, user, values]);
+  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, admin, values]);
 
   const removeClient = useCallback(async () => {
     if (!editingClientId || isSaving) {

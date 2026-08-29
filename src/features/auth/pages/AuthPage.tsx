@@ -12,6 +12,10 @@ import {
 } from "@/features/auth/constants/auth";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { buildAuthUrl } from "@/features/auth/utils/authUrlParams";
+import {
+  AUTH_HOME,
+  DASHBOARD_HOME,
+} from "@/features/auth/constants/routes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -41,7 +45,7 @@ export function AuthPage() {
 
   const requestedPath =
     (location.state as { from?: { pathname?: string } } | null)?.from
-      ?.pathname ?? "/dashboard";
+      ?.pathname ?? DASHBOARD_HOME;
 
   if (needsRedirect) {
     return <Navigate to={canonicalPath} replace />;
@@ -88,14 +92,14 @@ export function AuthPage() {
       ? "We’ll email you a link to choose a new password."
       : formType === AUTH_FORM_TYPES.signup
         ? "Create your account with email and password."
-        : "Sign in to your DayFlow personal workspace.";
+        : "Sign in to the DayFlow admin portal.";
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-12">
         <div className="mb-8 text-center">
           <Link
-            to="/auth"
+            to={AUTH_HOME}
             className="text-3xl font-semibold tracking-wider text-muted-foreground uppercase transition hover:text-foreground"
           >
             DayFlow

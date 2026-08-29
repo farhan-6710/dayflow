@@ -17,7 +17,7 @@ type UseClientChatOptions = {
 };
 
 export function useClientChat({ clientId, reload, setError }: UseClientChatOptions) {
-  const { user } = useAuth();
+  const { user: admin } = useAuth();
   const [draft, setDraft] = useState("");
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
 
   const startEdit = useCallback(
     (message: ClientChatMessage) => {
-      if (!user || !isAdminAuthoredChatMessage(message, user.id)) {
+      if (!admin || !isAdminAuthoredChatMessage(message, admin.id)) {
         return;
       }
 
@@ -39,11 +39,11 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
       setEditingMessageId(message.id);
       setDraft(message.body);
     },
-    [user],
+    [admin],
   );
 
   const sendMessage = useCallback(async () => {
-    if (isSending || !user) {
+    if (isSending || !admin) {
       return;
     }
 
@@ -63,7 +63,7 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
       } else {
         await createAdminClientChatMessage({
           clientId,
-          adminId: user.id,
+          adminId: admin.id,
           body,
         });
       }
@@ -82,7 +82,7 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
     } finally {
       setIsSending(false);
     }
-  }, [clientId, draft, editingMessageId, isSending, reload, setError, user]);
+  }, [admin, clientId, draft, editingMessageId, isSending, reload, setError]);
 
   const requestDelete = useCallback(
     (messageId: string) => {

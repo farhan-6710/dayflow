@@ -140,7 +140,7 @@ async function seedClients(
     const existing = await supabase
       .from("clients")
       .select("id")
-      .eq("user_id", userId)
+      .eq("admin_id", userId)
       .eq("company_name", client.company_name)
       .maybeSingle();
 
@@ -155,7 +155,7 @@ async function seedClients(
     }
 
     const created = await supabase.from("clients").insert({
-      user_id: userId,
+      admin_id: userId,
       company_name: client.company_name,
       client_name: client.client_name,
       mobile_number: client.mobile_number,

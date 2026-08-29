@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { AUTH_HOME } from "@/features/auth/constants/routes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 export function ProtectedRoute() {
@@ -11,7 +12,7 @@ export function ProtectedRoute() {
   }
 
   if (!user) {
-    return <Navigate to="/auth" state={{ from: location }} replace />;
+    return <Navigate to={AUTH_HOME} state={{ from: location }} replace />;
   }
 
   return <Outlet />;
