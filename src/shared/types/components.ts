@@ -119,6 +119,7 @@ export type ShellMobileNavSheetProps = {
 export type PortalUserHeaderMenuProps = {
   accountPath: string;
   settingsPath?: string;
+  signOutRedirect?: string;
 };
 
 export type AppShellLayoutProps = {
@@ -126,6 +127,7 @@ export type AppShellLayoutProps = {
   /** When set, shows the user avatar menu (account, settings, sign out). */
   accountPath?: string;
   settingsPath?: string;
+  signOutRedirect?: string;
   headerCenter?: ReactNode;
   headerActions?: ReactNode;
   mobileNavDescription: string;

@@ -1,4 +1,4 @@
-import { resolveProjectForLabel } from "@/features/projects/utils/projectFor";
+import { resolveProjectForLabel } from "@/features/admin/projects/utils/projectFor";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 
@@ -75,6 +75,17 @@ export async function fetchProjectsByClientId(
     .select(DB.PROJECTS.SELECT)
     .eq("user_id", userId)
     .eq("project_for", clientId)
+    .order("name", { ascending: true });
+
+  if (error) throw error;
+  return ((data as ProjectRow[]) ?? []).map(mapProject);
+}
+
+export async function fetchProjectsForClientPortal(): Promise<Project[]> {
+  const { data, error } = await supabase
+    .from(DB.PROJECTS.TABLE)
+    .select(DB.PROJECTS.SELECT)
+    .eq("is_archived", false)
     .order("name", { ascending: true });
 
   if (error) throw error;

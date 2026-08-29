@@ -167,9 +167,10 @@ export async function updateEmail(
 
 export async function requestPasswordReset(
   email: string,
+  redirectPath: string = `${ADMIN_PORTAL_AUTH_PATH}?form-type=reset-password`,
 ): Promise<AuthError | null> {
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-    redirectTo: `${window.location.origin}${ADMIN_PORTAL_AUTH_PATH}?form-type=reset-password`,
+    redirectTo: `${window.location.origin}${redirectPath}`,
   });
   return error;
 }

@@ -9,70 +9,117 @@ import {
   ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH,
   ADMIN_PORTAL_TASKS_CALENDAR_PATH,
 } from "@/app/constants/adminPortalRoutes";
+import {
+  CLIENT_PORTAL_DASHBOARD_PATH,
+  CLIENT_PORTAL_PREFIX,
+} from "@/app/constants/clientPortalRoutes";
 import { lazyRoutePage } from "@/app/lazyRoute";
-import { PublicRoute } from "@/features/auth/components/PublicRoute";
-import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
+import { PublicRoute } from "@/features/admin/auth/components/PublicRoute";
+import { ProtectedRoute } from "@/features/admin/auth/components/ProtectedRoute";
 import { RouteErrorPage } from "@/shared/pages/RouteErrorPage";
+import { ClientPublicRoute } from "@/features/client/auth/components/ClientPublicRoute";
+import { ClientProtectedRoute } from "@/features/client/auth/components/ClientProtectedRoute";
+import { ClientAppLayout } from "@/features/client/layouts/ClientAppLayout";
 import { AppLayout } from "@/shared/layouts/AppLayout";
 
 const AuthPage = lazyRoutePage(
-  () => import("@/features/auth/pages/AuthPage"),
+  () => import("@/features/admin/auth/pages/AuthPage"),
   "AuthPage",
 );
 
 const DashboardPage = lazyRoutePage(
-  () => import("@/features/dashboard/pages/DashboardPage"),
+  () => import("@/features/admin/dashboard/pages/DashboardPage"),
   "DashboardPage",
 );
 
 const ProjectsManagementPage = lazyRoutePage(
-  () => import("@/features/projects/pages/ProjectsManagementPage"),
+  () => import("@/features/admin/projects/pages/ProjectsManagementPage"),
   "ProjectsManagementPage",
 );
 
 const ProjectDetailPage = lazyRoutePage(
-  () => import("@/features/projects/pages/ProjectDetailPage"),
+  () => import("@/features/admin/projects/pages/ProjectDetailPage"),
   "ProjectDetailPage",
 );
 
 const ProjectNotePage = lazyRoutePage(
-  () => import("@/features/projects/pages/ProjectNotePage"),
+  () => import("@/features/admin/projects/pages/ProjectNotePage"),
   "ProjectNotePage",
 );
 
 const ClientsManagementPage = lazyRoutePage(
-  () => import("@/features/clients-management/pages/ClientsManagementPage"),
+  () => import("@/features/admin/clients-management/pages/ClientsManagementPage"),
   "ClientsManagementPage",
 );
 
 const ClientDetailPage = lazyRoutePage(
-  () => import("@/features/clients-management/pages/ClientDetailPage"),
+  () => import("@/features/admin/clients-management/pages/ClientDetailPage"),
   "ClientDetailPage",
 );
 
 const TasksCalendarPage = lazyRoutePage(
-  () => import("@/features/tasks/pages/TasksCalendarPage"),
+  () => import("@/features/admin/tasks/pages/TasksCalendarPage"),
   "TasksCalendarPage",
 );
 
 const RemindersManagementPage = lazyRoutePage(
-  () => import("@/features/reminders/pages/RemindersManagementPage"),
+  () => import("@/features/admin/reminders/pages/RemindersManagementPage"),
   "RemindersManagementPage",
 );
 
 const NotificationsPage = lazyRoutePage(
-  () => import("@/features/notifications/pages/NotificationsPage"),
+  () => import("@/features/admin/notifications/pages/NotificationsPage"),
   "NotificationsPage",
 );
 
 const AnalyticsPage = lazyRoutePage(
-  () => import("@/features/analytics/pages/AnalyticsPage"),
+  () => import("@/features/admin/analytics/pages/AnalyticsPage"),
   "AnalyticsPage",
 );
 
 const SettingsPage = lazyRoutePage(
-  () => import("@/features/settings/pages/SettingsPage"),
+  () => import("@/features/admin/settings/pages/SettingsPage"),
   "SettingsPage",
+);
+
+const ClientAuthPage = lazyRoutePage(
+  () => import("@/features/client/auth/pages/ClientAuthPage"),
+  "ClientAuthPage",
+);
+
+const NotAClientPage = lazyRoutePage(
+  () => import("@/features/client/auth/pages/NotAClientPage"),
+  "NotAClientPage",
+);
+
+const ClientDashboardPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientDashboardPage"),
+  "ClientDashboardPage",
+);
+
+const ClientProjectsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientProjectsPage"),
+  "ClientProjectsPage",
+);
+
+const ClientProjectDetailPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientProjectDetailPage"),
+  "ClientProjectDetailPage",
+);
+
+const ClientNotificationsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientNotificationsPage"),
+  "ClientNotificationsPage",
+);
+
+const ClientAnalyticsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientAnalyticsPage"),
+  "ClientAnalyticsPage",
+);
+
+const ClientSettingsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientSettingsPage"),
+  "ClientSettingsPage",
 );
 
 function ProjectDetailLegacyRedirect() {
@@ -191,6 +238,67 @@ export const router = createBrowserRouter([
               {
                 path: "*",
                 element: <Navigate to={ADMIN_PORTAL_DASHBOARD_PATH} replace />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: CLIENT_PORTAL_PREFIX,
+    errorElement: <RouteErrorPage />,
+    children: [
+      {
+        element: <ClientPublicRoute />,
+        children: [
+          {
+            path: "auth",
+            element: <ClientAuthPage />,
+          },
+        ],
+      },
+      {
+        path: "not-a-client",
+        element: <NotAClientPage />,
+      },
+      {
+        element: <ClientProtectedRoute />,
+        children: [
+          {
+            element: <ClientAppLayout />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="dashboard" replace />,
+              },
+              {
+                path: "dashboard",
+                element: <ClientDashboardPage />,
+              },
+              {
+                path: "projects",
+                element: <ClientProjectsPage />,
+              },
+              {
+                path: "projects/:id",
+                element: <ClientProjectDetailPage />,
+              },
+              {
+                path: "notifications",
+                element: <ClientNotificationsPage />,
+              },
+              {
+                path: "analytics",
+                element: <ClientAnalyticsPage />,
+              },
+              {
+                path: "settings",
+                element: <ClientSettingsPage />,
+              },
+              {
+                path: "*",
+                element: <Navigate to={CLIENT_PORTAL_DASHBOARD_PATH} replace />,
               },
             ],
           },

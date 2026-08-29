@@ -1,6 +1,6 @@
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
-import type { Client } from "@/features/clients-management/types/types";
+import type { Client } from "@/features/admin/clients-management/types/types";
 
 export type CreateClientInput = {
   companyName: string;
@@ -73,6 +73,7 @@ export async function createClient(
       admin_id: adminId,
       ...toClientColumns(input),
       is_active: true,
+      portal_enabled: Boolean(input.email?.trim()),
     })
     .select(DB.CLIENTS.SELECT)
     .single();

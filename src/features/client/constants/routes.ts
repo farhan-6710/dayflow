@@ -1,0 +1,4 @@
+export {
+  CLIENT_PORTAL_AUTH_PATH as CLIENT_AUTH_HOME,
+  CLIENT_PORTAL_DASHBOARD_PATH as CLIENT_DASHBOARD_HOME,
+} from "@/app/constants/clientPortalRoutes";

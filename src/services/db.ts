@@ -14,7 +14,7 @@ export const DB = {
   CLIENTS: {
     TABLE: "clients",
     SELECT:
-      "id, admin_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, created_at, updated_at",
+      "id, admin_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, portal_enabled, auth_user_id, created_at, updated_at",
   },
   CLIENT_CONVERSATION_MESSAGES: {
     TABLE: "client_conversation_messages",
@@ -44,16 +44,16 @@ export const DB = {
   CLIENT_ACTIVITY_TASKS: {
     TABLE: "client_activity_tasks",
     SELECT:
-      "id, project_id, title, description, priority, status, eta_date, eta_time, created_at, updated_at",
+      "id, project_id, title, description, priority, status, eta_date, eta_time, raised_by, created_at, updated_at",
   },
   CLIENT_ACTIVITY_MEETINGS: {
     TABLE: "client_activity_meetings",
     SELECT:
-      "id, project_id, title, description, status, from_date, from_time, to_date, to_time, venue, created_at, updated_at",
+      "id, project_id, title, description, status, from_date, from_time, to_date, to_time, venue, raised_by, created_at, updated_at",
   },
   CLIENT_ACTIVITY_CALLS: {
     TABLE: "client_activity_calls",
     SELECT:
-      "id, project_id, title, description, status, start_date, start_time, duration_minutes, created_at, updated_at",
+      "id, project_id, title, description, status, start_date, start_time, duration_minutes, raised_by, created_at, updated_at",
   },
 } as const;

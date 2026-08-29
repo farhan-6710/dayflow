@@ -2,8 +2,8 @@ import { LogOut, Settings, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import { AUTH_HOME } from "@/features/auth/constants/routes";
+import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { AUTH_HOME } from "@/features/admin/auth/constants/routes";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -25,6 +25,7 @@ import type { PortalUserHeaderMenuProps } from "@/shared/types/components";
 export function PortalUserHeaderMenu({
   accountPath,
   settingsPath,
+  signOutRedirect = AUTH_HOME,
 }: PortalUserHeaderMenuProps) {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export function PortalUserHeaderMenu({
     try {
       await signOut();
       setSignOutOpen(false);
-      navigate(AUTH_HOME, { replace: true });
+      navigate(signOutRedirect, { replace: true });
     } finally {
       setSigningOut(false);
     }

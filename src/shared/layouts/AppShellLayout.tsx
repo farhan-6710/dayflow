@@ -22,6 +22,7 @@ export function AppShellLayout({
   sidebarConfig,
   accountPath,
   settingsPath,
+  signOutRedirect,
   headerCenter,
   headerActions,
   mobileNavDescription,
@@ -89,6 +90,7 @@ export function AppShellLayout({
                 <PortalUserHeaderMenu
                   accountPath={accountPath}
                   settingsPath={settingsPath}
+                  signOutRedirect={signOutRedirect}
                 />
               ) : null}
             </div>

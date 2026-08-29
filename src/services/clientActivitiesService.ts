@@ -9,7 +9,7 @@ import type {
   UpdateClientActivityCallInput,
   UpdateClientActivityMeetingInput,
   UpdateClientActivityTaskInput,
-} from "@/features/client-activities/types/types";
+} from "@/features/admin/client-activities/types/types";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 
@@ -97,6 +97,7 @@ export async function createClientActivityTask(
       status: input.status,
       eta_date: input.etaDate,
       eta_time: input.etaTime,
+      raised_by: input.raisedBy ?? "admin",
     })
     .select(DB.CLIENT_ACTIVITY_TASKS.SELECT)
     .single();
@@ -193,6 +194,7 @@ export async function createClientActivityMeeting(
       to_date: input.toDate,
       to_time: input.toTime,
       venue: input.venue,
+      raised_by: input.raisedBy ?? "admin",
     })
     .select(DB.CLIENT_ACTIVITY_MEETINGS.SELECT)
     .single();
@@ -294,6 +296,7 @@ export async function createClientActivityCall(
       start_date: input.startDate,
       start_time: input.startTime,
       duration_minutes: input.durationMinutes,
+      raised_by: input.raisedBy ?? "admin",
     })
     .select(DB.CLIENT_ACTIVITY_CALLS.SELECT)
     .single();

@@ -9,7 +9,7 @@ import {
   ADMIN_PORTAL_SETTINGS_PATH,
   ADMIN_PORTAL_TASKS_CALENDAR_PATH,
 } from "@/app/constants/adminPortalRoutes";
-import { NotificationsHeaderButton } from "@/features/notifications/components/NotificationsHeaderButton";
+import { NotificationsHeaderButton } from "@/features/admin/notifications/components/NotificationsHeaderButton";
 import type { ShellSidebarConfig } from "@/shared/types/components";
 
 const sidebarConfig: ShellSidebarConfig = {
