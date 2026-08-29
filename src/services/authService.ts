@@ -7,6 +7,7 @@ import type {
 import { supabase } from "@/services/supabaseClient";
 import {
   ADMIN_PORTAL_AUTH_PATH,
+  ADMIN_PORTAL_DASHBOARD_PATH,
   ADMIN_PORTAL_SETTINGS_PATH,
 } from "@/app/constants/adminPortalRoutes";
 
@@ -99,30 +100,38 @@ export async function signInWithEmail(
   return error;
 }
 
+export type SignUpWithEmailResult =
+  | { ok: true; requiresEmailConfirmation: boolean }
+  | { ok: false; error: AuthError };
+
 export async function signUpWithEmail(
   email: string,
   password: string,
   fullName: string,
-): Promise<AuthError | null> {
+  emailRedirectPath: string = ADMIN_PORTAL_DASHBOARD_PATH,
+): Promise<SignUpWithEmailResult> {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName } },
+    options: {
+      data: { full_name: fullName },
+      emailRedirectTo: `${window.location.origin}${emailRedirectPath}`,
+    },
   });
 
   if (error) {
-    return error;
+    return { ok: false, error };
   }
 
   if (data.session) {
-    return null;
+    return { ok: true, requiresEmailConfirmation: false };
   }
 
-  const { error: signInError } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-  return signInError;
+  if (data.user && !data.session) {
+    return { ok: true, requiresEmailConfirmation: true };
+  }
+
+  return { ok: true, requiresEmailConfirmation: false };
 }
 
 export async function signInWithOAuthProvider(

@@ -2,13 +2,18 @@ import { useCallback, useState, type FormEvent } from "react";
 
 import { MIN_AUTH_PASSWORD_LENGTH } from "@/features/admin/auth/constants/auth";
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import {
+  AUTH_SIGNUP_EMAIL_SENT_MESSAGE,
+  formatAuthErrorMessage,
+} from "@/features/admin/auth/utils/formatAuthErrorMessage";
 
-export function useSignupForm() {
+export function useSignupForm(emailRedirectPath?: string) {
   const { signUpWithEmail } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const clearError = useCallback(() => {
@@ -19,6 +24,7 @@ export function useSignupForm() {
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setError(null);
+      setSuccess(null);
 
       if (!name.trim()) {
         setError("Name is required.");
@@ -32,18 +38,22 @@ export function useSignupForm() {
 
       setIsSubmitting(true);
 
-      const authError = await signUpWithEmail(
+      const result = await signUpWithEmail(
         email.trim(),
         password,
         name.trim(),
+        emailRedirectPath,
       );
-      if (authError) {
-        setError(authError.message);
+
+      if (!result.ok) {
+        setError(formatAuthErrorMessage(result.error.message));
+      } else if (result.requiresEmailConfirmation) {
+        setSuccess(AUTH_SIGNUP_EMAIL_SENT_MESSAGE);
       }
 
       setIsSubmitting(false);
     },
-    [email, name, password, signUpWithEmail],
+    [email, emailRedirectPath, name, password, signUpWithEmail],
   );
 
   return {
@@ -55,6 +65,7 @@ export function useSignupForm() {
     setPassword,
     error,
     setError,
+    success,
     isSubmitting,
     handleSubmit,
     clearError,

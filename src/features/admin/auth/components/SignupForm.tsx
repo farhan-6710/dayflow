@@ -6,6 +6,7 @@ import {
 import { AuthOAuthSignIn } from "@/features/admin/auth/components/AuthOAuthSignIn";
 import { authFormStyles } from "@/features/admin/auth/components/authFormStyles";
 import { formFieldGroupClassName } from "@/shared/constants/formStyles";
+import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
 import { useSignupForm } from "@/features/admin/auth/hooks/useSignupForm";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { Button } from "@/shared/ui/button";
@@ -13,7 +14,11 @@ import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 import { cn } from "@/shared/lib/utils";
 
-export function SignupForm() {
+export function SignupForm({
+  emailRedirectPath = DASHBOARD_HOME,
+}: {
+  emailRedirectPath?: string;
+} = {}) {
   const {
     name,
     setName,
@@ -23,10 +28,11 @@ export function SignupForm() {
     setPassword,
     error,
     setError,
+    success,
     isSubmitting,
     handleSubmit,
     clearError,
-  } = useSignupForm();
+  } = useSignupForm(emailRedirectPath);
 
   return (
     <div className="space-y-6">
@@ -65,6 +71,7 @@ export function SignupForm() {
           disabled={isSubmitting}
         />
 
+        {success ? <AuthFormAlert message={success} variant="success" /> : null}
         {error ? <AuthFormAlert message={error} variant="error" /> : null}
 
         <Button

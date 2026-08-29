@@ -1,6 +1,7 @@
 import { useCallback, useState, type FormEvent } from "react";
 
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { formatAuthErrorMessage } from "@/features/admin/auth/utils/formatAuthErrorMessage";
 
 export function useLoginForm() {
   const { signInWithEmail } = useAuth();
@@ -17,7 +18,7 @@ export function useLoginForm() {
 
       const authError = await signInWithEmail(email.trim(), password);
       if (authError) {
-        setError(authError.message);
+        setError(formatAuthErrorMessage(authError.message));
       }
 
       setIsSubmitting(false);

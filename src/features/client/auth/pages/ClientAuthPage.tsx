@@ -17,6 +17,7 @@ import {
   CLIENT_DASHBOARD_HOME,
 } from "@/features/client/constants/routes";
 import { ADMIN_PORTAL_AUTH_PATH } from "@/app/constants/adminPortalRoutes";
+import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -119,7 +120,7 @@ export function ClientAuthPage() {
               loginPath={buildClientAuthUrl(AUTH_FORM_TYPES.login)}
             />
           ) : formType === AUTH_FORM_TYPES.signup ? (
-            <SignupForm />
+            <SignupForm emailRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
           ) : (
             <LoginForm />
           )}

@@ -9,7 +9,8 @@ export async function fetchClientForAuthUser(
     .from(DB.CLIENTS.TABLE)
     .select(DB.CLIENTS.SELECT)
     .eq("auth_user_id", userId)
-    .eq("portal_enabled", true)
+    .eq("is_active", true)
+    .not("email", "is", null)
     .maybeSingle();
 
   if (error) throw error;
@@ -30,8 +31,9 @@ export async function linkClientPortalUser(
   const { data: candidates, error: findError } = await supabase
     .from(DB.CLIENTS.TABLE)
     .select(DB.CLIENTS.SELECT)
-    .eq("portal_enabled", true)
     .is("auth_user_id", null)
+    .eq("is_active", true)
+    .not("email", "is", null)
     .ilike("email", normalizedEmail)
     .limit(1);
 

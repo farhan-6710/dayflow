@@ -42,6 +42,11 @@ export function ClientProtectedRoute() {
         if (active) {
           setClient(linked);
         }
+      } catch (err) {
+        console.error("Failed to resolve client portal profile:", err);
+        if (active) {
+          setClient(null);
+        }
       } finally {
         if (active) {
           setChecking(false);

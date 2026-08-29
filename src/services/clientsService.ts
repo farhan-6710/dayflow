@@ -73,7 +73,6 @@ export async function createClient(
       admin_id: adminId,
       ...toClientColumns(input),
       is_active: true,
-      portal_enabled: Boolean(input.email?.trim()),
     })
     .select(DB.CLIENTS.SELECT)
     .single();

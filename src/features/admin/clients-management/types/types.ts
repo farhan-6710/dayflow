@@ -30,7 +30,6 @@ export type Client = {
   secondary_contact_number: string | null;
   website_url: string | null;
   is_active: boolean;
-  portal_enabled: boolean;
   auth_user_id: string | null;
   created_at: string;
   updated_at: string;

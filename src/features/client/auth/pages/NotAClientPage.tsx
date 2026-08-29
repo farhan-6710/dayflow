@@ -12,9 +12,9 @@ export function NotAClientPage() {
           You are not registered as a client
         </h1>
         <p className="text-sm text-muted-foreground">
-          This account is not linked to a client profile yet. Ask your provider
-          to add you in Clients Management, or sign in to the admin portal
-          instead.
+          No active client profile matches this account&apos;s email. Ask your
+          provider to add you in Clients Management with the same email you use
+          to sign in, or use the admin portal if you are a team member.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button asChild variant="outline">
