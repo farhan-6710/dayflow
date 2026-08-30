@@ -101,6 +101,12 @@
     0 2px 8px 0px oklch(var(--shadow-color-coords) / 0.12),
     0 8px 16px -2px oklch(var(--shadow-color-coords) / 0.12);
   --shadow-2xl: 0 4px 16px 0px oklch(var(--shadow-color-coords) / 0.18);
+
+  /* Override browser autofill — solid colors only (no color-mix in box-shadow) */
+  --input-surface: var(--background);
+  --input-autofill-bg: var(--input-surface);
+  /* Matches focus-visible:ring-2 + ring-primary/20 on form controls */
+  --input-focus-ring-shadow: 0 0 0 2px rgb(2 133 149);
 }
 
 .dark {
@@ -108,26 +114,28 @@
   --primary: #00b6cf;
   --primary-foreground: #000000;
 
-  --background: oklch(0.10 0 0); /* Pure obsidian black-gray */
-  --foreground: oklch(0.95 0 0);  /* Pure light gray-white */
+  --background: oklch(0.1 0 0); /* Pure obsidian black-gray */
+  --foreground: oklch(0.95 0 0); /* Pure light gray-white */
 
-  --card: rgb(14, 14, 14);        /* Deep neutral gray card background */
+  --card: rgb(14, 14, 14); /* Deep neutral gray card background */
   --card-foreground: oklch(0.95 0 0);
 
   --popover: oklch(0.15 0 0);
   --popover-foreground: oklch(0.95 0 0);
 
-  --secondary: oklch(0.18 0 0);   /* Secondary dark gray containers */
-  --secondary-foreground: oklch(0.90 0 0);
+  --secondary: oklch(0.18 0 0); /* Secondary dark gray containers */
+  --secondary-foreground: oklch(0.9 0 0);
 
-  --muted: oklch(20.904% 0.00002 271.152);      /* Sit with card — no gray slab on tables */
+  --muted: oklch(
+    20.904% 0.00002 271.152
+  ); /* Sit with card — no gray slab on tables */
   --muted-foreground: oklch(0.65 0 0);
 
   --destructive: #953333;
   --destructive-outline: #e05555;
   --destructive-foreground: #ffffff;
 
-  --border: oklch(0.24 0 0);      /* Neutral gray borders */
+  --border: oklch(0.24 0 0); /* Neutral gray borders */
   --input: oklch(0.24 0 0);
   --ring: oklch(0.568 0.08 199.63);
 
@@ -135,13 +143,13 @@
   --glow-bg-accent: #e2560514;
 
   /* Contribution Grid (Empty state neutral, active states keep cyan branding) */
-  --contrib-1: oklch(0.18 0 0);   /* Neutral gray empty state block */
+  --contrib-1: oklch(0.18 0 0); /* Neutral gray empty state block */
   --contrib-2: oklch(0.34 0.05 199.63);
   --contrib-3: oklch(0.46 0.07 199.63);
   --contrib-4: oklch(0.58 0.09 199.63);
 
   /* Dark Sidebar (Clean neutral slate depth) */
-  --sidebar: rgb(14, 14, 14);     /* Visually distinct depth from main background */
+  --sidebar: rgb(14, 14, 14); /* Visually distinct depth from main background */
   --sidebar-foreground: oklch(0.92 0 0);
   --sidebar-primary: oklch(0.568 0.08 199.63);
   --sidebar-primary-foreground: oklch(1 0 0);
@@ -151,10 +159,15 @@
   --sidebar-ring: oklch(0.568 0.08 199.63);
 
   /* Muted Status Background for Dark Mode */
-  --status-muted: oklch(0.20 0 0);
+  --status-muted: oklch(0.2 0 0);
 
   /* Shadow Coordinates adjusted to true black shadows for pure neutral contrast */
   --shadow-color-coords: 0 0 0;
+
+  /* Matches dark:bg-muted/40 on inputs — solid oklch for autofill inset shadow */
+  --input-surface: #121212;
+  --input-autofill-bg: var(--input-surface);
+  --input-focus-ring-shadow: 0 0 0 2px rgb(0 182 207);
 }
 
 @theme inline {
@@ -237,6 +250,48 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Unlayered so autofill overrides beat browser UA styles (layered rules lose). */
+:is(input, textarea, select):is(
+  :-webkit-autofill,
+  :-webkit-autofill:hover,
+  :-internal-autofill-selected
+) {
+  -webkit-text-fill-color: var(--foreground) !important;
+  caret-color: var(--foreground);
+  background-color: var(--input-autofill-bg) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--input-autofill-bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--input-autofill-bg) inset !important;
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+:is(input, textarea, select):is(
+  :-webkit-autofill:focus,
+  :-webkit-autofill:active,
+  :-internal-autofill-selected:focus
+) {
+  -webkit-text-fill-color: var(--foreground) !important;
+  caret-color: var(--foreground);
+  background-color: var(--input-autofill-bg) !important;
+  -webkit-box-shadow:
+    0 0 0 1000px var(--input-autofill-bg) inset,
+    var(--input-focus-ring-shadow) !important;
+  box-shadow:
+    0 0 0 1000px var(--input-autofill-bg) inset,
+    var(--input-focus-ring-shadow) !important;
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+:is(input, textarea, select):autofill {
+  -webkit-text-fill-color: var(--foreground) !important;
+  caret-color: var(--foreground);
+  background-color: var(--input-autofill-bg) !important;
+  box-shadow: 0 0 0 1000px var(--input-autofill-bg) inset !important;
 }
 
 body {

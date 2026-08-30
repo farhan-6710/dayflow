@@ -24,9 +24,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { formTextareaClassName } from "@/shared/constants/formStyles";
 import { Input } from "@/shared/ui/input";
-import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { cn } from "@/shared/lib/utils";
+import { OptionDropdown } from "@/shared/components/OptionDropdown";
 
 const PRIORITY_OPTIONS = [
   { value: "low", label: "Low" },
@@ -179,7 +180,7 @@ export function TasksCalendarPage() {
                 placeholder="Optional details…"
                 disabled={submitting}
                 rows={3}
-                className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:opacity-50"
+                className={cn(formTextareaClassName, "mt-1.5 min-h-[4.5rem]")}
               />
             </label>
 

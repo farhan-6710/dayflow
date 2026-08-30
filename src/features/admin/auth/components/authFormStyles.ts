@@ -1,8 +1,8 @@
-import { formControlFocusRingClassName, formLabelClassName } from "@/shared/constants/formStyles";
+import { formInputClassName, formLabelClassName } from "@/shared/constants/formStyles";
 
 export const authFormStyles = {
   label: formLabelClassName,
-  input: `h-10 rounded-lg border border-ring/60 bg-background px-3 text-sm text-foreground shadow-xs transition-[border-color,box-shadow] placeholder:text-muted-foreground dark:bg-card/80 dark:border-border ${formControlFocusRingClassName}`,
+  input: formInputClassName,
   googleButton:
     "h-10 w-full rounded-full border border-ring/60 bg-card text-sm font-medium text-foreground shadow-xs hover:bg-muted/50",
   oauthButton:
