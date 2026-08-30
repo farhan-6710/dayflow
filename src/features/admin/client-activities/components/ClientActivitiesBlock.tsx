@@ -25,15 +25,23 @@ export function ClientActivitiesBlock({
     if (scopeProps.scope === "project" && projectId) {
       return { scope: "project" as const, projectId };
     }
-    if (scopeProps.scope === "client" && clientId && user) {
+    if (scopeProps.scope === "client" && clientId) {
+      const clientScope = scopeProps;
       return {
         scope: "client" as const,
         clientId,
-        userId: user.id,
+        userId: clientScope.forClientPortal ? undefined : user?.id,
+        forClientPortal: clientScope.forClientPortal,
+        clientCompanyName: clientScope.clientCompanyName,
       };
     }
     return null;
-  }, [scopeProps.scope, projectId, clientId, user?.id]);
+  }, [
+    scopeProps,
+    projectId,
+    clientId,
+    user?.id,
+  ]);
 
   const {
     tasks,

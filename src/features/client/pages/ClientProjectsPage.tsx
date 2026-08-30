@@ -19,7 +19,7 @@ export function ClientProjectsPage() {
     void (async () => {
       try {
         setLoading(true);
-        const rows = await fetchProjectsForClientPortal();
+        const rows = await fetchProjectsForClientPortal(client.company_name, client.id);
         setProjects(rows);
       } finally {
         setLoading(false);

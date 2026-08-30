@@ -4,13 +4,14 @@ type ClientSeed = {
   company_name: string;
   client_name: string;
   mobile_number: string;
-  email: string;
+  email: string | null;
   secondary_contact_name?: string;
   secondary_contact_number?: string;
   website_url: string;
 };
 
-const LEGACY_SEED_COMPANY_NAMES = [
+/** Old placeholder/demo clients removed before seeding the real portfolio. */
+const LEGACY_DEMO_COMPANY_NAMES = [
   "Velocity Athletics",
   "Summit Build Co.",
   "CareBridge Medical Group",
@@ -19,74 +20,101 @@ const LEGACY_SEED_COMPANY_NAMES = [
   "BrightPath Learning Academy",
   "Harborview Realty Partners",
   "Lumen & Loom Fashion",
+  "ProKick Sports Academy",
+  "Shree Buildcon Infrastructure",
+  "Aarogya Plus Clinics",
+  "Masala Route Kitchen",
+  "Nimbus Tech Solutions",
+  "VidyaSetu Learning Hub",
+  "GreenLeaf Properties",
+  "Rangrez Ethnic Studio",
+  "asadsass",
 ] as const;
 
+/** Real portfolio clients — contact details sourced from each website. */
 const CLIENTS: ClientSeed[] = [
   {
-    company_name: "ProKick Sports Academy",
-    client_name: "Rahul Sharma",
-    mobile_number: "+91 98765 43210",
-    email: "rahul@prokicksports.in",
-    secondary_contact_name: "Neha Gupta",
-    secondary_contact_number: "+91 98765 43211",
-    website_url: "prokicksports.in",
+    company_name: "Turbo Shop",
+    client_name: "Turbo Shop Team",
+    mobile_number: "+1 403-993-6742",
+    email: "turboshopcanada1@gmail.com",
+    website_url: "turboshop.ca",
   },
   {
-    company_name: "Shree Buildcon Infrastructure",
-    client_name: "Vikram Desai",
-    mobile_number: "+91 98203 44120",
-    email: "vikram.desai@shreebuildcon.com",
-    secondary_contact_name: "Anita Joshi",
-    secondary_contact_number: "+91 98203 44121",
-    website_url: "shreebuildcon.com",
+    company_name: "Task Force Interiors",
+    client_name: "Project Inquiries",
+    mobile_number: "+91 40-23240629",
+    email: "info@taskforceinteriors.com",
+    secondary_contact_name: "Business Desk",
+    secondary_contact_number: "+91 40-66669067",
+    website_url: "taskforceinteriors.com",
   },
   {
-    company_name: "Aarogya Plus Clinics",
-    client_name: "Dr. Priya Menon",
-    mobile_number: "+91 98470 11223",
-    email: "priya.menon@aarogyaplus.in",
-    secondary_contact_name: "Dr. Arun Nair",
-    secondary_contact_number: "+91 98470 11224",
-    website_url: "aarogyaplus.in",
+    company_name: "Almo Laminates",
+    client_name: "Customer Care",
+    mobile_number: "+91 40 2323 0065",
+    email: "info@almolaminates.com",
+    website_url: "almolaminates.com",
   },
   {
-    company_name: "Masala Route Kitchen",
-    client_name: "Ananya Iyer",
-    mobile_number: "+91 94440 55667",
-    email: "ananya@masalaroute.in",
-    website_url: "masalaroute.in",
+    company_name: "Tuning Factory",
+    client_name: "Service Desk",
+    mobile_number: "+1 403-993-6742",
+    email: null,
+    website_url: "tuningfactory.ca",
   },
   {
-    company_name: "Nimbus Tech Solutions",
-    client_name: "Karan Singh",
-    mobile_number: "+91 98901 22334",
-    email: "karan@nimbustech.io",
-    secondary_contact_name: "Sneha Malhotra",
-    secondary_contact_number: "+91 98901 22335",
-    website_url: "nimbustech.io",
+    company_name: "Yash Computers",
+    client_name: "Yashwanth",
+    mobile_number: "+91 81218 30905",
+    email: "Yashcomputersofficialid@gmail.com",
+    secondary_contact_name: "Kukatpally Branch",
+    secondary_contact_number: "+91 9963540040",
+    website_url: "yashcomputers.in",
   },
   {
-    company_name: "VidyaSetu Learning Hub",
-    client_name: "Meera Patel",
-    mobile_number: "+91 97250 77889",
-    email: "meera@vidyasetu.org",
-    website_url: "vidyasetu.org",
+    company_name: "Nick Roofing",
+    client_name: "Nick",
+    mobile_number: "+1 973-207-0689",
+    email: "nickcontractorllc@gmail.com",
+    website_url: "nickroofing.com",
   },
   {
-    company_name: "GreenLeaf Properties",
-    client_name: "Rohit Kapoor",
-    mobile_number: "+91 98100 33445",
-    email: "rohit.kapoor@greenleafproperties.in",
-    secondary_contact_name: "Divya Khanna",
-    secondary_contact_number: "+91 98100 33446",
-    website_url: "greenleafproperties.in",
+    company_name: "Infinity Construction NYC",
+    client_name: "Brooklyn Office",
+    mobile_number: "+1 347-939-5779",
+    email: "Infinityconstructionnyc@gmail.com",
+    website_url: "infinityconstructionnyc.com",
   },
   {
-    company_name: "Rangrez Ethnic Studio",
-    client_name: "Kavya Reddy",
-    mobile_number: "+91 90307 88990",
-    email: "kavya@rangrezstudio.in",
-    website_url: "rangrezstudio.in",
+    company_name: "Mantoor Group",
+    client_name: "Sales Team",
+    mobile_number: "+91 97197 15225",
+    email: "info@mantoorgroup.com",
+    website_url: "mantoorgroup.com",
+  },
+  {
+    company_name: "Hotel Saptagiri",
+    client_name: "Reservations Desk",
+    mobile_number: "+91 99494 66066",
+    email: "info@hotelsaptagiri.in",
+    secondary_contact_name: "Reservations",
+    secondary_contact_number: "+91 40 666 777 88",
+    website_url: "hotelsaptagiri.in",
+  },
+  {
+    company_name: "Eat Rrite",
+    client_name: "Mukta",
+    mobile_number: "+91 96398 77483",
+    email: "info@eatrrite.com",
+    website_url: "eatrrite.com",
+  },
+  {
+    company_name: "Testing Company",
+    client_name: "Farhan Ahmed",
+    mobile_number: "+91 9087654321",
+    email: "f4rh4n67@gmail.com",
+    website_url: "",
   },
 ];
 
@@ -115,67 +143,84 @@ async function signIn(supabase: ReturnType<typeof createClient>) {
   return userId;
 }
 
-async function removeLegacySeedClients(
+async function removeLegacyDemoClients(
   supabase: ReturnType<typeof createClient>,
   userId: string,
 ) {
   const { error } = await supabase
     .from("clients")
     .delete()
-    .eq("user_id", userId)
-    .in("company_name", [...LEGACY_SEED_COMPANY_NAMES]);
+    .eq("admin_id", userId)
+    .in("company_name", [...LEGACY_DEMO_COMPANY_NAMES]);
 
   if (error) {
-    throw new Error(`Failed to remove legacy seed clients: ${error.message}`);
+    throw new Error(`Failed to remove legacy demo clients: ${error.message}`);
   }
 }
 
-async function seedClients(
+async function upsertClient(
   supabase: ReturnType<typeof createClient>,
   userId: string,
+  client: ClientSeed,
 ) {
-  let createdCount = 0;
+  const existingByCompany = await supabase
+    .from("clients")
+    .select("id")
+    .eq("admin_id", userId)
+    .eq("company_name", client.company_name)
+    .maybeSingle();
 
-  for (const client of CLIENTS) {
-    const existing = await supabase
+  if (existingByCompany.error) {
+    throw new Error(
+      `Failed to look up client "${client.company_name}": ${existingByCompany.error.message}`,
+    );
+  }
+
+  let clientId = existingByCompany.data?.id as string | undefined;
+
+  if (!clientId && client.email) {
+    const existingByEmail = await supabase
       .from("clients")
       .select("id")
       .eq("admin_id", userId)
-      .eq("company_name", client.company_name)
+      .ilike("email", client.email)
       .maybeSingle();
 
-    if (existing.error) {
+    if (existingByEmail.error) {
       throw new Error(
-        `Failed to look up client "${client.company_name}": ${existing.error.message}`,
+        `Failed to look up client by email "${client.email}": ${existingByEmail.error.message}`,
       );
     }
 
-    if (existing.data) {
-      continue;
-    }
-
-    const created = await supabase.from("clients").insert({
-      admin_id: userId,
-      company_name: client.company_name,
-      client_name: client.client_name,
-      mobile_number: client.mobile_number,
-      email: client.email,
-      secondary_contact_name: client.secondary_contact_name ?? null,
-      secondary_contact_number: client.secondary_contact_number ?? null,
-      website_url: client.website_url,
-      is_active: true,
-    });
-
-    if (created.error) {
-      throw new Error(
-        `Failed to create client "${client.company_name}": ${created.error.message}`,
-      );
-    }
-
-    createdCount += 1;
+    clientId = existingByEmail.data?.id as string | undefined;
   }
 
-  return createdCount;
+  const row = {
+    admin_id: userId,
+    company_name: client.company_name,
+    client_name: client.client_name,
+    mobile_number: client.mobile_number,
+    email: client.email,
+    secondary_contact_name: client.secondary_contact_name ?? null,
+    secondary_contact_number: client.secondary_contact_number ?? null,
+    website_url: client.website_url || null,
+    is_active: true,
+  };
+
+  if (clientId) {
+    const { error } = await supabase.from("clients").update(row).eq("id", clientId);
+    if (error) {
+      throw new Error(`Failed to update client "${client.company_name}": ${error.message}`);
+    }
+    return { created: false, updated: true };
+  }
+
+  const created = await supabase.from("clients").insert(row);
+  if (created.error) {
+    throw new Error(`Failed to create client "${client.company_name}": ${created.error.message}`);
+  }
+
+  return { created: true, updated: false };
 }
 
 async function main() {
@@ -184,15 +229,22 @@ async function main() {
   const supabase = createClient(supabaseUrl, supabaseKey);
   const userId = await signIn(supabase);
 
-  await removeLegacySeedClients(supabase, userId);
-  const clientCount = await seedClients(supabase, userId);
+  await removeLegacyDemoClients(supabase, userId);
+
+  let createdCount = 0;
+  let updatedCount = 0;
+
+  for (const client of CLIENTS) {
+    const result = await upsertClient(supabase, userId, client);
+    if (result.created) createdCount += 1;
+    if (result.updated) updatedCount += 1;
+  }
 
   console.log(`Signed in as ${userId}`);
   console.log(`Seed account email: ${requireEnv("SEED_EMAIL")}`);
-  console.log(`Clients created: ${clientCount}`);
-  console.log(
-    "Done. Legacy western seed clients were removed. Sign in with the seed account email to see the Indian demo clients.",
-  );
+  console.log(`Portfolio clients created: ${createdCount}`);
+  console.log(`Portfolio clients updated: ${updatedCount}`);
+  console.log("Done. Legacy demo clients were removed.");
 }
 
 try {

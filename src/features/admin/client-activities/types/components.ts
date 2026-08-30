@@ -54,4 +54,7 @@ export type ClientActivitiesBlockProps =
       clientId: string;
       canEdit?: boolean;
       activityRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+      /** Use client-portal project fetch (RLS/RPC) instead of admin-owned filter. */
+      forClientPortal?: boolean;
+      clientCompanyName?: string | null;
     };

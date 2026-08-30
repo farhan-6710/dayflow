@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "seed:dummy": "bun scripts/seed-dummy-data.ts",
     "seed:clients": "bun scripts/seed-clients.ts",
+    "seed:client-projects": "bun scripts/seed-client-projects.ts",
     "seed:task-months": "bun scripts/seed-task-months.ts"
   },
   "dependencies": {

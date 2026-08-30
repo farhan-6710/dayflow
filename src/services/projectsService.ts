@@ -24,6 +24,67 @@ type ProjectRow = Omit<Project, "project_for_label"> & {
   project_for_client?: { company_name: string } | { company_name: string }[] | null;
 };
 
+const CLIENT_PORTAL_PROJECTS_SELECT =
+  "id, user_id, name, color_hex, is_archived, project_for, created_at, updated_at";
+
+type ClientPortalProjectRow = Omit<ProjectRow, "project_for_client">;
+
+function normalizeRpcProjectRows(data: unknown): ClientPortalProjectRow[] {
+  if (data == null) {
+    return [];
+  }
+
+  if (typeof data === "string") {
+    try {
+      const parsed: unknown = JSON.parse(data);
+      return Array.isArray(parsed) ? (parsed as ClientPortalProjectRow[]) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  if (Array.isArray(data)) {
+    return data as ClientPortalProjectRow[];
+  }
+
+  return [];
+}
+
+async function fetchClientPortalProjectsViaTable(
+  clientCompanyName?: string | null,
+  clientId?: string | null,
+): Promise<Project[]> {
+  let query = supabase
+    .from(DB.PROJECTS.TABLE)
+    .select(CLIENT_PORTAL_PROJECTS_SELECT)
+    .eq("is_archived", false)
+    .order("name", { ascending: true });
+
+  if (clientId) {
+    query = query.eq("project_for", clientId);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    throw error;
+  }
+
+  return ((data as ClientPortalProjectRow[]) ?? []).map((row) =>
+    mapProjectRow(row, clientCompanyName),
+  );
+}
+
+function mapProjectRow(
+  row: Omit<ProjectRow, "project_for_client">,
+  clientName?: string | null,
+): Project {
+  return {
+    ...row,
+    project_for: row.project_for ?? null,
+    project_for_label: resolveProjectForLabel(row.project_for ?? null, clientName),
+  };
+}
+
 function companyNameFromJoin(
   related: ProjectRow["project_for_client"],
 ): string | null {
@@ -81,15 +142,31 @@ export async function fetchProjectsByClientId(
   return ((data as ProjectRow[]) ?? []).map(mapProject);
 }
 
-export async function fetchProjectsForClientPortal(): Promise<Project[]> {
-  const { data, error } = await supabase
-    .from(DB.PROJECTS.TABLE)
-    .select(DB.PROJECTS.SELECT)
-    .eq("is_archived", false)
-    .order("name", { ascending: true });
+export async function fetchProjectsForClientPortal(
+  clientCompanyName?: string | null,
+  clientId?: string | null,
+): Promise<Project[]> {
+  const { data, error } = await supabase.rpc("fetch_client_portal_projects");
 
-  if (error) throw error;
-  return ((data as ProjectRow[]) ?? []).map(mapProject);
+  if (!error) {
+    const rows = normalizeRpcProjectRows(data);
+    if (rows.length > 0) {
+      return rows.map((row) => mapProjectRow(row, clientCompanyName));
+    }
+  } else if (error.code !== "PGRST202") {
+    console.error("fetch_client_portal_projects RPC failed:", error);
+  }
+
+  return fetchClientPortalProjectsViaTable(clientCompanyName, clientId);
+}
+
+export async function fetchProjectForClientPortal(
+  projectId: string,
+  clientCompanyName?: string | null,
+  clientId?: string | null,
+): Promise<Project | null> {
+  const projects = await fetchProjectsForClientPortal(clientCompanyName, clientId);
+  return projects.find((project) => project.id === projectId) ?? null;
 }
 
 export async function createProject(userId: string, input: CreateProjectInput): Promise<Project> {

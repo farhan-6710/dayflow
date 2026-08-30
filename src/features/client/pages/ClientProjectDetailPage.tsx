@@ -1,13 +1,13 @@
 import { ArrowLeft, Folder } from "lucide-react";
 import { Link, useParams } from "react-router";
+import { useEffect, useState } from "react";
 
 import { ClientActivitiesBlock } from "@/features/admin/client-activities/components/ClientActivitiesBlock";
 import { CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { fetchProjectById, type Project } from "@/services/projectsService";
-import { useEffect, useState } from "react";
+import { fetchProjectForClientPortal, type Project } from "@/services/projectsService";
 
 export function ClientProjectDetailPage() {
   const { id: projectId = "" } = useParams();
@@ -20,13 +20,13 @@ export function ClientProjectDetailPage() {
     void (async () => {
       try {
         setLoading(true);
-        const row = await fetchProjectById(projectId);
+        const row = await fetchProjectForClientPortal(projectId, client.company_name, client.id);
         setProject(row);
       } finally {
         setLoading(false);
       }
     })();
-  }, [projectId]);
+  }, [projectId, client.company_name, client.id]);
 
   if (loading && !project) {
     return (
@@ -36,7 +36,7 @@ export function ClientProjectDetailPage() {
     );
   }
 
-  if (!project || project.project_for !== client.id) {
+  if (!project) {
     return (
       <div className="py-12 text-center text-sm text-muted-foreground">
         Project not found.
