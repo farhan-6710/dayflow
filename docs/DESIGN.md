@@ -1,123 +1,210 @@
 # Architecture & Design — DayFlow
 
-This guide explains the software design, database schemas, and global patterns of DayFlow.
+Software design, database schema, routing, and client portal patterns.
 
 ---
 
 ## Data Flow Pattern
 
-Data in DayFlow travels in a strict, predictable one-way cycle:
-
 ```text
 Database (Supabase)
       ▲
-      │ (API Call)
-src/services/ (supabase client functions)
+      │ (API call / RPC)
+src/services/
       ▲
-      │ (exposes data, actions & loading state)
-customHook.ts (features/domain/hooks)
+      │ (data, actions, loading)
+features/*/hooks/
       ▲
-      │ (composes hooks and passes props)
-PageView.tsx (features/domain/pages)
-      ├──► PresentationalComponent.tsx (features/domain/components)
+      │ (compose hooks, pass props)
+features/*/pages/
+      └──► features/*/components/
 ```
 
-1. **Pages** represent the top-level route views. They load data, hold routing logic, and act as high-level orchestrators. They don't contain raw HTML or style-heavy divs—they delegate everything to components.
-2. **Components** are presentational. They receive data and event handlers via typed props, render the interface, and style using Tailwind CSS.
-3. **Hooks** contain business logic. They connect Pages to Services, manage input fields, handle validation, trigger alerts, and run loading state managers.
-4. **Services** execute raw queries and operations against Supabase. They map response rows to structured TypeScript domain types.
+1. **Pages** — Route views; orchestrate hooks, no heavy markup
+2. **Components** — Presentational; typed props, Tailwind styling
+3. **Hooks** — State, validation, service calls
+4. **Services** — Supabase queries, RPCs, type mapping
 
 ---
 
-## Database Schema (Postgres)
-
-All tables live in the public schema of Postgres, using UUID primary keys.
+## Dual-Portal Routing
 
 ```text
-┌─────────────────┐
-│    profiles     │
-├─────────────────┤
-│ id (PK, auth)   │
-│ display_name    │
-│ avatar_url      │
-│ theme_preference│
-└────────┬────────┘
-         │ (1:many)
-         ├───┐
-         │   │
-         ▼   ▼
-┌─────────────────┐        ┌─────────────────┐
-│    projects     │        │      notes      │
-├─────────────────┤        ├─────────────────┤
-│ id (PK)         │◄──┐    │ id (PK)         │
-│ user_id (FK)    │   │    │ user_id (FK)    │
-│ name            │   │    │ project_id (FK) │
-│ color_hex       │   │    │ title           │
-│ is_archived     │   │    │ body            │
-└────────┬────────┘   │    └─────────────────┘
-         │            │
-         │ (1:many)   │ (1:many)
-         ▼            │
-┌─────────────────┐   │
-│      plans      │   │
-├─────────────────┤   │
-│ id (PK)         │   │
-│ project_id (FK) │   │
-│ title           │   │
-│ sort_order      │   │
-└────────┬────────┘   │
-         │            │
-         │ (1:many)   │
-         ▼            │
-┌─────────────────┐   │
-│      tasks      │───┘
-├─────────────────┤
-│ id (PK)         │
-│ user_id (FK)    │
-│ project_id (FK?)│
-│ plan_id (FK?)   │
-│ title           │
-│ description     │
-│ status          │
-│ priority        │
-│ due_date        │
-│ due_time        │
-│ reminder_at     │
-└─────────────────┘
+/admin-portal/auth          Admin login/signup (PublicRoute)
+/admin-portal/*             Admin app (ProtectedRoute + AppLayout)
+
+/client-portal/auth         Client login/signup (ClientPublicRoute)
+/client-portal/not-a-client Email not matched to any client
+/client-portal/*            Client app (ClientProtectedRoute + ClientAppLayout)
 ```
 
-### Table Definitions
+Route constants live in:
 
-1. **profiles:** Automatically created when a user signs up. Holds profile preferences.
-2. **projects:** Groups of related goals or workflows. Custom colors can be chosen.
-3. **plans:** Mid-level groupings (milestones, iterations, or categories) belonging to a specific project.
-4. **tasks:** Individual action items. Can belong to a project, a plan, or exist independently (Inbox).
-5. **notes:** Personal notes, optionally categorized under a project.
+- `src/app/constants/adminPortalRoutes.ts`
+- `src/app/constants/clientPortalRoutes.ts`
+
+`ClientProtectedRoute` calls `resolveClientPortalProfile()` → `link_client_portal_user()` RPC before rendering children.
 
 ---
 
-## Row Level Security (RLS) Policy Blueprint
+## Database Schema (Overview)
 
-All tables are locked down. The policy ensures that a user can only perform operations on rows where the `user_id` matches their authenticated session ID.
+All tables use UUID primary keys. Plans were removed (migration 007); tasks are standalone or tied to projects only on the admin side.
+
+```text
+profiles (auth.users)
+    │
+    ├── projects (user_id = admin)
+    │       ├── project_for → clients.id (optional; client-facing projects)
+    │       ├── notes
+    │       ├── project_reference_links
+    │       ├── client_activity_tasks
+    │       ├── client_activity_meetings
+    │       └── client_activity_calls
+    │
+    ├── clients (admin_id = admin)
+    │       ├── auth_user_id → auth.users (set on client first login)
+    │       └── client_conversation_messages
+    │
+    ├── tasks (personal admin tasks)
+    ├── reminders
+    └── notifications
+```
+
+### Key tables
+
+| Table | Owner column | Notes |
+|-------|--------------|-------|
+| `profiles` | `id` = auth user | Theme, display name |
+| `projects` | `user_id` | Admin owns all project rows |
+| `clients` | `admin_id` | One email per admin; `auth_user_id` for portal |
+| `notes` | `user_id` | Scoped to `project_id` |
+| `client_activity_*` | via `project_id` | `raised_by`: `'admin'` \| `'client'` |
+
+### Project assignment
+
+- **Myself** — `project_for` is `null` (personal admin project)
+- **Client project** — `project_for` = client UUID; visible in client portal when client email matches
+
+---
+
+## Row Level Security
+
+### Admin tables
+
+Standard owner policy:
 
 ```sql
--- Standard RLS setup
-alter table public.tasks enable row level security;
-
-create policy "Users own their tasks"
-  on public.tasks for all
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+using (auth.uid() = user_id)  -- or admin_id for clients
 ```
 
-Since DayFlow is a personal workspace, **there is no cross-user data sharing**. This simplifies policies and prevents accidental data exposure.
+Admin reads/writes their own tasks, projects, notes, clients, etc.
+
+### Client portal
+
+Clients do **not** own project rows (`projects.user_id` is the admin). Access uses:
+
+1. **Security definer RPCs** — bypass RLS safely inside controlled functions
+2. **Email / `auth_user_id` policies** — match logged-in user to `clients.email` or `clients.auth_user_id`
+
+Important RPCs and helpers (migrations 022–026):
+
+| Function | Role |
+|----------|------|
+| `link_client_portal_user()` | Link auth user → client row by email |
+| `fetch_client_portal_projects()` | List non-archived projects for current client email |
+| `client_portal_resolved_email()` | JWT + auth.users email (security definer) |
+| `client_portal_can_access_project(uuid)` | Shared check for projects + activities RLS |
+
+**Do not** grant `SELECT ON auth.users TO authenticated`. Use security definer helpers instead.
+
+### Client activity rules
+
+- **Read** — any activity on projects they can access
+- **Insert / update** — only when `raised_by = 'client'` (and their own updates)
+
+Admin manages all activities via `projects.user_id = auth.uid()`.
 
 ---
 
-## Authentication & Route Protection
+## Client Portal Auth Flow
 
-Routing and page layout use standard client-side guards:
+```text
+1. User signs up/logs in at /client-portal/auth (email must match clients.email)
+2. ClientProtectedRoute → resolveClientPortalProfile()
+3. link_client_portal_user() sets clients.auth_user_id on first match
+4. ClientPortalProvider exposes linked client row to pages
+5. fetch_client_portal_projects() returns projects where project_for → client email match
+```
 
-- **Unauthenticated / AuthRoute:** Redirects back to `/dashboard` if a user has a valid active session.
-- **Authenticated / AppRoute:** Redirects back to `/auth` if no valid session exists.
-- **Route Layout Shell:** Controls state transitions. The persistent sidebar and top search bar exist inside the protected route layout, containing the children within a smooth animated page container.
+**Magic link note:** session JWT may not include `email` immediately. Migrations 023/026 resolve email from JWT fallbacks and `auth.users` inside security definer functions. After first login, a full re-login or refresh (with 026 applied) ensures `auth_user_id` is set.
+
+---
+
+## Client Activities (shared module)
+
+`src/features/admin/client-activities/` is reused in both portals:
+
+| Scope | Where | Query |
+|-------|-------|-------|
+| `project` | Admin project detail | By `project_id` |
+| `client` | Admin client detail | By client's projects |
+| `client` + `forClientPortal` | Client dashboard/detail | Portal-scoped fetch + RLS |
+
+Props: `activityRaisedBy`, `canEdit`, `editOnlyRaisedBy` (client portal).
+
+---
+
+## Authentication (Admin)
+
+- **PublicRoute** — redirects authenticated users away from `/admin-portal/auth`
+- **ProtectedRoute** — requires session; wraps `AppLayout`
+- **AuthProvider** — session sync, profile load, password recovery flag
+
+Client portal mirrors this with `ClientPublicRoute` / `ClientProtectedRoute`.
+
+---
+
+## Frontend Services Map
+
+| Service | Responsibility |
+|---------|------------------|
+| `authService` | Sign in/up, OAuth, metadata sync |
+| `projectsService` | CRUD + `fetchProjectsForClientPortal` |
+| `clientsService` | Admin client CRUD |
+| `clientPortalService` | Link RPC, profile resolve |
+| `clientActivitiesService` | Tasks, meetings, calls |
+| `notesService` | Project notes |
+| `projectReferenceLinksService` | Reference URLs |
+| `clientChatMessagesService` | Admin–client chat |
+| `tasksService` | Personal admin tasks |
+| `remindersService` | Recurring reminders |
+| `notificationsService` | In-app notifications |
+| `profilesService` | User profile |
+
+Table/column names: `src/services/db.ts` only.
+
+---
+
+## Migrations Index
+
+| Range | Topic |
+|-------|--------|
+| 001–008 | Core schema, tasks, notes, reminders |
+| 009–010 | Notifications, task missed status |
+| 011–018 | Clients, project_for, reference links, admin_id rename |
+| 019 | Client activity tables |
+| 020–026 | Client portal auth, linking, projects RPC, RLS fixes |
+
+Always add **new** migration files; do not edit ones already applied in production.
+
+---
+
+## UI Patterns
+
+- **Project color chip** — `backgroundColor: color_hex`, white `Folder` icon (`text-white`)
+- **Directory tables** — `DirectoryTable` + `DirectoryTableRow` for clients/projects lists
+- **Page shell** — `PageHeader` + `PageContent`
+- **Transitions** — Framer Motion via layout / `TransitionLink`
+- **Destructive actions** — `ConfirmationModal` before delete
+- **Feedback** — `showToast('success' \| 'error' \| 'info', message)`

@@ -1,19 +1,40 @@
-# DayFlow — Personal Workspace
+# DayFlow — Admin & Client Portals
 
-DayFlow is a high-performance, beautiful personal command centre for managing tasks, project plans, calendar reminders, and notes—all in one place.
+DayFlow is a personal workspace for freelancers and small agencies: manage your own tasks, projects, and notes in the **admin portal**, and give clients a read-only **client portal** to view shared projects and raise activities.
 
-It is built for daily personal use, prioritizing speed, clean aesthetics, and simple architecture.
+Built for speed, clean aesthetics, and a simple architecture.
 
 ---
 
 ## Tech Stack
 
-- **Frontend:** React 19, React Router 7 (SPA client-side router), Tailwind CSS v4, Framer Motion, Recharts
+- **Frontend:** React 19, React Router 7, Tailwind CSS v4, Framer Motion, Recharts
 - **Language:** TypeScript
 - **Package Manager:** Bun
-- **Build System:** Vite 8
-- **Backend:** Supabase (Auth, Postgres database, and Row Level Security)
-- **Deployment:** Static hosting (Vite build output) + Supabase (no dedicated API/Node server)
+- **Build:** Vite 8
+- **Backend:** Supabase (Auth, Postgres, Row Level Security)
+- **Deployment:** Static hosting (Vite `dist/`) + Supabase
+
+---
+
+## Two Portals
+
+| Portal | Base path | Who |
+|--------|-----------|-----|
+| **Admin** | `/admin-portal` | You (freelancer / agency owner) |
+| **Client** | `/client-portal` | Your clients (separate auth) |
+
+Legacy paths (`/dashboard`, `/auth`, etc.) redirect to the admin portal.
+
+### Admin portal
+
+Dashboard, tasks calendar, projects (with notes & reference links), clients management, daily reminders, notifications, analytics, settings.
+
+### Client portal
+
+Dashboard, projects (read-only), notifications, analytics, settings. Clients can view activities on shared projects and raise tasks / meetings / calls (`raised_by = 'client'`).
+
+**Client access:** sign up or log in at `/client-portal/auth` with an email that matches `clients.email` in your admin account. First login links their auth user to the client row via `link_client_portal_user()`.
 
 ---
 
@@ -21,50 +42,113 @@ It is built for daily personal use, prioritizing speed, clean aesthetics, and si
 
 ```text
 dayflow/
-  docs/               Project documentation, design, and developer rules
+  docs/                    README, DESIGN, AGENTS (this folder)
   scripts/
-    migrations/       Numbered SQL migration files for Supabase
+    migrations/            Numbered SQL for Supabase (001–026)
+    seed-*.ts              Demo data seed scripts
+    clients.md             Portfolio client reference table
   src/
-    app/              App shell, router, global styles
-    services/         Supabase client, database table constants, and data fetchers
-    features/         One modular directory per feature block
-      auth/           Email/Password signup & login, routing protection
-      dashboard/      Daily command centre, KPIs, and task completion chart
-      tasks/          Task list, status & priority toggles
-      projects/       Project folders with inline notes editor
-      reminders/      Calendar reminders
-      notifications/  Reminder and task notification inbox
-      analytics/      Recharts tracking (completion rate, notes by project)
-      settings/       Preferences, theme, user account profile
-    shared/           Reusable cross-feature primitives
-      ui/             shadcn-based UI components (buttons, dropdowns, calendars, etc.)
-      components/     Global components (sidebar, headers, page wrapper, icons)
-      hooks/          Global React hooks
-      utils/          Global helper formatters, validators, and pure logic
+    app/                   Router, route constants, global styles
+    services/              Supabase client + all data access
+    features/
+      admin/               Admin portal features
+        auth/              Login, signup, AuthProvider
+        dashboard/         KPIs, focus list, completion chart
+        tasks/             Personal tasks calendar
+        projects/          Projects, notes, reference links
+        clients-management/  Clients CRUD, chat, detail
+        client-activities/   Shared tasks/meetings/calls (admin + client)
+        reminders/         Recurring reminders
+        notifications/     In-app notification inbox
+        analytics/         Charts
+        settings/          Profile & preferences
+      client/              Client portal only
+        auth/              Client login, protected routes
+        layouts/           Client sidebar shell
+        pages/             Dashboard, projects, etc.
+        providers/         ClientPortalProvider
+        hooks/             useClientDashboard
+    shared/                Cross-portal UI, layouts, utils
 ```
 
 ---
 
 ## Core Features
 
-1. **Dashboard:** A unified daily overview featuring high-level stats, a two-month task completion chart, and a focus list.
-2. **Tasks:** Create, update, and manage tasks with statuses (`todo`, `in_progress`, `done`) and priorities (`low`, `medium`, `high`).
-3. **Projects:** Group notes into project folders. Each project has a split-pane notes editor (list + content).
-4. **Reminders:** A calendar for recurring personal reminders.
-5. **Analytics:** Recharts-powered graphs for task completion and notes by project.
+### Admin (personal + business)
+
+1. **Dashboard** — Stats, task completion chart, focus list
+2. **Tasks calendar** — Personal tasks with status and priority
+3. **Projects** — Folders with notes, reference links, optional **Project for** (client)
+4. **Clients** — Contact records; link to projects via `project_for`
+5. **Client activities** — Tasks, meetings, calls per client project (admin or client raised)
+6. **Reminders** — Recurring daily reminders
+7. **Notifications** — Task/reminder inbox
+8. **Analytics** — Completion and notes charts
+
+### Client portal
+
+1. **Dashboard** — Active projects, activity stats, open/closed activities
+2. **Projects** — Read-only list and detail for projects assigned to them
+3. **Activities** — View all; edit only items they raised
 
 ---
 
-## Reference project
-
-DayFlow’s dashboard charts, split-pane notes editor, and orange + teal accent pairing are modeled after the Digi Carotene team portal:
+## Environment
 
 ```text
-/Users/farhan/my-work/digi-carotene-projects/digi-carotene/digi-carotene-sm-app
+VITE_SUPABASE_URL=
+VITE_SUPABASE_PUBLISHABLE_KEY=
+SEED_EMAIL=          # optional — for seed scripts
+SEED_PASSWORD=
 ```
 
-Relative from this repo:
+---
+
+## Seed Scripts
+
+Run against your Supabase project (requires `.env`):
+
+```bash
+bun run seed:dummy           # Personal projects + notes + tasks + reminders
+bun run seed:clients         # Portfolio clients (see scripts/clients.md)
+bun run seed:client-projects # Client-assigned projects + notes + links + activities
+bun run seed:task-months     # Historical tasks by month
+```
+
+---
+
+## Database Migrations
+
+Apply in order in the Supabase SQL editor: `scripts/migrations/001` … `026`.
+
+**Client portal (run after 019–021):**
+
+| Migration | Purpose |
+|-----------|---------|
+| 020 | Client portal columns, activity `raised_by`, base RLS |
+| 021 | Self-link by email, drop `portal_enabled` |
+| 022 | `link_client_portal_user()` RPC |
+| 023 | Harden link RPC (JWT/metadata email fallbacks) |
+| 024 | `fetch_client_portal_projects()` + projects RLS |
+| 025 | Fix RLS (no direct `auth.users` reads) |
+| 026 | Access helpers (`client_portal_can_access_project`, activity RLS) |
+
+---
+
+## Reference Project
+
+Dashboard charts, split-pane notes, and orange/teal accents follow patterns from the Digi Carotene team portal:
 
 ```text
 ../../digi-carotene-projects/digi-carotene/digi-carotene-sm-app
 ```
+
+Client portal project listing/detail patterns were inspired by the same codebase.
+
+---
+
+## Docs
+
+- [DESIGN.md](./DESIGN.md) — Architecture, schema, auth, client portal data model
+- [AGENTS.md](./AGENTS.md) — Coding rules for humans and AI agents

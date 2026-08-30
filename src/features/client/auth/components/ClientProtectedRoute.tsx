@@ -33,7 +33,7 @@ export function ClientProtectedRoute() {
       return;
     }
 
-    if (resolvedUserIdRef.current === userId) {
+    if (resolvedUserIdRef.current === userId && client) {
       setChecking(false);
       return;
     }

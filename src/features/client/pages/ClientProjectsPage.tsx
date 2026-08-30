@@ -1,6 +1,8 @@
+import { Folder } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { buildClientProjectDetailPath } from "@/app/constants/clientPortalRoutes";
+import { useAuth } from "@/features/admin/auth/hooks/useAuth";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
@@ -12,10 +14,15 @@ const GRID_CLASS = "grid-cols-[minmax(0,1fr)_8rem]";
 
 export function ClientProjectsPage() {
   const { client } = useClientPortal();
+  const { user } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user?.id) {
+      return;
+    }
+
     void (async () => {
       try {
         setLoading(true);
@@ -25,7 +32,7 @@ export function ClientProjectsPage() {
         setLoading(false);
       }
     })();
-  }, [client.id]);
+  }, [client.id, client.company_name, user?.id]);
 
   return (
     <div className="space-y-6">
@@ -51,10 +58,12 @@ export function ClientProjectsPage() {
             >
               <div className="flex min-w-0 items-center gap-3">
                 <span
-                  className="inline-flex size-8 shrink-0 rounded-lg"
+                  className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
                   style={{ backgroundColor: project.color_hex }}
                   aria-hidden="true"
-                />
+                >
+                  <Folder className="size-4" />
+                </span>
                 <span className="truncate font-medium">{project.name}</span>
               </div>
               <span className="text-sm text-muted-foreground">

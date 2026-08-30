@@ -121,7 +121,9 @@ const CLIENTS: ClientSeed[] = [
 function requireEnv(name: string): string {
   const value = process.env[name]?.trim();
   if (!value) {
-    throw new Error(`Missing ${name}. Add it to .env before running the seed script.`);
+    throw new Error(
+      `Missing ${name}. Add it to .env before running the seed script.`,
+    );
   }
   return value;
 }
@@ -129,7 +131,10 @@ function requireEnv(name: string): string {
 async function signIn(supabase: ReturnType<typeof createClient>) {
   const email = requireEnv("SEED_EMAIL");
   const password = requireEnv("SEED_PASSWORD");
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
     throw new Error(`Sign-in failed: ${error.message}`);
@@ -208,16 +213,23 @@ async function upsertClient(
   };
 
   if (clientId) {
-    const { error } = await supabase.from("clients").update(row).eq("id", clientId);
+    const { error } = await supabase
+      .from("clients")
+      .update(row)
+      .eq("id", clientId);
     if (error) {
-      throw new Error(`Failed to update client "${client.company_name}": ${error.message}`);
+      throw new Error(
+        `Failed to update client "${client.company_name}": ${error.message}`,
+      );
     }
     return { created: false, updated: true };
   }
 
   const created = await supabase.from("clients").insert(row);
   if (created.error) {
-    throw new Error(`Failed to create client "${client.company_name}": ${created.error.message}`);
+    throw new Error(
+      `Failed to create client "${client.company_name}": ${created.error.message}`,
+    );
   }
 
   return { created: true, updated: false };

@@ -1,60 +1,122 @@
 # Agent Guidelines — DayFlow
 
-This file contains the strict coding rules and conventions that all developers and AI agents must follow when modifying the DayFlow codebase.
+Coding rules and conventions for developers and AI agents working on DayFlow.
 
 ---
 
 ## Core Philosophy
 
-- **Simplicity Over Everything:** No over-engineering. Do not build for multi-tenancy, team collaboration, or enterprise scaling. DayFlow is a **personal single-user app**.
-- **Least Code, More Output:** Prefer the smallest possible change that solves the problem. Don't add unnecessary files, extra wrappers, or layers of indirection.
-- **Beginner-Friendly Code:** Code should read cleanly. Avoid clever one-liners or highly abstract patterns. Use flat, self-documenting functions with clear naming. One function should do exactly one job.
-- **Strict Domain Separation:** Keep features decoupled in their respective `features/` directory. Only use shared components and utility files inside `src/shared/`.
+- **Simplicity over everything** — smallest change that solves the problem; no extra layers
+- **Two portals, one codebase** — admin (`features/admin/`) and client (`features/client/`); share via `shared/` and selective reuse (e.g. `client-activities`)
+- **Beginner-friendly code** — flat functions, clear names, one job per function
+- **Strict domain separation** — feature code stays in its feature folder; cross-cutting UI in `shared/`
+
+DayFlow is a **single-admin, multi-client** freelancer workspace — not multi-tenant SaaS. One Supabase auth user owns the admin account; each client has their own auth user linked by email.
 
 ---
 
 ## Directory Architecture
 
-All code must reside in the standard structure:
-
 ```text
 src/
-  app/          Vite entry point, Global App layout shell, Client Router (React Router 7)
-  services/     Database/API layer. All Supabase calls live here. Nothing else imports the client.
-  features/     Self-contained domain directories containing:
-    components/   Presentational UI components
-    constants/    Domain-specific static data, routes, enums, Magic Numbers
-    hooks/        Stateful logic hooks (strictly one concern per hook)
-    pages/        Top-level routing views composing hooks + presentational components
-    types/        Feature types (types.ts for domain models, components.ts for props)
-    utils/        Feature-specific validation, parsing, formatters (no Supabase)
-  shared/       Reusable primitives across features (ui/, components/, layouts/, hooks/, utils/)
+  app/              Router, route constants (adminPortalRoutes, clientPortalRoutes)
+  services/         ALL Supabase access (including RPCs). Features never import supabaseClient.
+  features/
+    admin/          Admin portal (/admin-portal)
+      auth/         AuthProvider, ProtectedRoute, login/signup
+      dashboard/    tasks/  projects/  clients-management/
+      client-activities/   Shared with client portal
+      reminders/  notifications/  analytics/  settings/
+    client/         Client portal (/client-portal)
+      auth/         ClientProtectedRoute, ClientPublicRoute
+      layouts/      ClientAppLayout
+      pages/        Dashboard, projects, etc.
+      providers/    ClientPortalProvider
+      hooks/        useClientDashboard
+  shared/           ui/, components/, layouts/, hooks/, utils/
 ```
+
+Each feature may contain: `components/`, `constants/`, `hooks/`, `pages/`, `types/`, `utils/`.
 
 ---
 
-## Database & API (Supabase) Rules
+## Database & API Rules
 
-- **Zero Inline Supabase Calls:** Every single Supabase database or authentication call must reside in `src/services/`. No feature components, hooks, or pages can import the supabase client.
-- **No Table-name Strings in Code:** Define table names and select templates in `src/services/db.ts` (e.g. `DB.TASKS.TABLE`, `DB.TASKS.SELECT`). Always import and reference the constants.
-- **Row Level Security (RLS) is Law:** Every table MUST have RLS enabled, ensuring only the owner can query, update, or delete rows: `auth.uid() = user_id`.
-- **Simplified SQL:** Keep DB operations basic. Avoid recursive queries, database RPCs, triggers, or audit logs unless specifically needed. One query per operation.
+- **Zero inline Supabase** — every call in `src/services/`
+- **Use `DB` constants** — table names and `SELECT` strings in `src/services/db.ts` only
+- **RLS is law** — every table has RLS; admin policies use `user_id` / `admin_id`
+- **Client portal exceptions** — use existing security definer RPCs/helpers (022–026); never grant `authenticated` access to `auth.users`
+- **New migrations only** — add numbered SQL under `scripts/migrations/`; never edit applied migrations
+
+### Client portal checklist
+
+When touching client-visible data:
+
+1. Project must have `project_for` set to the client (not Myself)
+2. Client `email` must match portal login email
+3. Prefer `fetch_client_portal_projects()` RPC over raw project queries from the client session
+4. Activities: respect `raised_by` and `forClientPortal` on `useClientActivitiesQuery`
 
 ---
 
 ## Component & Hook Conventions
 
-- **Keep Components Presentational:** Keep `.tsx` files light (~120 lines max). Extract complex state management, mutations, and side effects into custom hooks.
-- **Separation of Concerns in Hooks:** Write hooks that do exactly one thing (e.g., `useTasksQuery` to fetch, `useTaskDialog` for form inputs + mutate actions). Comcompose them in the page component.
-- **Strict Prop Typing:** Prop types should be placed in `types/components.ts` under the feature directory. Always prefix component names to prop type names (e.g. `TaskCardProps`).
-- **No Magic Values in UI:** Put all select dropdown arrays, priority classes, date range filters, and layout classes in custom constant files.
+- **Presentational components** — target ~120 lines; extract logic to hooks
+- **One concern per hook** — e.g. `useTasksQuery`, `useClientDashboard`, `useClientActivitiesQuery`
+- **Prop types** — `types/components.ts`, named `ComponentNameProps`
+- **Constants** — dropdown options, grid classes, routes in `constants/` files
+
+### Reusing admin UI in client portal
+
+OK to import presentational blocks when scoped by props:
+
+```tsx
+<ClientActivitiesBlock
+  scope="client"
+  clientId={client.id}
+  forClientPortal
+  clientCompanyName={client.company_name}
+  canEdit
+  activityRaisedBy="client"
+/>
+```
+
+Do not import admin-only pages or hooks that assume `user.id` owns projects.
 
 ---
 
 ## UI, UX & Styling
 
-- **Tailwind v4:** Use modern, utility-first styling. Use CSS variables defined in the theme for colors and typography.
-- **Framer Motion:** All page changes must use smooth, clean slide-fade transitions via `TransitionLink` and the layout shell. Keep in-page transitions fast and snappy.
-- **Action Confirmation:** Always prompt the user with a `ConfirmationModal` before destructive or hard-to-undo actions (like deleting a task, project, or note).
-- **Toasts:** Use `showToast(type, message)` (`success`, `error`, `info`) after completing any API mutation (create/update/delete) or on failure.
-- **Loading & Empty States:** Ensure every query page has a smooth skeleton loading state and a beautiful, actionable empty state illustration.
+- **Tailwind v4** — theme CSS variables for colors
+- **Project icons** — colored background (`color_hex`) + **white** Lucide icon (`text-white`), e.g. `Folder`
+- **Framer Motion** — page transitions via layout shell
+- **ConfirmationModal** — before delete/archive
+- **showToast** — after mutations (`success`, `error`, `info`)
+- **Loading / empty** — skeletons and clear empty messages on every list page
+
+---
+
+## Seed & Demo Data
+
+- Portfolio clients: `scripts/clients.md`, `bun run seed:clients`
+- Client projects + activities: `bun run seed:client-projects`
+- Requires `SEED_EMAIL` / `SEED_PASSWORD` in `.env`
+- Seeds are idempotent where possible; client-project seed refreshes activities each run
+
+---
+
+## What Not to Do
+
+- Do not put Supabase calls in feature components or hooks (use services)
+- Do not reference table names as raw strings outside `db.ts`
+- Do not add `auth.users` to RLS policies for the `authenticated` role
+- Do not over-engineer abstractions for one-off helpers
+- Do not create docs/markdown files unless asked
+- Do not commit `.env` or credentials
+
+---
+
+## Related Docs
+
+- [README.md](./README.md) — setup, portals overview, seed commands
+- [DESIGN.md](./DESIGN.md) — schema, RLS, client auth flow, services map

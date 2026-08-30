@@ -37,7 +37,7 @@ function normalizeRpcProjectRows(data: unknown): ClientPortalProjectRow[] {
   if (typeof data === "string") {
     try {
       const parsed: unknown = JSON.parse(data);
-      return Array.isArray(parsed) ? (parsed as ClientPortalProjectRow[]) : [];
+      return normalizeRpcProjectRows(parsed);
     } catch {
       return [];
     }
@@ -45,6 +45,10 @@ function normalizeRpcProjectRows(data: unknown): ClientPortalProjectRow[] {
 
   if (Array.isArray(data)) {
     return data as ClientPortalProjectRow[];
+  }
+
+  if (typeof data === "object") {
+    return [data as ClientPortalProjectRow];
   }
 
   return [];
@@ -146,14 +150,19 @@ export async function fetchProjectsForClientPortal(
   clientCompanyName?: string | null,
   clientId?: string | null,
 ): Promise<Project[]> {
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData.session) {
+    return [];
+  }
+
   const { data, error } = await supabase.rpc("fetch_client_portal_projects");
 
   if (!error) {
     const rows = normalizeRpcProjectRows(data);
-    if (rows.length > 0) {
-      return rows.map((row) => mapProjectRow(row, clientCompanyName));
-    }
-  } else if (error.code !== "PGRST202") {
+    return rows.map((row) => mapProjectRow(row, clientCompanyName));
+  }
+
+  if (error.code !== "PGRST202") {
     console.error("fetch_client_portal_projects RPC failed:", error);
   }
 

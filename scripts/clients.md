@@ -18,4 +18,4 @@ Contact details sourced from each client's website. Seeded via `seed-clients.ts`
 
 Where a person's name was not listed on the site, the contact label comes from that site's contact section (e.g. "Reservations Desk", "Project Inquiries"). Yashwanth and Mukta are named on their sites.
 
-**Client portal test:** Log in at `/client-portal/auth` with `f4rh4n67@gmail.com` after running migrations **023** and **024**. Project **Testing site** should appear under Projects.
+**Client portal test:** Log in at `/client-portal/auth` with `f4rh4n67@gmail.com` after running migrations **023**, **025**, and **026**. Project **Testing site** should appear under Projects.
