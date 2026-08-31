@@ -13,12 +13,16 @@
     "seed:client-projects": "bun scripts/seed-client-projects.ts",
     "seed:task-months": "bun scripts/seed-task-months.ts",
     "generate:favicon": "bun scripts/generate-favicon.ts",
-    "generate:logos": "python3 scripts/process-logos.py && python3 scripts/generate-logo-light-from-dark.py"
+    "generate:logos": "python3 scripts/process-logos.py && python3 scripts/generate-logo-light-from-dark.py",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
     "@supabase/supabase-js": "^2.106.2",
     "@tailwindcss/vite": "^4.3.0",
+    "@tauri-apps/api": "^2.11.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.3.0",
@@ -39,6 +43,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@tauri-apps/cli": "^2.11.4",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
