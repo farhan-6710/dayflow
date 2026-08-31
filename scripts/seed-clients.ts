@@ -155,7 +155,7 @@ async function removeLegacyDemoClients(
   const { error } = await supabase
     .from("clients")
     .delete()
-    .eq("admin_id", userId)
+    .eq("owner_user_id", userId)
     .in("company_name", [...LEGACY_DEMO_COMPANY_NAMES]);
 
   if (error) {
@@ -171,7 +171,7 @@ async function upsertClient(
   const existingByCompany = await supabase
     .from("clients")
     .select("id")
-    .eq("admin_id", userId)
+    .eq("owner_user_id", userId)
     .eq("company_name", client.company_name)
     .maybeSingle();
 
@@ -187,7 +187,7 @@ async function upsertClient(
     const existingByEmail = await supabase
       .from("clients")
       .select("id")
-      .eq("admin_id", userId)
+      .eq("owner_user_id", userId)
       .ilike("email", client.email)
       .maybeSingle();
 
@@ -201,7 +201,7 @@ async function upsertClient(
   }
 
   const row = {
-    admin_id: userId,
+    owner_user_id: userId,
     company_name: client.company_name,
     client_name: client.client_name,
     mobile_number: client.mobile_number,

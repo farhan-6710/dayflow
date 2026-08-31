@@ -7,10 +7,10 @@ import type {
 
 import { supabase } from "@/services/supabaseClient";
 import {
-  ADMIN_PORTAL_AUTH_PATH,
-  ADMIN_PORTAL_DASHBOARD_PATH,
-  ADMIN_PORTAL_SETTINGS_PATH,
-} from "@/app/constants/adminPortalRoutes";
+  WORKSPACE_AUTH_PATH,
+  WORKSPACE_DASHBOARD_PATH,
+  WORKSPACE_SETTINGS_PATH,
+} from "@/app/constants/workspaceRoutes";
 import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
 import {
   openOAuthPopup,
@@ -117,7 +117,7 @@ export async function signUpWithEmail(
   email: string,
   password: string,
   fullName: string,
-  emailRedirectPath: string = ADMIN_PORTAL_DASHBOARD_PATH,
+  emailRedirectPath: string = WORKSPACE_DASHBOARD_PATH,
 ): Promise<SignUpWithEmailResult> {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -147,7 +147,7 @@ export type SignInWithOAuthResult = OAuthPopupResult;
 
 export async function signInWithOAuthProvider(
   provider: Provider,
-  redirectPath: string = ADMIN_PORTAL_DASHBOARD_PATH,
+  redirectPath: string = WORKSPACE_DASHBOARD_PATH,
 ): Promise<SignInWithOAuthResult> {
   const callbackUrl = new URL(`${window.location.origin}${OAUTH_CALLBACK_PATH}`);
   callbackUrl.searchParams.set("next", redirectPath);
@@ -203,7 +203,7 @@ export async function updateEmail(
   const { data, error } = await supabase.auth.updateUser(
     { email: email.trim().toLowerCase() },
     {
-      emailRedirectTo: `${window.location.origin}${ADMIN_PORTAL_SETTINGS_PATH}?email-change=pending`,
+      emailRedirectTo: `${window.location.origin}${WORKSPACE_SETTINGS_PATH}?email-change=pending`,
     },
   );
   return { user: data.user ?? null, error };
@@ -211,7 +211,7 @@ export async function updateEmail(
 
 export async function requestPasswordReset(
   email: string,
-  redirectPath: string = `${ADMIN_PORTAL_AUTH_PATH}?form-type=reset-password`,
+  redirectPath: string = `${WORKSPACE_AUTH_PATH}?form-type=reset-password`,
 ): Promise<AuthError | null> {
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
     redirectTo: `${window.location.origin}${redirectPath}`,

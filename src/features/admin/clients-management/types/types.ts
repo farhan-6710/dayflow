@@ -1,4 +1,4 @@
-export type ClientChatMessageAuthorAdmin = {
+export type ClientChatMessageAuthorUser = {
   display_name: string | null;
 };
 
@@ -10,18 +10,18 @@ export type ClientChatMessageAuthorClient = {
 export type ClientChatMessage = {
   id: string;
   client_id: string;
-  author_admin_id: string | null;
+  author_user_id: string | null;
   author_client_id: string | null;
   body: string;
   created_at: string;
   updated_at: string;
-  author_admin?: ClientChatMessageAuthorAdmin | ClientChatMessageAuthorAdmin[] | null;
+  author_user?: ClientChatMessageAuthorUser | ClientChatMessageAuthorUser[] | null;
   author_client?: ClientChatMessageAuthorClient | ClientChatMessageAuthorClient[] | null;
 };
 
 export type Client = {
   id: string;
-  admin_id: string;
+  owner_user_id: string;
   company_name: string;
   client_name: string | null;
   mobile_number: string | null;

@@ -30,8 +30,9 @@ features/*/pages/
 ## Dual-Portal Routing
 
 ```text
-/admin-portal/auth          Admin login/signup (PublicRoute)
-/admin-portal/*             Admin app (ProtectedRoute + AppLayout)
+/workspace/auth             Workspace login/signup (PublicRoute)
+/workspace/*                Workspace app (ProtectedRoute + AppLayout)
+/admin-portal/*             Legacy redirect → /workspace/*
 
 /client-portal/auth         Client login/signup (ClientPublicRoute)
 /client-portal/not-a-client Email not matched to any client
@@ -40,7 +41,8 @@ features/*/pages/
 
 Route constants live in:
 
-- `src/app/constants/adminPortalRoutes.ts`
+- `src/app/constants/workspaceRoutes.ts`
+- `src/app/constants/adminPortalRoutes.ts` (legacy `/admin-portal` prefix only)
 - `src/app/constants/clientPortalRoutes.ts`
 
 `ClientProtectedRoute` calls `resolveClientPortalProfile()` → `link_client_portal_user()` RPC before rendering children.
@@ -62,7 +64,7 @@ profiles (auth.users)
     │       ├── client_activity_meetings
     │       └── client_activity_calls
     │
-    ├── clients (admin_id = admin)
+    ├── clients (owner_user_id = workspace owner)
     │       ├── auth_user_id → auth.users (set on client first login)
     │       └── client_conversation_messages
     │
@@ -77,9 +79,9 @@ profiles (auth.users)
 |-------|--------------|-------|
 | `profiles` | `id` = auth user | Theme, display name |
 | `projects` | `user_id` | Admin owns all project rows |
-| `clients` | `admin_id` | One email per admin; `auth_user_id` for portal |
+| `clients` | `owner_user_id` | One email per workspace owner; `auth_user_id` for portal |
 | `notes` | `user_id` | Scoped to `project_id` |
-| `client_activity_*` | via `project_id` | `raised_by`: `'admin'` \| `'client'` |
+| `client_activity_*` | via `project_id` | `raised_by`: `'workspace'` \| `'client'` |
 
 ### Project assignment
 
@@ -95,7 +97,7 @@ profiles (auth.users)
 Standard owner policy:
 
 ```sql
-using (auth.uid() = user_id)  -- or admin_id for clients
+using (auth.uid() = user_id)  -- or owner_user_id for clients
 ```
 
 Admin reads/writes their own tasks, projects, notes, clients, etc.
@@ -157,7 +159,7 @@ Props: `activityRaisedBy`, `canEdit`, `editOnlyRaisedBy` (client portal).
 
 ## Authentication (Admin)
 
-- **PublicRoute** — redirects authenticated users away from `/admin-portal/auth`
+- **PublicRoute** — redirects authenticated users away from `/workspace/auth`
 - **ProtectedRoute** — requires session; wraps `AppLayout`
 - **AuthProvider** — session sync, profile load, password recovery flag
 
@@ -192,7 +194,8 @@ Table/column names: `src/services/db.ts` only.
 |-------|--------|
 | 001–008 | Core schema, tasks, notes, reminders |
 | 009–010 | Notifications, task missed status |
-| 011–018 | Clients, project_for, reference links, admin_id rename |
+| 011–018 | Clients, project_for, reference links, owner column (was `admin_id`) |
+| 027 | Workspace terminology rename |
 | 019 | Client activity tables |
 | 020–026 | Client portal auth, linking, projects RPC, RLS fixes |
 

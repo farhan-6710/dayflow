@@ -68,7 +68,7 @@ export type CreateClientActivityTaskInput = {
   raisedBy?: ClientActivityRaisedBy;
 };
 
-export type ClientActivityRaisedBy = "admin" | "client";
+export type ClientActivityRaisedBy = "workspace" | "client";
 
 export type UpdateClientActivityTaskInput = Partial<CreateClientActivityTaskInput>;
 

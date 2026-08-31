@@ -7,11 +7,11 @@ Coding rules and conventions for developers and AI agents working on DayFlow.
 ## Core Philosophy
 
 - **Simplicity over everything** — smallest change that solves the problem; no extra layers
-- **Two portals, one codebase** — admin (`features/admin/`) and client (`features/client/`); share via `shared/` and selective reuse (e.g. `client-activities`)
+- **Two portals, one codebase** — workspace (`features/admin/`, routes under `/workspace`) and client (`features/client/`); share via `shared/` and selective reuse (e.g. `client-activities`)
 - **Beginner-friendly code** — flat functions, clear names, one job per function
 - **Strict domain separation** — feature code stays in its feature folder; cross-cutting UI in `shared/`
 
-DayFlow is a **single-admin, multi-client** freelancer workspace — not multi-tenant SaaS. One Supabase auth user owns the admin account; each client has their own auth user linked by email.
+DayFlow is a **single-owner, multi-client** workspace — not multi-tenant SaaS. One Supabase auth user owns the workspace; each client has their own auth user linked by email.
 
 ---
 
@@ -19,10 +19,10 @@ DayFlow is a **single-admin, multi-client** freelancer workspace — not multi-t
 
 ```text
 src/
-  app/              Router, route constants (adminPortalRoutes, clientPortalRoutes)
+  app/              Router, route constants (workspaceRoutes, clientPortalRoutes)
   services/         ALL Supabase access (including RPCs). Features never import supabaseClient.
   features/
-    admin/          Admin portal (/admin-portal)
+    admin/          Workspace app (/workspace) — folder name unchanged in Phase 1
       auth/         AuthProvider, ProtectedRoute, login/signup
       dashboard/    tasks/  projects/  clients-management/
       client-activities/   Shared with client portal
@@ -44,7 +44,7 @@ Each feature may contain: `components/`, `constants/`, `hooks/`, `pages/`, `type
 
 - **Zero inline Supabase** — every call in `src/services/`
 - **Use `DB` constants** — table names and `SELECT` strings in `src/services/db.ts` only
-- **RLS is law** — every table has RLS; admin policies use `user_id` / `admin_id`
+- **RLS is law** — every table has RLS; workspace policies use `user_id` / `owner_user_id`
 - **Client portal exceptions** — use existing security definer RPCs/helpers (022–026); never grant `authenticated` access to `auth.users`
 - **New migrations only** — add numbered SQL under `scripts/migrations/`; never edit applied migrations
 

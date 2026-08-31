@@ -28,7 +28,7 @@ type UseClientActivityActionsOptions = {
 export function useClientActivityActions({
   reload,
   setError,
-  raisedBy = "admin",
+  raisedBy = "workspace",
 }: UseClientActivityActionsOptions) {
   const [isSaving, setIsSaving] = useState(false);
 

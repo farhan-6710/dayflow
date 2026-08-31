@@ -14,12 +14,12 @@ export const DB = {
   CLIENTS: {
     TABLE: "clients",
     SELECT:
-      "id, admin_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, auth_user_id, created_at, updated_at",
+      "id, owner_user_id, company_name, client_name, mobile_number, email, secondary_contact_name, secondary_contact_number, website_url, is_active, auth_user_id, created_at, updated_at",
   },
   CLIENT_CONVERSATION_MESSAGES: {
     TABLE: "client_conversation_messages",
     SELECT:
-      "id, client_id, author_admin_id, author_client_id, body, created_at, updated_at, author_admin:profiles!author_admin_id(display_name), author_client:clients!author_client_id(company_name, client_name)",
+      "id, client_id, author_user_id, author_client_id, body, created_at, updated_at, author_user:profiles!author_user_id(display_name), author_client:clients!author_client_id(company_name, client_name)",
   },
   TASKS: {
     TABLE: "tasks",

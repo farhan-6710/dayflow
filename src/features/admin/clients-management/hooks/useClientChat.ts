@@ -2,11 +2,11 @@ import { useCallback, useState } from "react";
 
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
 import type { ClientChatMessage } from "@/features/admin/clients-management/types/types";
-import { isAdminAuthoredChatMessage } from "@/features/admin/clients-management/utils/clientChatMessageDb";
+import { isWorkspaceAuthoredChatMessage } from "@/features/admin/clients-management/utils/clientChatMessageDb";
 import {
-  createAdminClientChatMessage,
-  deleteAdminClientChatMessage,
-  updateAdminClientChatMessage,
+  createWorkspaceClientChatMessage,
+  deleteWorkspaceClientChatMessage,
+  updateWorkspaceClientChatMessage,
 } from "@/services/clientChatMessagesService";
 import { showToast } from "@/shared/utils/showToast";
 
@@ -17,7 +17,7 @@ type UseClientChatOptions = {
 };
 
 export function useClientChat({ clientId, reload, setError }: UseClientChatOptions) {
-  const { user: admin } = useAuth();
+  const { user } = useAuth();
   const [draft, setDraft] = useState("");
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
 
   const startEdit = useCallback(
     (message: ClientChatMessage) => {
-      if (!admin || !isAdminAuthoredChatMessage(message, admin.id)) {
+      if (!user || !isWorkspaceAuthoredChatMessage(message, user.id)) {
         return;
       }
 
@@ -39,11 +39,11 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
       setEditingMessageId(message.id);
       setDraft(message.body);
     },
-    [admin],
+    [user],
   );
 
   const sendMessage = useCallback(async () => {
-    if (isSending || !admin) {
+    if (isSending || !user) {
       return;
     }
 
@@ -57,13 +57,13 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
 
     try {
       if (editingMessageId) {
-        await updateAdminClientChatMessage(editingMessageId, body);
+        await updateWorkspaceClientChatMessage(editingMessageId, body);
         showToast("success", "Message updated.");
         setEditingMessageId(null);
       } else {
-        await createAdminClientChatMessage({
+        await createWorkspaceClientChatMessage({
           clientId,
-          adminId: admin.id,
+          userId: user.id,
           body,
         });
       }
@@ -82,7 +82,7 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
     } finally {
       setIsSending(false);
     }
-  }, [admin, clientId, draft, editingMessageId, isSending, reload, setError]);
+  }, [clientId, draft, editingMessageId, isSending, reload, setError, user]);
 
   const requestDelete = useCallback(
     (messageId: string) => {
@@ -110,7 +110,7 @@ export function useClientChat({ clientId, reload, setError }: UseClientChatOptio
     setError(null);
 
     try {
-      await deleteAdminClientChatMessage(pendingDeleteId);
+      await deleteWorkspaceClientChatMessage(pendingDeleteId);
       showToast("success", "Message deleted.");
       setPendingDeleteId(null);
       await reload();

@@ -32,7 +32,7 @@ export function useClientDetail() {
         fetchClientChatMessages(clientId),
       ]);
 
-      if (!clientRow || clientRow.admin_id !== admin.id) {
+      if (!clientRow || clientRow.owner_user_id !== admin.id) {
         showToast("error", "Client not found.");
         navigate(CLIENTS_MANAGEMENT_PATH);
         return;

@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { Plus } from "lucide-react";
+import { Link } from "react-router";
 
 import { ProjectNotesTableRow } from "@/features/admin/projects/components/ProjectNotesTableRow";
 import { notesDirectoryConfig } from "@/features/admin/projects/constants/notesDirectory";
+import { buildProjectNotePath } from "@/features/admin/projects/constants/routes";
 import type { ProjectNotesTableProps } from "@/features/admin/projects/types/components";
 import type { Note } from "@/services/notesService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { Button } from "@/shared/ui/button";
 
 export function ProjectNotesTable({
   projectId,
@@ -13,6 +17,7 @@ export function ProjectNotesTable({
   isLoading,
   onDeleteNote,
   emptyMessage,
+  canAddNote = true,
 }: ProjectNotesTableProps) {
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -27,6 +32,16 @@ export function ProjectNotesTable({
         emptyMessage={emptyMessage ?? notesDirectoryConfig.emptyMessage}
         isLoading={isLoading}
         isEmpty={notes.length === 0}
+        headerAside={
+          canAddNote ? (
+            <Button asChild size="sm">
+              <Link to={buildProjectNotePath(projectId, "new")}>
+                <Plus className="size-4" />
+                Add Note
+              </Link>
+            </Button>
+          ) : undefined
+        }
       >
         {notes.map((note) => (
           <ProjectNotesTableRow

@@ -1,4 +1,4 @@
-import { ArrowLeft, Folder, Pencil, Plus } from "lucide-react";
+import { ArrowLeft, Folder, Pencil } from "lucide-react";
 import { Link } from "react-router";
 
 import { ProjectFormDialog } from "@/features/admin/projects/components/ProjectFormDialog";
@@ -7,7 +7,6 @@ import { ProjectReferenceLinksSection } from "@/features/admin/projects/componen
 import { ClientActivitiesBlock } from "@/features/admin/client-activities/components/ClientActivitiesBlock";
 import { useProjectDetail } from "@/features/admin/projects/hooks/useProjectDetail";
 import {
-  buildProjectNotePath,
   PROJECTS_MANAGEMENT_PATH,
 } from "@/features/admin/projects/constants/routes";
 import {
@@ -86,18 +85,10 @@ export function ProjectDetailPage() {
           </Link>
         }
         actions={
-          <div className="flex flex-wrap items-center gap-2">
-            <Button variant="outline" onClick={handleOpenEditDialog}>
-              <Pencil className="mr-1 size-4" />
-              Edit Project
-            </Button>
-            <Button asChild>
-              <Link to={buildProjectNotePath(project.id, "new")}>
-                <Plus className="mr-1 size-4" />
-                Add Note
-              </Link>
-            </Button>
-          </div>
+          <Button variant="outline" onClick={handleOpenEditDialog}>
+            <Pencil className="mr-1 size-4" />
+            Edit Project
+          </Button>
         }
       />
 
@@ -109,6 +100,7 @@ export function ProjectDetailPage() {
             isLoading={loading}
             onDeleteNote={handleDeleteNote}
             emptyMessage={buildProjectNotesEmptyMessage(project.name)}
+            canAddNote={!project.is_archived}
           />
 
           <ProjectReferenceLinksSection

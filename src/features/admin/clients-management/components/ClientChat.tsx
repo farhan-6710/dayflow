@@ -5,7 +5,7 @@ import { ClientChatMessage } from "@/features/admin/clients-management/component
 import type { ClientChatProps } from "@/features/admin/clients-management/types/components";
 import {
   getClientChatMessageAuthorLabel,
-  isAdminAuthoredChatMessage,
+  isWorkspaceAuthoredChatMessage,
 } from "@/features/admin/clients-management/utils/clientChatMessageDb";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldClassName } from "@/shared/constants/formStyles";
@@ -14,7 +14,7 @@ import { Button } from "@/shared/ui/button";
 
 export function ClientChat({
   clientContactLabel,
-  currentAdminId,
+  currentUserId,
   messages,
   draft,
   onDraftChange,
@@ -105,7 +105,7 @@ export function ClientChat({
           </p>
         ) : (
           messages.map((message) => {
-            const isMine = isAdminAuthoredChatMessage(message, currentAdminId);
+            const isMine = isWorkspaceAuthoredChatMessage(message, currentUserId);
             const authorLabel = isMine
               ? "You"
               : getClientChatMessageAuthorLabel(message, clientContactLabel);

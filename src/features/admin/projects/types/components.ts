@@ -64,6 +64,7 @@ export type ProjectNotesTableProps = {
   isLoading: boolean;
   onDeleteNote: (note: Note) => void | Promise<void>;
   emptyMessage?: string;
+  canAddNote?: boolean;
 };
 
 export type ProjectFormDialogProps = {

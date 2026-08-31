@@ -3,7 +3,7 @@ import { Loader2, X } from "lucide-react";
 
 import { reminderNotificationsDirectoryConfig } from "@/features/admin/notifications/constants/notificationTypes";
 import type { ReminderNotificationsTableProps } from "@/features/admin/notifications/types/components";
-import { ADMIN_PORTAL_DAILY_REMINDERS_PATH } from "@/app/constants/adminPortalRoutes";
+import { WORKSPACE_DAILY_REMINDERS_PATH } from "@/app/constants/workspaceRoutes";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
@@ -29,7 +29,7 @@ export function ReminderNotificationsTable({
       {notifications.map((notification) => (
         <DirectoryTableRow
           key={notification.id}
-          to={ADMIN_PORTAL_DAILY_REMINDERS_PATH}
+          to={WORKSPACE_DAILY_REMINDERS_PATH}
           className={cn(
             "grid items-center gap-4 px-6 py-4",
             reminderNotificationsDirectoryConfig.gridClass,

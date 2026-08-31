@@ -1,6 +1,6 @@
-import { ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH } from "@/app/constants/adminPortalRoutes";
+import { WORKSPACE_PROJECTS_MANAGEMENT_PATH } from "@/app/constants/workspaceRoutes";
 
-export const PROJECTS_MANAGEMENT_PATH = ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH;
+export const PROJECTS_MANAGEMENT_PATH = WORKSPACE_PROJECTS_MANAGEMENT_PATH;
 
 export function buildProjectDetailPath(projectId: string): string {
   return `${PROJECTS_MANAGEMENT_PATH}/${projectId}`;

@@ -39,11 +39,11 @@ export function SidebarBrand({
         aria-hidden="true"
       />
       <div className="min-w-0 shrink-0">
-        <p className="font-serif text-[1.35rem] font-semibold leading-none tracking-[0.02em] text-primary">
+        <p className="font-serif text-[1.35rem] font-semibold leading-none tracking-[0.02em] text-sidebar-foreground">
           DayFlow
         </p>
         {subtitle ? (
-          <p className="mt-0.5 text-[9px] font-semibold uppercase leading-none tracking-[0.1em] text-accent text-center">
+          <p className="mt-0.5 text-[9px] font-semibold uppercase leading-none tracking-[0.1em] text-muted-foreground text-center">
             {subtitle}
           </p>
         ) : null}

@@ -11,29 +11,29 @@ function pickRelation<T>(value: T | T[] | null | undefined): T | null {
 }
 
 export function mapClientChatMessageRow(row: ClientChatMessageRow): ClientChatMessage {
-  const { author_admin, author_client, ...message } = row;
+  const { author_user, author_client, ...message } = row;
 
   return {
     ...message,
-    author_admin: pickRelation(author_admin),
+    author_user: pickRelation(author_user),
     author_client: pickRelation(author_client),
   };
 }
 
-export function isAdminAuthoredChatMessage(
+export function isWorkspaceAuthoredChatMessage(
   message: ClientChatMessage,
-  adminId: string,
+  userId: string,
 ): boolean {
-  return message.author_admin_id === adminId;
+  return message.author_user_id === userId;
 }
 
 export function getClientChatMessageAuthorLabel(
   message: ClientChatMessage,
   fallbackClientLabel: string,
 ): string {
-  if (message.author_admin_id) {
-    const adminName = pickRelation(message.author_admin)?.display_name?.trim();
-    return adminName || "Admin";
+  if (message.author_user_id) {
+    const userName = pickRelation(message.author_user)?.display_name?.trim();
+    return userName || "Workspace";
   }
 
   const clientAuthor = pickRelation(message.author_client);

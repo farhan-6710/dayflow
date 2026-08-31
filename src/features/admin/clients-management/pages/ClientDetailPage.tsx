@@ -88,7 +88,7 @@ export function ClientDetailPage() {
           <ClientDetailSummary client={client} />
           <ClientChat
             clientContactLabel={clientContactLabel}
-            currentAdminId={admin.id}
+            currentUserId={admin.id}
             messages={messages}
             draft={draft}
             onDraftChange={setDraft}

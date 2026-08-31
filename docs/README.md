@@ -1,6 +1,6 @@
-# DayFlow — Admin & Client Portals
+# DayFlow — Workspace & Client Portals
 
-DayFlow is a personal workspace for freelancers and small agencies: manage your own tasks, projects, and notes in the **admin portal**, and give clients a read-only **client portal** to view shared projects and raise activities.
+DayFlow is a personal workspace for freelancers and small agencies: manage your own tasks, projects, and notes in the **workspace**, and give clients a read-only **client portal** to view shared projects and raise activities.
 
 Built for speed, clean aesthetics, and a simple architecture.
 
@@ -21,12 +21,12 @@ Built for speed, clean aesthetics, and a simple architecture.
 
 | Portal | Base path | Who |
 |--------|-----------|-----|
-| **Admin** | `/admin-portal` | You (freelancer / agency owner) |
+| **Workspace** | `/workspace` | You (solo or team — tasks, projects, clients) |
 | **Client** | `/client-portal` | Your clients (separate auth) |
 
-Legacy paths (`/dashboard`, `/auth`, etc.) redirect to the admin portal.
+Legacy paths (`/dashboard`, `/auth`, `/admin-portal/*`, etc.) redirect to the workspace.
 
-### Admin portal
+### Workspace
 
 Dashboard, tasks calendar, projects (with notes & reference links), clients management, daily reminders, notifications, analytics, settings.
 
@@ -34,7 +34,7 @@ Dashboard, tasks calendar, projects (with notes & reference links), clients mana
 
 Dashboard, projects (read-only), notifications, analytics, settings. Clients can view activities on shared projects and raise tasks / meetings / calls (`raised_by = 'client'`).
 
-**Client access:** sign up or log in at `/client-portal/auth` with an email that matches `clients.email` in your admin account. First login links their auth user to the client row via `link_client_portal_user()`.
+**Client access:** sign up or log in at `/client-portal/auth` with an email that matches `clients.email` in your workspace account. First login links their auth user to the client row via `link_client_portal_user()`.
 
 ---
 
@@ -44,20 +44,20 @@ Dashboard, projects (read-only), notifications, analytics, settings. Clients can
 dayflow/
   docs/                    README, DESIGN, AGENTS (this folder)
   scripts/
-    migrations/            Numbered SQL for Supabase (001–026)
+    migrations/            Numbered SQL for Supabase (001–027)
     seed-*.ts              Demo data seed scripts
     clients.md             Portfolio client reference table
   src/
     app/                   Router, route constants, global styles
     services/              Supabase client + all data access
     features/
-      admin/               Admin portal features
+      admin/               Workspace app features (route prefix: /workspace)
         auth/              Login, signup, AuthProvider
         dashboard/         KPIs, focus list, completion chart
         tasks/             Personal tasks calendar
         projects/          Projects, notes, reference links
         clients-management/  Clients CRUD, chat, detail
-        client-activities/   Shared tasks/meetings/calls (admin + client)
+        client-activities/   Shared tasks/meetings/calls (workspace + client)
         reminders/         Recurring reminders
         notifications/     In-app notification inbox
         analytics/         Charts
@@ -75,13 +75,13 @@ dayflow/
 
 ## Core Features
 
-### Admin (personal + business)
+### Workspace (personal + business)
 
 1. **Dashboard** — Stats, task completion chart, focus list
 2. **Tasks calendar** — Personal tasks with status and priority
 3. **Projects** — Folders with notes, reference links, optional **Project for** (client)
 4. **Clients** — Contact records; link to projects via `project_for`
-5. **Client activities** — Tasks, meetings, calls per client project (admin or client raised)
+5. **Client activities** — Tasks, meetings, calls per client project (workspace or client raised)
 6. **Reminders** — Recurring daily reminders
 7. **Notifications** — Task/reminder inbox
 8. **Analytics** — Completion and notes charts
@@ -120,7 +120,7 @@ bun run seed:task-months     # Historical tasks by month
 
 ## Database Migrations
 
-Apply in order in the Supabase SQL editor: `scripts/migrations/001` … `026`.
+Apply in order in the Supabase SQL editor: `scripts/migrations/001` … `027`.
 
 **Client portal (run after 019–021):**
 
@@ -133,6 +133,7 @@ Apply in order in the Supabase SQL editor: `scripts/migrations/001` … `026`.
 | 024 | `fetch_client_portal_projects()` + projects RLS |
 | 025 | Fix RLS (no direct `auth.users` reads) |
 | 026 | Access helpers (`client_portal_can_access_project`, activity RLS) |
+| 027 | Workspace terminology (`owner_user_id`, `author_user_id`, `raised_by = 'workspace'`) |
 
 ---
 

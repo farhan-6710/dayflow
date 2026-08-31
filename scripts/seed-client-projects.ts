@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-type RaisedBy = "admin" | "client";
+type RaisedBy = "workspace" | "client";
 
 type NoteSeed = { title: string; body: string };
 type LinkSeed = { label: string; url: string };
@@ -89,7 +89,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-04",
         eta_time: "2:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Add turbo rebuild FAQ",
@@ -116,7 +116,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-18",
         eta_time: "6:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     meetings: [
@@ -129,7 +129,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-12",
         to_time: "9:00 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Cart & checkout review",
@@ -140,7 +140,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-09-15",
         to_time: "7:45 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -151,7 +151,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-22",
         start_time: "8:30 PM",
         duration_minutes: 20,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Shipping policy wording",
@@ -194,7 +194,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-14",
         eta_time: "5:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Contact form captcha",
@@ -203,7 +203,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-20",
         eta_time: "3:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Services page icons",
@@ -212,7 +212,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-06",
         eta_time: "11:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Add new hospital project",
@@ -234,7 +234,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-08",
         to_time: "12:00 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "New project photos review",
@@ -256,7 +256,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-19",
         start_time: "12:00 PM",
         duration_minutes: 25,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Mobile menu bug",
@@ -299,7 +299,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-10",
         eta_time: "2:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Blog listing page",
@@ -308,7 +308,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-24",
         eta_time: "4:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "New swatch uploads",
@@ -326,7 +326,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-05",
         eta_time: "3:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     meetings: [
@@ -339,7 +339,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-05",
         to_time: "4:00 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "New product launch page",
@@ -361,7 +361,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-16",
         start_time: "11:00 AM",
         duration_minutes: 15,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Warranty page copy",
@@ -404,7 +404,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-11",
         eta_time: "7:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Vehicle pages SEO",
@@ -413,7 +413,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-08",
         eta_time: "6:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Swap hero slider images",
@@ -435,7 +435,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-09",
         to_time: "8:45 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -446,7 +446,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-23",
         start_time: "9:00 PM",
         duration_minutes: 15,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Captcha simplify",
@@ -498,7 +498,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-17",
         eta_time: "2:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Free consultation form",
@@ -507,7 +507,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-06",
         eta_time: "5:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Add new MacBook M1 listing",
@@ -529,7 +529,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-07",
         to_time: "5:00 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "New laptop batch photos",
@@ -551,7 +551,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-14",
         start_time: "6:00 PM",
         duration_minutes: 20,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Student discount banner",
@@ -594,7 +594,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-13",
         eta_time: "10:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Gallery compression",
@@ -603,7 +603,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-07",
         eta_time: "9:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Add skylight FAQ entry",
@@ -625,7 +625,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-16",
         to_time: "9:30 AM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -679,7 +679,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-09",
         eta_time: "11:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "FAQ schema markup",
@@ -688,7 +688,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-21",
         eta_time: "10:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "New project photos",
@@ -706,7 +706,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-04",
         eta_time: "2:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     meetings: [
@@ -719,7 +719,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-04",
         to_time: "11:00 AM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Projects page expansion",
@@ -741,7 +741,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-26",
         start_time: "11:00 AM",
         duration_minutes: 20,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Free consultation form",
@@ -815,7 +815,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-28",
         to_time: "11:30 AM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -826,7 +826,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-15",
         start_time: "4:00 PM",
         duration_minutes: 10,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Google Maps embed",
@@ -900,7 +900,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-20",
         to_time: "3:45 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -920,7 +920,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-12",
         start_time: "12:00 PM",
         duration_minutes: 10,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
   },
@@ -954,7 +954,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "in_progress",
         eta_date: "2026-09-04",
         eta_time: "11:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Appointment form test",
@@ -963,7 +963,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "completed",
         eta_date: "2026-08-19",
         eta_time: "4:00 PM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Add gut health blog post",
@@ -985,7 +985,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-08-18",
         to_time: "4:45 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -996,7 +996,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-08-08",
         start_time: "5:00 PM",
         duration_minutes: 10,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Wellness news section",
@@ -1029,7 +1029,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
     ],
     links: [
       { label: "Client portal login", url: "http://localhost:5173/client-portal/auth" },
-      { label: "Admin projects", url: "http://localhost:5173/admin-portal/projects" },
+      { label: "Workspace projects", url: "http://localhost:5173/workspace/projects-management" },
     ],
     tasks: [
       {
@@ -1039,7 +1039,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "pending",
         eta_date: "2026-09-01",
         eta_time: "10:00 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Confirm project shows up",
@@ -1048,7 +1048,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         status: "pending",
         eta_date: "2026-09-01",
         eta_time: "10:30 AM",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
       {
         title: "Raise a test activity",
@@ -1070,7 +1070,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         to_date: "2026-09-03",
         to_time: "4:30 PM",
         venue: "online",
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
     calls: [
@@ -1081,7 +1081,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
         start_date: "2026-09-01",
         start_time: "6:00 PM",
         duration_minutes: 15,
-        raised_by: "admin",
+        raised_by: "workspace",
       },
     ],
   },
@@ -1129,7 +1129,7 @@ async function findClientIdByCompanyName(
   const { data, error } = await supabase
     .from("clients")
     .select("id")
-    .eq("admin_id", userId)
+    .eq("owner_user_id", userId)
     .eq("company_name", companyName)
     .eq("is_active", true)
     .maybeSingle();

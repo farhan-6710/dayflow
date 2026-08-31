@@ -12,7 +12,7 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 
 export function ClientActivitiesBlock({
   canEdit = true,
-  activityRaisedBy = "admin",
+  activityRaisedBy = "workspace",
   ...scopeProps
 }: ClientActivitiesBlockProps) {
   const { user } = useAuth();

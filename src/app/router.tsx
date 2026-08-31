@@ -1,14 +1,16 @@
 import { createBrowserRouter, Navigate, useParams } from "react-router";
 
 import { LegacyPathRedirect } from "@/app/components/LegacyPathRedirect";
+import { AdminPortalLegacyRedirect } from "@/app/components/AdminPortalLegacyRedirect";
+import { LEGACY_ADMIN_PORTAL_PREFIX } from "@/app/constants/adminPortalRoutes";
 import {
-  ADMIN_PORTAL_CLIENTS_MANAGEMENT_PATH,
-  ADMIN_PORTAL_DAILY_REMINDERS_PATH,
-  ADMIN_PORTAL_DASHBOARD_PATH,
-  ADMIN_PORTAL_PREFIX,
-  ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH,
-  ADMIN_PORTAL_TASKS_CALENDAR_PATH,
-} from "@/app/constants/adminPortalRoutes";
+  WORKSPACE_CLIENTS_MANAGEMENT_PATH,
+  WORKSPACE_DAILY_REMINDERS_PATH,
+  WORKSPACE_DASHBOARD_PATH,
+  WORKSPACE_PREFIX,
+  WORKSPACE_PROJECTS_MANAGEMENT_PATH,
+  WORKSPACE_TASKS_CALENDAR_PATH,
+} from "@/app/constants/workspaceRoutes";
 import {
   CLIENT_PORTAL_DASHBOARD_PATH,
   CLIENT_PORTAL_PREFIX,
@@ -127,7 +129,7 @@ const ClientSettingsPage = lazyRoutePage(
 function ProjectDetailLegacyRedirect() {
   const { id } = useParams();
   return (
-    <Navigate to={`${ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH}/${id}`} replace />
+    <Navigate to={`${WORKSPACE_PROJECTS_MANAGEMENT_PATH}/${id}`} replace />
   );
 }
 
@@ -141,7 +143,11 @@ export const router = createBrowserRouter([
     element: <LegacyPathRedirect />,
   },
   {
-    path: ADMIN_PORTAL_PREFIX,
+    path: `${LEGACY_ADMIN_PORTAL_PREFIX}/*`,
+    element: <AdminPortalLegacyRedirect />,
+  },
+  {
+    path: WORKSPACE_PREFIX,
     errorElement: <RouteErrorPage />,
     children: [
       {
@@ -182,7 +188,7 @@ export const router = createBrowserRouter([
               {
                 path: "projects",
                 element: (
-                  <Navigate to={ADMIN_PORTAL_PROJECTS_MANAGEMENT_PATH} replace />
+                  <Navigate to={WORKSPACE_PROJECTS_MANAGEMENT_PATH} replace />
                 ),
               },
               {
@@ -200,13 +206,13 @@ export const router = createBrowserRouter([
               {
                 path: "clients",
                 element: (
-                  <Navigate to={ADMIN_PORTAL_CLIENTS_MANAGEMENT_PATH} replace />
+                  <Navigate to={WORKSPACE_CLIENTS_MANAGEMENT_PATH} replace />
                 ),
               },
               {
                 path: "tasks",
                 element: (
-                  <Navigate to={ADMIN_PORTAL_TASKS_CALENDAR_PATH} replace />
+                  <Navigate to={WORKSPACE_TASKS_CALENDAR_PATH} replace />
                 ),
               },
               {
@@ -216,7 +222,7 @@ export const router = createBrowserRouter([
               {
                 path: "calendar",
                 element: (
-                  <Navigate to={ADMIN_PORTAL_TASKS_CALENDAR_PATH} replace />
+                  <Navigate to={WORKSPACE_TASKS_CALENDAR_PATH} replace />
                 ),
               },
               {
@@ -226,7 +232,7 @@ export const router = createBrowserRouter([
               {
                 path: "reminders",
                 element: (
-                  <Navigate to={ADMIN_PORTAL_DAILY_REMINDERS_PATH} replace />
+                  <Navigate to={WORKSPACE_DAILY_REMINDERS_PATH} replace />
                 ),
               },
               {
@@ -243,7 +249,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "*",
-                element: <Navigate to={ADMIN_PORTAL_DASHBOARD_PATH} replace />,
+                element: <Navigate to={WORKSPACE_DASHBOARD_PATH} replace />,
               },
             ],
           },

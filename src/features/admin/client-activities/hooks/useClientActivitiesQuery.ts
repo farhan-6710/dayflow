@@ -21,7 +21,7 @@ export type ClientActivitiesQueryScope =
   | {
       scope: "client";
       clientId: string;
-      /** Admin portal: admin auth user id. Omit when forClientPortal is true. */
+      /** Workspace: auth user id. Omit when forClientPortal is true. */
       userId?: string;
       forClientPortal?: boolean;
       clientCompanyName?: string | null;

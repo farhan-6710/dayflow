@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
-import { ADMIN_PORTAL_AUTH_PATH } from "@/app/constants/adminPortalRoutes";
+import { WORKSPACE_AUTH_PATH } from "@/app/constants/workspaceRoutes";
 import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes";
 import { CLIENT_AUTH_HOME } from "@/features/client/constants/routes";
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
@@ -58,7 +58,7 @@ export function NotAClientPage() {
         <p className="text-sm text-muted-foreground">
           No active client profile matches this account&apos;s email. Ask your
           provider to add you in Clients Management with the same email you use
-          to sign in, or use the admin portal if you are a team member.
+          to sign in, or use the workspace if you manage your own DayFlow account.
         </p>
         {linkError ? (
           <p className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-xs text-destructive">
@@ -93,7 +93,7 @@ export function NotAClientPage() {
             Sign out
           </Button>
           <Button asChild>
-            <Link to={ADMIN_PORTAL_AUTH_PATH}>Go to admin portal</Link>
+            <Link to={WORKSPACE_AUTH_PATH}>Go to workspace</Link>
           </Button>
         </div>
       </div>

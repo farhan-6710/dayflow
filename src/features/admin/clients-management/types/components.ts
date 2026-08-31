@@ -25,7 +25,7 @@ export type ClientChatMessageProps = {
 
 export type ClientChatProps = {
   clientContactLabel: string;
-  currentAdminId: string;
+  currentUserId: string;
   messages: ClientChatMessage[];
   draft: string;
   onDraftChange: (value: string) => void;

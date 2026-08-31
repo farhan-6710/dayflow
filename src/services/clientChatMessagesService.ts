@@ -6,28 +6,28 @@ import type { ClientChatMessage } from "@/features/admin/clients-management/type
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 
-/** Admin portal — message from the signed-in admin. */
-export async function createAdminClientChatMessage(input: {
+/** Workspace — message from the signed-in workspace user. */
+export async function createWorkspaceClientChatMessage(input: {
   clientId: string;
-  adminId: string;
+  userId: string;
   body: string;
 }): Promise<ClientChatMessage> {
   return insertClientChatMessage({
     clientId: input.clientId,
-    authorAdminId: input.adminId,
+    authorUserId: input.userId,
     authorClientId: null,
     body: input.body,
   });
 }
 
-/** Client portal — message from the client (future). */
+/** Client portal — message from the client. */
 export async function createClientAuthoredChatMessage(input: {
   clientId: string;
   body: string;
 }): Promise<ClientChatMessage> {
   return insertClientChatMessage({
     clientId: input.clientId,
-    authorAdminId: null,
+    authorUserId: null,
     authorClientId: input.clientId,
     body: input.body,
   });
@@ -53,7 +53,7 @@ export async function fetchClientChatMessages(
 
 async function insertClientChatMessage(input: {
   clientId: string;
-  authorAdminId: string | null;
+  authorUserId: string | null;
   authorClientId: string | null;
   body: string;
 }): Promise<ClientChatMessage> {
@@ -62,15 +62,15 @@ async function insertClientChatMessage(input: {
     throw new Error("Message cannot be empty.");
   }
 
-  if (Boolean(input.authorAdminId) === Boolean(input.authorClientId)) {
-    throw new Error("Message needs exactly one author (admin or client).");
+  if (Boolean(input.authorUserId) === Boolean(input.authorClientId)) {
+    throw new Error("Message needs exactly one author (workspace user or client).");
   }
 
   const { data, error } = await supabase
     .from(DB.CLIENT_CONVERSATION_MESSAGES.TABLE)
     .insert({
       client_id: input.clientId,
-      author_admin_id: input.authorAdminId,
+      author_user_id: input.authorUserId,
       author_client_id: input.authorClientId,
       body,
     })
@@ -84,7 +84,7 @@ async function insertClientChatMessage(input: {
   return mapClientChatMessageRow(data as unknown as ClientChatMessageRow);
 }
 
-export async function updateAdminClientChatMessage(
+export async function updateWorkspaceClientChatMessage(
   messageId: string,
   body: string,
 ): Promise<ClientChatMessage> {
@@ -97,7 +97,7 @@ export async function updateAdminClientChatMessage(
     .from(DB.CLIENT_CONVERSATION_MESSAGES.TABLE)
     .update({ body: nextBody })
     .eq("id", messageId)
-    .not("author_admin_id", "is", null)
+    .not("author_user_id", "is", null)
     .select(DB.CLIENT_CONVERSATION_MESSAGES.SELECT)
     .single();
 
@@ -108,14 +108,14 @@ export async function updateAdminClientChatMessage(
   return mapClientChatMessageRow(data as unknown as ClientChatMessageRow);
 }
 
-export async function deleteAdminClientChatMessage(
+export async function deleteWorkspaceClientChatMessage(
   messageId: string,
 ): Promise<void> {
   const { error } = await supabase
     .from(DB.CLIENT_CONVERSATION_MESSAGES.TABLE)
     .delete()
     .eq("id", messageId)
-    .not("author_admin_id", "is", null);
+    .not("author_user_id", "is", null);
 
   if (error) {
     throw error;

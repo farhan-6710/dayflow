@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import {
   OAUTH_CALLBACK_MESSAGE_TYPE,
 } from "@/app/constants/oauthRoutes";
-import { ADMIN_PORTAL_DASHBOARD_PATH } from "@/app/constants/adminPortalRoutes";
+import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 import { supabase } from "@/services/supabaseClient";
 
@@ -30,7 +30,7 @@ export function OAuthCallbackPage() {
   const [searchParams] = useSearchParams();
   const handledRef = useRef(false);
 
-  const nextPath = searchParams.get("next") ?? ADMIN_PORTAL_DASHBOARD_PATH;
+  const nextPath = searchParams.get("next") ?? WORKSPACE_DASHBOARD_PATH;
   const oauthError =
     searchParams.get("error_description") ?? searchParams.get("error");
 
