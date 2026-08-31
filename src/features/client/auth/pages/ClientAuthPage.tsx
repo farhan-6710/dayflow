@@ -122,7 +122,7 @@ export function ClientAuthPage() {
           ) : formType === AUTH_FORM_TYPES.signup ? (
             <SignupForm emailRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
           ) : (
-            <LoginForm />
+            <LoginForm oauthRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
           )}
 
           {!showResetPassword && formType !== AUTH_FORM_TYPES.forgotPassword ? (

@@ -10,12 +10,17 @@ import { authFormStyles } from "@/features/admin/auth/components/authFormStyles"
 import { formFieldGroupClassName } from "@/shared/constants/formStyles";
 import { AUTH_FORM_TYPES } from "@/features/admin/auth/constants/auth";
 import { useLoginForm } from "@/features/admin/auth/hooks/useLoginForm";
+import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
 import { buildAuthUrl } from "@/features/admin/auth/utils/authUrlParams";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 
-export function LoginForm() {
+export function LoginForm({
+  oauthRedirectPath = DASHBOARD_HOME,
+}: {
+  oauthRedirectPath?: string;
+} = {}) {
   const {
     email,
     setEmail,
@@ -78,6 +83,7 @@ export function LoginForm() {
 
       <AuthOAuthSignIn
         disabled={isSubmitting}
+        oauthRedirectPath={oauthRedirectPath}
         onError={setError}
         onBeforeSignIn={clearError}
       />

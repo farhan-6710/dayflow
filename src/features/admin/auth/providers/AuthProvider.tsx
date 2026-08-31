@@ -132,7 +132,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signInWithEmail,
       signUpWithEmail,
       signInWithOAuthProvider: (provider, options) =>
-        signInWithOAuthProvider(provider, options?.isSignup ?? false),
+        signInWithOAuthProvider(provider, options?.redirectPath),
       signOut: handleSignOut,
     };
   }, [

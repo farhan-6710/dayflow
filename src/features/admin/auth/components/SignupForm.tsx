@@ -92,7 +92,7 @@ export function SignupForm({
 
       <AuthOAuthSignIn
         disabled={isSubmitting}
-        isSignup
+        oauthRedirectPath={emailRedirectPath}
         onError={setError}
         onBeforeSignIn={clearError}
       />

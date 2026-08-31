@@ -1,6 +1,6 @@
 export type AuthOAuthSignInProps = {
   disabled?: boolean;
-  isSignup?: boolean;
+  oauthRedirectPath?: string;
   onError: (message: string) => void;
   onBeforeSignIn?: () => void;
 };

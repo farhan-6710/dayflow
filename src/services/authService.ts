@@ -1,6 +1,7 @@
 import type {
   AuthChangeEvent,
   AuthError,
+  Provider,
   User,
 } from "@supabase/supabase-js";
 
@@ -137,13 +138,22 @@ export async function signUpWithEmail(
   return { ok: true, requiresEmailConfirmation: false };
 }
 
+export type SignInWithOAuthOptions = {
+  redirectPath?: string;
+};
+
 export async function signInWithOAuthProvider(
-  provider: string,
-  isSignup: boolean,
+  provider: Provider,
+  redirectPath: string = ADMIN_PORTAL_DASHBOARD_PATH,
 ): Promise<AuthError | null> {
-  // Empty handler for now as per user instruction
-  console.log("OAuth clicked (skipped for now):", provider, isSignup);
-  return null;
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: `${window.location.origin}${redirectPath}`,
+    },
+  });
+
+  return error;
 }
 
 export async function signOut(): Promise<void> {
