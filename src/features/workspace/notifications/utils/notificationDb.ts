@@ -1,5 +1,5 @@
-import type { AppNotification } from "@/features/admin/notifications/types/types";
-import type { NotificationType } from "@/features/admin/notifications/constants/notificationTypes";
+import type { AppNotification } from "@/features/workspace/notifications/types/types";
+import type { NotificationType } from "@/features/workspace/notifications/constants/notificationTypes";
 
 type NotificationRow = {
   id: string;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { updateProfile } from "@/services/profilesService";
 import {
   requestPasswordReset,

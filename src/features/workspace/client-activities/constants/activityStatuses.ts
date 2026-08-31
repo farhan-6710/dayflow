@@ -1,7 +1,7 @@
 import type {
   ClientActivityPriority,
   ClientActivityStatus,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 
 export const CLIENT_ACTIVITY_STATUSES: ClientActivityStatus[] = [
   "pending",

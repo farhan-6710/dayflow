@@ -1,7 +1,7 @@
-import { ProjectForSelect } from "@/features/admin/projects/components/ProjectForSelect";
-import { PROJECT_COLOR_PRESETS } from "@/features/admin/projects/constants/projectColors";
-import { PROJECT_FOR_LABEL } from "@/features/admin/projects/constants/projectFor";
-import type { ProjectFormDialogProps } from "@/features/admin/projects/types/components";
+import { ProjectForSelect } from "@/features/workspace/projects/components/ProjectForSelect";
+import { PROJECT_COLOR_PRESETS } from "@/features/workspace/projects/constants/projectColors";
+import { PROJECT_FOR_LABEL } from "@/features/workspace/projects/constants/projectFor";
+import type { ProjectFormDialogProps } from "@/features/workspace/projects/types/components";
 import {
   colorSwatchClassName,
   formFieldGroupClassName,

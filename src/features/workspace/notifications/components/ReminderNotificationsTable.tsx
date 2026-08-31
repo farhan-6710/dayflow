@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { Loader2, X } from "lucide-react";
 
-import { reminderNotificationsDirectoryConfig } from "@/features/admin/notifications/constants/notificationTypes";
-import type { ReminderNotificationsTableProps } from "@/features/admin/notifications/types/components";
+import { reminderNotificationsDirectoryConfig } from "@/features/workspace/notifications/constants/notificationTypes";
+import type { ReminderNotificationsTableProps } from "@/features/workspace/notifications/types/components";
 import { WORKSPACE_DAILY_REMINDERS_PATH } from "@/app/constants/workspaceRoutes";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";

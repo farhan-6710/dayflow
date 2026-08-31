@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { MYSELF_PROJECT_FOR_VALUE } from "@/features/admin/projects/constants/projectFor";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { MYSELF_PROJECT_FOR_VALUE } from "@/features/workspace/projects/constants/projectFor";
 import {
   DEFAULT_PROJECT_COLOR,
-} from "@/features/admin/projects/constants/projectColors";
+} from "@/features/workspace/projects/constants/projectColors";
 import {
   projectForToSelectValue,
   selectValueToProjectFor,
-} from "@/features/admin/projects/utils/projectFor";
-import type { Client } from "@/features/admin/clients-management/types/types";
+} from "@/features/workspace/projects/utils/projectFor";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 import { fetchClients } from "@/services/clientsService";
 import {
   fetchProjects,

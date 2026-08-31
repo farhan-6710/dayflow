@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ChevronDown, Clock3 } from "lucide-react";
 
-import { TASK_AVAILABLE_TIMES } from "@/features/admin/tasks/constants/tasksCalendar";
-import type { TaskTimeSelectProps } from "@/features/admin/tasks/types/components";
+import { TASK_AVAILABLE_TIMES } from "@/features/workspace/tasks/constants/tasksCalendar";
+import type { TaskTimeSelectProps } from "@/features/workspace/tasks/types/components";
 import { Button } from "@/shared/ui/button";
 import {
   Popover,

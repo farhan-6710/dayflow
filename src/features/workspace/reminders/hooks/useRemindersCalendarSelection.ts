@@ -6,7 +6,7 @@ import {
   buildMonthWeeks,
   parseCalendarDateFromSearchParams,
   toCalendarParts,
-} from "@/features/admin/reminders/utils/calendarUtils";
+} from "@/features/workspace/reminders/utils/calendarUtils";
 
 function resolveSelectedDate(searchParams: URLSearchParams): Date {
   return parseCalendarDateFromSearchParams(searchParams) ?? new Date();

@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 
-import { ClosedActivitiesSection } from "@/features/admin/client-activities/components/ClosedActivitiesSection";
-import { OpenActivitiesSection } from "@/features/admin/client-activities/components/OpenActivitiesSection";
-import { useClientActivitiesQuery } from "@/features/admin/client-activities/hooks/useClientActivitiesQuery";
-import { useClientActivityActions } from "@/features/admin/client-activities/hooks/useClientActivityActions";
-import type { ClientActivityRaisedBy } from "@/features/admin/client-activities/types/types";
-import type { ClientActivitiesBlockProps } from "@/features/admin/client-activities/types/components";
-import { isClientActivityOpen } from "@/features/admin/client-activities/utils/activityFormUtils";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { ClosedActivitiesSection } from "@/features/workspace/client-activities/components/ClosedActivitiesSection";
+import { OpenActivitiesSection } from "@/features/workspace/client-activities/components/OpenActivitiesSection";
+import { useClientActivitiesQuery } from "@/features/workspace/client-activities/hooks/useClientActivitiesQuery";
+import { useClientActivityActions } from "@/features/workspace/client-activities/hooks/useClientActivityActions";
+import type { ClientActivityRaisedBy } from "@/features/workspace/client-activities/types/types";
+import type { ClientActivitiesBlockProps } from "@/features/workspace/client-activities/types/components";
+import { isClientActivityOpen } from "@/features/workspace/client-activities/utils/activityFormUtils";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 
 export function ClientActivitiesBlock({

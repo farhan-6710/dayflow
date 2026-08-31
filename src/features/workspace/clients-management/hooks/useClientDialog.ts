@@ -1,17 +1,17 @@
 import { useCallback, useState } from "react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import type { Client } from "@/features/admin/clients-management/types/types";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 import type {
   ClientFormField,
   ClientFormValues,
-} from "@/features/admin/clients-management/utils/clientFormUtils";
+} from "@/features/workspace/clients-management/utils/clientFormUtils";
 import {
   clientToFormValues,
   emptyClientFormValues,
   normalizeClientEmail,
   validateClientForm,
-} from "@/features/admin/clients-management/utils/clientFormUtils";
+} from "@/features/workspace/clients-management/utils/clientFormUtils";
 import {
   createClient,
   deleteClient,
@@ -25,7 +25,7 @@ type UseClientDialogOptions = {
 };
 
 export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
-  const { user: admin } = useAuth();
+  const { user } = useAuth();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingClientId, setEditingClientId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -66,7 +66,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
   }, []);
 
   const saveClient = useCallback(async () => {
-    if (isSaving || !admin) {
+    if (isSaving || !user) {
       return;
     }
 
@@ -99,7 +99,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
         });
         showToast("success", `"${companyName}" updated successfully.`);
       } else {
-        await createClient(admin.id, payload);
+        await createClient(user.id, payload);
         showToast("success", `"${companyName}" added successfully.`);
       }
 
@@ -112,7 +112,7 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
     } finally {
       setIsSaving(false);
     }
-  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, admin, values]);
+  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, user, values]);
 
   const removeClient = useCallback(async () => {
     if (!editingClientId || isSaving) {

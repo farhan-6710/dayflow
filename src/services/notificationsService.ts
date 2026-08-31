@@ -3,10 +3,10 @@ import { supabase } from "@/services/supabaseClient";
 import type {
   AppNotification,
   CreateNotificationInput,
-} from "@/features/admin/notifications/types/types";
-import type { NotificationType } from "@/features/admin/notifications/constants/notificationTypes";
-import { mapDbRowToNotification } from "@/features/admin/notifications/utils/notificationDb";
-import { notifyNotificationsUpdated } from "@/features/admin/notifications/utils/notificationsEvents";
+} from "@/features/workspace/notifications/types/types";
+import type { NotificationType } from "@/features/workspace/notifications/constants/notificationTypes";
+import { mapDbRowToNotification } from "@/features/workspace/notifications/utils/notificationDb";
+import { notifyNotificationsUpdated } from "@/features/workspace/notifications/utils/notificationsEvents";
 
 export async function createNotifications(
   inputs: CreateNotificationInput[],

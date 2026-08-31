@@ -1,9 +1,9 @@
 import type { Reminder } from "@/services/remindersService";
-import type { ReminderDaySlot, ReminderSlotItem } from "@/features/admin/reminders/types/types";
+import type { ReminderDaySlot, ReminderSlotItem } from "@/features/workspace/reminders/types/types";
 import {
   getDayKeyForDate,
   isReminderActiveToday,
-} from "@/features/admin/reminders/utils/calendarUtils";
+} from "@/features/workspace/reminders/utils/calendarUtils";
 
 function toSlotItem(reminder: Reminder): ReminderSlotItem {
   return {

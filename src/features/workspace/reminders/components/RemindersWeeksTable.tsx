@@ -1,11 +1,11 @@
-import { ReminderWeekDayCell } from "@/features/admin/reminders/components/ReminderWeekDayCell";
+import { ReminderWeekDayCell } from "@/features/workspace/reminders/components/ReminderWeekDayCell";
 import {
   CALENDAR_DAY_COLUMN_WIDTH,
   CALENDAR_DAY_LABELS,
   CALENDAR_WEEK_COLUMN_MIN_WIDTH,
-} from "@/features/admin/reminders/constants/remindersCalendar";
-import type { RemindersWeeksTableProps } from "@/features/admin/reminders/types/components";
-import { isSameCalendarDay } from "@/features/admin/reminders/utils/calendarUtils";
+} from "@/features/workspace/reminders/constants/remindersCalendar";
+import type { RemindersWeeksTableProps } from "@/features/workspace/reminders/types/components";
+import { isSameCalendarDay } from "@/features/workspace/reminders/utils/calendarUtils";
 import { TABLE_HORIZONTAL_SCROLL_CLASS } from "@/shared/constants/directoryTable";
 import { cn } from "@/shared/lib/utils";
 import { TooltipProvider } from "@/shared/ui/tooltip";

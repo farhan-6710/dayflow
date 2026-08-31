@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 
-import type { TaskCompletionMonthSelection } from "@/features/admin/dashboard/types/taskCompletionChart";
+import type { TaskCompletionMonthSelection } from "@/features/workspace/dashboard/types/taskCompletionChart";
 import {
   buildTaskCompletionChart,
   defaultTaskCompletionMonths,
-} from "@/features/admin/dashboard/utils/taskCompletionChart";
+} from "@/features/workspace/dashboard/utils/taskCompletionChart";
 import type { Task } from "@/services/tasksService";
 
 export function useTaskCompletionChart(tasks: Task[]) {

@@ -2,9 +2,9 @@ import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 
-import { ProjectNoteEditor } from "@/features/admin/projects/components/ProjectNoteEditor";
-import { DRAFT_PROJECT_NOTE_ID } from "@/features/admin/projects/constants/projectNotes";
-import { useProjectNotePage } from "@/features/admin/projects/hooks/useProjectNotePage";
+import { ProjectNoteEditor } from "@/features/workspace/projects/components/ProjectNoteEditor";
+import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
+import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { PageHeader } from "@/shared/components/PageHeader";
 

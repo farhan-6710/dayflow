@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { DRAFT_PROJECT_NOTE_ID } from "@/features/admin/projects/constants/projectNotes";
+import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
 import type { Note } from "@/services/notesService";
 
 function buildDraftProjectNote(projectId: string, userId: string): Note {

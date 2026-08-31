@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { useClientActivitiesQuery } from "@/features/admin/client-activities/hooks/useClientActivitiesQuery";
-import { isClientActivityOpen } from "@/features/admin/client-activities/utils/activityFormUtils";
+import { useClientActivitiesQuery } from "@/features/workspace/client-activities/hooks/useClientActivitiesQuery";
+import { isClientActivityOpen } from "@/features/workspace/client-activities/utils/activityFormUtils";
 import { fetchProjectsForClientPortal } from "@/services/projectsService";
 
 export type ClientDashboardStats = {

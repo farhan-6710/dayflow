@@ -2,8 +2,8 @@ import { format } from "date-fns";
 import { Loader2, X } from "lucide-react";
 
 import { WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
-import { taskNotificationsDirectoryConfig } from "@/features/admin/notifications/constants/notificationTypes";
-import type { TaskNotificationsTableProps } from "@/features/admin/notifications/types/components";
+import { taskNotificationsDirectoryConfig } from "@/features/workspace/notifications/constants/notificationTypes";
+import type { TaskNotificationsTableProps } from "@/features/workspace/notifications/types/components";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";

@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import type { ReactNode } from "react";
 
-import type { ClientDetailSummaryProps } from "@/features/admin/clients-management/types/components";
+import type { ClientDetailSummaryProps } from "@/features/workspace/clients-management/types/components";
 import { ActiveStatusLabel } from "@/shared/components/ActiveStatusSwitchField";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 

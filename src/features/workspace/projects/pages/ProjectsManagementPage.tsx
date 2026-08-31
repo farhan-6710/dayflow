@@ -1,9 +1,9 @@
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ProjectFormDialog } from "@/features/admin/projects/components/ProjectFormDialog";
-import { ProjectsTable } from "@/features/admin/projects/components/ProjectsTable";
-import { useProjectsManagement } from "@/features/admin/projects/hooks/useProjectsManagement";
+import { ProjectFormDialog } from "@/features/workspace/projects/components/ProjectFormDialog";
+import { ProjectsTable } from "@/features/workspace/projects/components/ProjectsTable";
+import { useProjectsManagement } from "@/features/workspace/projects/hooks/useProjectsManagement";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";

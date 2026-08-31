@@ -1,11 +1,11 @@
 import type {
   ClientFormField,
   ClientFormValues,
-} from "@/features/admin/clients-management/utils/clientFormUtils";
+} from "@/features/workspace/clients-management/utils/clientFormUtils";
 import type {
   Client,
   ClientChatMessage,
-} from "@/features/admin/clients-management/types/types";
+} from "@/features/workspace/clients-management/types/types";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 
 export type ClientDetailSummaryProps = {

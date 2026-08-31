@@ -1,9 +1,9 @@
-import type { ReminderWeekDayCellProps } from "@/features/admin/reminders/types/components";
+import type { ReminderWeekDayCellProps } from "@/features/workspace/reminders/types/components";
 import {
   compareReminderTimes,
   formatMonthDayLabel,
   getDayLabel,
-} from "@/features/admin/reminders/utils/calendarUtils";
+} from "@/features/workspace/reminders/utils/calendarUtils";
 import { cn } from "@/shared/lib/utils";
 import {
   Tooltip,

@@ -1,13 +1,13 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import {
   CLIENT_PORTAL_AUTH_PATH,
   CLIENT_PORTAL_NOT_A_CLIENT_PATH,
 } from "@/app/constants/clientPortalRoutes";
 import { ClientPortalProvider } from "@/features/client/providers/ClientPortalProvider";
-import type { Client } from "@/features/admin/clients-management/types/types";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 import { resolveClientPortalProfile } from "@/services/clientPortalService";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { ExternalLink, Link2, Pencil, Plus, Trash2 } from "lucide-react";
 
-import { ProjectReferenceLinkDialog } from "@/features/admin/projects/components/ProjectReferenceLinkDialog";
-import type { ProjectReferenceLinksSectionProps } from "@/features/admin/projects/types/components";
-import type { CreateProjectReferenceLinkInput } from "@/features/admin/projects/types/referenceLinks";
+import { ProjectReferenceLinkDialog } from "@/features/workspace/projects/components/ProjectReferenceLinkDialog";
+import type { ProjectReferenceLinksSectionProps } from "@/features/workspace/projects/types/components";
+import type { CreateProjectReferenceLinkInput } from "@/features/workspace/projects/types/referenceLinks";
 import {
   EMPTY_PROJECT_REFERENCE_LINK_FORM,
   projectReferenceLinkToFormValues,
   type ProjectReferenceLinkFormValues,
-} from "@/features/admin/projects/utils/projectReferenceLinkFormUtils";
+} from "@/features/workspace/projects/utils/projectReferenceLinkFormUtils";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { Button } from "@/shared/ui/button";
 

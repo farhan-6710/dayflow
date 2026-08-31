@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { ChevronDown, Plus } from "lucide-react";
 
-import { ActivityCallDialog } from "@/features/admin/client-activities/components/ActivityCallDialog";
-import { ActivityColumns } from "@/features/admin/client-activities/components/ActivityColumns";
-import { ActivityMeetingDialog } from "@/features/admin/client-activities/components/ActivityMeetingDialog";
-import { ActivityTaskDialog } from "@/features/admin/client-activities/components/ActivityTaskDialog";
-import type { ClientActivitiesSectionProps } from "@/features/admin/client-activities/types/components";
+import { ActivityCallDialog } from "@/features/workspace/client-activities/components/ActivityCallDialog";
+import { ActivityColumns } from "@/features/workspace/client-activities/components/ActivityColumns";
+import { ActivityMeetingDialog } from "@/features/workspace/client-activities/components/ActivityMeetingDialog";
+import { ActivityTaskDialog } from "@/features/workspace/client-activities/components/ActivityTaskDialog";
+import type { ClientActivitiesSectionProps } from "@/features/workspace/client-activities/types/components";
 import type {
   ClientActivityCall,
   ClientActivityMeeting,
   ClientActivityTask,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 import {
   activityCallToFormValues,
   activityMeetingToFormValues,
@@ -21,7 +21,7 @@ import {
   type ClientActivityCallFormValues,
   type ClientActivityMeetingFormValues,
   type ClientActivityTaskFormValues,
-} from "@/features/admin/client-activities/utils/activityFormUtils";
+} from "@/features/workspace/client-activities/utils/activityFormUtils";
 import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,

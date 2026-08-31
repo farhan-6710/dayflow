@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Link } from "react-router";
 
-import { ProjectNotesTableRow } from "@/features/admin/projects/components/ProjectNotesTableRow";
-import { notesDirectoryConfig } from "@/features/admin/projects/constants/notesDirectory";
-import { buildProjectNotePath } from "@/features/admin/projects/constants/routes";
-import type { ProjectNotesTableProps } from "@/features/admin/projects/types/components";
+import { ProjectNotesTableRow } from "@/features/workspace/projects/components/ProjectNotesTableRow";
+import { notesDirectoryConfig } from "@/features/workspace/projects/constants/notesDirectory";
+import { buildProjectNotePath } from "@/features/workspace/projects/constants/routes";
+import type { ProjectNotesTableProps } from "@/features/workspace/projects/types/components";
 import type { Note } from "@/services/notesService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";

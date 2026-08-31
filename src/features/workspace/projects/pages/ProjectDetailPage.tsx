@@ -1,19 +1,19 @@
 import { ArrowLeft, Folder, Pencil } from "lucide-react";
 import { Link } from "react-router";
 
-import { ProjectFormDialog } from "@/features/admin/projects/components/ProjectFormDialog";
-import { ProjectNotesTable } from "@/features/admin/projects/components/ProjectNotesTable";
-import { ProjectReferenceLinksSection } from "@/features/admin/projects/components/ProjectReferenceLinksSection";
-import { ClientActivitiesBlock } from "@/features/admin/client-activities/components/ClientActivitiesBlock";
-import { useProjectDetail } from "@/features/admin/projects/hooks/useProjectDetail";
+import { ProjectFormDialog } from "@/features/workspace/projects/components/ProjectFormDialog";
+import { ProjectNotesTable } from "@/features/workspace/projects/components/ProjectNotesTable";
+import { ProjectReferenceLinksSection } from "@/features/workspace/projects/components/ProjectReferenceLinksSection";
+import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
+import { useProjectDetail } from "@/features/workspace/projects/hooks/useProjectDetail";
 import {
   PROJECTS_MANAGEMENT_PATH,
-} from "@/features/admin/projects/constants/routes";
+} from "@/features/workspace/projects/constants/routes";
 import {
   buildProjectDetailDescription,
   buildProjectDetailMeta,
   buildProjectNotesEmptyMessage,
-} from "@/features/admin/projects/utils/projectDetailDisplay";
+} from "@/features/workspace/projects/utils/projectDetailDisplay";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";

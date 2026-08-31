@@ -1,5 +1,5 @@
 import { Input } from "@/shared/ui/input";
-import type { ClientDialogBasicFieldsProps } from "@/features/admin/clients-management/types/components";
+import type { ClientDialogBasicFieldsProps } from "@/features/workspace/clients-management/types/components";
 
 export function ClientDialogBasicFields({
   values,

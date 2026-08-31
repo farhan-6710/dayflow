@@ -4,7 +4,7 @@ import type { User } from "@supabase/supabase-js";
 import {
   AuthContext,
   type AuthContextValue,
-} from "@/features/admin/auth/providers/authContext";
+} from "@/features/workspace/auth/providers/authContext";
 import type { Profile } from "@/services/profilesService";
 import {
   onAuthChange,

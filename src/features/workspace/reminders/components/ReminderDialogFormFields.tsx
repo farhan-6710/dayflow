@@ -1,6 +1,6 @@
-import { ReminderDayToggles } from "@/features/admin/reminders/components/ReminderDayToggles";
-import { ReminderTimeSelect } from "@/features/admin/reminders/components/ReminderTimeSelect";
-import type { ReminderDialogProps } from "@/features/admin/reminders/types/components";
+import { ReminderDayToggles } from "@/features/workspace/reminders/components/ReminderDayToggles";
+import { ReminderTimeSelect } from "@/features/workspace/reminders/components/ReminderTimeSelect";
+import type { ReminderDialogProps } from "@/features/workspace/reminders/types/components";
 import { DatePicker } from "@/shared/components/DatePicker";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
 import { Input } from "@/shared/ui/input";

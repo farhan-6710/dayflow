@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import type { ClientChatMessage } from "@/features/admin/clients-management/types/types";
-import { isWorkspaceAuthoredChatMessage } from "@/features/admin/clients-management/utils/clientChatMessageDb";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import type { ClientChatMessage } from "@/features/workspace/clients-management/types/types";
+import { isWorkspaceAuthoredChatMessage } from "@/features/workspace/clients-management/utils/clientChatMessageDb";
 import {
   createWorkspaceClientChatMessage,
   deleteWorkspaceClientChatMessage,

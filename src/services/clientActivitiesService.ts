@@ -9,7 +9,7 @@ import type {
   UpdateClientActivityCallInput,
   UpdateClientActivityMeetingInput,
   UpdateClientActivityTaskInput,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 

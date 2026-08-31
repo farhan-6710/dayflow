@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { ClientDialogBasicFields } from "@/features/admin/clients-management/components/ClientDialogBasicFields";
-import type { ClientDialogProps } from "@/features/admin/clients-management/types/components";
+import { ClientDialogBasicFields } from "@/features/workspace/clients-management/components/ClientDialogBasicFields";
+import type { ClientDialogProps } from "@/features/workspace/clients-management/types/components";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ActiveStatusSwitchField } from "@/shared/components/ActiveStatusSwitchField";
 import { Button } from "@/shared/ui/button";

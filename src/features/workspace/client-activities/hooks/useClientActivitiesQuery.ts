@@ -4,7 +4,7 @@ import type {
   ClientActivityCall,
   ClientActivityMeeting,
   ClientActivityTask,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 import type { Project } from "@/services/projectsService";
 import {
   fetchClientActivityCallsByClientId,

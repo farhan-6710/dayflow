@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { Pencil, Trash2 } from "lucide-react";
 
-import type { ClientChatMessageProps } from "@/features/admin/clients-management/types/components";
+import type { ClientChatMessageProps } from "@/features/workspace/clients-management/types/components";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 

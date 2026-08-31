@@ -1,4 +1,4 @@
-import type { NotificationType } from "@/features/admin/notifications/constants/notificationTypes";
+import type { NotificationType } from "@/features/workspace/notifications/constants/notificationTypes";
 
 export type AppNotification = {
   id: string;

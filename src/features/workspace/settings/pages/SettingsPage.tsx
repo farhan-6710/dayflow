@@ -1,4 +1,4 @@
-import { useSettings } from "@/features/admin/settings/hooks/useSettings";
+import { useSettings } from "@/features/workspace/settings/hooks/useSettings";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";

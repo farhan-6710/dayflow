@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { CLIENTS_MANAGEMENT_PATH } from "@/features/admin/clients-management/constants/routes";
-import { useClientDialog } from "@/features/admin/clients-management/hooks/useClientDialog";
-import type { Client, ClientChatMessage } from "@/features/admin/clients-management/types/types";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { CLIENTS_MANAGEMENT_PATH } from "@/features/workspace/clients-management/constants/routes";
+import { useClientDialog } from "@/features/workspace/clients-management/hooks/useClientDialog";
+import type { Client, ClientChatMessage } from "@/features/workspace/clients-management/types/types";
 import { fetchClientChatMessages } from "@/services/clientChatMessagesService";
 import { fetchClientById } from "@/services/clientsService";
 import { showToast } from "@/shared/utils/showToast";
 
 export function useClientDetail() {
-  const { user: admin, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { id: clientId } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [client, setClient] = useState<Client | null>(null);
@@ -19,7 +19,7 @@ export function useClientDetail() {
   const [error, setError] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
-    if (authLoading || !clientId || !admin) {
+    if (authLoading || !clientId || !user) {
       return;
     }
 
@@ -32,7 +32,7 @@ export function useClientDetail() {
         fetchClientChatMessages(clientId),
       ]);
 
-      if (!clientRow || clientRow.owner_user_id !== admin.id) {
+      if (!clientRow || clientRow.owner_user_id !== user.id) {
         showToast("error", "Client not found.");
         navigate(CLIENTS_MANAGEMENT_PATH);
         return;
@@ -49,7 +49,7 @@ export function useClientDetail() {
     } finally {
       setLoading(false);
     }
-  }, [authLoading, clientId, navigate, admin]);
+  }, [authLoading, clientId, navigate, user]);
 
   useEffect(() => {
     void reload();

@@ -1,4 +1,4 @@
-import type { ClientActivityMeetingVenue } from "@/features/admin/client-activities/types/types";
+import type { ClientActivityMeetingVenue } from "@/features/workspace/client-activities/types/types";
 
 export const CLIENT_ACTIVITY_MEETING_VENUES: ClientActivityMeetingVenue[] = [
   "client_location",

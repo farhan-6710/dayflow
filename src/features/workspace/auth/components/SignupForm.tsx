@@ -2,12 +2,12 @@ import {
   AuthEmailField,
   AuthFormAlert,
   AuthPasswordField,
-} from "@/features/admin/auth/components/AuthFormFields";
-import { AuthOAuthSignIn } from "@/features/admin/auth/components/AuthOAuthSignIn";
-import { authFormStyles } from "@/features/admin/auth/components/authFormStyles";
+} from "@/features/workspace/auth/components/AuthFormFields";
+import { AuthOAuthSignIn } from "@/features/workspace/auth/components/AuthOAuthSignIn";
+import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
 import { formFieldGroupClassName } from "@/shared/constants/formStyles";
-import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
-import { useSignupForm } from "@/features/admin/auth/hooks/useSignupForm";
+import { DASHBOARD_HOME } from "@/features/workspace/auth/constants/routes";
+import { useSignupForm } from "@/features/workspace/auth/hooks/useSignupForm";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";

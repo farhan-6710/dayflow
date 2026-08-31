@@ -2,8 +2,8 @@ import {
   AUTH_FORM_TYPE_PARAM,
   AUTH_FORM_TYPES,
   type AuthFormType,
-} from "@/features/admin/auth/constants/auth";
-import { AUTH_HOME } from "@/features/admin/auth/constants/routes";
+} from "@/features/workspace/auth/constants/auth";
+import { AUTH_HOME } from "@/features/workspace/auth/constants/routes";
 
 export function buildAuthUrl(
   formType: AuthFormType = AUTH_FORM_TYPES.login,

@@ -1,12 +1,12 @@
 import { Plus } from "lucide-react";
 
-import { ReminderDialog } from "@/features/admin/reminders/components/ReminderDialog";
-import { RemindersWeeksTable } from "@/features/admin/reminders/components/RemindersWeeksTable";
+import { ReminderDialog } from "@/features/workspace/reminders/components/ReminderDialog";
+import { RemindersWeeksTable } from "@/features/workspace/reminders/components/RemindersWeeksTable";
 import {
   useReminderChecker,
   useRemindersManagement,
-} from "@/features/admin/reminders/hooks/useRemindersManagement";
-import { useRemindersCalendarSelection } from "@/features/admin/reminders/hooks/useRemindersCalendarSelection";
+} from "@/features/workspace/reminders/hooks/useRemindersManagement";
+import { useRemindersCalendarSelection } from "@/features/workspace/reminders/hooks/useRemindersCalendarSelection";
 import { PageContent } from "@/shared/components/PageContent";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";

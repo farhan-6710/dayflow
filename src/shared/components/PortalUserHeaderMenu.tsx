@@ -2,8 +2,8 @@ import { LogOut, Settings, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { AUTH_HOME } from "@/features/admin/auth/constants/routes";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { AUTH_HOME } from "@/features/workspace/auth/constants/routes";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";

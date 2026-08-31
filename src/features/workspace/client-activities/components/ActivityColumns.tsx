@@ -1,19 +1,19 @@
 import type { ReactNode } from "react";
 import { CalendarDays, CheckSquare, Phone } from "lucide-react";
 
-import { ActivityList } from "@/features/admin/client-activities/components/ActivityList";
+import { ActivityList } from "@/features/workspace/client-activities/components/ActivityList";
 import type {
   ClientActivityCall,
   ClientActivityMeeting,
   ClientActivityTask,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 
 type ActivityColumnsProps = {
   tasks: ClientActivityTask[];
   meetings: ClientActivityMeeting[];
   calls: ClientActivityCall[];
   canEdit: boolean;
-  editOnlyRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+  editOnlyRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
   showProjectName?: boolean;
   onEditTask: (task: ClientActivityTask) => void;
   onEditMeeting: (meeting: ClientActivityMeeting) => void;

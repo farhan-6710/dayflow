@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { DEFAULT_TASK_TIME } from "@/features/admin/tasks/constants/tasksCalendar";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { DEFAULT_TASK_TIME } from "@/features/workspace/tasks/constants/tasksCalendar";
 import { fetchTasks, createTask, updateTask, deleteTask, type Task } from "@/services/tasksService";
 import { showToast } from "@/shared/utils/showToast";
 

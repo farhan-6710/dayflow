@@ -1,21 +1,21 @@
 import { ArrowLeft, Pencil } from "lucide-react";
 import { Link } from "react-router";
 
-import { ClientChat } from "@/features/admin/clients-management/components/ClientChat";
-import { ClientDetailSummary } from "@/features/admin/clients-management/components/ClientDetailSummary";
-import { ClientDialog } from "@/features/admin/clients-management/components/ClientDialog";
-import { ClientActivitiesBlock } from "@/features/admin/client-activities/components/ClientActivitiesBlock";
-import { CLIENTS_MANAGEMENT_PATH } from "@/features/admin/clients-management/constants/routes";
-import { useClientChat } from "@/features/admin/clients-management/hooks/useClientChat";
-import { useClientDetail } from "@/features/admin/clients-management/hooks/useClientDetail";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { ClientChat } from "@/features/workspace/clients-management/components/ClientChat";
+import { ClientDetailSummary } from "@/features/workspace/clients-management/components/ClientDetailSummary";
+import { ClientDialog } from "@/features/workspace/clients-management/components/ClientDialog";
+import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
+import { CLIENTS_MANAGEMENT_PATH } from "@/features/workspace/clients-management/constants/routes";
+import { useClientChat } from "@/features/workspace/clients-management/hooks/useClientChat";
+import { useClientDetail } from "@/features/workspace/clients-management/hooks/useClientDetail";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Button } from "@/shared/ui/button";
 
 export function ClientDetailPage() {
-  const { user: admin } = useAuth();
+  const { user } = useAuth();
   const {
     client,
     messages,
@@ -54,7 +54,7 @@ export function ClientDetailPage() {
     );
   }
 
-  if (!client || !admin) {
+  if (!client || !user) {
     return null;
   }
 
@@ -88,7 +88,7 @@ export function ClientDetailPage() {
           <ClientDetailSummary client={client} />
           <ClientChat
             clientContactLabel={clientContactLabel}
-            currentUserId={admin.id}
+            currentUserId={user.id}
             messages={messages}
             draft={draft}
             onDraftChange={setDraft}

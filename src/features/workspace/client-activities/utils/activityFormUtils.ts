@@ -5,8 +5,8 @@ import type {
   ClientActivityPriority,
   ClientActivityStatus,
   ClientActivityTask,
-} from "@/features/admin/client-activities/types/types";
-import { DEFAULT_TASK_TIME } from "@/features/admin/tasks/constants/tasksCalendar";
+} from "@/features/workspace/client-activities/types/types";
+import { DEFAULT_TASK_TIME } from "@/features/workspace/tasks/constants/tasksCalendar";
 
 export type ClientActivityTaskFormValues = {
   projectId: string;

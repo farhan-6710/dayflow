@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import { Bell } from "lucide-react";
 
-import { NOTIFICATIONS_PATH } from "@/features/admin/notifications/constants/routes";
-import { useUnreadNotificationsCount } from "@/features/admin/notifications/hooks/useUnreadNotificationsCount";
+import { NOTIFICATIONS_PATH } from "@/features/workspace/notifications/constants/routes";
+import { useUnreadNotificationsCount } from "@/features/workspace/notifications/hooks/useUnreadNotificationsCount";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 

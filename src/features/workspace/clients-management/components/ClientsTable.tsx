@@ -1,6 +1,6 @@
-import { ClientsTableRow } from "@/features/admin/clients-management/components/ClientsTableRow";
-import { clientsDirectoryConfig } from "@/features/admin/clients-management/constants/clientsDirectory";
-import type { ClientsTableProps } from "@/features/admin/clients-management/types/components";
+import { ClientsTableRow } from "@/features/workspace/clients-management/components/ClientsTableRow";
+import { clientsDirectoryConfig } from "@/features/workspace/clients-management/constants/clientsDirectory";
+import type { ClientsTableProps } from "@/features/workspace/clients-management/types/components";
 import { ActiveStatusFilter } from "@/shared/components/ActiveStatusFilter";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
 import { ACTIVE_STATUS_FILTER_LABELS } from "@/shared/constants/activeStatusFilter";

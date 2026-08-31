@@ -1,10 +1,10 @@
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ClientDialog } from "@/features/admin/clients-management/components/ClientDialog";
-import { ClientsTable } from "@/features/admin/clients-management/components/ClientsTable";
-import { useClientDialog } from "@/features/admin/clients-management/hooks/useClientDialog";
-import { useClientsQuery } from "@/features/admin/clients-management/hooks/useClientsQuery";
+import { ClientDialog } from "@/features/workspace/clients-management/components/ClientDialog";
+import { ClientsTable } from "@/features/workspace/clients-management/components/ClientsTable";
+import { useClientDialog } from "@/features/workspace/clients-management/hooks/useClientDialog";
+import { useClientsQuery } from "@/features/workspace/clients-management/hooks/useClientsQuery";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";

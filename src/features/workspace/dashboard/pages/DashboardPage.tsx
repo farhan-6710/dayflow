@@ -6,10 +6,10 @@ import {
   WORKSPACE_PROJECTS_MANAGEMENT_PATH,
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
-import { FocusListItem } from "@/features/admin/dashboard/components/FocusListItem";
-import { TaskCompletionChart } from "@/features/admin/dashboard/components/TaskCompletionChart";
-import { useDashboard } from "@/features/admin/dashboard/hooks/useDashboard";
-import { TaskFormDialog } from "@/features/admin/tasks/components/TaskFormDialog";
+import { FocusListItem } from "@/features/workspace/dashboard/components/FocusListItem";
+import { TaskCompletionChart } from "@/features/workspace/dashboard/components/TaskCompletionChart";
+import { useDashboard } from "@/features/workspace/dashboard/hooks/useDashboard";
+import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDialog";
 import { PageContent } from "@/shared/components/PageContent";
 import { DateFilters } from "@/shared/components/DateFilters";
 import { PageHeader } from "@/shared/components/PageHeader";

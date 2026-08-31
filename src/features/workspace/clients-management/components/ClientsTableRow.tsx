@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { Pencil } from "lucide-react";
 
-import { CLIENTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/admin/clients-management/constants/clientsDirectory";
-import { buildClientDetailPath } from "@/features/admin/clients-management/constants/routes";
-import type { ClientsTableRowProps } from "@/features/admin/clients-management/types/components";
+import { CLIENTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/clients-management/constants/clientsDirectory";
+import { buildClientDetailPath } from "@/features/workspace/clients-management/constants/routes";
+import type { ClientsTableRowProps } from "@/features/workspace/clients-management/types/components";
 import { ActiveStatusLabel } from "@/shared/components/ActiveStatusSwitchField";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";

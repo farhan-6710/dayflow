@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { DASHBOARD_HOME } from "@/features/workspace/auth/constants/routes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 export function PublicRoute() {

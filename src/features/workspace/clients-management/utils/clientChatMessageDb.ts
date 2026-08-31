@@ -1,4 +1,4 @@
-import type { ClientChatMessage } from "@/features/admin/clients-management/types/types";
+import type { ClientChatMessage } from "@/features/workspace/clients-management/types/types";
 
 export type ClientChatMessageRow = ClientChatMessage;
 

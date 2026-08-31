@@ -1,4 +1,4 @@
-import { resolveProjectForLabel } from "@/features/admin/projects/utils/projectFor";
+import { resolveProjectForLabel } from "@/features/workspace/projects/utils/projectFor";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 

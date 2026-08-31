@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Copy, FileText, Save, Trash2 } from "lucide-react";
 
-import type { ProjectNoteEditorProps } from "@/features/admin/projects/types/components";
+import type { ProjectNoteEditorProps } from "@/features/workspace/projects/types/components";
 import {
   containMinWidthClassName,
   toolbarActionsClassName,

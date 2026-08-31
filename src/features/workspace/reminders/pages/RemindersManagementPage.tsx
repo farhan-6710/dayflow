@@ -1,11 +1,11 @@
 import { BellRing, Clock3, PencilLine, Plus } from "lucide-react";
 
-import { REMINDER_DAY_OPTIONS } from "@/features/admin/reminders/constants/remindersCalendar";
-import { ReminderDialog } from "@/features/admin/reminders/components/ReminderDialog";
+import { REMINDER_DAY_OPTIONS } from "@/features/workspace/reminders/constants/remindersCalendar";
+import { ReminderDialog } from "@/features/workspace/reminders/components/ReminderDialog";
 import {
   useReminderChecker,
   useRemindersManagement,
-} from "@/features/admin/reminders/hooks/useRemindersManagement";
+} from "@/features/workspace/reminders/hooks/useRemindersManagement";
 import { PageContent } from "@/shared/components/PageContent";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";

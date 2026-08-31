@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { fetchProjects, type Project } from "@/services/projectsService";
 import { fetchTasks, createTask, updateTask, deleteTask, type Task } from "@/services/tasksService";
-import { DEFAULT_TASK_TIME } from "@/features/admin/tasks/constants/tasksCalendar";
-import { isClosedTaskStatus } from "@/features/admin/tasks/constants/taskStatus";
+import { DEFAULT_TASK_TIME } from "@/features/workspace/tasks/constants/tasksCalendar";
+import { isClosedTaskStatus } from "@/features/workspace/tasks/constants/taskStatus";
 import { showToast } from "@/shared/utils/showToast";
 import type { DateFiltersFilterState } from "@/shared/types/components";
 import { resolveDateFiltersRange } from "@/shared/utils/dateFiltersUtils";

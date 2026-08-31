@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
 
-import type { Client } from "@/features/admin/clients-management/types/types";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 
 type ClientPortalContextValue = {
   client: Client;

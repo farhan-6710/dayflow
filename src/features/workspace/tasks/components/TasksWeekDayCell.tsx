@@ -1,14 +1,14 @@
 import type { TaskStatus } from "@/services/tasksService";
-import type { TasksWeekDayCellProps } from "@/features/admin/tasks/types/components";
+import type { TasksWeekDayCellProps } from "@/features/workspace/tasks/types/components";
 import {
   isClosedTaskStatus,
   TASK_STATUS_LABELS,
-} from "@/features/admin/tasks/constants/taskStatus";
-import { compareByPriority } from "@/features/admin/tasks/utils/taskCalendarSort";
+} from "@/features/workspace/tasks/constants/taskStatus";
+import { compareByPriority } from "@/features/workspace/tasks/utils/taskCalendarSort";
 import {
   formatMonthDayLabel,
   getDayLabel,
-} from "@/features/admin/reminders/utils/calendarUtils";
+} from "@/features/workspace/reminders/utils/calendarUtils";
 import { cn } from "@/shared/lib/utils";
 import {
   Tooltip,

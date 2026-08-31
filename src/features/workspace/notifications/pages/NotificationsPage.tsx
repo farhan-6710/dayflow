@@ -1,6 +1,6 @@
-import { ReminderNotificationsTable } from "@/features/admin/notifications/components/ReminderNotificationsTable";
-import { TaskNotificationsTable } from "@/features/admin/notifications/components/TaskNotificationsTable";
-import { useNotificationsInbox } from "@/features/admin/notifications/hooks/useNotificationsInbox";
+import { ReminderNotificationsTable } from "@/features/workspace/notifications/components/ReminderNotificationsTable";
+import { TaskNotificationsTable } from "@/features/workspace/notifications/components/TaskNotificationsTable";
+import { useNotificationsInbox } from "@/features/workspace/notifications/hooks/useNotificationsInbox";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";

@@ -1,7 +1,7 @@
 import {
   MYSELF_PROJECT_FOR_LABEL,
   MYSELF_PROJECT_FOR_VALUE,
-} from "@/features/admin/projects/constants/projectFor";
+} from "@/features/workspace/projects/constants/projectFor";
 
 export function projectForToSelectValue(projectFor: string | null): string {
   return projectFor ?? MYSELF_PROJECT_FOR_VALUE;

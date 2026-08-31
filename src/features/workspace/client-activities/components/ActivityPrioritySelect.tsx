@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import {
   CLIENT_ACTIVITY_PRIORITIES,
   CLIENT_ACTIVITY_PRIORITY_LABELS,
-} from "@/features/admin/client-activities/constants/activityStatuses";
-import type { ClientActivityPriority } from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/constants/activityStatuses";
+import type { ClientActivityPriority } from "@/features/workspace/client-activities/types/types";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 
 type ActivityPrioritySelectProps = {

@@ -1,7 +1,7 @@
 import {
   TASK_STATUS_DOT_COLORS,
   TASK_STATUS_LEGEND,
-} from "@/features/admin/tasks/constants/taskStatus";
+} from "@/features/workspace/tasks/constants/taskStatus";
 
 export function TasksManagementStatusLegend() {
   return (

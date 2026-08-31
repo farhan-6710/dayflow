@@ -7,7 +7,7 @@ Coding rules and conventions for developers and AI agents working on DayFlow.
 ## Core Philosophy
 
 - **Simplicity over everything** — smallest change that solves the problem; no extra layers
-- **Two portals, one codebase** — workspace (`features/admin/`, routes under `/workspace`) and client (`features/client/`); share via `shared/` and selective reuse (e.g. `client-activities`)
+- **Two portals, one codebase** — workspace (`features/workspace/`, routes under `/workspace`) and client (`features/client/`); share via `shared/` and selective reuse (e.g. `client-activities`)
 - **Beginner-friendly code** — flat functions, clear names, one job per function
 - **Strict domain separation** — feature code stays in its feature folder; cross-cutting UI in `shared/`
 
@@ -22,7 +22,7 @@ src/
   app/              Router, route constants (workspaceRoutes, clientPortalRoutes)
   services/         ALL Supabase access (including RPCs). Features never import supabaseClient.
   features/
-    admin/          Workspace app (/workspace) — folder name unchanged in Phase 1
+    workspace/      Workspace app (/workspace)
       auth/         AuthProvider, ProtectedRoute, login/signup
       dashboard/    tasks/  projects/  clients-management/
       client-activities/   Shared with client portal
@@ -66,7 +66,7 @@ When touching client-visible data:
 - **Prop types** — `types/components.ts`, named `ComponentNameProps`
 - **Constants** — dropdown options, grid classes, routes in `constants/` files
 
-### Reusing admin UI in client portal
+### Reusing workspace UI in client portal
 
 OK to import presentational blocks when scoped by props:
 
@@ -81,7 +81,7 @@ OK to import presentational blocks when scoped by props:
 />
 ```
 
-Do not import admin-only pages or hooks that assume `user.id` owns projects.
+Do not import workspace-only pages or hooks that assume `user.id` owns projects.
 
 ---
 

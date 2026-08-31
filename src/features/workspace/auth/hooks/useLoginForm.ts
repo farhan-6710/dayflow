@@ -1,7 +1,7 @@
 import { useCallback, useState, type FormEvent } from "react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { formatAuthErrorMessage } from "@/features/admin/auth/utils/formatAuthErrorMessage";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { formatAuthErrorMessage } from "@/features/workspace/auth/utils/formatAuthErrorMessage";
 
 export function useLoginForm() {
   const { signInWithEmail } = useAuth();

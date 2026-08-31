@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { WORKSPACE_AUTH_PATH } from "@/app/constants/workspaceRoutes";
 import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes";
 import { CLIENT_AUTH_HOME } from "@/features/client/constants/routes";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { resolveClientPortalProfile } from "@/services/clientPortalService";
 import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { Button } from "@/shared/ui/button";

@@ -1,12 +1,12 @@
 import { Calendar, Clock3, Edit, MoreVertical, Trash2 } from "lucide-react";
 
-import { tasksDirectoryConfig } from "@/features/admin/tasks/constants/tasksDirectory";
-import type { TaskListItemProps } from "@/features/admin/tasks/types/components";
+import { tasksDirectoryConfig } from "@/features/workspace/tasks/constants/tasksDirectory";
+import type { TaskListItemProps } from "@/features/workspace/tasks/types/components";
 import {
   isClosedTaskStatus,
   TASK_STATUS_BADGE_CLASS,
   TASK_STATUS_LABELS,
-} from "@/features/admin/tasks/constants/taskStatus";
+} from "@/features/workspace/tasks/constants/taskStatus";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";

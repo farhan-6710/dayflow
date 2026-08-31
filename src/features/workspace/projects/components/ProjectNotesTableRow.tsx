@@ -1,9 +1,9 @@
 import { format } from "date-fns";
 import { Trash2 } from "lucide-react";
 
-import { NOTES_DIRECTORY_ROW_GRID_CLASS } from "@/features/admin/projects/constants/notesDirectory";
-import { buildProjectNotePath } from "@/features/admin/projects/constants/routes";
-import type { ProjectNotesTableRowProps } from "@/features/admin/projects/types/components";
+import { NOTES_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/projects/constants/notesDirectory";
+import { buildProjectNotePath } from "@/features/workspace/projects/constants/routes";
+import type { ProjectNotesTableRowProps } from "@/features/workspace/projects/types/components";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";

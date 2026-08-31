@@ -1,5 +1,5 @@
-import { ActivitiesPanel } from "@/features/admin/client-activities/components/ActivitiesPanel";
-import type { ClientActivitiesSectionProps } from "@/features/admin/client-activities/types/components";
+import { ActivitiesPanel } from "@/features/workspace/client-activities/components/ActivitiesPanel";
+import type { ClientActivitiesSectionProps } from "@/features/workspace/client-activities/types/components";
 
 export function ClosedActivitiesSection(props: ClientActivitiesSectionProps) {
   return (

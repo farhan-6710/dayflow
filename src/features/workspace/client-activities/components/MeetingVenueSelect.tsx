@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import {
   CLIENT_ACTIVITY_MEETING_VENUE_LABELS,
   CLIENT_ACTIVITY_MEETING_VENUES,
-} from "@/features/admin/client-activities/constants/meetingVenues";
-import type { ClientActivityMeetingVenue } from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/constants/meetingVenues";
+import type { ClientActivityMeetingVenue } from "@/features/workspace/client-activities/types/types";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 
 type MeetingVenueSelectProps = {

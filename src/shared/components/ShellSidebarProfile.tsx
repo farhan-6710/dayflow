@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { TransitionLink } from "@/shared/components/TransitionLink";
 import { cn } from "@/shared/lib/utils";
 import { usePageTransition } from "@/shared/providers/pageTransitionContext";

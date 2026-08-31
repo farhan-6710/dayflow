@@ -1,4 +1,4 @@
-import type { ProjectReferenceLinkFormValues } from "@/features/admin/projects/utils/projectReferenceLinkFormUtils";
+import type { ProjectReferenceLinkFormValues } from "@/features/workspace/projects/utils/projectReferenceLinkFormUtils";
 import { formFieldClassName } from "@/shared/constants/formStyles";
 import { Button } from "@/shared/ui/button";
 import {

@@ -3,14 +3,14 @@ import { Pencil } from "lucide-react";
 import {
   CLIENT_ACTIVITY_PRIORITY_LABELS,
   CLIENT_ACTIVITY_STATUS_LABELS,
-} from "@/features/admin/client-activities/constants/activityStatuses";
-import { CLIENT_ACTIVITY_MEETING_VENUE_LABELS } from "@/features/admin/client-activities/constants/meetingVenues";
+} from "@/features/workspace/client-activities/constants/activityStatuses";
+import { CLIENT_ACTIVITY_MEETING_VENUE_LABELS } from "@/features/workspace/client-activities/constants/meetingVenues";
 import type {
   ClientActivityCall,
   ClientActivityMeeting,
   ClientActivityTask,
-} from "@/features/admin/client-activities/types/types";
-import { formatActivityDateTime } from "@/features/admin/client-activities/utils/activityDisplayUtils";
+} from "@/features/workspace/client-activities/types/types";
+import { formatActivityDateTime } from "@/features/workspace/client-activities/utils/activityDisplayUtils";
 import { Button } from "@/shared/ui/button";
 
 function taskMeta(task: ClientActivityTask, showProjectName: boolean): string {
@@ -50,7 +50,7 @@ type ActivityListProps =
       kind: "task";
       items: ClientActivityTask[];
       canEdit: boolean;
-      editOnlyRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+      editOnlyRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
       showProjectName?: boolean;
       onEdit: (item: ClientActivityTask) => void;
     }
@@ -58,7 +58,7 @@ type ActivityListProps =
       kind: "meeting";
       items: ClientActivityMeeting[];
       canEdit: boolean;
-      editOnlyRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+      editOnlyRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
       showProjectName?: boolean;
       onEdit: (item: ClientActivityMeeting) => void;
     }
@@ -66,15 +66,15 @@ type ActivityListProps =
       kind: "call";
       items: ClientActivityCall[];
       canEdit: boolean;
-      editOnlyRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+      editOnlyRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
       showProjectName?: boolean;
       onEdit: (item: ClientActivityCall) => void;
     };
 
 function canEditActivityItem(
   canEdit: boolean,
-  item: { raised_by: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy },
-  editOnlyRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy,
+  item: { raised_by: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy },
+  editOnlyRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy,
 ) {
   if (!canEdit) return false;
   if (!editOnlyRaisedBy) return true;

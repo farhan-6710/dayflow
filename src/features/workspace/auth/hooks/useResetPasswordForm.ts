@@ -2,8 +2,8 @@ import { useCallback, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 
 import { ACCOUNT_PASSWORD_MIN_LENGTH } from "@/shared/constants/accountPassword";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { DASHBOARD_HOME } from "@/features/workspace/auth/constants/routes";
 import { updatePassword } from "@/services/authService";
 import { showToast } from "@/shared/utils/showToast";
 

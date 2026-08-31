@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-import { ProjectNoteEditor } from "@/features/admin/projects/components/ProjectNoteEditor";
-import { ProjectNotesList } from "@/features/admin/projects/components/ProjectNotesList";
-import { DRAFT_PROJECT_NOTE_ID } from "@/features/admin/projects/constants/projectNotes";
-import type { ProjectNotesWorkspaceProps } from "@/features/admin/projects/types/components";
+import { ProjectNoteEditor } from "@/features/workspace/projects/components/ProjectNoteEditor";
+import { ProjectNotesList } from "@/features/workspace/projects/components/ProjectNotesList";
+import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
+import type { ProjectNotesWorkspaceProps } from "@/features/workspace/projects/types/components";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { Button } from "@/shared/ui/button";

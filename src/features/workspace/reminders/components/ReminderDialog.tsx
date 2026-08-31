@@ -1,5 +1,5 @@
-import { ReminderDialogFormFields } from "@/features/admin/reminders/components/ReminderDialogFormFields";
-import type { ReminderDialogProps } from "@/features/admin/reminders/types/components";
+import { ReminderDialogFormFields } from "@/features/workspace/reminders/components/ReminderDialogFormFields";
+import type { ReminderDialogProps } from "@/features/workspace/reminders/types/components";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { Button } from "@/shared/ui/button";
 import {

@@ -5,7 +5,7 @@ import type {
   CreateClientActivityCallInput,
   CreateClientActivityMeetingInput,
   CreateClientActivityTaskInput,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 import {
   createClientActivityCall,
   createClientActivityMeeting,

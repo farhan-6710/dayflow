@@ -15,7 +15,7 @@ import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
 import {
   openOAuthPopup,
   type OAuthPopupResult,
-} from "@/features/admin/auth/utils/oauthPopup";
+} from "@/features/workspace/auth/utils/oauthPopup";
 
 // Returns the signed-in user from the Auth server (not a stale JWT cache).
 export async function getCurrentUser(): Promise<User | null> {

@@ -5,8 +5,8 @@ import {
   Phone,
 } from "lucide-react";
 
-import { ClientActivitiesBlock } from "@/features/admin/client-activities/components/ClientActivitiesBlock";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { CLIENT_PORTAL_DASHBOARD_PATH, CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes";
 import { useClientDashboard } from "@/features/client/hooks/useClientDashboard";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";

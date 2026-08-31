@@ -1,9 +1,9 @@
-import { ProjectsTableRow } from "@/features/admin/projects/components/ProjectsTableRow";
+import { ProjectsTableRow } from "@/features/workspace/projects/components/ProjectsTableRow";
 import {
   PROJECTS_STATUS_FILTER_LABELS,
   projectsDirectoryConfig,
-} from "@/features/admin/projects/constants/projectsDirectory";
-import type { ProjectsTableProps } from "@/features/admin/projects/types/components";
+} from "@/features/workspace/projects/constants/projectsDirectory";
+import type { ProjectsTableProps } from "@/features/workspace/projects/types/components";
 import { ActiveStatusFilter } from "@/shared/components/ActiveStatusFilter";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";

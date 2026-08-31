@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { NOTIFICATIONS_UPDATED_EVENT } from "@/features/admin/notifications/constants/notificationTypes";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { NOTIFICATIONS_UPDATED_EVENT } from "@/features/workspace/notifications/constants/notificationTypes";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { countUnreadNotifications } from "@/services/notificationsService";
 
 export function useUnreadNotificationsCount() {

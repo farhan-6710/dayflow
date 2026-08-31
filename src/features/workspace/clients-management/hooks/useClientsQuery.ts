@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import type { Client } from "@/features/admin/clients-management/types/types";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 import { fetchClients } from "@/services/clientsService";
 import { showToast } from "@/shared/utils/showToast";
 
@@ -14,7 +14,7 @@ function loadClientsErrorMessage(error: unknown): string {
 }
 
 export function useClientsQuery() {
-  const { user: admin, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export function useClientsQuery() {
       return;
     }
 
-    if (!admin) {
+    if (!user) {
       setClients([]);
       setIsLoading(false);
       return;
@@ -33,7 +33,7 @@ export function useClientsQuery() {
     try {
       setIsLoading(true);
       setError(null);
-      setClients(await fetchClients(admin.id));
+      setClients(await fetchClients(user.id));
     } catch (e) {
       console.error(e);
       const message = loadClientsErrorMessage(e);
@@ -42,7 +42,7 @@ export function useClientsQuery() {
     } finally {
       setIsLoading(false);
     }
-  }, [authLoading, admin]);
+  }, [authLoading, user]);
 
   useEffect(() => {
     void reload();

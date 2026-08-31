@@ -1,8 +1,8 @@
 import { Archive, Edit, Folder, MoreVertical, Trash2 } from "lucide-react";
 
-import { PROJECTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/admin/projects/constants/projectsDirectory";
-import { buildProjectDetailPath } from "@/features/admin/projects/constants/routes";
-import type { ProjectsTableRowProps } from "@/features/admin/projects/types/components";
+import { PROJECTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/projects/constants/projectsDirectory";
+import { buildProjectDetailPath } from "@/features/workspace/projects/constants/routes";
+import type { ProjectsTableRowProps } from "@/features/workspace/projects/types/components";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { cn } from "@/shared/lib/utils";

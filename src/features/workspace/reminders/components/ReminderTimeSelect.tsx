@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ChevronDown, Clock3 } from "lucide-react";
 
-import type { ReminderTimeSelectProps } from "@/features/admin/reminders/types/components";
-import { REMINDER_AVAILABLE_TIMES } from "@/features/admin/reminders/constants/remindersCalendar";
+import type { ReminderTimeSelectProps } from "@/features/workspace/reminders/types/components";
+import { REMINDER_AVAILABLE_TIMES } from "@/features/workspace/reminders/constants/remindersCalendar";
 import { Button } from "@/shared/ui/button";
 import {
   Popover,

@@ -1,6 +1,6 @@
-import { TASK_STATUS_OPTIONS } from "@/features/admin/tasks/constants/taskStatus";
-import { TaskDateTimePicker } from "@/features/admin/tasks/components/TaskDateTimePicker";
-import type { TaskFormDialogProps } from "@/features/admin/tasks/types/components";
+import { TASK_STATUS_OPTIONS } from "@/features/workspace/tasks/constants/taskStatus";
+import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
+import type { TaskFormDialogProps } from "@/features/workspace/tasks/types/components";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { Button } from "@/shared/ui/button";

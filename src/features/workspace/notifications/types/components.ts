@@ -1,4 +1,4 @@
-import type { AppNotification } from "@/features/admin/notifications/types/types";
+import type { AppNotification } from "@/features/workspace/notifications/types/types";
 
 export type ReminderNotificationsTableProps = {
   notifications: AppNotification[];

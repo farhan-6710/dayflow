@@ -51,7 +51,7 @@ dayflow/
     app/                   Router, route constants, global styles
     services/              Supabase client + all data access
     features/
-      admin/               Workspace app features (route prefix: /workspace)
+      workspace/           Workspace app features (route prefix: /workspace)
         auth/              Login, signup, AuthProvider
         dashboard/         KPIs, focus list, completion chart
         tasks/             Personal tasks calendar

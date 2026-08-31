@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { CLIENT_DASHBOARD_HOME } from "@/features/client/constants/routes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 

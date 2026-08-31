@@ -1,6 +1,6 @@
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
-import type { Client } from "@/features/admin/clients-management/types/types";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 
 const LINK_RPC = "link_client_portal_user";
 const LINK_RETRY_DELAYS_MS = [0, 400, 1200];

@@ -2,13 +2,13 @@ import { useState, type ReactNode } from "react";
 
 import type { Provider } from "@supabase/supabase-js";
 
-import { authFormStyles } from "@/features/admin/auth/components/authFormStyles";
-import { FacebookIcon } from "@/features/admin/auth/components/FacebookIcon";
-import { GoogleIcon } from "@/features/admin/auth/components/GoogleIcon";
-import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
-import type { AuthOAuthSignInProps } from "@/features/admin/auth/types/components";
-import { formatAuthErrorMessage } from "@/features/admin/auth/utils/formatAuthErrorMessage";
+import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
+import { FacebookIcon } from "@/features/workspace/auth/components/FacebookIcon";
+import { GoogleIcon } from "@/features/workspace/auth/components/GoogleIcon";
+import { DASHBOARD_HOME } from "@/features/workspace/auth/constants/routes";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import type { AuthOAuthSignInProps } from "@/features/workspace/auth/types/components";
+import { formatAuthErrorMessage } from "@/features/workspace/auth/utils/formatAuthErrorMessage";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { showToast } from "@/shared/utils/showToast";
 import { Button } from "@/shared/ui/button";

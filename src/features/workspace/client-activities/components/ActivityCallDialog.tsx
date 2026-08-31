@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { ActivityProjectSelect } from "@/features/admin/client-activities/components/ActivityProjectSelect";
-import { ActivityStatusSelect } from "@/features/admin/client-activities/components/ActivityStatusSelect";
-import type { ClientActivityCallFormValues } from "@/features/admin/client-activities/utils/activityFormUtils";
-import { TaskDateTimePicker } from "@/features/admin/tasks/components/TaskDateTimePicker";
+import { ActivityProjectSelect } from "@/features/workspace/client-activities/components/ActivityProjectSelect";
+import { ActivityStatusSelect } from "@/features/workspace/client-activities/components/ActivityStatusSelect";
+import type { ClientActivityCallFormValues } from "@/features/workspace/client-activities/utils/activityFormUtils";
+import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
 import type { Project } from "@/services/projectsService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldClassName } from "@/shared/constants/formStyles";

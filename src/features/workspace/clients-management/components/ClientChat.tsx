@@ -1,12 +1,12 @@
 import { Loader2, RefreshCw, Send } from "lucide-react";
 import { useEffect, useRef, type KeyboardEvent } from "react";
 
-import { ClientChatMessage } from "@/features/admin/clients-management/components/ClientChatMessage";
-import type { ClientChatProps } from "@/features/admin/clients-management/types/components";
+import { ClientChatMessage } from "@/features/workspace/clients-management/components/ClientChatMessage";
+import type { ClientChatProps } from "@/features/workspace/clients-management/types/components";
 import {
   getClientChatMessageAuthorLabel,
   isWorkspaceAuthoredChatMessage,
-} from "@/features/admin/clients-management/utils/clientChatMessageDb";
+} from "@/features/workspace/clients-management/utils/clientChatMessageDb";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldClassName } from "@/shared/constants/formStyles";
 import { cn } from "@/shared/lib/utils";

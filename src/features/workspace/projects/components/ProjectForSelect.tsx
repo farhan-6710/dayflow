@@ -1,8 +1,8 @@
 import {
   MYSELF_PROJECT_FOR_LABEL,
   MYSELF_PROJECT_FOR_VALUE,
-} from "@/features/admin/projects/constants/projectFor";
-import type { ProjectForSelectProps } from "@/features/admin/projects/types/components";
+} from "@/features/workspace/projects/constants/projectFor";
+import type { ProjectForSelectProps } from "@/features/workspace/projects/types/components";
 import {
   Select,
   SelectContent,

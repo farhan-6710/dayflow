@@ -3,10 +3,10 @@ import { Eye, EyeOff } from "lucide-react";
 
 import {
   AuthFormAlert,
-} from "@/features/admin/auth/components/AuthFormFields";
-import { authFormStyles } from "@/features/admin/auth/components/authFormStyles";
+} from "@/features/workspace/auth/components/AuthFormFields";
+import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
 import { formFieldGroupClassName } from "@/shared/constants/formStyles";
-import { useResetPasswordForm } from "@/features/admin/auth/hooks/useResetPasswordForm";
+import { useResetPasswordForm } from "@/features/workspace/auth/hooks/useResetPasswordForm";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";

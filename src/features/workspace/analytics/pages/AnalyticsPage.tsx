@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { fetchTasks, type Task } from "@/services/tasksService";
 import { fetchProjects, type Project } from "@/services/projectsService";
 import { fetchNotes, type Note } from "@/services/notesService";

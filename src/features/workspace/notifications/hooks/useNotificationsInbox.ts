@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { NOTIFICATIONS_UPDATED_EVENT } from "@/features/admin/notifications/constants/notificationTypes";
-import type { AppNotification } from "@/features/admin/notifications/types/types";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { NOTIFICATIONS_UPDATED_EVENT } from "@/features/workspace/notifications/constants/notificationTypes";
+import type { AppNotification } from "@/features/workspace/notifications/types/types";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import {
   fetchUnreadNotifications,
   markNotificationRead,

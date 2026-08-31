@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import { Plus } from "lucide-react";
 
-import { useTasksCalendarSelection } from "@/features/admin/tasks/hooks/useTasksCalendarSelection";
-import { useTasksManagement } from "@/features/admin/tasks/hooks/useTasksManagement";
-import { TasksWeeksTable } from "@/features/admin/tasks/components/TasksWeeksTable";
-import { TaskDateTimePicker } from "@/features/admin/tasks/components/TaskDateTimePicker";
+import { useTasksCalendarSelection } from "@/features/workspace/tasks/hooks/useTasksCalendarSelection";
+import { useTasksManagement } from "@/features/workspace/tasks/hooks/useTasksManagement";
+import { TasksWeeksTable } from "@/features/workspace/tasks/components/TasksWeeksTable";
+import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
 import {
   TASK_STATUS_DOT_COLORS,
   TASK_STATUS_LEGEND,
   TASK_STATUS_OPTIONS,
   TASK_STATUS_TEXT_COLORS,
-} from "@/features/admin/tasks/constants/taskStatus";
+} from "@/features/workspace/tasks/constants/taskStatus";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";

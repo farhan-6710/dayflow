@@ -1,4 +1,4 @@
-import type { ReminderDaySlot, Week } from "@/features/admin/reminders/types/types";
+import type { ReminderDaySlot, Week } from "@/features/workspace/reminders/types/types";
 
 export type RemindersWeeksTableProps = {
   year: number;

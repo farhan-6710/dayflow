@@ -6,7 +6,7 @@ import {
   startOfMonth,
 } from "date-fns";
 
-import type { Week } from "@/features/admin/reminders/types/types";
+import type { Week } from "@/features/workspace/reminders/types/types";
 import type { ReminderDayKey } from "@/services/remindersService";
 
 export function toCalendarParts(date: Date) {

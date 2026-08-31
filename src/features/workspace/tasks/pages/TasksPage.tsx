@@ -3,11 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 import { WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
-import { TaskFormDialog } from "@/features/admin/tasks/components/TaskFormDialog";
-import { TaskListItem } from "@/features/admin/tasks/components/TaskListItem";
-import { TASK_STATUS_OPTIONS } from "@/features/admin/tasks/constants/taskStatus";
-import { tasksDirectoryConfig } from "@/features/admin/tasks/constants/tasksDirectory";
-import { useTasksManagement } from "@/features/admin/tasks/hooks/useTasksManagement";
+import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDialog";
+import { TaskListItem } from "@/features/workspace/tasks/components/TaskListItem";
+import { TASK_STATUS_OPTIONS } from "@/features/workspace/tasks/constants/taskStatus";
+import { tasksDirectoryConfig } from "@/features/workspace/tasks/constants/tasksDirectory";
+import { useTasksManagement } from "@/features/workspace/tasks/hooks/useTasksManagement";
 import {
   compactDropdownClassName,
   containMinWidthClassName,

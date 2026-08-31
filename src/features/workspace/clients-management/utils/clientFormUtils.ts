@@ -1,4 +1,4 @@
-import type { Client } from "@/features/admin/clients-management/types/types";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 
 export type ClientFormValues = {
   companyName: string;

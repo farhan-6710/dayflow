@@ -1,7 +1,7 @@
 import { Trash2 } from "lucide-react";
 
-import { formatNoteIndex } from "@/features/admin/projects/constants/projectNotes";
-import type { ProjectNotesListProps } from "@/features/admin/projects/types/components";
+import { formatNoteIndex } from "@/features/workspace/projects/constants/projectNotes";
+import type { ProjectNotesListProps } from "@/features/workspace/projects/types/components";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 

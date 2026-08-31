@@ -1,7 +1,7 @@
 import type {
   CreateProjectReferenceLinkInput,
   ProjectReferenceLink,
-} from "@/features/admin/projects/types/referenceLinks";
+} from "@/features/workspace/projects/types/referenceLinks";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 

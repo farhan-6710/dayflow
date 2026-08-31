@@ -1,7 +1,7 @@
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
-import { useTaskCompletionChart } from "@/features/admin/dashboard/hooks/useTaskCompletionChart";
+import { useTaskCompletionChart } from "@/features/workspace/dashboard/hooks/useTaskCompletionChart";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import type { Task } from "@/services/tasksService";
 import {

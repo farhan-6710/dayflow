@@ -1,7 +1,7 @@
 import {
   REMINDER_DAY_OPTIONS,
-} from "@/features/admin/reminders/constants/remindersCalendar";
-import type { ReminderDayTogglesProps } from "@/features/admin/reminders/types/components";
+} from "@/features/workspace/reminders/constants/remindersCalendar";
+import type { ReminderDayTogglesProps } from "@/features/workspace/reminders/types/components";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 

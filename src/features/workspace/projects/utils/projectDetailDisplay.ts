@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-import { PROJECT_FOR_LABEL } from "@/features/admin/projects/constants/projectFor";
+import { PROJECT_FOR_LABEL } from "@/features/workspace/projects/constants/projectFor";
 import type { Note } from "@/services/notesService";
 import type { Project } from "@/services/projectsService";
 

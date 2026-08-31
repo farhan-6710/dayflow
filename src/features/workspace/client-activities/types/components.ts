@@ -5,7 +5,7 @@ import type {
   CreateClientActivityCallInput,
   CreateClientActivityMeetingInput,
   CreateClientActivityTaskInput,
-} from "@/features/admin/client-activities/types/types";
+} from "@/features/workspace/client-activities/types/types";
 import type { Project } from "@/services/projectsService";
 
 export type ClientActivitiesSectionProps = {
@@ -17,7 +17,7 @@ export type ClientActivitiesSectionProps = {
   showProjectName?: boolean;
   showAddNew?: boolean;
   /** When set, only activities with this raised_by value can be edited. */
-  editOnlyRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+  editOnlyRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
   /** When viewing a single project, activities always belong to this project. */
   fixedProjectId?: string;
   projectOptions?: Project[];
@@ -47,14 +47,14 @@ export type ClientActivitiesBlockProps =
       scope: "project";
       projectId: string;
       canEdit?: boolean;
-      activityRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
+      activityRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
     }
   | {
       scope: "client";
       clientId: string;
       canEdit?: boolean;
-      activityRaisedBy?: import("@/features/admin/client-activities/types/types").ClientActivityRaisedBy;
-      /** Use client-portal project fetch (RLS/RPC) instead of admin-owned filter. */
+      activityRaisedBy?: import("@/features/workspace/client-activities/types/types").ClientActivityRaisedBy;
+      /** Use client-portal project fetch (RLS/RPC) instead of workspace-owned filter. */
       forClientPortal?: boolean;
       clientCompanyName?: string | null;
     };

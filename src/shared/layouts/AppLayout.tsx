@@ -9,7 +9,7 @@ import {
   WORKSPACE_SETTINGS_PATH,
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
-import { NotificationsHeaderButton } from "@/features/admin/notifications/components/NotificationsHeaderButton";
+import { NotificationsHeaderButton } from "@/features/workspace/notifications/components/NotificationsHeaderButton";
 import type { ShellSidebarConfig } from "@/shared/types/components";
 
 const sidebarConfig: ShellSidebarConfig = {

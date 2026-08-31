@@ -3,7 +3,7 @@ import { format, getDaysInMonth } from "date-fns";
 import type {
   TaskCompletionChartData,
   TaskCompletionChartPoint,
-} from "@/features/admin/dashboard/types/taskCompletionChart";
+} from "@/features/workspace/dashboard/types/taskCompletionChart";
 import type { Task } from "@/services/tasksService";
 
 function localDateParts(iso: string): { year: number; month: number; day: number } | null {

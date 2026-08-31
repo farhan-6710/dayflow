@@ -1,9 +1,9 @@
-import { authFormStyles } from "@/features/admin/auth/components/authFormStyles";
+import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
 import type {
   AuthEmailFieldProps,
   AuthFormAlertProps,
   AuthPasswordFieldProps,
-} from "@/features/admin/auth/types/components";
+} from "@/features/workspace/auth/types/components";
 import { formFieldGroupClassName } from "@/shared/constants/formStyles";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";

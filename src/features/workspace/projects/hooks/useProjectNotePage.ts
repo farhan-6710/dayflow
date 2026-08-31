@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import { DRAFT_PROJECT_NOTE_ID } from "@/features/admin/projects/constants/projectNotes";
+import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
 import {
   buildProjectNotePath,
   buildProjectPath,
   PROJECTS_MANAGEMENT_PATH,
-} from "@/features/admin/projects/constants/routes";
-import { useDraftProjectNote } from "@/features/admin/projects/hooks/useDraftProjectNote";
-import type { ProjectNoteSavePayload } from "@/features/admin/projects/types/components";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+} from "@/features/workspace/projects/constants/routes";
+import { useDraftProjectNote } from "@/features/workspace/projects/hooks/useDraftProjectNote";
+import type { ProjectNoteSavePayload } from "@/features/workspace/projects/types/components";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import {
   createNote,
   deleteNote,

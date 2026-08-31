@@ -1,8 +1,8 @@
 import {
   mapClientChatMessageRow,
   type ClientChatMessageRow,
-} from "@/features/admin/clients-management/utils/clientChatMessageDb";
-import type { ClientChatMessage } from "@/features/admin/clients-management/types/types";
+} from "@/features/workspace/clients-management/utils/clientChatMessageDb";
+import type { ClientChatMessage } from "@/features/workspace/clients-management/types/types";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 

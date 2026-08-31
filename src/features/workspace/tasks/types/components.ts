@@ -61,7 +61,7 @@ export type TasksWeekDayCellProps = {
 export type TasksWeeksTableProps = {
   year: number;
   month: number;
-  weeks: import("@/features/admin/reminders/types/types").Week[];
+  weeks: import("@/features/workspace/reminders/types/types").Week[];
   selectedDate: Date;
   tasksByDateKey: Map<string, Task[]>;
   onOpenDay: (year: number, month: number, date: number) => void;

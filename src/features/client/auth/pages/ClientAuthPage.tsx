@@ -1,18 +1,18 @@
 import { Link, Navigate, useLocation, useSearchParams } from "react-router";
 
-import { AuthFormCard } from "@/features/admin/auth/components/AuthFormCard";
-import { AuthShellLayout } from "@/features/admin/auth/components/AuthShellLayout";
-import { ForgotPasswordForm } from "@/features/admin/auth/components/ForgotPasswordForm";
-import { LoginForm } from "@/features/admin/auth/components/LoginForm";
-import { ResetPasswordForm } from "@/features/admin/auth/components/ResetPasswordForm";
-import { SignupForm } from "@/features/admin/auth/components/SignupForm";
+import { AuthFormCard } from "@/features/workspace/auth/components/AuthFormCard";
+import { AuthShellLayout } from "@/features/workspace/auth/components/AuthShellLayout";
+import { ForgotPasswordForm } from "@/features/workspace/auth/components/ForgotPasswordForm";
+import { LoginForm } from "@/features/workspace/auth/components/LoginForm";
+import { ResetPasswordForm } from "@/features/workspace/auth/components/ResetPasswordForm";
+import { SignupForm } from "@/features/workspace/auth/components/SignupForm";
 import {
   AUTH_FORM_TYPE_PARAM,
   AUTH_FORM_TYPE_VALUES,
   AUTH_FORM_TYPES,
   type AuthFormType,
-} from "@/features/admin/auth/constants/auth";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+} from "@/features/workspace/auth/constants/auth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { buildClientAuthUrl } from "@/features/client/auth/utils/clientAuthUrlParams";
 import {
   CLIENT_DASHBOARD_HOME,

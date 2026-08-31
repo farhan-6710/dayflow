@@ -15,11 +15,11 @@ import {
   CLIENT_PORTAL_DASHBOARD_PATH,
   CLIENT_PORTAL_PREFIX,
 } from "@/app/constants/clientPortalRoutes";
-import { OAuthCallbackPage } from "@/features/admin/auth/pages/OAuthCallbackPage";
+import { OAuthCallbackPage } from "@/features/workspace/auth/pages/OAuthCallbackPage";
 import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
 import { lazyRoutePage } from "@/app/lazyRoute";
-import { PublicRoute } from "@/features/admin/auth/components/PublicRoute";
-import { ProtectedRoute } from "@/features/admin/auth/components/ProtectedRoute";
+import { PublicRoute } from "@/features/workspace/auth/components/PublicRoute";
+import { ProtectedRoute } from "@/features/workspace/auth/components/ProtectedRoute";
 import { RouteErrorPage } from "@/shared/pages/RouteErrorPage";
 import { ClientPublicRoute } from "@/features/client/auth/components/ClientPublicRoute";
 import { ClientProtectedRoute } from "@/features/client/auth/components/ClientProtectedRoute";
@@ -27,62 +27,62 @@ import { ClientAppLayout } from "@/features/client/layouts/ClientAppLayout";
 import { AppLayout } from "@/shared/layouts/AppLayout";
 
 const AuthPage = lazyRoutePage(
-  () => import("@/features/admin/auth/pages/AuthPage"),
+  () => import("@/features/workspace/auth/pages/AuthPage"),
   "AuthPage",
 );
 
 const DashboardPage = lazyRoutePage(
-  () => import("@/features/admin/dashboard/pages/DashboardPage"),
+  () => import("@/features/workspace/dashboard/pages/DashboardPage"),
   "DashboardPage",
 );
 
 const ProjectsManagementPage = lazyRoutePage(
-  () => import("@/features/admin/projects/pages/ProjectsManagementPage"),
+  () => import("@/features/workspace/projects/pages/ProjectsManagementPage"),
   "ProjectsManagementPage",
 );
 
 const ProjectDetailPage = lazyRoutePage(
-  () => import("@/features/admin/projects/pages/ProjectDetailPage"),
+  () => import("@/features/workspace/projects/pages/ProjectDetailPage"),
   "ProjectDetailPage",
 );
 
 const ProjectNotePage = lazyRoutePage(
-  () => import("@/features/admin/projects/pages/ProjectNotePage"),
+  () => import("@/features/workspace/projects/pages/ProjectNotePage"),
   "ProjectNotePage",
 );
 
 const ClientsManagementPage = lazyRoutePage(
-  () => import("@/features/admin/clients-management/pages/ClientsManagementPage"),
+  () => import("@/features/workspace/clients-management/pages/ClientsManagementPage"),
   "ClientsManagementPage",
 );
 
 const ClientDetailPage = lazyRoutePage(
-  () => import("@/features/admin/clients-management/pages/ClientDetailPage"),
+  () => import("@/features/workspace/clients-management/pages/ClientDetailPage"),
   "ClientDetailPage",
 );
 
 const TasksCalendarPage = lazyRoutePage(
-  () => import("@/features/admin/tasks/pages/TasksCalendarPage"),
+  () => import("@/features/workspace/tasks/pages/TasksCalendarPage"),
   "TasksCalendarPage",
 );
 
 const RemindersManagementPage = lazyRoutePage(
-  () => import("@/features/admin/reminders/pages/RemindersManagementPage"),
+  () => import("@/features/workspace/reminders/pages/RemindersManagementPage"),
   "RemindersManagementPage",
 );
 
 const NotificationsPage = lazyRoutePage(
-  () => import("@/features/admin/notifications/pages/NotificationsPage"),
+  () => import("@/features/workspace/notifications/pages/NotificationsPage"),
   "NotificationsPage",
 );
 
 const AnalyticsPage = lazyRoutePage(
-  () => import("@/features/admin/analytics/pages/AnalyticsPage"),
+  () => import("@/features/workspace/analytics/pages/AnalyticsPage"),
   "AnalyticsPage",
 );
 
 const SettingsPage = lazyRoutePage(
-  () => import("@/features/admin/settings/pages/SettingsPage"),
+  () => import("@/features/workspace/settings/pages/SettingsPage"),
   "SettingsPage",
 );
 

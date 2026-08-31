@@ -2,7 +2,7 @@ import {
   AUTH_FORM_TYPE_PARAM,
   AUTH_FORM_TYPES,
   type AuthFormType,
-} from "@/features/admin/auth/constants/auth";
+} from "@/features/workspace/auth/constants/auth";
 import { CLIENT_AUTH_HOME } from "@/features/client/constants/routes";
 
 export function buildClientAuthUrl(

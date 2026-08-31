@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import {
   buildDefaultReminderFormValues,
   buildReminderDaySlot,
   reminderToFormValues,
-} from "@/features/admin/reminders/utils/reminderFormUtils";
+} from "@/features/workspace/reminders/utils/reminderFormUtils";
 import { createNotifications } from "@/services/notificationsService";
 import {
   createReminder,
@@ -17,7 +17,7 @@ import {
   type ReminderDayKey,
 } from "@/services/remindersService";
 import { showToast } from "@/shared/utils/showToast";
-import { parseTimeToMinutes } from "@/features/admin/reminders/utils/calendarUtils";
+import { parseTimeToMinutes } from "@/features/workspace/reminders/utils/calendarUtils";
 
 export function useRemindersManagement() {
   const { user } = useAuth();

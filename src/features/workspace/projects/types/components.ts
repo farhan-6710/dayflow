@@ -78,7 +78,7 @@ export type ProjectFormDialogProps = {
   onProjectColorChange: (value: string) => void;
   projectFor: string;
   onProjectForChange: (value: string) => void;
-  clients: import("@/features/admin/clients-management/types/types").Client[];
+  clients: import("@/features/workspace/clients-management/types/types").Client[];
   onSubmit: (event: React.FormEvent) => void | Promise<void>;
 };
 
@@ -91,20 +91,20 @@ export type ProjectNotesTableRowProps = {
 export type ProjectForSelectProps = {
   value: string;
   onChange: (value: string) => void;
-  clients: import("@/features/admin/clients-management/types/types").Client[];
+  clients: import("@/features/workspace/clients-management/types/types").Client[];
   disabled?: boolean;
 };
 
 export type ProjectReferenceLinksSectionProps = {
-  referenceLinks: import("@/features/admin/projects/types/referenceLinks").ProjectReferenceLink[];
+  referenceLinks: import("@/features/workspace/projects/types/referenceLinks").ProjectReferenceLink[];
   canEdit: boolean;
   isSaving?: boolean;
   onAdd: (
-    input: import("@/features/admin/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
+    input: import("@/features/workspace/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
   ) => Promise<void>;
   onUpdate: (
     linkId: string,
-    input: import("@/features/admin/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
+    input: import("@/features/workspace/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
   ) => Promise<void>;
   onDelete: (linkId: string) => Promise<void>;
 };

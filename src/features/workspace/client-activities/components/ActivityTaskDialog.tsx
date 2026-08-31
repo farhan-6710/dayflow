@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { ActivityPrioritySelect } from "@/features/admin/client-activities/components/ActivityPrioritySelect";
-import { ActivityProjectSelect } from "@/features/admin/client-activities/components/ActivityProjectSelect";
-import { ActivityStatusSelect } from "@/features/admin/client-activities/components/ActivityStatusSelect";
-import type { ClientActivityTaskFormValues } from "@/features/admin/client-activities/utils/activityFormUtils";
-import { TaskDateTimePicker } from "@/features/admin/tasks/components/TaskDateTimePicker";
+import { ActivityPrioritySelect } from "@/features/workspace/client-activities/components/ActivityPrioritySelect";
+import { ActivityProjectSelect } from "@/features/workspace/client-activities/components/ActivityProjectSelect";
+import { ActivityStatusSelect } from "@/features/workspace/client-activities/components/ActivityStatusSelect";
+import type { ClientActivityTaskFormValues } from "@/features/workspace/client-activities/utils/activityFormUtils";
+import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
 import type { Project } from "@/services/projectsService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldClassName } from "@/shared/constants/formStyles";

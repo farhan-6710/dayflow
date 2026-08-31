@@ -51,12 +51,12 @@ Route constants live in:
 
 ## Database Schema (Overview)
 
-All tables use UUID primary keys. Plans were removed (migration 007); tasks are standalone or tied to projects only on the admin side.
+All tables use UUID primary keys. Plans were removed (migration 007); tasks are standalone or tied to projects only on the workspace side.
 
 ```text
 profiles (auth.users)
     │
-    ├── projects (user_id = admin)
+    ├── projects (user_id = workspace owner)
     │       ├── project_for → clients.id (optional; client-facing projects)
     │       ├── notes
     │       ├── project_reference_links
@@ -68,7 +68,7 @@ profiles (auth.users)
     │       ├── auth_user_id → auth.users (set on client first login)
     │       └── client_conversation_messages
     │
-    ├── tasks (personal admin tasks)
+    ├── tasks (personal workspace tasks)
     ├── reminders
     └── notifications
 ```
@@ -78,21 +78,21 @@ profiles (auth.users)
 | Table | Owner column | Notes |
 |-------|--------------|-------|
 | `profiles` | `id` = auth user | Theme, display name |
-| `projects` | `user_id` | Admin owns all project rows |
+| `projects` | `user_id` | Workspace owner holds all project rows |
 | `clients` | `owner_user_id` | One email per workspace owner; `auth_user_id` for portal |
 | `notes` | `user_id` | Scoped to `project_id` |
 | `client_activity_*` | via `project_id` | `raised_by`: `'workspace'` \| `'client'` |
 
 ### Project assignment
 
-- **Myself** — `project_for` is `null` (personal admin project)
+- **Myself** — `project_for` is `null` (personal workspace project)
 - **Client project** — `project_for` = client UUID; visible in client portal when client email matches
 
 ---
 
 ## Row Level Security
 
-### Admin tables
+### Workspace tables
 
 Standard owner policy:
 
@@ -100,11 +100,11 @@ Standard owner policy:
 using (auth.uid() = user_id)  -- or owner_user_id for clients
 ```
 
-Admin reads/writes their own tasks, projects, notes, clients, etc.
+Workspace users read/write their own tasks, projects, notes, clients, etc.
 
 ### Client portal
 
-Clients do **not** own project rows (`projects.user_id` is the admin). Access uses:
+Clients do **not** own project rows (`projects.user_id` is the workspace owner). Access uses:
 
 1. **Security definer RPCs** — bypass RLS safely inside controlled functions
 2. **Email / `auth_user_id` policies** — match logged-in user to `clients.email` or `clients.auth_user_id`
@@ -125,7 +125,7 @@ Important RPCs and helpers (migrations 022–026):
 - **Read** — any activity on projects they can access
 - **Insert / update** — only when `raised_by = 'client'` (and their own updates)
 
-Admin manages all activities via `projects.user_id = auth.uid()`.
+Workspace users manage all activities via `projects.user_id = auth.uid()`.
 
 ---
 
@@ -145,19 +145,19 @@ Admin manages all activities via `projects.user_id = auth.uid()`.
 
 ## Client Activities (shared module)
 
-`src/features/admin/client-activities/` is reused in both portals:
+`src/features/workspace/client-activities/` is reused in both portals:
 
 | Scope | Where | Query |
 |-------|-------|-------|
-| `project` | Admin project detail | By `project_id` |
-| `client` | Admin client detail | By client's projects |
+| `project` | Workspace project detail | By `project_id` |
+| `client` | Workspace client detail | By client's projects |
 | `client` + `forClientPortal` | Client dashboard/detail | Portal-scoped fetch + RLS |
 
 Props: `activityRaisedBy`, `canEdit`, `editOnlyRaisedBy` (client portal).
 
 ---
 
-## Authentication (Admin)
+## Authentication (Workspace)
 
 - **PublicRoute** — redirects authenticated users away from `/workspace/auth`
 - **ProtectedRoute** — requires session; wraps `AppLayout`
@@ -173,13 +173,13 @@ Client portal mirrors this with `ClientPublicRoute` / `ClientProtectedRoute`.
 |---------|------------------|
 | `authService` | Sign in/up, OAuth, metadata sync |
 | `projectsService` | CRUD + `fetchProjectsForClientPortal` |
-| `clientsService` | Admin client CRUD |
+| `clientsService` | Workspace client CRUD |
 | `clientPortalService` | Link RPC, profile resolve |
 | `clientActivitiesService` | Tasks, meetings, calls |
 | `notesService` | Project notes |
 | `projectReferenceLinksService` | Reference URLs |
-| `clientChatMessagesService` | Admin–client chat |
-| `tasksService` | Personal admin tasks |
+| `clientChatMessagesService` | Workspace–client chat |
+| `tasksService` | Personal workspace tasks |
 | `remindersService` | Recurring reminders |
 | `notificationsService` | In-app notifications |
 | `profilesService` | User profile |

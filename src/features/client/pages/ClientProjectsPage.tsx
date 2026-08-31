@@ -2,7 +2,7 @@ import { Folder } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { buildClientProjectDetailPath } from "@/app/constants/clientPortalRoutes";
-import { useAuth } from "@/features/admin/auth/hooks/useAuth";
+import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";

@@ -1,6 +1,6 @@
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
-import type { Client } from "@/features/admin/clients-management/types/types";
+import type { Client } from "@/features/workspace/clients-management/types/types";
 
 export type CreateClientInput = {
   companyName: string;

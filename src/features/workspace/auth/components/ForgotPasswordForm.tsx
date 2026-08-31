@@ -3,11 +3,11 @@ import { Link } from "react-router";
 import {
   AuthEmailField,
   AuthFormAlert,
-} from "@/features/admin/auth/components/AuthFormFields";
-import { authFormStyles } from "@/features/admin/auth/components/authFormStyles";
-import { AUTH_FORM_TYPES } from "@/features/admin/auth/constants/auth";
-import { useForgotPasswordForm } from "@/features/admin/auth/hooks/useForgotPasswordForm";
-import { buildAuthUrl } from "@/features/admin/auth/utils/authUrlParams";
+} from "@/features/workspace/auth/components/AuthFormFields";
+import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
+import { AUTH_FORM_TYPES } from "@/features/workspace/auth/constants/auth";
+import { useForgotPasswordForm } from "@/features/workspace/auth/hooks/useForgotPasswordForm";
+import { buildAuthUrl } from "@/features/workspace/auth/utils/authUrlParams";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";

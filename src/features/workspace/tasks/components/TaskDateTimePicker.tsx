@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 
-import { TaskTimeSelect } from "@/features/admin/tasks/components/TaskTimeSelect";
-import type { TaskDateTimePickerProps } from "@/features/admin/tasks/types/components";
+import { TaskTimeSelect } from "@/features/workspace/tasks/components/TaskTimeSelect";
+import type { TaskDateTimePickerProps } from "@/features/workspace/tasks/types/components";
 import { DatePicker } from "@/shared/components/DatePicker";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
