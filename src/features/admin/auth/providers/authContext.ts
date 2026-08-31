@@ -1,8 +1,7 @@
 import { createContext } from "react";
-import type { AuthError, User } from "@supabase/supabase-js";
-import type { Provider } from "@supabase/supabase-js";
+import type { AuthError, Provider, User } from "@supabase/supabase-js";
 import type { Profile } from "@/services/profilesService";
-import type { SignUpWithEmailResult } from "@/services/authService";
+import type { SignInWithOAuthResult, SignUpWithEmailResult } from "@/services/authService";
 
 export type AuthContextValue = {
   user: User | null;
@@ -24,7 +23,7 @@ export type AuthContextValue = {
   signInWithOAuthProvider: (
     provider: Provider,
     options?: { redirectPath?: string },
-  ) => Promise<AuthError | null>;
+  ) => Promise<SignInWithOAuthResult>;
   signOut: () => Promise<void>;
 };
 

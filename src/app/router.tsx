@@ -13,6 +13,8 @@ import {
   CLIENT_PORTAL_DASHBOARD_PATH,
   CLIENT_PORTAL_PREFIX,
 } from "@/app/constants/clientPortalRoutes";
+import { OAuthCallbackPage } from "@/features/admin/auth/pages/OAuthCallbackPage";
+import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
 import { lazyRoutePage } from "@/app/lazyRoute";
 import { PublicRoute } from "@/features/admin/auth/components/PublicRoute";
 import { ProtectedRoute } from "@/features/admin/auth/components/ProtectedRoute";
@@ -130,6 +132,10 @@ function ProjectDetailLegacyRedirect() {
 }
 
 export const router = createBrowserRouter([
+  {
+    path: OAUTH_CALLBACK_PATH,
+    element: <OAuthCallbackPage />,
+  },
   {
     path: "/",
     element: <LegacyPathRedirect />,

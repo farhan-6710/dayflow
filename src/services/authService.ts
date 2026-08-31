@@ -11,6 +11,11 @@ import {
   ADMIN_PORTAL_DASHBOARD_PATH,
   ADMIN_PORTAL_SETTINGS_PATH,
 } from "@/app/constants/adminPortalRoutes";
+import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
+import {
+  openOAuthPopup,
+  type OAuthPopupResult,
+} from "@/features/admin/auth/utils/oauthPopup";
 
 // Returns the signed-in user from the Auth server (not a stale JWT cache).
 export async function getCurrentUser(): Promise<User | null> {
@@ -138,22 +143,39 @@ export async function signUpWithEmail(
   return { ok: true, requiresEmailConfirmation: false };
 }
 
-export type SignInWithOAuthOptions = {
-  redirectPath?: string;
-};
+export type SignInWithOAuthResult = OAuthPopupResult;
 
 export async function signInWithOAuthProvider(
   provider: Provider,
   redirectPath: string = ADMIN_PORTAL_DASHBOARD_PATH,
-): Promise<AuthError | null> {
-  const { error } = await supabase.auth.signInWithOAuth({
+): Promise<SignInWithOAuthResult> {
+  const callbackUrl = new URL(`${window.location.origin}${OAUTH_CALLBACK_PATH}`);
+  callbackUrl.searchParams.set("next", redirectPath);
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: `${window.location.origin}${redirectPath}`,
+      redirectTo: callbackUrl.toString(),
+      skipBrowserRedirect: true,
     },
   });
 
-  return error;
+  if (error) {
+    return { ok: false, error };
+  }
+
+  if (!data.url) {
+    return {
+      ok: false,
+      error: {
+        message: "Could not start Google sign-in.",
+        name: "OAuthError",
+        status: 400,
+      } as AuthError,
+    };
+  }
+
+  return openOAuthPopup(data.url);
 }
 
 export async function signOut(): Promise<void> {

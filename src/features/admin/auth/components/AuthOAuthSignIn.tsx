@@ -53,14 +53,29 @@ export function AuthOAuthSignIn({
     onBeforeSignIn?.();
     setActiveProvider(provider);
 
-    const error = await signInWithOAuthProvider(provider, {
+    const result = await signInWithOAuthProvider(provider, {
       redirectPath: oauthRedirectPath,
     });
 
-    if (error) {
-      setActiveProvider(null);
-      onError(formatAuthErrorMessage(error.message));
+    setActiveProvider(null);
+
+    if (result.ok) {
+      return;
     }
+
+    if (result.popupBlocked) {
+      showToast(
+        "error",
+        "Popup blocked. Allow popups for this site and try again.",
+      );
+      return;
+    }
+
+    if (result.cancelled) {
+      return;
+    }
+
+    onError(formatAuthErrorMessage(result.error?.message ?? "Google sign-in failed."));
   };
 
   return (
@@ -88,7 +103,7 @@ export function AuthOAuthSignIn({
               disabled={disabled || activeProvider !== null}
             >
               {isLoading ? <LoadingSpinner size="sm" /> : option.icon}
-              {isLoading ? "Redirecting..." : option.label}
+              {isLoading ? "Signing in..." : option.label}
             </Button>
           );
         })}
