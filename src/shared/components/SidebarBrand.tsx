@@ -27,23 +27,23 @@ export function SidebarBrand({
   }
 
   return (
-    <div className={cn("flex w-fit min-w-0 items-center gap-3", className)}>
+    <div className={cn("flex w-fit min-w-0 items-center gap-2", className)}>
       <img
         src={iconSrc}
         alt=""
         aria-hidden="true"
-        className="size-10 shrink-0 object-contain"
+        className="size-9.75 shrink-0 object-contain"
       />
       <div
-        className="h-9 w-px shrink-0 bg-sidebar-border/80"
+        className="h-6 w-px shrink-0 self-center bg-sidebar-border/70"
         aria-hidden="true"
       />
       <div className="min-w-0 shrink-0">
-        <p className="font-serif text-[1.35rem] font-semibold leading-none tracking-[0.02em] text-sidebar-foreground">
+        <p className="font-serif text-[1.25rem] font-semibold leading-none tracking-[0.02em] text-sidebar-foreground">
           DayFlow
         </p>
         {subtitle ? (
-          <p className="mt-0.5 text-[9px] font-semibold uppercase leading-none tracking-[0.1em] text-muted-foreground text-center">
+          <p className="mt-0.5 text-[9px] font-semibold uppercase leading-none tracking-[0.1em] text-muted-foreground">
             {subtitle}
           </p>
         ) : null}
