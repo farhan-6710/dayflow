@@ -11,8 +11,6 @@ import type { ShellSidebarConfig } from "@/shared/types/components";
 
 const sidebarConfig: ShellSidebarConfig = {
   homeLink: CLIENT_PORTAL_DASHBOARD_PATH,
-  initials: "DF",
-  brandName: "DayFlow",
   brandSubtitle: "Client Portal",
   nav: [
     { label: "Dashboard", to: CLIENT_PORTAL_DASHBOARD_PATH, icon: "dashboard" },

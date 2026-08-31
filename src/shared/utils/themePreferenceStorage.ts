@@ -1,3 +1,5 @@
+import { applyStoredBrandFavicon } from "@/shared/utils/brandFavicon";
+
 export const THEME_STORAGE_KEY = "DC-theme";
 
 export type ThemePreference = "light" | "dark";
@@ -27,4 +29,5 @@ export function resolveInitialThemePreference(): ThemePreference {
 export function applyStoredThemeClassToDocument() {
   const stored = getStoredThemePreference();
   document.body.classList.toggle("dark", stored === "dark");
+  applyStoredBrandFavicon();
 }

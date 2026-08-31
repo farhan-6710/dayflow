@@ -15,6 +15,7 @@ import {
   setStoredThemePreference,
   type ThemePreference,
 } from "@/shared/utils/themePreferenceStorage";
+import { applyBrandFavicon } from "@/shared/utils/brandFavicon";
 
 type ThemeContextValue = {
   isDarkMode: boolean;
@@ -37,6 +38,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   useEffect(() => {
     document.body.classList.toggle("dark", isDarkMode);
     setStoredThemePreference(theme);
+    applyBrandFavicon(isDarkMode);
   }, [isDarkMode, theme]);
 
   const setDarkMode = useCallback((enabled: boolean) => {

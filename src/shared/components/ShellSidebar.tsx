@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { ShellSidebarProfile } from "@/shared/components/ShellSidebarProfile";
 import { TransitionLink } from "@/shared/components/TransitionLink";
 import { SHELL_SIDEBAR_MOTION } from "@/shared/constants/pageMotion";
@@ -171,43 +172,26 @@ export function ShellSidebarContent({
 }: ShellSidebarContentProps) {
   const { activePath } = usePageTransition();
   const activeNavPath = resolveActiveNavPath(activePath, config.nav);
-  const nameParts = config.brandName.split(" ");
 
   return (
     <div className="flex h-full flex-col">
-      <TransitionLink
-        to={config.homeLink}
-        onClick={onNavigate}
-        className="flex h-16 shrink-0 items-center justify-center border-b border-sidebar-border/80 px-4"
-      >
-        <div
-          className={
-            collapsed
-              ? "flex items-center justify-center"
-              : "flex items-center justify-center gap-3"
-          }
+      <div className="shrink-0 border-b border-sidebar-border/80">
+        <TransitionLink
+          to={config.homeLink}
+          onClick={onNavigate}
+          className="flex items-center justify-center px-4 py-3"
         >
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm">
-            {config.initials}
-          </div>
-          <div className={collapsed ? "sr-only" : "min-w-0 text-left"}>
-            <div className="truncate text-xl font-bold leading-none tracking-tight">
-              <span className="text-primary">{nameParts[0]}</span>
-              {nameParts.length > 1 ? (
-                <span className="text-accent">
-                  {" "}
-                  {nameParts.slice(1).join(" ")}
-                </span>
-              ) : null}
-            </div>
-            {config.brandSubtitle ? (
-              <p className="mt-0.5 truncate text-[10px] font-semibold uppercase leading-none tracking-wider text-muted-foreground">
-                {config.brandSubtitle}
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </TransitionLink>
+          {collapsed ? (
+            <DayFlowLogo variant="icon" />
+          ) : (
+            <DayFlowLogo
+              variant="full"
+              subtitle={config.brandSubtitle}
+              imageClassName="h-[2.8rem] max-w-[12rem]"
+            />
+          )}
+        </TransitionLink>
+      </div>
 
       <nav className={cn("min-h-0 flex-1 space-y-1.5 overflow-y-auto", collapsed ? "p-3" : "p-4")}>
         {config.nav.map((item) =>

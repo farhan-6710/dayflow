@@ -88,8 +88,6 @@ export type ShellQuickAction = {
 
 export type ShellSidebarConfig = {
   homeLink: string;
-  initials: string;
-  brandName: string;
   brandSubtitle?: string;
   nav: ShellNavItem[];
   quickAction?: ShellQuickAction;

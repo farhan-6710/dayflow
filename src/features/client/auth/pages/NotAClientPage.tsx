@@ -6,6 +6,7 @@ import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes
 import { CLIENT_AUTH_HOME } from "@/features/client/constants/routes";
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
 import { resolveClientPortalProfile } from "@/services/clientPortalService";
+import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { Button } from "@/shared/ui/button";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 
@@ -48,6 +49,9 @@ export function NotAClientPage() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 text-center">
       <div className="max-w-md space-y-4">
+        <div className="flex justify-center">
+          <DayFlowLogo variant="full" imageClassName="h-9 max-w-[10rem]" />
+        </div>
         <h1 className="text-xl font-semibold tracking-tight">
           You are not registered as a client
         </h1>

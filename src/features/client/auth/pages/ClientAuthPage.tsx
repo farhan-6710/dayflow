@@ -18,6 +18,7 @@ import {
 } from "@/features/client/constants/routes";
 import { ADMIN_PORTAL_AUTH_PATH } from "@/app/constants/adminPortalRoutes";
 import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes";
+import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -94,12 +95,9 @@ export function ClientAuthPage() {
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-12">
-        <div className="mb-8 text-center">
-          <Link
-            to={CLIENT_AUTH_HOME}
-            className="text-3xl font-semibold tracking-wider text-muted-foreground uppercase transition hover:text-foreground"
-          >
-            DayFlow
+        <div className="mb-8 flex flex-col items-center">
+          <Link to={CLIENT_AUTH_HOME} className="transition-opacity hover:opacity-90">
+            <DayFlowLogo variant="full" imageClassName="h-10 max-w-[12rem]" />
           </Link>
           <p className="mt-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
             Client Portal

@@ -16,6 +16,7 @@ import {
   AUTH_HOME,
   DASHBOARD_HOME,
 } from "@/features/admin/auth/constants/routes";
+import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -97,12 +98,9 @@ export function AuthPage() {
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-12">
-        <div className="mb-8 text-center">
-          <Link
-            to={AUTH_HOME}
-            className="text-3xl font-semibold tracking-wider text-muted-foreground uppercase transition hover:text-foreground"
-          >
-            DayFlow
+        <div className="mb-8 flex justify-center">
+          <Link to={AUTH_HOME} className="transition-opacity hover:opacity-90">
+            <DayFlowLogo variant="full" imageClassName="h-10 max-w-[12rem]" />
           </Link>
         </div>
 
