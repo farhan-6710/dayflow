@@ -160,6 +160,7 @@
 
   /* Muted Status Background for Dark Mode */
   --status-muted: oklch(0.2 0 0);
+  --status-done: oklch(0.72 0.14 145);
 
   /* Shadow Coordinates adjusted to true black shadows for pure neutral contrast */
   --shadow-color-coords: 0 0 0;

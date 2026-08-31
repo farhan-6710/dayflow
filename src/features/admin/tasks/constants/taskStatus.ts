@@ -17,21 +17,21 @@ export const TASK_STATUS_LABELS: Record<TaskStatus, string> = {
 export const TASK_STATUS_DOT_COLORS: Record<TaskStatus, string> = {
   todo: "bg-muted-foreground",
   in_progress: "bg-primary",
-  done: "bg-green-500",
+  done: "bg-status-done",
   missed: "bg-status-missed",
 };
 
 export const TASK_STATUS_TEXT_COLORS: Record<TaskStatus, string> = {
   todo: "text-muted-foreground",
   in_progress: "text-primary",
-  done: "text-green-600",
+  done: "text-status-done",
   missed: "text-status-missed",
 };
 
 export const TASK_STATUS_BADGE_CLASS: Record<TaskStatus, string> = {
   todo: "bg-muted text-muted-foreground",
   in_progress: "bg-primary/10 text-primary",
-  done: "bg-emerald-500/10 text-emerald-600",
+  done: "bg-status-done/15 text-status-done",
   missed: "bg-status-missed/15 text-status-missed",
 };
 

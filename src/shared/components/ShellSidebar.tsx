@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
-import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
+import { SidebarBrand } from "@/shared/components/SidebarBrand";
 import { ShellSidebarProfile } from "@/shared/components/ShellSidebarProfile";
 import { TransitionLink } from "@/shared/components/TransitionLink";
 import { SHELL_SIDEBAR_MOTION } from "@/shared/constants/pageMotion";
@@ -179,17 +179,14 @@ export function ShellSidebarContent({
         <TransitionLink
           to={config.homeLink}
           onClick={onNavigate}
-          className="flex items-center justify-center px-4 py-3"
-        >
-          {collapsed ? (
-            <DayFlowLogo variant="icon" />
-          ) : (
-            <DayFlowLogo
-              variant="full"
-              subtitle={config.brandSubtitle}
-              imageClassName="h-[2.8rem] max-w-[12rem]"
-            />
+          className={cn(
+            "flex items-center justify-center px-4 py-3",
           )}
+        >
+          <SidebarBrand
+            collapsed={collapsed}
+            subtitle={config.brandSubtitle}
+          />
         </TransitionLink>
       </div>
 

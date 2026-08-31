@@ -16,12 +16,6 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/tooltip";
 
-const PRIORITY_TEXT: Record<string, string> = {
-  high: "text-destructive",
-  medium: "text-accent",
-  low: "text-muted-foreground",
-};
-
 function isOverdue(dueDate: string, status: TaskStatus, todayStr: string): boolean {
   return !isClosedTaskStatus(status) && dueDate < todayStr;
 }
@@ -33,9 +27,9 @@ export function TasksWeekDayCell({
   tasks,
   isSelected,
   statusColors,
+  statusText,
   onOpenDay,
   onEdit,
-  // statusText intentionally unused — tasks use priority-based colours instead
 }: TasksWeekDayCellProps) {
   const hasTasks = tasks.length > 0;
   const dayName = getDayLabel(year, month, dateNumber);
@@ -105,7 +99,7 @@ export function TasksWeekDayCell({
                     <span
                       className={cn(
                         "text-[11px] font-semibold",
-                        PRIORITY_TEXT[task.priority],
+                        statusText[task.status],
                       )}
                     >
                       {TASK_STATUS_LABELS[task.status]}
