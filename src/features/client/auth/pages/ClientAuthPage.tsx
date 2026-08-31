@@ -1,5 +1,7 @@
 import { Link, Navigate, useLocation, useSearchParams } from "react-router";
 
+import { AuthFormCard } from "@/features/admin/auth/components/AuthFormCard";
+import { AuthShellLayout } from "@/features/admin/auth/components/AuthShellLayout";
 import { ForgotPasswordForm } from "@/features/admin/auth/components/ForgotPasswordForm";
 import { LoginForm } from "@/features/admin/auth/components/LoginForm";
 import { ResetPasswordForm } from "@/features/admin/auth/components/ResetPasswordForm";
@@ -13,12 +15,9 @@ import {
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
 import { buildClientAuthUrl } from "@/features/client/auth/utils/clientAuthUrlParams";
 import {
-  CLIENT_AUTH_HOME,
   CLIENT_DASHBOARD_HOME,
 } from "@/features/client/constants/routes";
-import { ADMIN_PORTAL_AUTH_PATH } from "@/app/constants/adminPortalRoutes";
 import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes";
-import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -82,72 +81,53 @@ export function ClientAuthPage() {
       ? "Reset password"
       : formType === AUTH_FORM_TYPES.signup
         ? "Create account"
-        : "Log in";
+        : "Sign in";
 
   const description = showResetPassword
-    ? "Enter a new password for your DayFlow client account."
+    ? "Enter a new password for your client account."
     : formType === AUTH_FORM_TYPES.forgotPassword
-      ? "We’ll email you a link to choose a new password."
+      ? "We'll email you a link to choose a new password."
       : formType === AUTH_FORM_TYPES.signup
-        ? "Create your client portal account."
-        : "Sign in to the DayFlow client portal.";
+        ? "Use the same email your provider listed for you."
+        : "Use the email on your client profile to continue.";
+
+  const showSwitchLink =
+    !showResetPassword && formType !== AUTH_FORM_TYPES.forgotPassword;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-12">
-        <div className="mb-8 flex flex-col items-center">
-          <Link to={CLIENT_AUTH_HOME} className="transition-opacity hover:opacity-90">
-            <DayFlowLogo variant="full" imageClassName="h-10 max-w-[12rem]" />
-          </Link>
-          <p className="mt-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Client Portal
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-          <div className="mb-6 text-center">
-            <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-          </div>
-
-          {showResetPassword ? (
-            <ResetPasswordForm redirectTo={CLIENT_DASHBOARD_HOME} />
-          ) : formType === AUTH_FORM_TYPES.forgotPassword ? (
-            <ForgotPasswordForm
-              redirectPath={buildClientAuthUrl(AUTH_FORM_TYPES.resetPassword)}
-              loginPath={buildClientAuthUrl(AUTH_FORM_TYPES.login)}
-            />
-          ) : formType === AUTH_FORM_TYPES.signup ? (
-            <SignupForm emailRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
-          ) : (
-            <LoginForm oauthRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
-          )}
-
-          {!showResetPassword && formType !== AUTH_FORM_TYPES.forgotPassword ? (
-            <p className="mt-6 text-center text-sm text-muted-foreground">
+    <AuthShellLayout>
+      <AuthFormCard
+        title={title}
+        description={description}
+        footer={
+          showSwitchLink ? (
+            <p className="text-center text-sm text-muted-foreground">
               {formType === AUTH_FORM_TYPES.signup
                 ? "Already have an account?"
-                : "Need an account?"}{" "}
+                : "Don't have an account?"}{" "}
               <Link
                 to={switchFormPath}
                 className="font-semibold text-primary hover:underline"
               >
-                {formType === AUTH_FORM_TYPES.signup ? "Log in" : "Sign up"}
+                {formType === AUTH_FORM_TYPES.signup ? "Sign in" : "Sign up"}
               </Link>
             </p>
-          ) : null}
-
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            Admin user?{" "}
-            <Link
-              to={ADMIN_PORTAL_AUTH_PATH}
-              className="font-semibold text-primary hover:underline"
-            >
-              Go to admin portal
-            </Link>
-          </p>
-        </div>
-      </div>
-    </div>
+          ) : undefined
+        }
+      >
+        {showResetPassword ? (
+          <ResetPasswordForm redirectTo={CLIENT_DASHBOARD_HOME} />
+        ) : formType === AUTH_FORM_TYPES.forgotPassword ? (
+          <ForgotPasswordForm
+            redirectPath={buildClientAuthUrl(AUTH_FORM_TYPES.resetPassword)}
+            loginPath={buildClientAuthUrl(AUTH_FORM_TYPES.login)}
+          />
+        ) : formType === AUTH_FORM_TYPES.signup ? (
+          <SignupForm emailRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
+        ) : (
+          <LoginForm oauthRedirectPath={CLIENT_PORTAL_DASHBOARD_PATH} />
+        )}
+      </AuthFormCard>
+    </AuthShellLayout>
   );
 }

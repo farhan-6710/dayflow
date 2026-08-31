@@ -1,5 +1,7 @@
 import { Link, Navigate, useLocation, useSearchParams } from "react-router";
 
+import { AuthFormCard } from "@/features/admin/auth/components/AuthFormCard";
+import { AuthShellLayout } from "@/features/admin/auth/components/AuthShellLayout";
 import { ForgotPasswordForm } from "@/features/admin/auth/components/ForgotPasswordForm";
 import { LoginForm } from "@/features/admin/auth/components/LoginForm";
 import { ResetPasswordForm } from "@/features/admin/auth/components/ResetPasswordForm";
@@ -12,11 +14,7 @@ import {
 } from "@/features/admin/auth/constants/auth";
 import { useAuth } from "@/features/admin/auth/hooks/useAuth";
 import { buildAuthUrl } from "@/features/admin/auth/utils/authUrlParams";
-import {
-  AUTH_HOME,
-  DASHBOARD_HOME,
-} from "@/features/admin/auth/constants/routes";
-import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
+import { DASHBOARD_HOME } from "@/features/admin/auth/constants/routes";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -85,57 +83,50 @@ export function AuthPage() {
       ? "Reset password"
       : formType === AUTH_FORM_TYPES.signup
         ? "Create account"
-        : "Log in";
+        : "Sign in";
 
   const description = showResetPassword
     ? "Enter a new password for your DayFlow account."
     : formType === AUTH_FORM_TYPES.forgotPassword
-      ? "We’ll email you a link to choose a new password."
+      ? "We'll email you a link to choose a new password."
       : formType === AUTH_FORM_TYPES.signup
-        ? "Create your account with email and password."
-        : "Sign in to the DayFlow admin portal.";
+        ? "Add your name, email, and a password to get started."
+        : "Use your email and password to access your workspace.";
+
+  const showSwitchLink =
+    !showResetPassword && formType !== AUTH_FORM_TYPES.forgotPassword;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-12">
-        <div className="mb-8 flex justify-center">
-          <Link to={AUTH_HOME} className="transition-opacity hover:opacity-90">
-            <DayFlowLogo variant="full" imageClassName="h-10 max-w-[12rem]" />
-          </Link>
-        </div>
-
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-          <div className="mb-6 text-center">
-            <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-          </div>
-
-          {showResetPassword ? (
-            <ResetPasswordForm />
-          ) : formType === AUTH_FORM_TYPES.forgotPassword ? (
-            <ForgotPasswordForm />
-          ) : formType === AUTH_FORM_TYPES.signup ? (
-            <SignupForm />
-          ) : (
-            <LoginForm />
-          )}
-
-          {!showResetPassword &&
-          formType !== AUTH_FORM_TYPES.forgotPassword ? (
-            <p className="mt-6 text-center text-sm text-muted-foreground">
+    <AuthShellLayout>
+      <AuthFormCard
+        title={title}
+        description={description}
+        footer={
+          showSwitchLink ? (
+            <p className="text-center text-sm text-muted-foreground">
               {formType === AUTH_FORM_TYPES.signup
                 ? "Already have an account?"
-                : "Need an account?"}{" "}
+                : "Don't have an account?"}{" "}
               <Link
                 to={switchFormPath}
                 className="font-semibold text-primary hover:underline"
               >
-                {formType === AUTH_FORM_TYPES.signup ? "Log in" : "Sign up"}
+                {formType === AUTH_FORM_TYPES.signup ? "Sign in" : "Sign up"}
               </Link>
             </p>
-          ) : null}
-        </div>
-      </div>
-    </div>
+          ) : undefined
+        }
+      >
+        {showResetPassword ? (
+          <ResetPasswordForm />
+        ) : formType === AUTH_FORM_TYPES.forgotPassword ? (
+          <ForgotPasswordForm />
+        ) : formType === AUTH_FORM_TYPES.signup ? (
+          <SignupForm />
+        ) : (
+          <LoginForm />
+        )}
+      </AuthFormCard>
+    </AuthShellLayout>
   );
 }

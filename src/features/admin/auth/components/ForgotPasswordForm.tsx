@@ -57,7 +57,7 @@ export function ForgotPasswordForm({
           to={loginPath}
           className="font-semibold text-primary hover:underline"
         >
-          Log in
+          Sign in
         </Link>
       </p>
     </div>

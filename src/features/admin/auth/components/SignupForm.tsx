@@ -96,11 +96,6 @@ export function SignupForm({
         onError={setError}
         onBeforeSignIn={clearError}
       />
-
-      <p className="text-center text-xs text-muted-foreground">
-        After sign-up you may need to wait until Digi Carotene Management grants
-        team or client portal access.
-      </p>
     </div>
   );
 }
