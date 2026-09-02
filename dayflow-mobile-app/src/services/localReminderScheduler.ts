@@ -1,5 +1,10 @@
 import * as Notifications from "expo-notifications";
 import type { DayOfWeek, Reminder } from "@types";
+import {
+  REMINDER_NOTIFICATION_CATEGORY,
+  REMINDER_NOTIFICATION_CHANNEL,
+  REMINDER_NOTIFICATION_SOUND,
+} from "@notifications/constants";
 
 const REMINDER_PREFIX = "dayflow-reminder:";
 
@@ -48,13 +53,15 @@ export async function scheduleLocalReminderNotifications(
           title: reminder.name,
           body: reminder.description ?? "Time for your reminder",
           data: { reminderId: reminder.id },
-          categoryIdentifier: "custom_category",
+          categoryIdentifier: REMINDER_NOTIFICATION_CATEGORY,
+          sound: REMINDER_NOTIFICATION_SOUND,
         },
         trigger: {
           type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
           weekday: DAY_TO_WEEKDAY[day],
           hour: reminder.hour,
           minute: reminder.minute,
+          channelId: REMINDER_NOTIFICATION_CHANNEL,
         },
       });
     }

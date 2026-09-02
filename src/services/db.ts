@@ -4,7 +4,8 @@
 export const DB = {
   PROFILES: {
     TABLE: "profiles",
-    SELECT: "id, display_name, avatar_url, theme_preference, created_at, updated_at",
+    SELECT:
+      "id, display_name, avatar_url, theme_preference, created_at, updated_at",
   },
   PROJECTS: {
     TABLE: "projects",
@@ -23,7 +24,8 @@ export const DB = {
   },
   TASKS: {
     TABLE: "tasks",
-    SELECT: "id, user_id, title, description, status, priority, due_date, due_time, created_at, updated_at",
+    SELECT:
+      "id, user_id, title, description, status, priority, due_date, due_time, created_at, updated_at",
   },
   NOTES: {
     TABLE: "notes",
@@ -35,7 +37,8 @@ export const DB = {
   },
   REMINDERS: {
     TABLE: "reminders",
-    SELECT: "id, user_id, title, description, reminder_time, days_of_week, is_disabled, disabled_until, status, category, created_at, updated_at",
+    SELECT:
+      "id, user_id, title, description, reminder_time, days_of_week, is_disabled, disabled_until, status, category, created_at, updated_at",
   },
   REMINDER_OCCURRENCES: {
     TABLE: "reminder_occurrences",
@@ -43,7 +46,8 @@ export const DB = {
   },
   NOTIFICATIONS: {
     TABLE: "notifications",
-    SELECT: "id, user_id, notification_type, title, message, status, related_id, created_at, read_at",
+    SELECT:
+      "id, user_id, notification_type, title, message, status, related_id, created_at, read_at",
   },
   CLIENT_ACTIVITY_TASKS: {
     TABLE: "client_activity_tasks",

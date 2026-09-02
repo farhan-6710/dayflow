@@ -7,6 +7,7 @@ import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 import { updateReminderRequest } from "@redux/slices/remindersSlice";
 import { store } from "@redux/store";
+import { REMINDER_NOTIFICATION_CATEGORY } from "@notifications/constants";
 import type { ReminderStatus } from "@types";
 
 const LOG_PREFIX = "[ReminderNotification]";
@@ -31,7 +32,7 @@ export const setupNotifications = async (): Promise<{
 };
 
 export const registerNotificationCategories = async () => {
-  await Notifications.setNotificationCategoryAsync("custom_category", [
+  await Notifications.setNotificationCategoryAsync(REMINDER_NOTIFICATION_CATEGORY, [
     {
       identifier: "action_missed",
       buttonTitle: "Missed",

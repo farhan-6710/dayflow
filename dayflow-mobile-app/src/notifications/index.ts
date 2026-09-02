@@ -1,4 +1,4 @@
-// Notifications feature public API
+export * from "./constants";
 export * from "./context/NotificationProvider";
 export * from "./hooks/useRegisterDFN";
 export * from "./hooks/useTestNotification";

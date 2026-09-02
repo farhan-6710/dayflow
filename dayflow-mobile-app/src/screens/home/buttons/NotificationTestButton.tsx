@@ -5,6 +5,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useThemeColors } from "@constants/theme";
 import { useNotification } from "@notifications/context/NotificationProvider";
 import { useTestNotification } from "@notifications/hooks/useTestNotification";
+import {
+  REMINDER_NOTIFICATION_CATEGORY,
+  REMINDER_NOTIFICATION_CHANNEL,
+  REMINDER_NOTIFICATION_SOUND,
+} from "@notifications/constants";
 import Text from "@components/atoms/Text";
 
 export default function NotificationTestButton() {
@@ -43,12 +48,12 @@ export default function NotificationTestButton() {
       title: "Hi, Farhan 👋😎",
       body: "Your device is all set to recieve notifications !!!",
       data: {},
-      sound: "notification_sound.wav",
+      sound: REMINDER_NOTIFICATION_SOUND,
       priority: "high",
       vibrate: "true",
       vibrationPattern: [0, 250, 250, 250],
-      channelId: "custom_channel",
-      categoryId: "custom_category", // Add category for action buttons
+      channelId: REMINDER_NOTIFICATION_CHANNEL,
+      categoryId: REMINDER_NOTIFICATION_CATEGORY,
     });
   };
 

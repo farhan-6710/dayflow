@@ -17,6 +17,10 @@ import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
 } from "react-native-reanimated";
+import {
+  REMINDER_NOTIFICATION_CHANNEL,
+  REMINDER_NOTIFICATION_SOUND,
+} from "@notifications/constants";
 import "@styles/global.css";
 import "@styles/dynamicClasses.css";
 
@@ -53,13 +57,13 @@ export default function RootLayout() {
   // setup notification channel for Android
   useEffect(() => {
     if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("custom_channel", {
-        name: "custom_channel",
+      Notifications.setNotificationChannelAsync(REMINDER_NOTIFICATION_CHANNEL, {
+        name: "Reminders",
         importance: Notifications.AndroidImportance.HIGH,
         enableVibrate: true,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: "#FF231F7C",
-        sound: "notification_sound.wav",
+        sound: REMINDER_NOTIFICATION_SOUND,
       });
     }
   }, []);
