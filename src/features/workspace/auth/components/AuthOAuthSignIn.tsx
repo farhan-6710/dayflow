@@ -10,6 +10,7 @@ import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import type { AuthOAuthSignInProps } from "@/features/workspace/auth/types/components";
 import { formatAuthErrorMessage } from "@/features/workspace/auth/utils/formatAuthErrorMessage";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
+import { isDesktopApp } from "@/shared/utils/platform";
 import { showToast } from "@/shared/utils/showToast";
 import { Button } from "@/shared/ui/button";
 
@@ -53,6 +54,10 @@ export function AuthOAuthSignIn({
     onBeforeSignIn?.();
     setActiveProvider(provider);
 
+    if (isDesktopApp()) {
+      showToast("info", "Opening your browser to sign in with Google…");
+    }
+
     const result = await signInWithOAuthProvider(provider, {
       redirectPath: oauthRedirectPath,
     });
@@ -72,6 +77,7 @@ export function AuthOAuthSignIn({
     }
 
     if (result.cancelled) {
+      showToast("info", "Google sign-in was cancelled.");
       return;
     }
 

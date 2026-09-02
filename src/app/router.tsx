@@ -16,7 +16,11 @@ import {
   CLIENT_PORTAL_PREFIX,
 } from "@/app/constants/clientPortalRoutes";
 import { OAuthCallbackPage } from "@/features/workspace/auth/pages/OAuthCallbackPage";
-import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
+import { DesktopOAuthBridgePage } from "@/features/workspace/auth/pages/DesktopOAuthBridgePage";
+import {
+  DESKTOP_OAUTH_BRIDGE_PATH,
+  OAUTH_CALLBACK_PATH,
+} from "@/app/constants/oauthRoutes";
 import { lazyRoutePage } from "@/app/lazyRoute";
 import { PublicRoute } from "@/features/workspace/auth/components/PublicRoute";
 import { ProtectedRoute } from "@/features/workspace/auth/components/ProtectedRoute";
@@ -137,6 +141,10 @@ export const router = createBrowserRouter([
   {
     path: OAUTH_CALLBACK_PATH,
     element: <OAuthCallbackPage />,
+  },
+  {
+    path: DESKTOP_OAUTH_BRIDGE_PATH,
+    element: <DesktopOAuthBridgePage />,
   },
   {
     path: "/",

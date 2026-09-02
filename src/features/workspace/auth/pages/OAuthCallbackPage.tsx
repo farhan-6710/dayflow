@@ -47,6 +47,7 @@ export function OAuthCallbackPage() {
       return;
     }
 
+    const code = searchParams.get("code");
     let active = true;
 
     const complete = (success: boolean, errorMessage?: string) => {
@@ -59,12 +60,36 @@ export function OAuthCallbackPage() {
         return;
       }
 
-      if (success) {
-        navigate(nextPath, { replace: true });
-      } else {
-        navigate(nextPath, { replace: true });
-      }
+      navigate(nextPath, { replace: true });
     };
+
+    const finishWithSession = () => {
+      void supabase.auth.getSession().then(({ data: { session }, error }) => {
+        if (!active) {
+          return;
+        }
+        if (error) {
+          complete(false, error.message);
+          return;
+        }
+        if (session) {
+          complete(true);
+        }
+      });
+    };
+
+    if (code) {
+      void supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        if (!active) {
+          return;
+        }
+        if (error) {
+          complete(false, error.message);
+          return;
+        }
+        finishWithSession();
+      });
+    }
 
     const {
       data: { subscription },
@@ -74,18 +99,9 @@ export function OAuthCallbackPage() {
       }
     });
 
-    void supabase.auth.getSession().then(({ data: { session }, error }) => {
-      if (!active) {
-        return;
-      }
-      if (error) {
-        complete(false, error.message);
-        return;
-      }
-      if (session) {
-        complete(true);
-      }
-    });
+    if (!code) {
+      finishWithSession();
+    }
 
     const timeout = window.setTimeout(() => {
       if (!handledRef.current) {
@@ -98,7 +114,7 @@ export function OAuthCallbackPage() {
       subscription.unsubscribe();
       window.clearTimeout(timeout);
     };
-  }, [navigate, nextPath, oauthError]);
+  }, [navigate, nextPath, oauthError, searchParams]);
 
   return <CenteredLoading />;
 }

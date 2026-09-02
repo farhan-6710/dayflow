@@ -1,155 +1,102 @@
 # DayFlow — Workspace & Client Portals
 
-DayFlow is a personal workspace for freelancers and small agencies: manage your own tasks, projects, and notes in the **workspace**, and give clients a read-only **client portal** to view shared projects and raise activities.
+DayFlow is a cross-platform workspace for freelancers and small agencies. Manage tasks, projects, clients, and reminders in the **workspace**; give clients a separate **client portal** to view shared work and raise activities.
 
-Built for speed, clean aesthetics, and a simple architecture.
-
----
-
-## Tech Stack
-
-- **Frontend:** React 19, React Router 7, Tailwind CSS v4, Framer Motion, Recharts
-- **Language:** TypeScript
-- **Package Manager:** Bun
-- **Build:** Vite 8
-- **Backend:** Supabase (Auth, Postgres, Row Level Security)
-- **Deployment:** Static hosting (Vite `dist/`) + Supabase
+**Platforms:** Web · Desktop (macOS, Tauri) · Mobile (React Native / Expo)
 
 ---
 
-## Two Portals
+## Try DayFlow (web)
 
-| Portal | Base path | Who |
-|--------|-----------|-----|
-| **Workspace** | `/workspace` | You (solo or team — tasks, projects, clients) |
-| **Client** | `/client-portal` | Your clients (separate auth) |
+### 1. Open the live app
 
-Legacy paths (`/dashboard`, `/auth`, `/admin-portal/*`, etc.) redirect to the workspace.
+**[https://bisque-gull-237581.hostingersite.com](https://bisque-gull-237581.hostingersite.com)**
 
-### Workspace
+### 2. Sign in to the workspace with Demo Account
 
-Dashboard, tasks calendar, projects (with notes & reference links), clients management, daily reminders, notifications, analytics, settings.
+Go to **[Workspace login](https://bisque-gull-237581.hostingersite.com/workspace/auth)** (owner portal; `/admin-portal` redirects here) and use the demo account:
 
-### Client portal
+| Field | Value |
+|-------|-------|
+| Email | `dayflow.demo@gmail.com` |
+| Password | `F@6710` |
 
-Dashboard, projects (read-only), notifications, analytics, settings. Clients can view activities on shared projects and raise tasks / meetings / calls (`raised_by = 'client'`).
+You’ll land on the workspace dashboard — tasks, projects, clients, reminders, notifications, and analytics.
 
-**Client access:** sign up or log in at `/client-portal/auth` with an email that matches `clients.email` in your workspace account. First login links their auth user to the client row via `link_client_portal_user()`.
+### 3. Client portal (optional)
 
----
-
-## Workspace Layout
-
-```text
-dayflow/
-  docs/                    README, DESIGN, AGENTS (this folder)
-  scripts/
-    migrations/            Numbered SQL for Supabase (001–027)
-    seed-*.ts              Demo data seed scripts
-    clients.md             Portfolio client reference table
-  src/
-    app/                   Router, route constants, global styles
-    services/              Supabase client + all data access
-    features/
-      workspace/           Workspace app features (route prefix: /workspace)
-        auth/              Login, signup, AuthProvider
-        dashboard/         KPIs, focus list, completion chart
-        tasks/             Personal tasks calendar
-        projects/          Projects, notes, reference links
-        clients-management/  Clients CRUD, chat, detail
-        client-activities/   Shared tasks/meetings/calls (workspace + client)
-        reminders/         Recurring reminders
-        notifications/     In-app notification inbox
-        analytics/         Charts
-        settings/          Profile & preferences
-      client/              Client portal only
-        auth/              Client login, protected routes
-        layouts/           Client sidebar shell
-        pages/             Dashboard, projects, etc.
-        providers/         ClientPortalProvider
-        hooks/             useClientDashboard
-    shared/                Cross-portal UI, layouts, utils
-```
+Clients sign in at **[Client portal login](https://bisque-gull-237581.hostingersite.com/client-portal/auth)** with an email linked to a client record in the demo workspace.
 
 ---
 
-## Core Features
+## Install DayFlow (macOS desktop)
 
-### Workspace (personal + business)
+### 1. Download
 
-1. **Dashboard** — Stats, task completion chart, focus list
-2. **Tasks calendar** — Personal tasks with status and priority
-3. **Projects** — Folders with notes, reference links, optional **Project for** (client)
-4. **Clients** — Contact records; link to projects via `project_for`
-5. **Client activities** — Tasks, meetings, calls per client project (workspace or client raised)
-6. **Reminders** — Recurring daily reminders
-7. **Notifications** — Task/reminder inbox
-8. **Analytics** — Completion and notes charts
+Get the latest `.dmg` from GitHub Releases:
 
-### Client portal
+**[DayFlow v0.1.1 — GitHub Release](https://github.com/farhan-6710/dayflow-app/releases/tag/v0.1.1)**
 
-1. **Dashboard** — Active projects, activity stats, open/closed activities
-2. **Projects** — Read-only list and detail for projects assigned to them
-3. **Activities** — View all; edit only items they raised
+### 2. Install
 
----
+1. Open the downloaded `.dmg`
+2. Drag **DayFlow** into **Applications**
 
-## Environment
+### 3. First launch on macOS
 
-```text
-VITE_SUPABASE_URL=
-VITE_SUPABASE_PUBLISHABLE_KEY=
-SEED_EMAIL=          # optional — for seed scripts
-SEED_PASSWORD=
-```
+macOS may block unsigned apps with a “damaged” warning. Fix it once:
 
----
+**Option A — Right-click:** Applications → right-click **DayFlow** → **Open** → **Open**
 
-## Seed Scripts
-
-Run against your Supabase project (requires `.env`):
+**Option B — Terminal:**
 
 ```bash
-bun run seed:dummy           # Personal projects + notes + tasks + reminders
-bun run seed:clients         # Portfolio clients (see scripts/clients.md)
-bun run seed:client-projects # Client-assigned projects + notes + links + activities
-bun run seed:task-months     # Historical tasks by month
+xattr -cr /Applications/DayFlow.app
 ```
 
----
+Then open DayFlow normally and sign in with the same demo credentials above.
 
-## Database Migrations
-
-Apply in order in the Supabase SQL editor: `scripts/migrations/001` … `027`.
-
-**Client portal (run after 019–021):**
-
-| Migration | Purpose |
-|-----------|---------|
-| 020 | Client portal columns, activity `raised_by`, base RLS |
-| 021 | Self-link by email, drop `portal_enabled` |
-| 022 | `link_client_portal_user()` RPC |
-| 023 | Harden link RPC (JWT/metadata email fallbacks) |
-| 024 | `fetch_client_portal_projects()` + projects RLS |
-| 025 | Fix RLS (no direct `auth.users` reads) |
-| 026 | Access helpers (`client_portal_can_access_project`, activity RLS) |
-| 027 | Workspace terminology (`owner_user_id`, `author_user_id`, `raised_by = 'workspace'`) |
+**Google sign-in on desktop:** opens your system browser, then returns to the app via a deep link (`dayflow://`). Deep links work in the **installed** `.app` — rebuild and reinstall after OAuth-related updates.
 
 ---
 
-## Reference Project
+## What it does
 
-Dashboard charts, split-pane notes, and orange/teal accents follow patterns from the Digi Carotene team portal:
+| Portal | Path | Who |
+|--------|------|-----|
+| **Workspace** | `/workspace` | Owner — tasks, projects, clients, reminders, analytics |
+| **Client** | `/client-portal` | Client — shared projects, raise tasks / meetings / calls |
+
+**Highlights:** Supabase Auth (email + Google OAuth) · dual-portal RLS · client activities (`raised_by`: workspace \| client) · in-app notifications · optimistic UI · analytics charts · Tauri desktop build
+
+---
+
+## Tech stack
+
+**Frontend:** React 19 · TypeScript · Vite 8 · Tailwind v4 · shadcn/ui · Framer Motion · Recharts
+
+**Backend & data:** Supabase (Auth, Postgres, RLS) · Bun
+
+**Desktop:** Tauri 2 (macOS)
+
+**Planned:** PHP (Hostinger) — transactional emails and cron jobs
+
+---
+
+## Codebase overview
 
 ```text
-../../digi-carotene-projects/digi-carotene/digi-carotene-sm-app
+src/features/workspace/   Owner app (/workspace)
+src/features/client/      Client portal (/client-portal)
+src/services/             All Supabase access
+src/shared/               Shared UI and layouts
+src-tauri/                Tauri desktop shell
+docs/                     README, DESIGN, AGENTS
 ```
-
-Client portal project listing/detail patterns were inspired by the same codebase.
 
 ---
 
-## Docs
+## Further reading
 
-- [DESIGN.md](./DESIGN.md) — Architecture, schema, auth, client portal data model
-- [AGENTS.md](./AGENTS.md) — Coding rules for humans and AI agents
+- [DESIGN.md](./DESIGN.md) — Architecture, schema, auth, and RLS
+- [AGENTS.md](./AGENTS.md) — Coding conventions for contributors

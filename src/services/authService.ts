@@ -13,9 +13,14 @@ import {
 } from "@/app/constants/workspaceRoutes";
 import { OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
 import {
+  buildDesktopOAuthBridgeUrl,
+  openDesktopOAuth,
+} from "@/features/workspace/auth/utils/oauthDesktop";
+import {
   openOAuthPopup,
   type OAuthPopupResult,
 } from "@/features/workspace/auth/utils/oauthPopup";
+import { isDesktopApp } from "@/shared/utils/platform";
 
 // Returns the signed-in user from the Auth server (not a stale JWT cache).
 export async function getCurrentUser(): Promise<User | null> {
@@ -149,14 +154,23 @@ export async function signInWithOAuthProvider(
   provider: Provider,
   redirectPath: string = WORKSPACE_DASHBOARD_PATH,
 ): Promise<SignInWithOAuthResult> {
-  const callbackUrl = new URL(`${window.location.origin}${OAUTH_CALLBACK_PATH}`);
-  callbackUrl.searchParams.set("next", redirectPath);
+  const redirectTo = isDesktopApp()
+    ? buildDesktopOAuthBridgeUrl(redirectPath)
+    : (() => {
+        const callbackUrl = new URL(`${window.location.origin}${OAUTH_CALLBACK_PATH}`);
+        callbackUrl.searchParams.set("next", redirectPath);
+        return callbackUrl.toString();
+      })();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: callbackUrl.toString(),
+      redirectTo,
       skipBrowserRedirect: true,
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
     },
   });
 
@@ -173,6 +187,10 @@ export async function signInWithOAuthProvider(
         status: 400,
       } as AuthError,
     };
+  }
+
+  if (isDesktopApp()) {
+    return openDesktopOAuth(data.url);
   }
 
   return openOAuthPopup(data.url);
