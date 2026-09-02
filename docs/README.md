@@ -1,3 +1,5 @@
+![Dayflow Banner](../public/brand-promotion-banner-dark.png)
+
 # DayFlow — Workspace & Client Portals
 
 DayFlow is a cross-platform workspace for freelancers and small agencies. Manage tasks, projects, clients, and reminders in the **workspace**; give clients a separate **client portal** to view shared work and raise activities.
@@ -33,9 +35,7 @@ Clients sign in at **[Client portal login](https://bisque-gull-237581.hostingers
 
 ### 1. Download
 
-Get the latest `.dmg` from GitHub Releases:
-
-**[DayFlow v0.1.1 — GitHub Release](https://github.com/farhan-6710/dayflow-app/releases/tag/v0.1.1)**
+Get the latest `.dmg` from [GitHub Releases](https://github.com/farhan-6710/dayflow-app/releases).
 
 ### 2. Install
 

@@ -65,15 +65,41 @@ Detect desktop in React: `isDesktopApp()` from `@/shared/utils/platform`.
 
 **Desktop Google OAuth:** system browser → hosted bridge `/auth/desktop-oauth-bridge` → deep link `dayflow://auth/callback` → `exchangeCodeForSession`. Requires PKCE (`supabaseClient`), Tauri plugins `opener` + `deep-link`, and Supabase redirect URL for the bridge page.
 
+**Before `tauri:build`:** eject any mounted DayFlow DMG or the dmg step fails:
+
+```bash
+hdiutil detach "/Volumes/DayFlow" 2>/dev/null || true
+bun run tauri:build
+```
+
+Output: `src-tauri/target/release/bundle/dmg/DayFlow_X.Y.Z_aarch64.dmg`
+
+**If `.dmg` is missing but `.app` exists**, create it manually:
+
+```bash
+mkdir -p src-tauri/target/release/bundle/dmg
+hdiutil create -volname "DayFlow" \
+  -srcfolder "src-tauri/target/release/bundle/macos/DayFlow.app" \
+  -ov -format UDZO \
+  "src-tauri/target/release/bundle/dmg/DayFlow_0.1.2_aarch64.dmg"
+```
+
 ---
 
 ## GitHub Release (maintainer)
 
 1. Bump `version` in `src-tauri/tauri.conf.json` + `src-tauri/Cargo.toml`
-2. `bun run tauri:build`
-3. GitHub → Releases → tag `vX.Y.Z` on `main`
-4. Upload `src-tauri/target/release/bundle/dmg/*.dmg`
-5. Note in release: macOS may need right-click → Open for unsigned builds
+2. Deploy web app if OAuth/bridge code changed
+3. Eject mounted volume, then build:
+
+```bash
+hdiutil detach "/Volumes/DayFlow" 2>/dev/null || true
+bun run tauri:build
+```
+
+4. GitHub → Releases → tag `vX.Y.Z` on `main`
+5. Upload `src-tauri/target/release/bundle/dmg/*.dmg`
+6. Release notes: right-click → Open for unsigned macOS builds; `xattr -cr /Applications/DayFlow.app` if needed
 
 Do not commit `src-tauri/target/`.
 
