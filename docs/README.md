@@ -35,7 +35,7 @@ Clients sign in at **[Client portal login](https://bisque-gull-237581.hostingers
 
 ### 1. Download
 
-Get the latest `.dmg` from [GitHub Releases](https://github.com/farhan-6710/dayflow-app/releases).
+Get the latest `.dmg` from [GitHub Releases](https://github.com/farhan-6710/dayflow/releases).
 
 ### 2. Install
 
