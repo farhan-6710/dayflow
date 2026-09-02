@@ -50,7 +50,7 @@ export function SidebarMenu({ onClose }: SidebarMenuProps) {
             <Text
               className={`text-base ${
                 active
-                  ? "text-primary font-semibold"
+                  ? "text-primary dark:text-primary-dark font-semibold"
                   : "text-foreground dark:text-foreground-dark"
               }`}
             >

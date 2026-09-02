@@ -16,15 +16,15 @@ export interface InsightConfig {
  *
  * @example
  * const config = getInsightConfig("success");
- * // Returns: { colors: ["#FF7A1A", "#fd9a00"], icon: "checkmark-circle", bgClass: "bg-orange-100 dark:bg-orange-900/30" }
+ * // Returns: { colors: ["#028595", "#1ba4b5"], icon: "checkmark-circle", bgClass: "bg-teal-100 dark:bg-teal-900/30" }
  */
 export const getInsightConfig = (type: InsightType): InsightConfig => {
   switch (type) {
     case "success":
       return {
-        colors: ["#FF7A1A", "#fd9a00"],
+        colors: ["#028595", "#1ba4b5"],
         icon: "checkmark-circle",
-        bgClass: "bg-orange-100 dark:bg-orange-900/30",
+        bgClass: "bg-teal-100 dark:bg-teal-900/30",
       };
     case "warning":
       return {

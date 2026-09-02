@@ -15,6 +15,7 @@ export { default as TimePickerField } from "./molecules/TimePickerField";
 export { IconBadge } from "./molecules/IconBadge";
 export { FormActions } from "./molecules/FormActions";
 export { default as StatsCard } from "./molecules/StatsCard";
+export { default as BrandMark } from "./molecules/BrandMark";
 
 // Reminder History
 export * from "@screens/history";

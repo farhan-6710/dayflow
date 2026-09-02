@@ -3,20 +3,17 @@ import { View } from "react-native";
 
 const PageHeaderSkeleton: React.FC = () => {
   return (
-    <View className="flex-row justify-between items-center mr-6 my-6">
-      {/* Icon Skeleton */}
-      <View className="w-[42px] h-[42px] bg-muted dark:bg-muted-dark rounded-full animate-pulse" />
-
-      {/* Title and Subtitle Skeleton */}
-      <View className="flex-1 ml-4">
-        {/* Title */}
-        <View className="h-9 bg-muted dark:bg-muted-dark rounded-lg mb-2 w-[60%] animate-pulse" />
-        {/* Subtitle */}
-        <View className="h-4 bg-muted dark:bg-muted-dark rounded-md w-[80%] animate-pulse" />
+    <View
+      className="flex-row items-center justify-between border-b border-border py-5 dark:border-border-dark"
+      style={{ paddingHorizontal: 24 }}
+    >
+      <View className="h-10 w-10 rounded-lg bg-muted dark:bg-muted-dark animate-pulse" />
+      <View className="mx-2.5 h-6 w-px bg-muted dark:bg-muted-dark" />
+      <View className="flex-1">
+        <View className="mb-2 h-5 w-[40%] rounded-lg bg-muted dark:bg-muted-dark animate-pulse" />
+        <View className="h-3 w-[55%] rounded-md bg-muted dark:bg-muted-dark animate-pulse" />
       </View>
-
-      {/* Action Button Skeleton */}
-      <View className="w-12 h-12 bg-muted dark:bg-muted-dark rounded-xl animate-pulse" />
+      <View className="h-12 w-12 rounded-xl bg-muted dark:bg-muted-dark animate-pulse" />
     </View>
   );
 };

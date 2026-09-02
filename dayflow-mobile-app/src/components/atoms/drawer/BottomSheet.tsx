@@ -13,6 +13,7 @@ import {
 import { BottomSheetBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import { useColorScheme } from "react-native";
 import { BottomSheetRef } from "@types";
+import { THEME_COLORS } from "@constants/theme";
 
 interface BottomSheetComponentProps {
   children: ReactNode;
@@ -76,10 +77,16 @@ const BottomSheetComponent = forwardRef<
         handleStyle={{
           borderTopRightRadius: 14,
           borderTopLeftRadius: 14,
-          backgroundColor: colorScheme === "dark" ? "#0f172b" : "#D1D5DB",
+          backgroundColor:
+            colorScheme === "dark"
+              ? THEME_COLORS.dark.card
+              : THEME_COLORS.light.card,
         }}
         handleIndicatorStyle={{
-          backgroundColor: colorScheme === "dark" ? "#9CA3AF" : "#6B7280",
+          backgroundColor:
+            colorScheme === "dark"
+              ? THEME_COLORS.dark.border
+              : THEME_COLORS.neutral.gray,
           width: 40,
           height: 4,
         }}

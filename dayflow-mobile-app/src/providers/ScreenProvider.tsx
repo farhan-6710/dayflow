@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
-import { StatusBar, Platform, useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useReminderDayCycle } from "@hooks/reminders/useReminderDayCycle";
+import { useThemeColors } from "@constants/theme";
 
 interface ScreenProviderProps {
   children: ReactNode;
@@ -13,6 +14,7 @@ export const ScreenProvider: React.FC<ScreenProviderProps> = ({
   edges = ["top", "left", "right", "bottom"],
 }) => {
   const colorScheme = useColorScheme();
+  const colors = useThemeColors();
   useReminderDayCycle();
 
   return (
@@ -22,15 +24,7 @@ export const ScreenProvider: React.FC<ScreenProviderProps> = ({
     >
       <StatusBar
         barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={
-          Platform.OS === "android"
-            ? colorScheme === "dark"
-              ? "#020618"
-              : "#f3f4f6"
-            : colorScheme === "dark"
-            ? "#020618"
-            : "#f3f4f6"
-        }
+        backgroundColor={colors.background}
         translucent={false}
       />
       {children}

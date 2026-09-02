@@ -66,7 +66,7 @@ export function getReminderClasses(status: string) {
   if (s === "upcoming") {
     return cn(
       "reminder relative flex flex-row items-center rounded-tr-3xl rounded-bl-3xl mb-3 box-border",
-      "bg-card dark:bg-card-dark border border-orange-400/50 dark:border-border-dark"
+      "bg-card dark:bg-card-dark border border-primary/40 dark:border-primary-dark/40"
     );
   }
 
@@ -112,7 +112,7 @@ export function getReminderIconClasses(status: string) {
   if (s === "upcoming") {
     return cn(
       base,
-      "bg-orange-50 border border-orange-300 dark:bg-orange-900/30 dark:border-amber-400"
+      "bg-primary/10 border border-primary/40 dark:bg-primary/20 dark:border-primary-dark"
     );
   }
 
@@ -142,7 +142,9 @@ export function getReminderIconColor(
       : THEME_COLORS.neutral.grayDark;
   }
 
-  if (s === "upcoming") return THEME_COLORS.secondary;
+  if (s === "upcoming") {
+    return isDarkMode ? THEME_COLORS.dark.primary : THEME_COLORS.light.primary;
+  }
   if (s === "missed") return THEME_COLORS.status.error;
   return THEME_COLORS.status.success; // done
 }

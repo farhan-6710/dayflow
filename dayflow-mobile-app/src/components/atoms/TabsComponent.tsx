@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Pressable, Animated } from "react-native";
 import Text from "@components/atoms/Text";
+import { useThemeColors } from "@constants/theme";
 
 type Tab = {
   key: string;
@@ -14,6 +15,7 @@ interface TabsProps {
 }
 
 export default function TabsComponent({ tabs, initialActive = 0 }: TabsProps) {
+  const colors = useThemeColors();
   const [active, setActive] = useState(initialActive);
   const [indicatorPosition] = useState(new Animated.Value(initialActive));
   const [containerWidth, setContainerWidth] = useState(0);
@@ -44,7 +46,7 @@ export default function TabsComponent({ tabs, initialActive = 0 }: TabsProps) {
             top: 4,
             bottom: 4,
             width: tabWidth - 8,
-            backgroundColor: "#FF7A1A",
+            backgroundColor: colors.primary,
             borderRadius: 9999,
             transform: [
               {

@@ -15,3 +15,4 @@ export { default as RepeatDaysSelector } from "./RepeatDaysSelector";
 export { default as TimePickerField } from "./TimePickerField";
 export { default as PeriodSelect } from "./PeriodSelect";
 export { default as StatsCard } from "./StatsCard";
+export { default as BrandMark } from "./BrandMark";

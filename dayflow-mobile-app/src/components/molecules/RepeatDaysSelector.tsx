@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeColors, THEME_COLORS } from "@constants/theme";
+import { useThemeColors } from "@constants/theme";
 import { DAYS_OF_WEEK } from "@constants/reminders";
 import Text from "../atoms/Text";
 import { DayOfWeek } from "@types";
@@ -35,9 +35,9 @@ export default function RepeatDaysSelector({
               activeOpacity={0.7}
               style={{
                 backgroundColor: isSelected
-                  ? THEME_COLORS.primary
+                  ? colors.primary
                   : colors.backgroundTwo,
-                borderColor: isSelected ? THEME_COLORS.primary : colors.border,
+                borderColor: isSelected ? colors.primary : colors.border,
               }}
               className={`w-10 h-10 rounded-full items-center justify-center border ${
                 !isSelected

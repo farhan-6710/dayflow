@@ -26,10 +26,10 @@ export const getBarColor = (
  *
  * @example
  * const bgClass = getBarBgClass(85);
- * // Returns: "bg-orange-100 dark:bg-orange-900/30"
+ * // Returns: "bg-primary/10 dark:bg-primary/20"
  */
 export const getBarBgClass = (percentage: number): string => {
-  if (percentage >= 80) return "bg-orange-100 dark:bg-orange-900/30";
+  if (percentage >= 80) return "bg-primary/10 dark:bg-primary/20";
   if (percentage >= 50) return "bg-amber-100 dark:bg-amber-900/30";
   return "bg-red-100 dark:bg-red-900/30";
 };

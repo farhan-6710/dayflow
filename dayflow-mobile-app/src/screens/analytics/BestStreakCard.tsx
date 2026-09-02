@@ -30,8 +30,8 @@ const BestStreakCard = React.memo<BestStreakCardProps>(
         <View className="flex-row items-center justify-around">
           {/* Current Streak */}
           <View className="items-center flex-1">
-            <View className="w-16 h-16 rounded-full items-center justify-center mb-3 bg-orange-100 dark:bg-orange-900/30">
-              <Ionicons name="flame" size={32} color={colors.primary} />
+            <View className="w-16 h-16 rounded-full items-center justify-center mb-3 bg-accent/10">
+              <Ionicons name="flame" size={32} color={colors.accent} />
             </View>
             <Text className="text-xs text-foreground dark:text-foreground-dark uppercase tracking-wider mb-1">
               Current
@@ -45,11 +45,11 @@ const BestStreakCard = React.memo<BestStreakCardProps>(
           </View>
 
           {/* Divider */}
-          <View className="w-px h-[80px] bg-borderLight dark:bg-borderDark" />
+          <View className="w-px h-[80px] bg-border dark:bg-border-dark" />
 
           {/* Best Streak */}
           <View className="items-center flex-1">
-            <View className="w-16 h-16 rounded-full items-center justify-center mb-3 bg-orange-100 dark:bg-orange-900/30">
+            <View className="w-16 h-16 rounded-full items-center justify-center mb-3 bg-primary/10 dark:bg-primary/20">
               <Ionicons name="trophy" size={32} color={colors.primary} />
             </View>
             <Text className="text-xs text-foreground dark:text-foreground-dark uppercase tracking-wider mb-1">

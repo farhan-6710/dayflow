@@ -62,7 +62,7 @@ export default function InputField({
         <Ionicons
           name={icon as any}
           size={14}
-          color={isFocused ? "#FF7A1A" : "#9CA3AF"}
+          color={isFocused ? colors.primary : colors.gray}
         />
         <Text className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
           {label}
@@ -72,7 +72,7 @@ export default function InputField({
         <Ionicons
           name={icon as any}
           size={20}
-          color={isFocused ? "#FF7A1A" : "#6B7280"}
+          color={isFocused ? colors.primary : colors.gray}
           style={{ position: "absolute", left: 16, top: 14, zIndex: 1 }}
         />
         <TextInput

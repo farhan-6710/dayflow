@@ -20,8 +20,8 @@ export const PROFILE_STATS: ProfileStat[] = [
     label: "Total Reminders",
     value: 247,
     icon: "bell",
-    color: "#FF7A1A",
-    bgColor: "rgba(255, 122, 26, 0.1)",
+    color: "#028595",
+    bgColor: "rgba(2, 133, 149, 0.1)",
   },
   {
     id: "completed",

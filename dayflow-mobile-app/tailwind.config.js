@@ -10,25 +10,26 @@ module.exports = {
         cinzel: ["Cinzel_700Bold"], // Add Cinzel as a Tailwind font-family
       },
       colors: {
-        // Light Mode Colors
-        background: "#ffffff",
-        foreground: "#0a0a0a",
-        card: "#fafafa",
-        border: "#ebebeb",
-        muted: "#eeeeee",
-        "muted-foreground": "#717171",
-        primary: "#ff7a1a",
+        background: "#f4f7f7",
+        foreground: "#1a2e31",
+        card: "#ffffff",
+        border: "#dce4e5",
+        muted: "#eef2f2",
+        "muted-foreground": "#5c6f72",
+        primary: "#028595",
+        "primary-dark": "#00b6cf",
+        accent: "#e25505",
+        destructive: "#c94141",
 
-        // Dark Mode Colors
-        "background-dark": "#070707",
-        "foreground-dark": "#eeeeee",
-        "card-dark": "#0f0f0f",
-        "border-dark": "#222222",
-        "muted-dark": "#222222",
-        "muted-foreground-dark": "#9e9e9e",
+        "background-dark": "#121212",
+        "foreground-dark": "#f2f2f2",
+        "card-dark": "#0e0e0e",
+        "border-dark": "#3d3d3d",
+        "muted-dark": "#2a2a2a",
+        "muted-foreground-dark": "#a6a6a6",
       },
       borderRadius: {
-        DEFAULT: "0.6rem",
+        DEFAULT: "0.5rem",
       },
       spacing: {
         DEFAULT: "0.25rem",

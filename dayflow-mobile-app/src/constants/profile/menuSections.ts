@@ -21,8 +21,8 @@ export const PROFILE_MENU_SECTIONS: ProfileSection[] = [
         subtitle: "Push notifications enabled",
         icon: "bell",
         action: "toggle",
-        iconColor: "#FF7A1A",
-        iconBgColor: "rgba(255, 122, 26, 0.1)",
+        iconColor: "#028595",
+        iconBgColor: "rgba(2, 133, 149, 0.1)",
         rightContent: "switch",
       },
       {

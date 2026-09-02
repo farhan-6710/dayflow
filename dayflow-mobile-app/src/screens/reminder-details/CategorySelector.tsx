@@ -40,7 +40,7 @@ const CategorySelector = React.memo<CategorySelectorProps>(
                 activeOpacity={0.85}
                 className={`px-4 py-2 rounded-2xl border ${
                   isSelected
-                    ? `bg-primary border-primary`
+                    ? `bg-primary dark:bg-primary-dark border-primary dark:border-primary-dark`
                     : `bg-gray-50 dark:bg-card-dark border-border dark:border-border-dark`
                 }`}
               >

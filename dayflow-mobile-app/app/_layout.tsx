@@ -23,6 +23,7 @@ import {
 } from "@notifications/constants";
 import "@styles/global.css";
 import "@styles/dynamicClasses.css";
+import { THEME_COLORS } from "@constants/theme";
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -77,13 +78,22 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: colorScheme === "dark" ? "#003245" : "#ffffff",
+            backgroundColor:
+              colorScheme === "dark"
+                ? THEME_COLORS.dark.background
+                : THEME_COLORS.light.card,
           },
-          headerTintColor: colorScheme === "dark" ? "#D1D5DB" : "#374151",
+          headerTintColor:
+            colorScheme === "dark"
+              ? THEME_COLORS.dark.text
+              : THEME_COLORS.light.text,
           headerTitleStyle: {
             fontWeight: "600",
             fontSize: 17,
-            color: colorScheme === "dark" ? "#ffffff" : "#111827",
+            color:
+              colorScheme === "dark"
+                ? THEME_COLORS.dark.heading
+                : THEME_COLORS.light.heading,
           },
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "Back",

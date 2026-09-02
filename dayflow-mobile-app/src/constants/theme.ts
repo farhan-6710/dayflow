@@ -1,78 +1,62 @@
 import { useColorScheme } from "react-native";
 
+/** Hex tokens aligned with the web `src/index.css` brand theme. */
 export const THEME_COLORS = {
-  // Brand Colors
-  primary: "#ff7a1a",
-  secondary: "#fd9a00",
+  primary: "#028595",
+  secondary: "#1ba4b5",
+  accent: "#e25505",
 
-  // Base Colors
   white: "#ffffff",
   black: "#000000",
 
-  // Light Theme
   light: {
-    // Backgrounds
-    background: "#ffffff",
-    backgroundTwo: "#fafafa", // card
-    card: "#ffedd5",
-    active: "#eeeeee", // muted
-
-    // Text & Headings
-    text: "#0a0a0a", // foreground
-    heading: "#0a0a0a", // foreground
-
-    // Borders & Shadows
-    border: "#ebebeb",
-    borderTwo: "#ebebeb",
-    shadow: "rgba(0, 0, 0, 0.8)",
-
-    // Gradients
+    primary: "#028595",
+    background: "#f4f7f7",
+    backgroundTwo: "#ffffff",
+    card: "#ffffff",
+    active: "#eef2f2",
+    text: "#1a2e31",
+    heading: "#1a2e31",
+    border: "#dce4e5",
+    borderTwo: "#dce4e5",
+    shadow: "rgba(26, 46, 49, 0.18)",
     gradients: {
-      paused: ["#9CA3AF", "#9CA3AF"],
-      upcoming: ["#fd9a00", "#f97316"],
-      missed: ["#ef4444", "#b91c1c"],
-      done: ["#14b8a6", "#0d9488"],
+      paused: ["#9CA3AF", "#6B7280"],
+      upcoming: ["#028595", "#1ba4b5"],
+      missed: ["#c94141", "#922e2e"],
+      done: ["#2f9e6a", "#028595"],
     },
   },
 
-  // Dark Theme
   dark: {
-    // Backgrounds
-    background: "#070707",
-    backgroundTwo: "#0f0f0f", // card-dark
-    card: "rgba(124, 45, 18, 0.2)",
-    active: "#222222", // muted-dark
-
-    // Text & Headings
-    text: "#eeeeee", // foreground-dark
-    heading: "#eeeeee", // foreground-dark
-
-    // Borders & Shadows
-    border: "#222222", // border-dark
-    borderTwo: "#222222", // border-dark
-    shadow: "rgba(255, 255, 255, 0.3)",
-
-    // Gradients
+    primary: "#00b6cf",
+    background: "#121212",
+    backgroundTwo: "#0e0e0e",
+    card: "#0e0e0e",
+    active: "#2a2a2a",
+    text: "#f2f2f2",
+    heading: "#f2f2f2",
+    border: "#3d3d3d",
+    borderTwo: "#3d3d3d",
+    shadow: "rgba(0, 0, 0, 0.45)",
     gradients: {
-      paused: ["#4B5563", "#4B5563"],
-      upcoming: ["#d97706", "#ea580c"],
-      missed: ["#ef4444", "#b91c1c"],
-      done: ["#059669", "#0d9488"],
+      paused: ["#4B5563", "#374151"],
+      upcoming: ["#00b6cf", "#028595"],
+      missed: ["#e05555", "#953333"],
+      done: ["#34c77b", "#00b6cf"],
     },
   },
 
-  // Neutral Colors
   neutral: {
-    gray: "#9CA3AF",
+    gray: "#6b7a7c",
     grayLight: "#9CA3AF",
     grayDark: "#4B5563",
   },
 
-  // Status Colors
   status: {
-    success: "#10B981",
-    error: "#EF4444",
-    warning: "#ffba00",
+    success: "#2f9e6a",
+    error: "#c94141",
+    warning: "#e25505",
   },
 };
 
@@ -82,8 +66,9 @@ export const useThemeColors = () => {
   const theme = isDark ? THEME_COLORS.dark : THEME_COLORS.light;
 
   return {
-    primary: THEME_COLORS.primary,
+    primary: theme.primary,
     secondary: THEME_COLORS.secondary,
+    accent: THEME_COLORS.accent,
     white: THEME_COLORS.white,
     black: THEME_COLORS.black,
     background: theme.background,
@@ -95,7 +80,7 @@ export const useThemeColors = () => {
     border: theme.border,
     borderTwo: theme.borderTwo,
     shadow: theme.shadow,
-    gray: THEME_COLORS.neutral.gray,
+    gray: isDark ? "#a6a6a6" : THEME_COLORS.neutral.gray,
     success: THEME_COLORS.status.success,
     error: THEME_COLORS.status.error,
     warning: THEME_COLORS.status.warning,

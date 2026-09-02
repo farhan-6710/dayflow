@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Platform, useColorScheme } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
+import { THEME_COLORS } from "@constants/theme";
 
 /**
  * Custom hook to set Android navigation bar theme based on color scheme
@@ -14,7 +15,9 @@ export const useNavigationBarTheme = () => {
       const setNavigationBarTheme = async () => {
         try {
           await NavigationBar.setBackgroundColorAsync(
-            colorScheme === "dark" ? "#1f2937" : "#f3f4f6"
+            colorScheme === "dark"
+              ? THEME_COLORS.dark.background
+              : THEME_COLORS.light.background
           );
           await NavigationBar.setButtonStyleAsync(
             colorScheme === "dark" ? "light" : "dark"

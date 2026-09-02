@@ -6,7 +6,9 @@ export const getToastConfig = (isDark: boolean) => ({
     <BaseToast
       {...props}
       style={{
-        borderLeftColor: THEME_COLORS.primary,
+        borderLeftColor: isDark
+          ? THEME_COLORS.dark.primary
+          : THEME_COLORS.light.primary,
         backgroundColor: isDark
           ? THEME_COLORS.dark.backgroundTwo
           : THEME_COLORS.light.backgroundTwo,
@@ -42,7 +44,7 @@ export const getToastConfig = (isDark: boolean) => ({
     <ErrorToast
       {...props}
       style={{
-        borderLeftColor: "#EF4444",
+        borderLeftColor: THEME_COLORS.status.error,
         backgroundColor: isDark
           ? THEME_COLORS.dark.backgroundTwo
           : THEME_COLORS.light.backgroundTwo,

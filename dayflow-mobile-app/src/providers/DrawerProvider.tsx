@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { Drawer } from "react-native-drawer-layout";
 import SidebarLeft from "@screens/home/sections/SidebarLeft";
+import { useThemeColors } from "@constants/theme";
 
 type DrawerContextType = {
   openDrawer: () => void;
@@ -18,6 +19,7 @@ export const useDrawer = () => useContext(DrawerContext);
 
 export function DrawerProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const colors = useThemeColors();
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
@@ -31,7 +33,7 @@ export function DrawerProvider({ children }: { children: React.ReactNode }) {
         drawerType="slide"
         drawerPosition="left"
         drawerStyle={{
-          backgroundColor: "#003245",
+          backgroundColor: colors.cardBackground,
           width: "70%",
         }}
         overlayStyle={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}

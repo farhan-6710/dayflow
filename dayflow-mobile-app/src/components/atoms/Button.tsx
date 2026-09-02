@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Text from "@components/atoms/Text";
+import { useThemeColors } from "@constants/theme";
 
 type ButtonVariant = "primary" | "secondary" | "danger" | "success" | "outline";
 type ButtonSize = "small" | "medium" | "large";
@@ -43,6 +44,7 @@ export default function Button({
   fullWidth = false,
   children,
 }: ButtonProps) {
+  const colors = useThemeColors();
   const isDisabled = disabled || loading;
 
   // Size configurations
@@ -78,7 +80,7 @@ export default function Button({
 
     switch (variant) {
       case "primary":
-        return "bg-primary";
+        return "bg-primary dark:bg-primary-dark";
       case "secondary":
         return "bg-white dark:bg-card-dark border border-gray-200 dark:border-border-dark";
       case "danger":
@@ -88,7 +90,7 @@ export default function Button({
       case "outline":
         return "bg-transparent border-2 border-border dark:border-border-dark";
       default:
-        return "bg-primary";
+        return "bg-primary dark:bg-primary-dark";
     }
   };
 
@@ -150,9 +152,9 @@ export default function Button({
     }
 
     const shadowColors = {
-      primary: "#FF7A1A",
-      danger: "#EF4444",
-      success: "#10B981",
+      primary: colors.primary,
+      danger: colors.error,
+      success: colors.success,
       secondary: "transparent",
       outline: "transparent",
     };

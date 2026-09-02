@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure base styles are applied */
 @layer base {
   * {
     box-sizing: border-box;
@@ -10,28 +9,29 @@
 }
 
 :root {
-  /* Light Mode Variables */
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #fafafa;
-  --border: #ebebeb;
-  --muted: #eeeeee;
-  --muted-foreground: #717171;
-  --primary: #fba100;
+  /* Light — match web src/index.css */
+  --background: #f4f7f7;
+  --foreground: #1a2e31;
+  --card: #ffffff;
+  --border: #dce4e5;
+  --muted: #eef2f2;
+  --muted-foreground: #5c6f72;
+  --primary: #028595;
+  --primary-dark: #00b6cf;
+  --accent: #e25505;
+  --destructive: #c94141;
 
-  /* Dark Mode Variables (Merged into root) */
-  --background-dark: #070707;
-  --foreground-dark: #eeeeee;
-  --card-dark: #0f0f0f;
-  --border-dark: #222222;
-  --muted-dark: #222222;
-  --muted-foreground-dark: #9e9e9e;
-  --radius: 0.6rem;
+  --background-dark: #121212;
+  --foreground-dark: #f2f2f2;
+  --card-dark: #0e0e0e;
+  --border-dark: #3d3d3d;
+  --muted-dark: #2a2a2a;
+  --muted-foreground-dark: #a6a6a6;
+  --radius: 0.5rem;
   --spacing: 0.25rem;
 }
 
 @theme inline {
-  /* Light Tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -39,8 +39,10 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-accent: var(--accent);
+  --color-destructive: var(--destructive);
 
-  /* Dark Tokens */
   --color-background-dark: var(--background-dark);
   --color-foreground-dark: var(--foreground-dark);
   --color-card-dark: var(--card-dark);

@@ -175,7 +175,7 @@ const HistoryScreen = React.memo(() => {
                 className={`h-12 w-12 items-center justify-center rounded-xl ${
                   safePage === 1
                     ? "opacity-20 bg-muted dark:bg-muted-dark"
-                    : "bg-primary"
+                    : "bg-primary dark:bg-primary-dark"
                 }`}
               >
                 <Text className="text-foreground dark:text-foreground-dark font-bold text-lg">
@@ -195,7 +195,7 @@ const HistoryScreen = React.memo(() => {
                 className={`h-12 w-12 items-center justify-center rounded-xl ${
                   safePage === totalPages
                     ? "opacity-20 bg-muted dark:bg-muted-dark"
-                    : "bg-primary"
+                    : "bg-primary dark:bg-primary-dark"
                 }`}
               >
                 <Text className="text-white font-bold text-lg">→</Text>

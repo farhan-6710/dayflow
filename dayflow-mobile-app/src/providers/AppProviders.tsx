@@ -18,6 +18,7 @@ import { AuthProvider } from "./AuthProvider";
 import { DrawerProvider } from "./DrawerProvider";
 import Toast from "react-native-toast-message";
 import { getToastConfig } from "@config/toastConfig";
+import { THEME_COLORS } from "@constants/theme";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,20 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
   const rawColorScheme = useColorScheme();
   const colorScheme = rawColorScheme || "light";
   const isDark = colorScheme === "dark";
+  const navigationTheme = {
+    ...(isDark ? DarkTheme : DefaultTheme),
+    colors: {
+      ...(isDark ? DarkTheme.colors : DefaultTheme.colors),
+      primary: isDark ? THEME_COLORS.dark.primary : THEME_COLORS.light.primary,
+      background: isDark
+        ? THEME_COLORS.dark.background
+        : THEME_COLORS.light.background,
+      card: isDark ? THEME_COLORS.dark.card : THEME_COLORS.light.card,
+      text: isDark ? THEME_COLORS.dark.text : THEME_COLORS.light.text,
+      border: isDark ? THEME_COLORS.dark.border : THEME_COLORS.light.border,
+      notification: THEME_COLORS.accent,
+    },
+  };
 
   return (
     <SafeAreaProvider>
@@ -37,7 +52,7 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
           <QueryClientProvider client={queryClient}>
             <NotificationProvider>
               <ThemeProvider
-                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+                value={navigationTheme}
               >
                 <GestureHandlerRootView style={{ flex: 1 }}>
                   <AuthProvider>
