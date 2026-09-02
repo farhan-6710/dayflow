@@ -7,7 +7,7 @@ from shutil import copy2
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-WEB_PUBLIC = ROOT.parent / "public"
+WEB_PUBLIC = ROOT.parent / "web" / "public"
 ASSETS = ROOT / "assets"
 BRAND = ASSETS / "brand"
 ICONS = ASSETS / "icons"

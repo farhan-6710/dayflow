@@ -1,4 +1,4 @@
-![Dayflow Banner](../public/brand-promotion-banner-img-dark.png)
+![Dayflow Banner](../apps/web/public/brand-promotion-banner-img-dark.png)
 
 # DayFlow — Workspace & Client Portals
 
@@ -86,12 +86,14 @@ Then open DayFlow normally and sign in with the same demo credentials above.
 ## Codebase overview
 
 ```text
-src/features/workspace/   Owner app (/workspace)
-src/features/client/      Client portal (/client-portal)
-src/services/             All Supabase access
-src/shared/               Shared UI and layouts
-src-tauri/                Tauri desktop shell
-docs/                     README, DESIGN, AGENTS
+apps/web/src/features/workspace/   Owner app (/workspace)
+apps/web/src/features/client/      Client portal (/client-portal)
+apps/web/src/services/             All Supabase access
+apps/web/src/shared/               Shared UI and layouts
+apps/web/src-tauri/                Tauri desktop shell
+apps/mobile/                       Expo app
+scripts/migrations/                Shared Supabase SQL
+docs/                              README, DESIGN, AGENTS
 ```
 
 ---

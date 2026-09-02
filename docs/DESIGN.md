@@ -8,7 +8,7 @@ For interviewers and contributors. Product demo: [README.md](./README.md).
 
 ```text
 Web (Vite dist/)  ──┐
-Desktop (Tauri)   ──┼──► React UI ──► src/services/ ──► Supabase (Auth + Postgres + RLS)
+Desktop (Tauri)   ──┼──► React UI ──► apps/web/src/services/ ──► Supabase (Auth + Postgres + RLS)
 Mobile (Expo)*    ──┘
 
 * separate repo; same Supabase backend
@@ -68,7 +68,7 @@ Never grant `SELECT ON auth.users TO authenticated`.
 
 ## Shared module: client-activities
 
-`src/features/workspace/client-activities/` used in both portals.
+`apps/web/src/features/workspace/client-activities/` used in both portals.
 
 | Scope | Context |
 |-------|---------|
@@ -97,15 +97,15 @@ Never grant `SELECT ON auth.users TO authenticated`.
 | `notificationsService` | In-app task/reminder alerts |
 | `tasksService`, `remindersService`, `notesService` | Core workspace data |
 
-All table names in `src/services/db.ts`.
+All table names in `apps/web/src/services/db.ts`.
 
 ---
 
 ## Desktop (Tauri)
 
-- Shell: `src-tauri/` — Rust wraps Vite `dist/` in production, dev server in development
+- Shell: `apps/web/src-tauri/` — Rust wraps Vite `dist/` in production, dev server in development
 - Config: `tauri.conf.json` (window, CSP, bundle, identifier `com.dayflow.app`)
-- Build output: `src-tauri/target/release/bundle/dmg/*.dmg` (macOS)
+- Build output: `apps/web/src-tauri/target/release/bundle/dmg/*.dmg` (macOS)
 
 ---
 

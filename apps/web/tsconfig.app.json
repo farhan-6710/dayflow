@@ -25,6 +25,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["dayflow-mobile-app"]
+  "include": ["src"]
 }

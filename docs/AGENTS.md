@@ -9,18 +9,20 @@ Rules for developers and AI agents. See [README.md](./README.md) for product ove
 - **Single-owner, multi-client** — one workspace owner; clients get separate auth linked by email
 - **Two portals, one codebase** — `features/workspace/` + `features/client/`; share via `shared/` and `client-activities`
 - **Live product** — hosted Supabase; end users do not run migrations
-- **Platforms** — web (Vite), desktop (Tauri), mobile (Expo, separate repo)
+- **Platforms** — web (Vite), desktop (Tauri), mobile (Expo) in one repo (`apps/web`, `apps/mobile`)
 
 ---
 
 ## Directory rules
 
 ```text
-src/services/           ALL Supabase calls — never import supabaseClient in features
-src/features/workspace/   Owner app (/workspace)
-src/features/client/      Client portal (/client-portal)
-src/shared/               Cross-portal UI, layouts, utils
-src-tauri/                Tauri config, Rust shell, icons (do not watch in Vite)
+apps/web/src/services/            ALL Supabase calls — never import supabaseClient in features
+apps/web/src/features/workspace/  Owner app (/workspace)
+apps/web/src/features/client/     Client portal (/client-portal)
+apps/web/src/shared/              Cross-portal UI, layouts, utils
+apps/web/src-tauri/               Tauri config, Rust shell, icons (do not watch in Vite)
+apps/mobile/                      Expo app
+scripts/migrations/               Shared SQL
 ```
 
 Feature folders: `components/`, `hooks/`, `pages/`, `constants/`, `types/`, `utils/`.
@@ -30,7 +32,7 @@ Feature folders: `components/`, `hooks/`, `pages/`, `constants/`, `types/`, `uti
 ## Code rules
 
 - Smallest change that solves the problem — no over-engineering
-- Supabase only in `src/services/`; table/column names only in `src/services/db.ts`
+- Supabase only in `apps/web/src/services/`; table/column names only in `apps/web/src/services/db.ts`
 - RLS is law — workspace uses `user_id` / `owner_user_id`; client portal uses RPCs (022–026)
 - Presentational components ~120 lines; logic in hooks
 - Prop types in `types/components.ts` as `ComponentNameProps`
@@ -55,11 +57,11 @@ OK for presentational blocks with props (`ClientActivitiesBlock`, `forClientPort
 
 | Command | Purpose |
 |---------|---------|
-| `bun run tauri:dev` | Dev desktop window (starts Vite on :5173) |
-| `bun run tauri:build` | macOS `.app` + `.dmg` |
-| `bunx tauri icon public/logo-light-icon.png` | Regenerate icons |
+| `cd apps/web && bun run tauri:dev` | Dev desktop window (starts Vite on :5173) |
+| `cd apps/web && bun run tauri:build` | macOS `.app` + `.dmg` |
+| `cd apps/web && bunx tauri icon public/logo-light-icon.png` | Regenerate icons |
 
-Config: `src-tauri/tauri.conf.json` · Vite ignores `src-tauri/` in watch · CSP allows Supabase domains.
+Config: `apps/web/src-tauri/tauri.conf.json` · Vite ignores `src-tauri/` in watch · CSP allows Supabase domains.
 
 Detect desktop in React: `isDesktopApp()` from `@/shared/utils/platform`.
 
@@ -69,39 +71,39 @@ Detect desktop in React: `isDesktopApp()` from `@/shared/utils/platform`.
 
 ```bash
 hdiutil detach "/Volumes/DayFlow" 2>/dev/null || true
-bun run tauri:build
+cd apps/web && bun run tauri:build
 ```
 
-Output: `src-tauri/target/release/bundle/dmg/DayFlow_X.Y.Z_aarch64.dmg`
+Output: `apps/web/src-tauri/target/release/bundle/dmg/DayFlow_X.Y.Z_aarch64.dmg`
 
 **If `.dmg` is missing but `.app` exists**, create it manually:
 
 ```bash
-mkdir -p src-tauri/target/release/bundle/dmg
+mkdir -p apps/web/src-tauri/target/release/bundle/dmg
 hdiutil create -volname "DayFlow" \
-  -srcfolder "src-tauri/target/release/bundle/macos/DayFlow.app" \
+  -srcfolder "apps/web/src-tauri/target/release/bundle/macos/DayFlow.app" \
   -ov -format UDZO \
-  "src-tauri/target/release/bundle/dmg/DayFlow_0.1.2_aarch64.dmg"
+  "apps/web/src-tauri/target/release/bundle/dmg/DayFlow_0.1.2_aarch64.dmg"
 ```
 
 ---
 
 ## GitHub Release (maintainer)
 
-1. Bump `version` in `src-tauri/tauri.conf.json` + `src-tauri/Cargo.toml`
+1. Bump `version` in `apps/web/src-tauri/tauri.conf.json` + `apps/web/src-tauri/Cargo.toml`
 2. Deploy web app if OAuth/bridge code changed
 3. Eject mounted volume, then build:
 
 ```bash
 hdiutil detach "/Volumes/DayFlow" 2>/dev/null || true
-bun run tauri:build
+cd apps/web && bun run tauri:build
 ```
 
 4. GitHub → Releases → tag `vX.Y.Z` on `main`
-5. Upload `src-tauri/target/release/bundle/dmg/*.dmg`
+5. Upload `apps/web/src-tauri/target/release/bundle/dmg/*.dmg`
 6. Release notes: right-click → Open for unsigned macOS builds; `xattr -cr /Applications/DayFlow.app` if needed
 
-Do not commit `src-tauri/target/`.
+Do not commit `apps/web/src-tauri/target/`.
 
 ---
 
@@ -111,4 +113,4 @@ New SQL only under `scripts/migrations/` — never edit applied migrations. Prod
 
 ## Seeds (local dev only)
 
-`bun run seed:clients` · `seed:client-projects` · requires `SEED_EMAIL` / `SEED_PASSWORD` in `.env`
+`cd apps/web && bun run seed:clients` · `seed:client-projects` · requires `SEED_EMAIL` / `SEED_PASSWORD` in `apps/web/.env`
