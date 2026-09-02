@@ -1,6 +1,8 @@
 import { format } from "date-fns";
 import type { User } from "@supabase/supabase-js";
 
+import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
+
 export function getUserDisplayName(user: User | null): string {
   if (!user) {
     return "Guest";
@@ -15,6 +17,18 @@ export function getUserDisplayName(user: User | null): string {
     user.email?.split("@")[0] ??
     "User"
   );
+}
+
+/** Profile-aware display name; avoids auth-metadata flash for the demo account. */
+export function getWorkspaceDisplayName(
+  user: User | null,
+  profileDisplayName: string | null | undefined,
+): string {
+  if (isDemoAccountEmail(user?.email)) {
+    return profileDisplayName?.trim() || "Demo User";
+  }
+
+  return profileDisplayName?.trim() || getUserDisplayName(user);
 }
 
 export function getInitialsFromName(name: string): string {

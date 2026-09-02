@@ -24,7 +24,8 @@ import {
   totalPostsSparklineData,
 } from "@/shared/fixtures/sparklines";
 import { cn } from "@/shared/lib/utils";
-import { getUserDisplayName } from "@/shared/utils/authUserDisplay";
+import { getWorkspaceDisplayName } from "@/shared/utils/authUserDisplay";
+import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
 
 export function DashboardPage() {
   const { filter, dateFilterProps, periodLabel } = useDateFilters();
@@ -73,9 +74,8 @@ export function DashboardPage() {
     setTaskToDelete(null);
   };
 
-  const greetingName =
-    profile?.display_name?.trim() || getUserDisplayName(user);
-  const isDemoAccount = greetingName === "Demo User";
+  const isDemoAccount = isDemoAccountEmail(user?.email);
+  const greetingName = getWorkspaceDisplayName(user, profile?.display_name);
   const dashboardHeading = isDemoAccount
     ? "Welcome to the DayFlow Demo"
     : `Welcome, ${greetingName}!`;

@@ -5,6 +5,7 @@ import {
   AuthFormAlert,
   AuthPasswordField,
 } from "@/features/workspace/auth/components/AuthFormFields";
+import { DemoAccountLoginPrompt } from "@/features/workspace/auth/components/DemoAccountLoginPrompt";
 import { AuthOAuthSignIn } from "@/features/workspace/auth/components/AuthOAuthSignIn";
 import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
 import { formFieldGroupClassName } from "@/shared/constants/formStyles";
@@ -30,63 +31,71 @@ export function LoginForm({
     setError,
     isSubmitting,
     handleSubmit,
+    loginWithDemoAccount,
     clearError,
   } = useLoginForm();
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
-        <AuthEmailField
-          id="login-email"
-          value={email}
-          onChange={setEmail}
-          disabled={isSubmitting}
-        />
+    <>
+      <DemoAccountLoginPrompt
+        disabled={isSubmitting}
+        onDemoLogin={loginWithDemoAccount}
+      />
 
-        <div className={formFieldGroupClassName}>
-          <AuthPasswordField
-            id="login-password"
-            label="Password"
-            value={password}
-            onChange={setPassword}
-            autoComplete="current-password"
-            placeholder="Enter your password"
+      <div className="space-y-6">
+        <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
+          <AuthEmailField
+            id="login-email"
+            value={email}
+            onChange={setEmail}
             disabled={isSubmitting}
           />
-          <div className="flex justify-end">
-            <Link
-              to={buildAuthUrl(AUTH_FORM_TYPES.forgotPassword)}
-              className="text-xs font-semibold text-primary hover:underline"
-            >
-              Forgot password?
-            </Link>
+
+          <div className={formFieldGroupClassName}>
+            <AuthPasswordField
+              id="login-password"
+              label="Password"
+              value={password}
+              onChange={setPassword}
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              disabled={isSubmitting}
+            />
+            <div className="flex justify-end">
+              <Link
+                to={buildAuthUrl(AUTH_FORM_TYPES.forgotPassword)}
+                className="text-xs font-semibold text-primary hover:underline"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {error ? <AuthFormAlert message={error} variant="error" /> : null}
+          {error ? <AuthFormAlert message={error} variant="error" /> : null}
 
-        <Button
-          type="submit"
-          className={cn(authFormStyles.submitButton, "mt-2")}
+          <Button
+            type="submit"
+            className={cn(authFormStyles.submitButton, "mt-2")}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <LoadingSpinner size="sm" />
+                Signing in...
+              </>
+            ) : (
+              "Sign in"
+            )}
+          </Button>
+        </form>
+
+        <AuthOAuthSignIn
           disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>
-              <LoadingSpinner size="sm" />
-              Signing in...
-            </>
-          ) : (
-            "Sign in"
-          )}
-        </Button>
-      </form>
-
-      <AuthOAuthSignIn
-        disabled={isSubmitting}
-        oauthRedirectPath={oauthRedirectPath}
-        onError={setError}
-        onBeforeSignIn={clearError}
-      />
-    </div>
+          oauthRedirectPath={oauthRedirectPath}
+          onError={setError}
+          onBeforeSignIn={clearError}
+        />
+      </div>
+    </>
   );
 }

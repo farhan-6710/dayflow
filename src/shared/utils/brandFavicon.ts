@@ -25,7 +25,7 @@ export function applyBrandFaviconFromDocumentTheme() {
 
 /** Initial favicon before React mounts — matches stored theme when available. */
 export function applyStoredBrandFavicon() {
-  const stored = localStorage.getItem("DC-theme");
+  const stored = localStorage.getItem("DF-theme");
   if (stored === "dark") {
     applyBrandFavicon(true);
     return;

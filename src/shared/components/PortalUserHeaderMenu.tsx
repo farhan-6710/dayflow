@@ -18,7 +18,7 @@ import {
 import {
   getInitialsFromName,
   getUserAvatarUrl,
-  getUserDisplayName,
+  getWorkspaceDisplayName,
 } from "@/shared/utils/authUserDisplay";
 import type { PortalUserHeaderMenuProps } from "@/shared/types/components";
 
@@ -32,8 +32,7 @@ export function PortalUserHeaderMenu({
   const [signOutOpen, setSignOutOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
-  const displayName =
-    profile?.display_name?.trim() || getUserDisplayName(user);
+  const displayName = getWorkspaceDisplayName(user, profile?.display_name);
   const initials = getInitialsFromName(displayName);
   const avatarUrl = profile?.avatar_url || getUserAvatarUrl(user);
 

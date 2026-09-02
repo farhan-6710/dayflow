@@ -12,8 +12,8 @@ import {
 import {
   getInitialsFromName,
   getUserAvatarUrl,
-  getUserDisplayName,
   getUserEmail,
+  getWorkspaceDisplayName,
 } from "@/shared/utils/authUserDisplay";
 import { routePath } from "@/shared/utils/routePath";
 
@@ -32,8 +32,7 @@ export function ShellSidebarProfile({
   const { activePath } = usePageTransition();
   const isActive = routePath(to) === routePath(activePath);
 
-  const displayName =
-    profile?.display_name?.trim() || getUserDisplayName(user);
+  const displayName = getWorkspaceDisplayName(user, profile?.display_name);
   const email = getUserEmail(user);
   const initials = getInitialsFromName(displayName);
   const avatarUrl = profile?.avatar_url || getUserAvatarUrl(user);

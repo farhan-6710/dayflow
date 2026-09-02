@@ -1,6 +1,6 @@
 import { applyStoredBrandFavicon } from "@/shared/utils/brandFavicon";
 
-export const THEME_STORAGE_KEY = "DC-theme";
+export const THEME_STORAGE_KEY = "DF-theme";
 
 export type ThemePreference = "light" | "dark";
 
