@@ -12,6 +12,7 @@
     "seed:clients": "bun scripts/seed-clients.ts",
     "seed:client-projects": "bun scripts/seed-client-projects.ts",
     "seed:task-months": "bun scripts/seed-task-months.ts",
+    "seed:september-tasks": "bun scripts/seed-september-tasks.ts",
     "generate:favicon": "bun scripts/generate-favicon.ts",
     "generate:logos": "python3 scripts/process-logos.py && python3 scripts/generate-logo-light-from-dark.py",
     "tauri": "tauri",
