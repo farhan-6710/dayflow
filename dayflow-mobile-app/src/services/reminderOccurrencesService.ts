@@ -157,6 +157,23 @@ export async function recordReminderOccurrence(
   );
 }
 
+export async function clearOccurrenceForDate(
+  reminderId: string,
+  date = formatLocalDate(),
+): Promise<void> {
+  const userId = await getCurrentUserId();
+  const { error } = await supabase
+    .from(DB.REMINDER_OCCURRENCES.TABLE)
+    .delete()
+    .eq("user_id", userId)
+    .eq("reminder_id", reminderId)
+    .eq("occurrence_date", date);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 export async function fetchReminderOccurrences(): Promise<ReminderOccurrence[]> {
   const userId = await getCurrentUserId();
 

@@ -11,7 +11,7 @@ import {
 import { useAuth } from "@providers/AuthProvider";
 import { Reminder, DayOfWeek, ReminderStatus, ReminderCategory } from "@types";
 import { formatDisplayTime } from "@utils/home/reminderUtils";
-import { initialReminderStatus } from "@utils/reminderDay";
+import { initialReminderStatus, statusForSchedule } from "@utils/reminderDay";
 
 interface AddReminderData {
   name: string;
@@ -95,8 +95,12 @@ export const useUpdateReminder = (reminderId?: string) => {
       return false;
     }
 
-    // Dispatch update and navigate immediately (optimistic UI)
-    dispatch(updateReminderRequest({ id, updates }));
+    const existing = reminders.find((reminder) => reminder.id === id);
+    const nextUpdates = existing
+      ? { ...updates, status: statusForSchedule({ ...existing, ...updates }) }
+      : updates;
+
+    dispatch(updateReminderRequest({ id, updates: nextUpdates }));
     router.back();
     return true;
   };

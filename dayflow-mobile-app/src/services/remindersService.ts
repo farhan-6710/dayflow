@@ -6,7 +6,8 @@ import {
   mapRowToReminder,
   type SupabaseReminderRow,
 } from "@services/reminderMapper";
-import { recordReminderOccurrence } from "@services/reminderOccurrencesService";
+import { recordReminderOccurrence, clearOccurrenceForDate } from "@services/reminderOccurrencesService";
+import { statusForSchedule } from "@utils/reminderDay";
 import type { Reminder } from "@types";
 
 async function getCurrentUserId(): Promise<string> {
@@ -49,10 +50,14 @@ export async function createReminder(
   reminder: Omit<Reminder, "id" | "createdAt" | "updatedAt">,
 ): Promise<Reminder> {
   const userId = await getCurrentUserId();
+  const status = statusForSchedule({
+    ...reminder,
+    status: reminder.status ?? "upcoming",
+  });
 
   const { data, error } = await supabase
     .from(DB.REMINDERS.TABLE)
-    .insert(mapReminderToInsert(userId, reminder))
+    .insert(mapReminderToInsert(userId, { ...reminder, status }))
     .select(DB.REMINDERS.SELECT)
     .single();
 
@@ -70,7 +75,21 @@ export async function updateReminder(
   updates: Partial<Reminder>,
 ): Promise<Reminder> {
   const userId = await getCurrentUserId();
-  const payload = mapReminderToUpdate(updates);
+
+  const { data: currentRow, error: currentError } = await supabase
+    .from(DB.REMINDERS.TABLE)
+    .select(DB.REMINDERS.SELECT)
+    .eq("id", id)
+    .eq("user_id", userId)
+    .single();
+
+  if (currentError) {
+    throw new Error(currentError.message);
+  }
+
+  const current = mapRowToReminder(currentRow as SupabaseReminderRow);
+  const nextStatus = statusForSchedule({ ...current, ...updates });
+  const payload = mapReminderToUpdate({ ...updates, status: nextStatus });
 
   const { data, error } = await supabase
     .from(DB.REMINDERS.TABLE)
@@ -85,9 +104,13 @@ export async function updateReminder(
   }
 
   const updated = mapRowToReminder(data as SupabaseReminderRow);
-  if (updates.status === "done" || updates.status === "missed") {
-    await recordReminderOccurrence(updated.id, updates.status);
+
+  if (nextStatus === "upcoming" && (current.status === "done" || current.status === "missed")) {
+    await clearOccurrenceForDate(updated.id);
+  } else if (nextStatus === "done" || nextStatus === "missed") {
+    await recordReminderOccurrence(updated.id, nextStatus);
   }
+
   return updated;
 }
 

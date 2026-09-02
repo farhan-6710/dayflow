@@ -3,6 +3,7 @@ import * as Haptics from "expo-haptics";
 import { DayOfWeek, Reminder, ReminderStatus, ReminderCategory } from "@types";
 import { DAYS_OF_WEEK } from "@constants/reminders";
 import { formatDisplayTime } from "@utils/home/reminderUtils";
+import { statusForSchedule } from "@utils/reminderDay";
 
 interface ReminderFormState {
   name: string;
@@ -121,19 +122,33 @@ export const useReminderEditForm = (reminder: Reminder | null) => {
 
   // Generic field change handler
   const handleFieldChange = (field: keyof Reminder, value: ReminderValue) => {
-    setLocalChanges((prev) => ({ ...prev, [field]: value }));
+    if (!reminder) return;
+
+    setLocalChanges((prev) => {
+      const patch = { ...prev, [field]: value } as Partial<Reminder>;
+      return {
+        ...patch,
+        status: statusForSchedule({ ...reminder, ...patch }),
+      };
+    });
     setHasChanges(true);
   };
 
   const handleTimePickerChange = (hour: number, minute: number) => {
-    if (!currentData) return;
+    if (!reminder) return;
 
-    setLocalChanges((prev) => ({
-      ...prev,
-      hour,
-      minute,
-      displayTime: formatDisplayTime(hour, minute),
-    }));
+    setLocalChanges((prev) => {
+      const patch = {
+        ...prev,
+        hour,
+        minute,
+        displayTime: formatDisplayTime(hour, minute),
+      };
+      return {
+        ...patch,
+        status: statusForSchedule({ ...reminder, ...patch }),
+      };
+    });
     setHasChanges(true);
   };
 

@@ -1,4 +1,4 @@
-import type { DayOfWeek, Reminder } from "@types";
+import type { DayOfWeek, Reminder, ReminderStatus } from "@types";
 
 const DAY_KEYS: DayOfWeek[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -57,14 +57,33 @@ export function hasReminderTimePassed(
   return nowMinutes > scheduledMinutes;
 }
 
+/**
+ * Status from the schedule. Paused stays paused. Done stays done if the
+ * time has already passed. Otherwise: future → upcoming, past → missed.
+ */
+export function statusForSchedule(
+  reminder: Pick<Reminder, "hour" | "minute" | "repeatDays" | "status">,
+  now = new Date(),
+): ReminderStatus {
+  if (reminder.status === "paused") {
+    return "paused";
+  }
+
+  const dueNow =
+    repeatsOn(reminder, now) && hasReminderTimePassed(reminder, now);
+  if (!dueNow) {
+    return "upcoming";
+  }
+
+  return reminder.status === "done" ? "done" : "missed";
+}
+
 export function initialReminderStatus(
   reminder: Pick<Reminder, "hour" | "minute" | "repeatDays">,
   now = new Date(),
 ): "upcoming" | "missed" {
-  if (!repeatsOn(reminder, now) || !hasReminderTimePassed(reminder, now)) {
-    return "upcoming";
-  }
-  return "missed";
+  const status = statusForSchedule({ ...reminder, status: "upcoming" }, now);
+  return status === "missed" ? "missed" : "upcoming";
 }
 
 export function formatHistoryDate(dateStr: string): string {
