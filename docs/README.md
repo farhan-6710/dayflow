@@ -1,4 +1,4 @@
-![Dayflow Banner](../public/brand-promotion-banner-dark.png)
+![Dayflow Banner](../public/brand-promotion-banner-img-dark.png)
 
 # DayFlow — Workspace & Client Portals
 
