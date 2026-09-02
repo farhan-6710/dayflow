@@ -1,0 +1,81 @@
+/* Dynamic classes safelist - Tailwind v3 compatible */
+/* This file ensures commonly used dynamic classes are included in build */
+
+/* Transition and transform classes */
+.transition-all,
+.transition-colors,
+.transition-transform,
+.transform {
+  /* Placeholder to ensure these classes are included */
+  content: "";
+}
+
+/* Color utility classes safelist */
+.bg-primary,
+.bg-secondary,
+.bg-accent,
+.text-primary,
+.text-secondary,
+.text-accent,
+.border-primary,
+.border-secondary,
+.border-accent {
+  /* Placeholder classes for safelist */
+  content: "";
+}
+
+/* Hover states */
+.hover\:bg-primary:hover,
+.hover\:bg-secondary:hover,
+.hover\:bg-accent:hover,
+.hover\:text-primary:hover,
+.hover\:text-secondary:hover,
+.hover\:text-accent:hover {
+  /* Placeholder classes for hover states */
+  content: "";
+}
+
+/* Reminder-specific safelist - only truly dynamic classes that might be purged */
+.bg-amber-50,
+.border-amber-400,
+.dark\:bg-amber-950\/30,
+.border-2,
+.border-amber-400,
+.dark\:border-amber-600,
+.shadow-amber-200\/50,
+.dark\:shadow-amber-900\/20,
+.bg-white,
+.dark\:bg-backgroundDarkTwo,
+.border,
+.border-borderLight,
+.dark\:border-slate-700,
+.bg-backgroundLight,
+.bg-backgroundLightTwo,
+.dark\:bg-backgroundDarkThree,
+.dark\:bg-slate-700\/50,
+.border-slate-200,
+.dark\:border-slate-600 {
+  /* Placeholder to ensure these conditional/dynamic classes are included by nativewind */
+  content: "";
+}
+
+/* AI Assist component dynamic classes */
+.bg-green-100,
+.dark\:bg-green-900\/30,
+.bg-amber-100,
+.dark\:bg-amber-900\/30,
+.bg-blue-100,
+.dark\:bg-blue-900\/30,
+.bg-purple-100,
+.dark\:bg-purple-900\/30,
+.bg-orange-100,
+.dark\:bg-orange-900\/30,
+.bg-yellow-100,
+.dark\:bg-yellow-900\/30,
+.bg-teal-100,
+.dark\:bg-teal-900\/30,
+.bg-red-100,
+.dark\:bg-red-900\/30 {
+  /* AI status, insights, and analytics color backgrounds */
+  content: "";
+}

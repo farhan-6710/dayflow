@@ -1,0 +1,72 @@
+{
+  "expo": {
+    "name": "DayFlow",
+    "slug": "personal-assistant-app",
+    "owner": "farhan_6710",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/icons/splash-icon-dark.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.expo.personalassistantapp",
+      "icon": {
+        "dark": "./assets/icons/ios-dark.png",
+        "light": "./assets/icons/ios-light.png",
+        "tinted": "./assets/icons/ios-tinted.png"
+      }
+    },
+    "android": {
+      "notification": {
+        "icon": "./assets/icon.png"
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "monochromeImage": "./assets/icons/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "dev.expo.personalassistantapp",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ce9d820f-d43a-44e0-bd40-e8a3b71422b6"
+      }
+    },
+    "plugins": [
+      "expo-asset",
+      [
+        "expo-notifications",
+        {
+          "sounds": ["./assets/sounds/notification_sound.wav"]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/icons/splash-icon-dark.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/icons/splash-icon-light.png",
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}
