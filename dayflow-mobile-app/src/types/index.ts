@@ -1,9 +1,7 @@
 // Core domain types
-// DB stores reminder statuses (missed set from notification actions)
 export type ReminderStatus = "done" | "upcoming" | "paused" | "missed";
-
-// Frontend displays 4 statuses (missed is calculated)
-export type DisplayReminderStatus = "done" | "missed" | "upcoming" | "paused";
+export type OccurrenceStatus = "done" | "missed";
+export type DisplayReminderStatus = ReminderStatus;
 
 export type DayOfWeek = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 
@@ -27,8 +25,15 @@ export interface Reminder {
   tempId?: string; // Client-only: temporary ID for optimistic adds
 }
 
+export interface ReminderOccurrence {
+  reminderId: string;
+  occurrenceDate: string;
+  status: OccurrenceStatus;
+  category?: ReminderCategory;
+}
+
 export interface ReminderHistoryItem {
-  id: number;
+  id: string;
   remindersChecked: number;
   totalReminders: number;
   date: string;

@@ -1,30 +1,22 @@
 import { useMemo } from "react";
 import { useThemeColors } from "@constants/theme";
-import {
-  getAnalyticsStats,
-  WEEKLY_TREND_DATA,
-  getAnalyticsCategories,
-  STREAK_DATA,
-} from "@constants/analytics";
+import { useReminderHistory } from "@hooks/reminders/useReminderHistory";
+import { buildAnalyticsFromOccurrences } from "@utils/analytics";
 
 /**
  * Hook for managing analytics data with theme-aware colors
- *
- * @returns Analytics data with properly themed colors
- *
- * @example
- * const { stats, weekData, categories, streakData } = useAnalyticsData();
  */
 export const useAnalyticsData = () => {
   const colors = useThemeColors();
+  const { occurrences, loading } = useReminderHistory();
 
-  const stats = useMemo(() => getAnalyticsStats(colors), [colors]);
-  const categories = useMemo(() => getAnalyticsCategories(colors), [colors]);
+  const analytics = useMemo(
+    () => buildAnalyticsFromOccurrences(occurrences, colors),
+    [occurrences, colors],
+  );
 
   return {
-    stats,
-    weekData: WEEKLY_TREND_DATA,
-    categories,
-    streakData: STREAK_DATA,
+    ...analytics,
+    loading,
   };
 };

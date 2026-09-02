@@ -2,6 +2,4 @@
 export * from "./ai-assist";
 export * from "./analytics";
 export * from "./profile";
-
-// Reminder utilities
-export { getReminderDisplayStatus } from "./getReminderDisplayStatus";
+export * from "./reminderDay";

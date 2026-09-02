@@ -3,6 +3,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import Toast from "react-native-toast-message";
 import { remindersAPI } from "../api/remindersAPI";
 import { scheduleLocalReminderNotifications } from "@services/localReminderScheduler";
+import { reconcileReminderStatuses } from "@services/reminderOccurrencesService";
 import {
   getRemindersRequest,
   getRemindersSuccess,
@@ -19,14 +20,23 @@ import {
 } from "../slices/remindersSlice";
 import { Reminder } from "@types";
 
+function* syncScheduledReminders(reminders: Reminder[]) {
+  const didChange: boolean = yield call(reconcileReminderStatuses, reminders);
+  const next: Reminder[] = didChange
+    ? yield call(remindersAPI.getAll)
+    : reminders;
+  yield call(scheduleLocalReminderNotifications, next);
+  return next;
+}
+
 /**
  * Worker Saga: Fetch all reminders
  */
 function* getRemindersWorker() {
   try {
     const reminders: Reminder[] = yield call(remindersAPI.getAll);
-    yield put(getRemindersSuccess(reminders));
-    yield call(scheduleLocalReminderNotifications, reminders);
+    const next: Reminder[] = yield call(syncScheduledReminders, reminders);
+    yield put(getRemindersSuccess(next));
   } catch (error) {
     console.error("[Redux Saga] Failed to fetch reminders:", error);
     const errorMessage =
@@ -50,7 +60,8 @@ function* addReminderWorker(
     const newReminder: Reminder = yield call(remindersAPI.create, reminderData);
     yield put(addReminderSuccess({ tempId, reminder: newReminder }));
     const reminders: Reminder[] = yield call(remindersAPI.getAll);
-    yield call(scheduleLocalReminderNotifications, reminders);
+    const next: Reminder[] = yield call(syncScheduledReminders, reminders);
+    yield put(getRemindersSuccess(next));
 
     // Show success toast in saga (guaranteed delivery)
     Toast.show({
@@ -88,7 +99,8 @@ function* updateReminderWorker(
     );
     yield put(updateReminderSuccess(updatedReminder));
     const reminders: Reminder[] = yield call(remindersAPI.getAll);
-    yield call(scheduleLocalReminderNotifications, reminders);
+    const next: Reminder[] = yield call(syncScheduledReminders, reminders);
+    yield put(getRemindersSuccess(next));
 
     // Show success toast in saga (guaranteed delivery)
     Toast.show({
@@ -120,7 +132,8 @@ function* deleteReminderWorker(action: PayloadAction<string>) {
     yield call(remindersAPI.delete, id);
     yield put(deleteReminderSuccess(id));
     const reminders: Reminder[] = yield call(remindersAPI.getAll);
-    yield call(scheduleLocalReminderNotifications, reminders);
+    const next: Reminder[] = yield call(syncScheduledReminders, reminders);
+    yield put(getRemindersSuccess(next));
 
     // Show success toast in saga (guaranteed delivery)
     Toast.show({

@@ -28,9 +28,10 @@ const ReminderHistoryCard = React.memo<ReminderHistoryCardProps>(
     const isDark = colorScheme === "dark";
 
     // Calculate completion percentage
-    const completionPercentage = Math.round(
-      (item.remindersChecked / item.totalReminders) * 100
-    );
+    const completionPercentage =
+      item.totalReminders > 0
+        ? Math.round((item.remindersChecked / item.totalReminders) * 100)
+        : 0;
 
     // Determine status based on completion percentage
     const isFullyCompleted = completionPercentage === 100;

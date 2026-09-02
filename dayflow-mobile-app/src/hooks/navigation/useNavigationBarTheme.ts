@@ -19,8 +19,8 @@ export const useNavigationBarTheme = () => {
           await NavigationBar.setButtonStyleAsync(
             colorScheme === "dark" ? "light" : "dark"
           );
-        } catch (error) {
-          console.log("NavigationBar theming not supported:", error);
+        } catch {
+          // Navigation bar theming is unsupported on some Android builds.
         }
       };
       setNavigationBarTheme();

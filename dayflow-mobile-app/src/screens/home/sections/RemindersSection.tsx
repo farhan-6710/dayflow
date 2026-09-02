@@ -31,7 +31,6 @@ const RemindersSection = React.memo<RemindersSectionProps>(
 
         {/* Reminder Buttons */}
         <AddReminderButton onPress={onAddReminderPress} />
-        {/* <ResetRemindersButton /> */}
       </View>
     );
   }

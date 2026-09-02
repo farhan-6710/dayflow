@@ -63,9 +63,6 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      console.log("🔒 Session expired - automatically signing out");
-
-      // Show toast notification
       Toast.show({
         type: "error",
         text1: "Session Expired",

@@ -9,6 +9,7 @@ interface RemindersState {
   reminders: Reminder[];
   globalPaused: boolean;
   getRemindersLoading: boolean; // For initial fetch only
+  hasFetched: boolean;
   pendingUpdates: Record<string, Reminder>; // Rollback snapshots for updates
   lastDeletedReminder: Reminder | null; // Rollback snapshot for deletes
 }
@@ -17,6 +18,7 @@ const initialState: RemindersState = {
   reminders: [],
   globalPaused: false,
   getRemindersLoading: false,
+  hasFetched: false,
   pendingUpdates: {},
   lastDeletedReminder: null,
 };
@@ -27,10 +29,13 @@ const remindersSlice = createSlice({
   reducers: {
     // GET Reminders
     getRemindersRequest: (state) => {
-      state.getRemindersLoading = true;
+      if (!state.hasFetched) {
+        state.getRemindersLoading = true;
+      }
     },
     getRemindersSuccess: (state, action: PayloadAction<Reminder[]>) => {
       state.getRemindersLoading = false;
+      state.hasFetched = true;
       state.reminders = Array.isArray(action.payload) ? action.payload : [];
     },
     getRemindersFailure: (state, _action: PayloadAction<string>) => {
@@ -192,6 +197,8 @@ const remindersSlice = createSlice({
     resetReminders: (state) => {
       state.reminders = [];
       state.globalPaused = false;
+      state.hasFetched = false;
+      state.getRemindersLoading = false;
     },
   },
 });

@@ -41,10 +41,6 @@ export default function HomeScreen() {
     }
   }, [dispatch, session]);
 
-  // getAuthToken().then((token) => {
-  //   console.log("Auth Token:", token);
-  // });
-
   // Redux selectors
   const reminders = useSelector(
     (state: RootState) => state.reminders.reminders

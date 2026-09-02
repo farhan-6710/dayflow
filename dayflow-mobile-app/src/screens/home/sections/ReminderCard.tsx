@@ -7,7 +7,6 @@ import { Reminder } from "@types";
 import Text from "@components/atoms/Text";
 import { IconBadge } from "@components/molecules";
 import { useReminderCardStyles } from "@/hooks";
-import { getReminderDisplayStatus } from "@/utils";
 
 interface ReminderCardProps {
   /** The reminder data to display */
@@ -20,14 +19,7 @@ interface ReminderCardProps {
 
 const ReminderCard = React.memo<ReminderCardProps>(
   ({ reminder, index, onPress }) => {
-    // Calculate display status (converts upcoming to missed if time passed)
-    const displayStatus = getReminderDisplayStatus(
-      reminder.status,
-      reminder.hour,
-      reminder.minute,
-      reminder.repeatDays
-    );
-    const styles = useReminderCardStyles(displayStatus);
+    const styles = useReminderCardStyles(reminder.status);
 
     const handlePress = () => {
       onPress?.(reminder);

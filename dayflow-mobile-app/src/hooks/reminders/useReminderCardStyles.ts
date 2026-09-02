@@ -15,7 +15,7 @@ import {
  * Custom hook for ReminderCard styling logic
  * Consolidates all style calculations for cleaner component code
  *
- * @param status - The reminder display status (done, missed, upcoming, paused)
+ * @param status - The reminder status from the database
  * @returns Object containing all style classes and color values
  *
  * @example

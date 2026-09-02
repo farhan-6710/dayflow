@@ -9,6 +9,8 @@ import { updateReminderRequest } from "@redux/slices/remindersSlice";
 import { store } from "@redux/store";
 import type { ReminderStatus } from "@types";
 
+const LOG_PREFIX = "[ReminderNotification]";
+
 export const setupNotifications = async (): Promise<{
   token: string | null;
   status: string;
@@ -23,13 +25,12 @@ export const setupNotifications = async (): Promise<{
 
     return { token, status };
   } catch (error) {
-    console.error("Error setting up notifications:", error);
+    console.error(`${LOG_PREFIX} setup failed:`, error);
     throw error;
   }
 };
 
 export const registerNotificationCategories = async () => {
-  // Set up notification category with action buttons
   await Notifications.setNotificationCategoryAsync("custom_category", [
     {
       identifier: "action_missed",
@@ -46,7 +47,11 @@ export const registerNotificationCategories = async () => {
 
 export const createNotificationReceivedListener = () => {
   return Notifications.addNotificationReceivedListener((notification) => {
-    console.log("🔔 Notification Received: ", notification);
+    const { title, data } = notification.request.content;
+    console.log(`${LOG_PREFIX} received`, {
+      title,
+      reminderId: data?.reminderId,
+    });
   });
 };
 
@@ -55,7 +60,6 @@ function applyReminderStatusFromNotification(
   status: ReminderStatus,
   toast: { type: "success" | "info" | "error"; title: string; message: string },
 ) {
-  // Optimistic Redux update — saga syncs to Supabase in the background.
   store.dispatch(updateReminderRequest({ id: reminderId, updates: { status } }));
   Toast.show({
     type: toast.type,
@@ -67,25 +71,21 @@ function applyReminderStatusFromNotification(
 export const createNotificationResponseListener = () => {
   return Notifications.addNotificationResponseReceivedListener(
     async (response) => {
-      console.log(
-        "🔔 Notification Response: ",
-        JSON.stringify(response, null, 2),
-        JSON.stringify(response.notification.request.content.data, null, 2)
-      );
-
-      // Handle action button responses
       const actionId = response.actionIdentifier;
       const notificationId = response.notification.request.identifier;
       const notificationData = response.notification.request.content.data;
       const reminderId = notificationData?.reminderId as string | undefined;
 
+      console.log(`${LOG_PREFIX} invoked`, {
+        actionId,
+        reminderId,
+      });
+
       if (!reminderId) {
-        console.warn("⚠️ No reminderId found in notification data");
+        console.warn(`${LOG_PREFIX} missing reminderId in notification data`);
       }
 
       if (actionId === "action_missed") {
-        console.log("❌ User marked reminder as missed");
-
         if (reminderId) {
           applyReminderStatusFromNotification(reminderId, "missed", {
             type: "info",
@@ -99,8 +99,6 @@ export const createNotificationResponseListener = () => {
       }
 
       if (actionId === "action_done") {
-        console.log("✅ User marked reminder as done");
-
         if (reminderId) {
           applyReminderStatusFromNotification(reminderId, "done", {
             type: "success",
@@ -113,28 +111,21 @@ export const createNotificationResponseListener = () => {
         return;
       }
 
-      // Handle default notification tap (no action button pressed)
-      // Navigate to reminder details if tapped without action button
       if (reminderId) {
         try {
-          router.push(`/reminder/${reminderId}` as any);
+          router.push(`/reminder-details/${reminderId}` as any);
         } catch (error) {
-          console.error("Navigation error:", error);
+          console.error(`${LOG_PREFIX} navigation failed:`, error);
         }
       }
-    }
+    },
   );
 };
 
 export const copyTokenToClipboard = async (expoPushToken: string | null) => {
   if (expoPushToken) {
-    // Trigger haptic feedback first
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-    // Copy to clipboard
     await Clipboard.setStringAsync(expoPushToken);
-
-    // Show success alert
     Alert.alert("Copied!", "Expo push token has been copied to clipboard");
   }
 };

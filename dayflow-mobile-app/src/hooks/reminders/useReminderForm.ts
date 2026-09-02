@@ -2,7 +2,6 @@ import { useState } from "react";
 import * as Haptics from "expo-haptics";
 import { DayOfWeek, Reminder, ReminderStatus, ReminderCategory } from "@types";
 import { DAYS_OF_WEEK } from "@constants/reminders";
-import { sanitizeTimeInput } from "@utils/reminder-details/validation";
 import { formatDisplayTime } from "@utils/home/reminderUtils";
 
 interface ReminderFormState {
@@ -48,16 +47,6 @@ export const useReminderForm = (initialData?: Partial<Reminder>) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Time change handler with validation (legacy text inputs)
-  const handleTimeChange = (type: "hour" | "minute", value: string) => {
-    const max = type === "hour" ? 23 : 59;
-    const sanitized = sanitizeTimeInput(value, max);
-
-    if (sanitized !== null) {
-      setFormState((prev) => ({ ...prev, [type]: sanitized }));
-    }
-  };
-
   const handleTimePickerChange = (hour: number, minute: number) => {
     setFormState((prev) => ({
       ...prev,
@@ -100,7 +89,7 @@ export const useReminderForm = (initialData?: Partial<Reminder>) => {
     setFormState({
       name: initialData?.name || "",
       description: initialData?.description || "",
-      hour: initialData?.hour?.toString() || "0",
+      hour: initialData?.hour?.toString() || "9",
       minute: initialData?.minute?.toString() || "0",
       repeatDays: initialData?.repeatDays || DAYS_OF_WEEK,
       category: initialData?.category,
@@ -111,7 +100,6 @@ export const useReminderForm = (initialData?: Partial<Reminder>) => {
   return {
     formState,
     handleFieldChange,
-    handleTimeChange,
     handleTimePickerChange,
     handleDayToggle,
     getNumericTime,
@@ -134,31 +122,6 @@ export const useReminderEditForm = (reminder: Reminder | null) => {
   // Generic field change handler
   const handleFieldChange = (field: keyof Reminder, value: ReminderValue) => {
     setLocalChanges((prev) => ({ ...prev, [field]: value }));
-    setHasChanges(true);
-  };
-
-  // Time change handler with validation and display time update (legacy text inputs)
-  const handleTimeChange = (type: "hour" | "minute", value: string) => {
-    if (!currentData) return;
-
-    const max = type === "hour" ? 23 : 59;
-    const sanitized = sanitizeTimeInput(value, max);
-
-    if (!sanitized) return;
-
-    const numValue = parseInt(sanitized, 10);
-    const updatedReminder: Partial<Reminder> = {
-      [type]: numValue,
-    };
-
-    const hour = type === "hour" ? numValue : currentData.hour;
-    const minute = type === "minute" ? numValue : currentData.minute;
-
-    if (hour !== undefined && minute !== undefined) {
-      updatedReminder.displayTime = formatDisplayTime(hour, minute);
-    }
-
-    setLocalChanges((prev) => ({ ...prev, ...updatedReminder }));
     setHasChanges(true);
   };
 
@@ -200,7 +163,6 @@ export const useReminderEditForm = (reminder: Reminder | null) => {
     hasChanges,
     setHasChanges,
     handleFieldChange,
-    handleTimeChange,
     handleTimePickerChange,
     handleDayToggle,
     resetChanges,

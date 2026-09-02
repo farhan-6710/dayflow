@@ -6,6 +6,7 @@ import {
   mapRowToReminder,
   type SupabaseReminderRow,
 } from "@services/reminderMapper";
+import { recordReminderOccurrence } from "@services/reminderOccurrencesService";
 import type { Reminder } from "@types";
 
 async function getCurrentUserId(): Promise<string> {
@@ -20,6 +21,12 @@ async function getCurrentUserId(): Promise<string> {
   }
 
   return userId;
+}
+
+async function persistOccurrenceIfTerminal(reminder: Reminder): Promise<void> {
+  if (reminder.status === "done" || reminder.status === "missed") {
+    await recordReminderOccurrence(reminder.id, reminder.status);
+  }
 }
 
 export async function fetchReminders(): Promise<Reminder[]> {
@@ -53,7 +60,9 @@ export async function createReminder(
     throw new Error(error.message);
   }
 
-  return mapRowToReminder(data as SupabaseReminderRow);
+  const created = mapRowToReminder(data as SupabaseReminderRow);
+  await persistOccurrenceIfTerminal(created);
+  return created;
 }
 
 export async function updateReminder(
@@ -75,7 +84,11 @@ export async function updateReminder(
     throw new Error(error.message);
   }
 
-  return mapRowToReminder(data as SupabaseReminderRow);
+  const updated = mapRowToReminder(data as SupabaseReminderRow);
+  if (updates.status === "done" || updates.status === "missed") {
+    await recordReminderOccurrence(updated.id, updates.status);
+  }
+  return updated;
 }
 
 export async function deleteReminder(id: string): Promise<void> {

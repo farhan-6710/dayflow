@@ -42,14 +42,14 @@ export default function RemindersGuide() {
           numberOfLines={0}
         >
           <Text className="font-semibold font-serif">Reminder States :- </Text>
-          New reminders are marked as{" "}
-          <Text className="font-semibold font-serif">Upcoming</Text> if the time
-          is in the future, or{" "}
-          <Text className="font-semibold font-serif">Missed</Text> if the time
-          has passed. When you complete a task, tap the reminder to open details
-          and change its status to{" "}
-          <Text className="font-semibold font-serif">Done</Text>. You can switch
-          between Done and Missed anytime.
+          New reminders start as{" "}
+          <Text className="font-semibold font-serif">Upcoming</Text>. Once the
+          scheduled time passes without marking{" "}
+          <Text className="font-semibold font-serif">Done</Text>, the reminder
+          is saved as{" "}
+          <Text className="font-semibold font-serif">Missed</Text>. At midnight
+          the schedule resets to Upcoming for the next day. You can switch
+          between Done and Missed from the reminder details.
         </Text>
 
         {/* Managing Reminders */}

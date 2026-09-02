@@ -11,6 +11,7 @@ import {
 import { useAuth } from "@providers/AuthProvider";
 import { Reminder, DayOfWeek, ReminderStatus, ReminderCategory } from "@types";
 import { formatDisplayTime } from "@utils/home/reminderUtils";
+import { initialReminderStatus } from "@utils/reminderDay";
 
 interface AddReminderData {
   name: string;
@@ -41,9 +42,12 @@ export const useAddReminder = () => {
       return false;
     }
 
-    // All new reminders start as 'upcoming'
-    // Frontend will calculate and display 'missed' if time has passed
-    const status: ReminderStatus = "upcoming";
+    // Persist missed immediately if today's scheduled time already passed
+    const status: ReminderStatus = initialReminderStatus({
+      hour: data.hour,
+      minute: data.minute,
+      repeatDays: data.repeatDays,
+    });
 
     const reminderData = {
       name: data.name,

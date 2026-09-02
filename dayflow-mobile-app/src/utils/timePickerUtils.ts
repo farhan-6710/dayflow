@@ -29,20 +29,3 @@ export function formatTimeLabel(hour24: number, minute: number): string {
   const { hour12, minute: min, period } = to12HourParts(hour24, minute);
   return `${hour12}:${String(min).padStart(2, "0")} ${period}`;
 }
-
-export function parseTimeLabel(label: string): { hour: number; minute: number } | null {
-  const match = label.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-  if (!match) {
-    return null;
-  }
-
-  const hour12 = Number.parseInt(match[1]!, 10);
-  const minute = Number.parseInt(match[2]!, 10);
-  const period = match[3]!.toUpperCase() as TimePeriod;
-
-  if (!Number.isFinite(hour12) || !Number.isFinite(minute)) {
-    return null;
-  }
-
-  return to24Hour(hour12, minute, period);
-}

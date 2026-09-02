@@ -26,9 +26,6 @@ export const useTestNotification = (config?: any) => {
       });
       return res.data;
     },
-    onSuccess: (data) => {
-      console.log("Push notification sent successfully:", data);
-    },
     onError: (error) => {
       console.error("Failed to send push notification:", error);
       Alert.alert("Error", "Failed to send push notification");

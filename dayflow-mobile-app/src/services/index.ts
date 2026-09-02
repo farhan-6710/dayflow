@@ -1,6 +1,7 @@
 export * from "./db";
 export * from "./reminderMapper";
 export * from "./remindersService";
+export * from "./reminderOccurrencesService";
 export * from "./expoPushTokensService";
 export * from "./localReminderScheduler";
 

@@ -5,7 +5,6 @@ import { useNotification } from "@notifications/context/NotificationProvider";
 
 export const useRegisterDFN = (onLog?: (message: string) => void) => {
   const log = (message: string) => {
-    console.log(`[useRegisterDFN] ${message}`);
     onLog?.(message);
   };
 
@@ -18,7 +17,6 @@ export const useRegisterDFN = (onLog?: (message: string) => void) => {
       log("Notification setup process completed");
     },
     onError: (error) => {
-      console.log("❌ Failed to save Expo token to Supabase:", error);
       log(`Failed to save Expo token: ${error.message}`);
     },
   });
