@@ -17,7 +17,7 @@ export default function LoginRoute() {
       <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-1 bg-background dark:bg-background-dark">
         <AuthHeader
-          title="DayFlow"
+          title="Log in"
           subtitle="Organize your day, amplify your flow"
           showNavigationHeader={true}
           onBackPress={handleBackPress}

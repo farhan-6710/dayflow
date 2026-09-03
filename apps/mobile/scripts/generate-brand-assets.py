@@ -20,30 +20,65 @@ DARK_BG = (18, 18, 18, 255)  # web dark background
 WHITE = (255, 255, 255, 255)
 TRANSPARENT = (0, 0, 0, 0)
 
+# DF mark is left-heavy (thick D stem vs thin check). Extra optical nudge after
+# alpha-centroid centering, as a fraction of canvas size (~12px right / 6px down
+# at 1024, which reads as a couple of pixels on a launcher icon).
+OPTICAL_NUDGE = (0.012, 0.006)
 
-def fit_on_canvas(src: Path, size: int, background, pad_ratio: float = 0.16) -> Image.Image:
-    logo = Image.open(src).convert("RGBA")
+
+def crop_glyph(logo: Image.Image) -> Image.Image:
+    """Trim transparent (or near-empty) padding so the mark can fill the canvas."""
+    alpha = logo.split()[-1]
+    bbox = alpha.getbbox()
+    if not bbox:
+        return logo
+    return logo.crop(bbox)
+
+
+def alpha_centroid(logo: Image.Image) -> tuple[float, float]:
+    """Return the alpha-weighted visual center of an RGBA glyph."""
+    alpha = logo.split()[-1]
+    w, h = logo.size
+    data = alpha.tobytes()
+    sx = sy = total = 0
+    for i, a in enumerate(data):
+        if a:
+            sx += (i % w) * a
+            sy += (i // w) * a
+            total += a
+    if not total:
+        return (w / 2, h / 2)
+    return (sx / total, sy / total)
+
+
+def scaled_glyph(src: Path, size: int, pad_ratio: float) -> Image.Image:
+    logo = crop_glyph(Image.open(src).convert("RGBA"))
+    inner = max(1, int(size * (1 - 2 * pad_ratio)))
+    scale = min(inner / logo.width, inner / logo.height)
+    new_size = (max(1, round(logo.width * scale)), max(1, round(logo.height * scale)))
+    return logo.resize(new_size, Image.Resampling.LANCZOS)
+
+
+def place_glyph(logo: Image.Image, size: int, background) -> Image.Image:
+    """Paste the glyph so its visual center sits on the canvas center, then nudge."""
     canvas = Image.new("RGBA", (size, size), background)
-    inner = int(size * (1 - 2 * pad_ratio))
-    logo.thumbnail((inner, inner), Image.Resampling.LANCZOS)
-    x = (size - logo.width) // 2
-    y = (size - logo.height) // 2
+    cx, cy = alpha_centroid(logo)
+    x = round(size / 2 - cx + size * OPTICAL_NUDGE[0])
+    y = round(size / 2 - cy + size * OPTICAL_NUDGE[1])
     canvas.paste(logo, (x, y), logo)
     return canvas
 
 
-def tinted_template(src: Path, size: int) -> Image.Image:
+def fit_on_canvas(src: Path, size: int, background, pad_ratio: float = 0.18) -> Image.Image:
+    return place_glyph(scaled_glyph(src, size, pad_ratio), size, background)
+
+
+def tinted_template(src: Path, size: int, pad_ratio: float = 0.22) -> Image.Image:
     """iOS tinted icon: white glyph using the logo alpha."""
-    logo = Image.open(src).convert("RGBA")
-    inner = int(size * 0.68)
-    logo.thumbnail((inner, inner), Image.Resampling.LANCZOS)
+    logo = scaled_glyph(src, size, pad_ratio)
     glyph = Image.new("RGBA", logo.size, (255, 255, 255, 255))
     glyph.putalpha(logo.split()[-1])
-    canvas = Image.new("RGBA", (size, size), TRANSPARENT)
-    x = (size - glyph.width) // 2
-    y = (size - glyph.height) // 2
-    canvas.paste(glyph, (x, y), glyph)
-    return canvas
+    return place_glyph(glyph, size, TRANSPARENT)
 
 
 def save_rgb(image: Image.Image, dest: Path) -> None:
@@ -66,22 +101,22 @@ def main() -> None:
     copy2(LIGHT_SRC, BRAND / "logo-light-icon.png")
     copy2(DARK_SRC, BRAND / "logo-dark-icon.png")
 
-    # App / Play icon (light logo on white)
-    fit_on_canvas(LIGHT_SRC, 1024, WHITE, 0.14).save(ASSETS / "icon.png", "PNG")
-    fit_on_canvas(LIGHT_SRC, 192, WHITE, 0.12).save(ASSETS / "favicon.png", "PNG")
+    # iOS / store: full 1024 canvas is visible (only corners round).
+    fit_on_canvas(LIGHT_SRC, 1024, WHITE, 0.24).save(ASSETS / "icon.png", "PNG")
+    fit_on_canvas(LIGHT_SRC, 192, WHITE, 0.22).save(ASSETS / "favicon.png", "PNG")
 
-    # Adaptive / notification foreground (transparent)
-    fit_on_canvas(LIGHT_SRC, 1024, TRANSPARENT, 0.18).save(
+    # Android adaptive: only the center 72/108 (~67%) shows in the squircle.
+    # 0.32 pad → ~36% of the 108 layer ≈ 54% of the visible icon (Expo Go-like).
+    fit_on_canvas(LIGHT_SRC, 1024, TRANSPARENT, 0.32).save(
         ICONS / "adaptive-icon.png", "PNG"
     )
     copy2(ICONS / "adaptive-icon.png", ASSETS / "adaptive-icon.png")
 
-    # iOS appearance icons
-    fit_on_canvas(LIGHT_SRC, 1024, WHITE, 0.14).save(ICONS / "ios-light.png", "PNG")
-    fit_on_canvas(DARK_SRC, 1024, DARK_BG, 0.14).save(ICONS / "ios-dark.png", "PNG")
-    tinted_template(LIGHT_SRC, 1024).save(ICONS / "ios-tinted.png", "PNG")
+    fit_on_canvas(LIGHT_SRC, 1024, WHITE, 0.24).save(ICONS / "ios-light.png", "PNG")
+    fit_on_canvas(DARK_SRC, 1024, DARK_BG, 0.24).save(ICONS / "ios-dark.png", "PNG")
+    tinted_template(LIGHT_SRC, 1024, 0.24).save(ICONS / "ios-tinted.png", "PNG")
 
-    # Splash: logo on brand surfaces
+    # Splash PNG: extra inset; display size is Expo's default 200 in app.json
     fit_on_canvas(LIGHT_SRC, 1284, LIGHT_BG, 0.28).save(
         ICONS / "splash-icon-light.png", "PNG"
     )

@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { validateLoginForm } from "@utils/validation";
 import { authToast, getUserDisplayName } from "@utils/toast";
+import { getSupabaseHost } from "@lib/supabase";
 
 interface LoginFormData {
   email: string;
@@ -45,7 +46,10 @@ export const useLogin = () => {
       router.push("/(tabs)");
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : undefined;
-      authToast.authError("Login failed", errorMessage);
+      authToast.authError(
+        "Login failed",
+        `${errorMessage ?? "Request failed"} (${getSupabaseHost()})`,
+      );
     } finally {
       setLoading(false);
     }

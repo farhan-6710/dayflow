@@ -23,9 +23,6 @@
       }
     },
     "android": {
-      "notification": {
-        "icon": "./assets/icons/ios-tinted.png"
-      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "monochromeImage": "./assets/icons/ios-tinted.png",
@@ -46,10 +43,12 @@
       }
     },
     "plugins": [
+      "expo-router",
       "expo-asset",
       [
         "expo-notifications",
         {
+          "icon": "./assets/icons/ios-tinted.png",
           "sounds": ["./assets/sounds/notification_sound.wav"]
         }
       ],

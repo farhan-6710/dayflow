@@ -17,7 +17,7 @@ export default function SignupScreen() {
       <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-1 bg-background dark:bg-background-dark">
         <AuthHeader
-          title="DayFlow"
+          title="Create account"
           subtitle="Organize your day, amplify your flow"
           showNavigationHeader={true}
           onBackPress={handleBackPress}
