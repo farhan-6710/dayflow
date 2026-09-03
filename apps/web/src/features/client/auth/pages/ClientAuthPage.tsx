@@ -38,6 +38,7 @@ export function ClientAuthPage() {
     : AUTH_FORM_TYPES.login;
 
   const needsRedirect = !isAuthFormType(rawFormType);
+  const authCode = searchParams.get("code");
   const canonicalPath = buildClientAuthUrl(formType);
 
   const requestedPath =
@@ -45,11 +46,31 @@ export function ClientAuthPage() {
       ?.pathname ?? CLIENT_DASHBOARD_HOME;
 
   if (needsRedirect) {
+    if (authCode) {
+      const params = new URLSearchParams();
+      params.set(AUTH_FORM_TYPE_PARAM, AUTH_FORM_TYPES.resetPassword);
+      params.set("code", authCode);
+      return (
+        <Navigate to={`${location.pathname}?${params.toString()}`} replace />
+      );
+    }
     return <Navigate to={canonicalPath} replace />;
   }
 
   if (loading || (user && !profile && !isPasswordRecovery)) {
     return <CenteredLoading />;
+  }
+
+  if (
+    isPasswordRecovery &&
+    formType !== AUTH_FORM_TYPES.resetPassword
+  ) {
+    return (
+      <Navigate
+        to={buildClientAuthUrl(AUTH_FORM_TYPES.resetPassword)}
+        replace
+      />
+    );
   }
 
   const showResetPassword =

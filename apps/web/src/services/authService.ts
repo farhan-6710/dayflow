@@ -21,6 +21,7 @@ import {
   type OAuthPopupResult,
 } from "@/features/workspace/auth/utils/oauthPopup";
 import { isDesktopApp } from "@/shared/utils/platform";
+import { markPasswordRecoveryPending } from "@/features/workspace/auth/utils/passwordRecovery";
 
 // Returns the signed-in user from the Auth server (not a stale JWT cache).
 export async function getCurrentUser(): Promise<User | null> {
@@ -234,5 +235,8 @@ export async function requestPasswordReset(
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
     redirectTo: `${window.location.origin}${redirectPath}`,
   });
+  if (!error) {
+    markPasswordRecoveryPending();
+  }
   return error;
 }

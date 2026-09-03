@@ -16,12 +16,18 @@ import {
   syncAuthUserMetadata,
 } from "@/services/authService";
 import { fetchProfile } from "@/services/profilesService";
+import {
+  clearPasswordRecoveryPending,
+  isPasswordRecoveryContext,
+} from "@/features/workspace/auth/utils/passwordRecovery";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isPasswordRecovery, setIsPasswordRecovery] = useState(false);
+  const [isPasswordRecovery, setIsPasswordRecovery] = useState(
+    isPasswordRecoveryContext,
+  );
 
   const loadProfile = useCallback(async (currentUser: User) => {
     try {
@@ -52,6 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const clearPasswordRecovery = useCallback(() => {
     setIsPasswordRecovery(false);
+    clearPasswordRecoveryPending();
   }, []);
 
   useEffect(() => {
@@ -64,6 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (event === "SIGNED_OUT") {
         setIsPasswordRecovery(false);
+        clearPasswordRecoveryPending();
         setUser(null);
         setProfile(null);
         setLoading(false);
@@ -86,7 +94,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       void (async () => {
-        const syncedUser = await syncAuthUserMetadata(nextUser);
+        // Don't call updateUser during recovery — it can consume the session
+        // before the user has set a new password.
+        const syncedUser =
+          event === "PASSWORD_RECOVERY"
+            ? nextUser
+            : await syncAuthUserMetadata(nextUser);
         if (!active) {
           return;
         }
@@ -118,6 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setProfile(null);
     setIsPasswordRecovery(false);
+    clearPasswordRecoveryPending();
   }, []);
 
   const value = useMemo<AuthContextValue>(() => {
