@@ -7,14 +7,17 @@ For interviewers and contributors. Product demo: [README.md](./README.md).
 ## System overview
 
 ```text
-Web (Vite dist/)  ──┐
-Desktop (Tauri)   ──┼──► React UI ──► apps/web/src/services/ ──► Supabase (Auth + Postgres + RLS)
-Mobile (Expo)*    ──┘
-
-* separate repo; same Supabase backend
+Web (Vite dist/)     ──► apps/web/src/services/     ──┐
+Desktop (Tauri wraps     (same React app as web)      ├──► one Supabase project
+  the Vite app)                                       │      Auth + Postgres + RLS
+Mobile (Expo)        ──► apps/mobile/src/services/  ──┘
 ```
 
-**Data flow:** `pages` → `hooks` → `services` → Supabase. No inline Supabase in features.
+All three clients use the **same** hosted project. Web/desktop and mobile each have their own `createClient` and `db.ts`, but they point at the same URL/key and the same tables. RLS (`user_id = auth.uid()`, client-portal RPCs) is the access contract — there is no extra sync service.
+
+**Data flow (web/desktop):** `pages` → `hooks` → `apps/web/src/services/` → Supabase. No inline Supabase in features.
+
+**Data flow (mobile):** screens/hooks → `apps/mobile/src/services/` → `apps/mobile/src/lib/supabase.ts` → the same Supabase. Mobile currently covers owner reminders, occurrence rows, and Expo push tokens.
 
 ---
 
@@ -41,7 +44,9 @@ profiles
   ├── projects (user_id) → notes, reference_links, client_activity_*
   ├── clients (owner_user_id, auth_user_id, email)
   │     └── client_conversation_messages
-  ├── tasks, reminders, notifications
+  ├── tasks, reminders → reminder_occurrences
+  ├── notifications
+  └── expo_push_tokens   (mobile devices for the same user_id)
 ```
 
 | Concept | Detail |
@@ -80,8 +85,9 @@ Never grant `SELECT ON auth.users TO authenticated`.
 
 ## Auth
 
-- **Workspace:** AuthProvider, email/password + Google OAuth, PublicRoute / ProtectedRoute
-- **Client:** ClientPortalProvider, email must match `clients.email`
+- **Workspace (web/desktop):** AuthProvider, email/password + Google OAuth, PublicRoute / ProtectedRoute
+- **Client portal (web/desktop):** ClientPortalProvider, email must match `clients.email`
+- **Mobile:** same Auth users via `signInWithPassword`; session persisted with AsyncStorage. The demo workspace owner is the same `auth.uid()` as on web. Google OAuth on mobile is not wired the same way as the Tauri deep-link flow.
 
 ---
 
@@ -97,7 +103,7 @@ Never grant `SELECT ON auth.users TO authenticated`.
 | `notificationsService` | In-app task/reminder alerts |
 | `tasksService`, `remindersService`, `notesService` | Core workspace data |
 
-All table names in `apps/web/src/services/db.ts`.
+All web/desktop table names in `apps/web/src/services/db.ts`. Mobile names in `apps/mobile/src/services/db.ts` (`reminders`, `reminder_occurrences`, `expo_push_tokens`) — same Postgres relations.
 
 ---
 
@@ -106,12 +112,22 @@ All table names in `apps/web/src/services/db.ts`.
 - Shell: `apps/web/src-tauri/` — Rust wraps Vite `dist/` in production, dev server in development
 - Config: `tauri.conf.json` (window, CSP, bundle, identifier `com.dayflow.app`)
 - Build output: `apps/web/src-tauri/target/release/bundle/dmg/*.dmg` (macOS)
+- Same Supabase client as web (`VITE_SUPABASE_URL` / `VITE_SUPABASE_PUBLISHABLE_KEY`)
+
+---
+
+## Mobile (Expo)
+
+- App: `apps/mobile/` — Expo Router, preview APKs via EAS (`distribution: internal`)
+- Client: `apps/mobile/src/lib/supabase.ts` (`EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_KEY`)
+- Reads/writes the shared `reminders` rows for `auth.uid()`; registers device tokens in `expo_push_tokens`
+- Android preview: see [README.md](./README.md#install-dayflow-mobile). iOS: coming soon
 
 ---
 
 ## Migrations (contributors)
 
-Numbered SQL in `scripts/migrations/` (001–027). Production DB is live — add new files only, never edit applied migrations. Key ranges: 011–018 clients/projects, 019–026 client portal + RLS, 027 workspace terminology.
+Numbered SQL in `scripts/migrations/` (001–029). Production DB is live — add new files only, never edit applied migrations. Key ranges: 011–018 clients/projects, 019–026 client portal + RLS, 027 workspace terminology, 028–029 mobile reminder fields + occurrences + Expo push tokens.
 
 ---
 

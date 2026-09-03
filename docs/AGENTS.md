@@ -16,13 +16,15 @@ Rules for developers and AI agents. See [README.md](./README.md) for product ove
 ## Directory rules
 
 ```text
-apps/web/src/services/            ALL Supabase calls — never import supabaseClient in features
+apps/web/src/services/            ALL web/desktop Supabase calls — never import supabaseClient in features
 apps/web/src/features/workspace/  Owner app (/workspace)
 apps/web/src/features/client/     Client portal (/client-portal)
 apps/web/src/shared/              Cross-portal UI, layouts, utils
 apps/web/src-tauri/               Tauri config, Rust shell, icons (do not watch in Vite)
-apps/mobile/                      Expo app
-scripts/migrations/               Shared SQL
+apps/mobile/                      Expo app — same Supabase project as web
+apps/mobile/src/lib/supabase.ts   Mobile createClient
+apps/mobile/src/services/         Mobile table access (reminders, push tokens)
+scripts/migrations/               Shared SQL (web, desktop, and mobile)
 ```
 
 Feature folders: `components/`, `hooks/`, `pages/`, `constants/`, `types/`, `utils/`.
@@ -32,8 +34,8 @@ Feature folders: `components/`, `hooks/`, `pages/`, `constants/`, `types/`, `uti
 ## Code rules
 
 - Smallest change that solves the problem — no over-engineering
-- Supabase only in `apps/web/src/services/`; table/column names only in `apps/web/src/services/db.ts`
-- RLS is law — workspace uses `user_id` / `owner_user_id`; client portal uses RPCs (022–026)
+- Supabase only in `apps/web/src/services/` (web/desktop) and `apps/mobile/src/services/` (mobile); table/column names only in each app’s `db.ts` — same Postgres tables
+- RLS is law — workspace uses `user_id` / `owner_user_id`; client portal uses RPCs (022–026). Mobile uses the same policies (`auth.uid()`).
 - Presentational components ~120 lines; logic in hooks
 - Prop types in `types/components.ts` as `ComponentNameProps`
 - `showToast` after mutations; `ConfirmationModal` before deletes
