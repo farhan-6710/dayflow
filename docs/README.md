@@ -21,7 +21,7 @@ Go to **[Workspace login](https://bisque-gull-237581.hostingersite.com/workspace
 | Field | Value |
 |-------|-------|
 | Email | `dayflow.demo@gmail.com` |
-| Password | `F@6710` |
+| Password | `D@1234` |
 
 You’ll land on the workspace dashboard — tasks, projects, clients, reminders, notifications, and analytics.
 
