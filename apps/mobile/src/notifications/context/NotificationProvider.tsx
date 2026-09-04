@@ -1,4 +1,6 @@
-import * as Notifications from "expo-notifications";
+import {
+  type NotificationSubscription,
+} from "@notifications/expoNotifications";
 import {
   setupNotifications,
   createNotificationReceivedListener,
@@ -35,8 +37,8 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
   const [error, setError] = useState<Error | null>(null);
   const [permissionStatus, setPermissionStatus] = useState<string>("Unknown");
 
-  const notificationListener = useRef<Notifications.Subscription | null>(null);
-  const responseListener = useRef<Notifications.Subscription | null>(null);
+  const notificationListener = useRef<NotificationSubscription | null>(null);
+  const responseListener = useRef<NotificationSubscription | null>(null);
 
   useEffect(() => {
     const initializeNotifications = async () => {
@@ -80,7 +82,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
   );
 };
 
-export const useNotification = (): NotificationContextType => {
+export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (context === undefined) {
     throw new Error(

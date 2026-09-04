@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Platform, useColorScheme } from "react-native";
 import { Providers as AppProviders } from "@providers/AppProviders";
-import * as Notifications from "expo-notifications";
+import Notifications from "@notifications/expoNotifications";
 import { Stack } from "expo-router";
 import { useNavigationBarTheme } from "@hooks/navigation/useNavigationBarTheme";
 import {

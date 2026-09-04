@@ -11,7 +11,7 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
-} from "@react-navigation/native";
+} from "expo-router/react-navigation";
 import { useColorScheme } from "react-native";
 import { ScreenProvider } from "./ScreenProvider";
 import { AuthProvider } from "./AuthProvider";

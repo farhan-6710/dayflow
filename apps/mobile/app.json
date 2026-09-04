@@ -7,12 +7,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/icons/splash-icon-light.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#f4f7f7"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dev.expo.personalassistantapp",
@@ -28,7 +22,6 @@
         "monochromeImage": "./assets/icons/ios-tinted.png",
         "backgroundColor": "#f4f7f7"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "dev.expo.personalassistantapp",
       "googleServicesFile": "./google-services.json"
@@ -45,6 +38,7 @@
     "plugins": [
       "expo-router",
       "expo-asset",
+      "expo-status-bar",
       [
         "expo-notifications",
         {

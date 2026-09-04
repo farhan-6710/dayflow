@@ -1,9 +1,16 @@
-import * as Notifications from "expo-notifications";
+import Notifications from "@notifications/expoNotifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
-// import { Platform } from "react-native";
+import { isRunningInExpoGo } from "expo";
+import { Platform } from "react-native";
 
 export async function registerForPushNotificationsAsync() {
+  if (isRunningInExpoGo() && Platform.OS === "android") {
+    throw new Error(
+      "Push notifications require a development or preview build on Android (not Expo Go).",
+    );
+  }
+
   if (!Device.isDevice) {
     throw new Error("Must use physical device for push notifications");
   }

@@ -1,11 +1,15 @@
 import { StyleSheet, useWindowDimensions, useColorScheme } from "react-native";
-import React from "react";
+import React, { type ComponentProps } from "react";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { Tabs } from "expo-router";
 import TabBarButton from "./TabBarButton";
 import { useThemeColors } from "@constants/theme";
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
-const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
+type TabBarProps = Parameters<
+  NonNullable<ComponentProps<typeof Tabs>["tabBar"]>
+>[0];
+
+const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
   const colors = useThemeColors();
   const { width } = useWindowDimensions();
   const colorScheme = useColorScheme();

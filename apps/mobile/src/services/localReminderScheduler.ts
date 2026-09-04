@@ -1,4 +1,4 @@
-import * as Notifications from "expo-notifications";
+import Notifications from "@notifications/expoNotifications";
 import type { DayOfWeek, Reminder } from "@types";
 import {
   REMINDER_NOTIFICATION_CATEGORY,

@@ -4,6 +4,8 @@ Expo (React Native) app. Same Supabase Auth + Postgres as web and desktop — sa
 
 Product overview: [docs/README.md](../../docs/README.md). Shared schema: [docs/DESIGN.md](../../docs/DESIGN.md).
 
+**Platforms:** Expo SDK 57 · React Native 0.86 · Expo Go compatible
+
 ## Setup
 
 ```bash

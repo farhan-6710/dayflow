@@ -1,4 +1,4 @@
-import * as Notifications from "expo-notifications";
+import Notifications from "@notifications/expoNotifications";
 import { router } from "expo-router";
 import { registerForPushNotificationsAsync } from "./registerForPushNotificationsAsync";
 import * as Clipboard from "expo-clipboard";
