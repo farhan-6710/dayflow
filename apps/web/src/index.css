@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Ovo&display=swap");
+@import "@fontsource/ovo";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";

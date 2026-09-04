@@ -24,7 +24,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self' tauri:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.supabase.in wss://*.supabase.in; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline'"
+      "csp": "default-src 'self' tauri: asset: https://asset.localhost http://asset.localhost; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.supabase.in wss://*.supabase.in; img-src 'self' data: https: blob: asset: https://asset.localhost http://asset.localhost; style-src 'self' 'unsafe-inline'; font-src 'self' data: asset: https://asset.localhost http://asset.localhost; script-src 'self' 'unsafe-inline'"
     }
   },
   "bundle": {

@@ -6,6 +6,7 @@
       "name": "modern-nav-dashboard",
       "dependencies": {
         "@fontsource-variable/geist": "^5.2.8",
+        "@fontsource/ovo": "^5.3.0",
         "@supabase/supabase-js": "^2.106.2",
         "@tailwindcss/vite": "^4.3.0",
         "@tauri-apps/api": "^2.11.1",
@@ -135,6 +136,8 @@
     "@floating-ui/utils": ["@floating-ui/utils@0.2.12", "", {}, "sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww=="],
 
     "@fontsource-variable/geist": ["@fontsource-variable/geist@5.3.0", "", {}, "sha512-j0m+vLQuG5XAYoHtGCVu0spvlGreR3EzpECUVzkFmI1mTVnAO38l/NEPDCFgZ177JxzYJCLSmTQibIiYPilGrA=="],
+
+    "@fontsource/ovo": ["@fontsource/ovo@5.3.0", "", {}, "sha512-/3YolrDRLGJLa2z3HAtyoToemZz6djPIk0tiU47DWfFxjWdjCECR9491Spy1OpnfFI55Pauk1gOSSXyvDI1X3w=="],
 
     "@hono/node-server": ["@hono/node-server@2.1.1", "", { "peerDependencies": { "hono": "^4" } }, "sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg=="],
 
