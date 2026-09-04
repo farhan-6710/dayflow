@@ -153,3 +153,5 @@ docs/                              README, DESIGN, AGENTS
 
 - [DESIGN.md](./DESIGN.md) — Architecture, schema, auth, RLS, and how mobile shares the backend
 - [AGENTS.md](./AGENTS.md) — Coding conventions for contributors
+- [apps/web/README.md](../apps/web/README.md) — Web + Tauri build and release
+- [apps/mobile/README.md](../apps/mobile/README.md) — Expo setup and Android preview builds
