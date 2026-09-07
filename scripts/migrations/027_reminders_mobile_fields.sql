@@ -1,4 +1,5 @@
--- Migration 028 — Mobile app fields for reminders + Expo push tokens
+-- Migration 027 — Mobile app fields for reminders + Expo push tokens
+-- (formerly 028; renumbered after failed 027 workspace terminology)
 
 alter table public.reminders
   add column if not exists status text not null default 'upcoming',

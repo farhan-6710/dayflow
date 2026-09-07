@@ -64,4 +64,4 @@ src/services/db.ts        Table names (same Postgres as web)
 scripts/generate-brand-assets.py
 ```
 
-Do not add a second database. Migrations live in repo `scripts/migrations/` (028–029 are mobile reminder/push fields).
+Do not add a second database. Migrations live in repo `scripts/migrations/` (027–028 are mobile reminder/push fields; 029 is workspace terminology).

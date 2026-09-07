@@ -1,6 +1,7 @@
--- Migration 029 — One row per reminder per day (done or missed)
+-- Migration 028 — One row per reminder per day (done or missed)
+-- (formerly 029; renumbered after failed workspace terminology migration)
 
-create table public.reminder_occurrences (
+create table if not exists public.reminder_occurrences (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles (id) on delete cascade,
   reminder_id uuid not null references public.reminders (id) on delete cascade,
@@ -10,6 +11,9 @@ create table public.reminder_occurrences (
 );
 
 alter table public.reminder_occurrences enable row level security;
+
+drop policy if exists "Users own their reminder occurrences"
+  on public.reminder_occurrences;
 
 create policy "Users own their reminder occurrences"
   on public.reminder_occurrences for all to authenticated

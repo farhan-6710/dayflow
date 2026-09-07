@@ -127,7 +127,7 @@ All web/desktop table names in `apps/web/src/services/db.ts`. Mobile names in `a
 
 ## Migrations (contributors)
 
-Numbered SQL in `scripts/migrations/` (001–029). Production DB is live — add new files only, never edit applied migrations. Key ranges: 011–018 clients/projects, 019–026 client portal + RLS, 027 workspace terminology, 028–029 mobile reminder fields + occurrences + Expo push tokens.
+Numbered SQL in `scripts/migrations/` (001–029). Production DB is live — add new files only, never edit applied migrations. Key ranges: 011–018 clients/projects, 019–026 client portal + RLS, 027–028 mobile reminder fields + occurrences + Expo push tokens, 029 workspace terminology (`admin` → `workspace` / `owner_user_id`).
 
 ---
 
