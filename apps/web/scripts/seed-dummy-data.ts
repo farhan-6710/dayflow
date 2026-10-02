@@ -230,7 +230,7 @@ async function findOrCreateProject(
       user_id: userId,
       name,
       color_hex: colorHex,
-      is_archived: false,
+      is_active: true,
     })
     .select("id")
     .single();

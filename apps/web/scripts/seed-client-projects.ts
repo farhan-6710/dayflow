@@ -1024,7 +1024,7 @@ const CLIENT_PROJECTS: ClientProjectSeed[] = [
       },
       {
         title: "Project for field",
-        body: "Must stay set to Testing Company (not Myself). is_archived = false.",
+        body: "Must stay set to Testing Company (not Myself). is_active = true.",
       },
     ],
     links: [
@@ -1169,7 +1169,7 @@ async function findOrCreateClientProject(
         .update({
           name: seed.name,
           project_for: clientId,
-          is_archived: false,
+          is_active: true,
           color_hex: seed.color_hex,
         })
         .eq("id", existing.data.id);
@@ -1193,7 +1193,7 @@ async function findOrCreateClientProject(
       name: seed.name,
       color_hex: seed.color_hex,
       project_for: clientId,
-      is_archived: false,
+      is_active: true,
     })
     .select("id")
     .single();

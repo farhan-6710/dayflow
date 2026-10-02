@@ -2,8 +2,10 @@ import { useState } from "react";
 import { ExternalLink, Link2, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { ProjectReferenceLinkDialog } from "@/features/workspace/projects/components/ProjectReferenceLinkDialog";
-import type { ProjectReferenceLinksSectionProps } from "@/features/workspace/projects/types/components";
-import type { CreateProjectReferenceLinkInput } from "@/features/workspace/projects/types/referenceLinks";
+import type {
+  ProjectReferenceLinksSectionProps,
+  ReferenceLinkInput,
+} from "@/features/workspace/projects/types/components";
 import {
   EMPTY_PROJECT_REFERENCE_LINK_FORM,
   projectReferenceLinkToFormValues,
@@ -15,7 +17,11 @@ import { Button } from "@/shared/ui/button";
 export function ProjectReferenceLinksSection({
   referenceLinks,
   canEdit,
+  isLoading = false,
   isSaving = false,
+  description = "Links stored with this project.",
+  dialogDescription = "Store a link with this project (proposal, deck, sheet, etc.).",
+  deleteDescription = "This removes the link from the project. This cannot be undone.",
   onAdd,
   onUpdate,
   onDelete,
@@ -39,7 +45,7 @@ export function ProjectReferenceLinksSection({
     setDialogOpen(true);
   };
 
-  const buildPayload = (): CreateProjectReferenceLinkInput => ({
+  const buildPayload = (): ReferenceLinkInput => ({
     url: values.url,
     label: values.label.trim() || null,
   });
@@ -65,9 +71,7 @@ export function ProjectReferenceLinksSection({
           <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
             Reference Links
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Links stored with this project.
-          </p>
+          <p className="mt-1 text-xs text-muted-foreground">{description}</p>
         </div>
         {canEdit ? (
           <Button
@@ -85,7 +89,11 @@ export function ProjectReferenceLinksSection({
       </div>
 
       <div className="px-6 py-5">
-        {referenceLinks.length === 0 ? (
+        {isLoading ? (
+          <p className="py-8 text-center text-sm text-muted-foreground">
+            Loading reference links...
+          </p>
+        ) : referenceLinks.length === 0 ? (
           <p className="py-8 text-center text-sm text-muted-foreground">
             No reference links
           </p>
@@ -158,6 +166,7 @@ export function ProjectReferenceLinksSection({
         }}
         isEditing={editingLinkId !== null}
         isSaving={isSaving}
+        description={dialogDescription}
         values={values}
         onFieldChange={(field, value) =>
           setValues((current) => ({ ...current, [field]: value }))
@@ -171,7 +180,7 @@ export function ProjectReferenceLinksSection({
           if (!open) setPendingDeleteId(null);
         }}
         title="Delete reference link?"
-        description="This removes the link from the project. This cannot be undone."
+        description={deleteDescription}
         confirmLabel="Delete"
         confirmVariant="destructive"
         loading={isSaving}

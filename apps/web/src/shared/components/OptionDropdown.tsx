@@ -41,12 +41,12 @@ export function OptionDropdown({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "h-10 min-w-0 w-full justify-between gap-2 rounded-lg border border-ring/60 bg-card px-3 text-sm font-medium shadow-xs",
+            "h-9 min-w-0 w-full justify-between gap-2 rounded-lg border border-ring/60 bg-card px-3 text-sm font-medium shadow-xs",
             className,
           )}
         >
           <span className="truncate">{selected?.label ?? placeholder}</span>
-          <ChevronDown className="size-4 shrink-0 opacity-50" aria-hidden="true" />
+          <ChevronDown className="size-3.5 shrink-0 opacity-50" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[var(--radix-dropdown-menu-trigger-width)]">

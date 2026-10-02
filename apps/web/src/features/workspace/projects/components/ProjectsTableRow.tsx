@@ -1,4 +1,4 @@
-import { Archive, Edit, Folder, MoreVertical, Trash2 } from "lucide-react";
+import { CircleOff, Edit, Folder, MoreVertical, RotateCcw, Trash2 } from "lucide-react";
 
 import { PROJECTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/projects/constants/projectsDirectory";
 import { buildProjectDetailPath } from "@/features/workspace/projects/constants/routes";
@@ -17,10 +17,10 @@ import {
 export function ProjectsTableRow({
   project,
   onEditProject,
-  onToggleArchive,
+  onToggleActive,
   onDeleteProject,
 }: ProjectsTableRowProps) {
-  const isActive = !project.is_archived;
+  const isActive = project.is_active;
 
   return (
     <DirectoryTableRow
@@ -65,7 +65,7 @@ export function ProjectsTableRow({
             isActive ? "text-primary" : "text-muted-foreground",
           )}
         >
-          {isActive ? "Active" : "Archived"}
+          {isActive ? "Active" : "Inactive"}
         </span>
       </div>
 
@@ -91,9 +91,13 @@ export function ProjectsTableRow({
                 <Edit className="mr-2 size-4" /> Edit
               </DropdownMenuItem>
             ) : null}
-            <DropdownMenuItem onClick={() => onToggleArchive(project)}>
-              <Archive className="mr-2 size-4" />{" "}
-              {isActive ? "Archive" : "Restore"}
+            <DropdownMenuItem onClick={() => onToggleActive(project)}>
+              {isActive ? (
+                <CircleOff className="mr-2 size-4" />
+              ) : (
+                <RotateCcw className="mr-2 size-4" />
+              )}
+              {isActive ? "Mark as inactive" : "Mark as active"}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => onDeleteProject(project.id)}

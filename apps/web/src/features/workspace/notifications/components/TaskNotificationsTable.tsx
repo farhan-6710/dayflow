@@ -24,7 +24,7 @@ export function TaskNotificationsTable({
       columns={[...taskNotificationsDirectoryConfig.columns]}
       emptyMessage={taskNotificationsDirectoryConfig.emptyMessage}
       isLoading={isLoading}
-      isEmpty={notifications.length === 0}
+      isEmpty={!isLoading && notifications.length === 0}
     >
       {notifications.map((notification) => (
         <DirectoryTableRow

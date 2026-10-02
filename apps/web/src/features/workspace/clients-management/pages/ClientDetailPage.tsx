@@ -55,7 +55,20 @@ export function ClientDetailPage() {
   }
 
   if (!client || !user) {
-    return null;
+    return (
+      <div className="space-y-4 py-6">
+        {error ? <ErrorBanner message={error} /> : null}
+        <div className="py-6 text-center text-sm text-muted-foreground">
+          Client not found.
+        </div>
+        <Link
+          to={CLIENTS_MANAGEMENT_PATH}
+          className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" /> Back to Clients Management
+        </Link>
+      </div>
+    );
   }
 
   const clientContactLabel =
@@ -95,6 +108,7 @@ export function ClientDetailPage() {
             onSend={() => void sendMessage()}
             onRefresh={() => void reload()}
             isSending={isSending}
+            isLoading={loading && messages.length === 0}
             isRefreshing={loading}
             editingMessageId={editingMessageId}
             onEditMessage={startEdit}

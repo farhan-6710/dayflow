@@ -17,6 +17,7 @@ type ProjectReferenceLinkDialogProps = {
   onOpenChange: (open: boolean) => void;
   isEditing?: boolean;
   isSaving?: boolean;
+  description?: string;
   values: ProjectReferenceLinkFormValues;
   onFieldChange: <K extends keyof ProjectReferenceLinkFormValues>(
     field: K,
@@ -30,6 +31,7 @@ export function ProjectReferenceLinkDialog({
   onOpenChange,
   isEditing = false,
   isSaving = false,
+  description = "Store a link with this project (proposal, deck, sheet, etc.).",
   values,
   onFieldChange,
   onSave,
@@ -41,9 +43,7 @@ export function ProjectReferenceLinkDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{isEditing ? "Edit link" : "Attach link"}</DialogTitle>
-          <DialogDescription>
-            Store a link with this project (proposal, deck, sheet, etc.).
-          </DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-2">

@@ -32,6 +32,7 @@ export type ClientChatProps = {
   onSend: () => void;
   onRefresh: () => void;
   isSending: boolean;
+  isLoading?: boolean;
   isRefreshing?: boolean;
   editingMessageId?: string | null;
   onEditMessage?: (message: ClientChatMessage) => void;

@@ -38,6 +38,7 @@ export function useProjectDetail() {
   const [referenceLinks, setReferenceLinks] = useState<ProjectReferenceLink[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectColor, setProjectColor] = useState<string>(DEFAULT_PROJECT_COLOR);
@@ -49,6 +50,7 @@ export function useProjectDetail() {
     if (!projectId || !user) return;
     try {
       setLoading(true);
+      setError(null);
       const [proj, projectNotes, links, clientRows] = await Promise.all([
         fetchProjectById(projectId),
         fetchNotesByProject(projectId),
@@ -66,6 +68,7 @@ export function useProjectDetail() {
       setClients(clientRows);
     } catch (e) {
       console.error(e);
+      setError("Failed to load project");
       showToast("error", "Failed to load project");
     } finally {
       setLoading(false);
@@ -181,6 +184,7 @@ export function useProjectDetail() {
     referenceLinks,
     clients,
     loading,
+    error,
     dialogOpen,
     setDialogOpen,
     projectName,

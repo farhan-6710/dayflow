@@ -56,7 +56,7 @@ export function MultiSelect({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "h-auto w-max min-w-40 max-w-none justify-between gap-2 rounded-lg border border-ring/60 bg-card px-3 py-2 text-sm font-medium text-foreground shadow-xs hover:bg-muted/50 dark:border-input dark:bg-muted/40",
+            "h-9 w-max min-w-40 max-w-none justify-between gap-2 rounded-lg border border-ring/60 bg-card px-3 text-sm font-medium text-foreground shadow-xs hover:bg-muted/50 dark:border-input dark:bg-muted/40",
             className,
           )}
         >

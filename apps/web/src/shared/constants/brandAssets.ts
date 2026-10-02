@@ -21,7 +21,7 @@ export const BRAND_PROMOTION_BANNER_ASPECT =
   BRAND_PROMOTION_BANNER.width / BRAND_PROMOTION_BANNER.height;
 
 export const BRAND_PROMOTION_BANNER_BACKDROP = {
-  light: "#eef2f3",
+  light: "#f3f5f8",
   dark: "#0c0e10",
 } as const;
 

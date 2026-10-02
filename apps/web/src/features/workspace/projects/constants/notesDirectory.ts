@@ -1,10 +1,13 @@
 import type { DirectoryTableColumn } from "@/shared/types/components";
 
-export const NOTES_DIRECTORY_GRID_CLASS = "grid-cols-[1.1fr_2fr_0.8fr_0.7fr]";
-export const NOTES_DIRECTORY_ROW_GRID_CLASS = "sm:grid-cols-[1.1fr_2fr_0.8fr_0.7fr]";
+export const NOTES_DIRECTORY_GRID_CLASS =
+  "grid-cols-[1.1fr_0.7fr_1.8fr_0.8fr_0.7fr]";
+export const NOTES_DIRECTORY_ROW_GRID_CLASS =
+  "sm:grid-cols-[1.1fr_0.7fr_1.8fr_0.8fr_0.7fr]";
 
 export const notesDirectoryColumns: DirectoryTableColumn[] = [
   { label: "NOTE TITLE" },
+  { label: "CATEGORY" },
   { label: "DESCRIPTION" },
   { label: "UPDATED" },
   { label: "ACTIONS", align: "right" },

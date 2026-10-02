@@ -22,6 +22,7 @@ export function useDashboard(filter: DateFiltersFilterState) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [quickTaskTitle, setQuickTaskTitle] = useState("");
   const [creating, setCreating] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -38,6 +39,7 @@ export function useDashboard(filter: DateFiltersFilterState) {
     if (!user) return;
     try {
       setLoading(true);
+      setError(null);
       const [allProjects, allTasks] = await Promise.all([
         fetchProjects(user.id),
         fetchTasks(user.id),
@@ -46,6 +48,7 @@ export function useDashboard(filter: DateFiltersFilterState) {
       setTasks(allTasks);
     } catch (e) {
       console.error(e);
+      setError("Failed to load dashboard data");
       showToast("error", "Failed to load dashboard data");
     } finally {
       setLoading(false);
@@ -179,6 +182,7 @@ export function useDashboard(filter: DateFiltersFilterState) {
     profile,
     user,
     loading,
+    error,
     stats,
     tasks,
     urgentTasks,

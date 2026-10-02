@@ -1,3 +1,8 @@
+import type { NoteCategory } from "@/features/workspace/projects/constants/noteCategories";
+import {
+  DEFAULT_NOTE_CATEGORY,
+  isNoteCategory,
+} from "@/features/workspace/projects/constants/noteCategories";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
 
@@ -7,6 +12,7 @@ export type Note = {
   project_id: string | null;
   title: string;
   body: string | null;
+  category: NoteCategory;
   created_at: string;
   updated_at: string;
 };
@@ -15,7 +21,15 @@ export type CreateNoteInput = {
   project_id?: string | null;
   title: string;
   body?: string | null;
+  category?: NoteCategory;
 };
+
+function normalizeNote(row: Note): Note {
+  return {
+    ...row,
+    category: isNoteCategory(row.category) ? row.category : DEFAULT_NOTE_CATEGORY,
+  };
+}
 
 export async function fetchNotes(userId: string): Promise<Note[]> {
   const { data, error } = await supabase
@@ -25,7 +39,7 @@ export async function fetchNotes(userId: string): Promise<Note[]> {
     .order("updated_at", { ascending: false });
 
   if (error) throw error;
-  return (data as Note[]) ?? [];
+  return ((data as Note[]) ?? []).map(normalizeNote);
 }
 
 export async function fetchNoteById(id: string): Promise<Note | null> {
@@ -36,7 +50,7 @@ export async function fetchNoteById(id: string): Promise<Note | null> {
     .maybeSingle();
 
   if (error) throw error;
-  return (data as Note | null) ?? null;
+  return data ? normalizeNote(data as Note) : null;
 }
 
 export async function fetchNotesByProject(projectId: string): Promise<Note[]> {
@@ -47,7 +61,7 @@ export async function fetchNotesByProject(projectId: string): Promise<Note[]> {
     .order("updated_at", { ascending: false });
 
   if (error) throw error;
-  return (data as Note[]) ?? [];
+  return ((data as Note[]) ?? []).map(normalizeNote);
 }
 
 export async function createNote(userId: string, input: CreateNoteInput): Promise<Note> {
@@ -58,17 +72,18 @@ export async function createNote(userId: string, input: CreateNoteInput): Promis
       project_id: input.project_id ?? null,
       title: input.title,
       body: input.body ?? null,
+      category: input.category ?? DEFAULT_NOTE_CATEGORY,
     })
     .select(DB.NOTES.SELECT)
     .single();
 
   if (error) throw error;
-  return data as Note;
+  return normalizeNote(data as Note);
 }
 
 export async function updateNote(
   id: string,
-  updates: Partial<Pick<Note, "title" | "body">>
+  updates: Partial<Pick<Note, "title" | "body" | "category">>
 ): Promise<Note> {
   const { data, error } = await supabase
     .from(DB.NOTES.TABLE)
@@ -78,7 +93,7 @@ export async function updateNote(
     .single();
 
   if (error) throw error;
-  return data as Note;
+  return normalizeNote(data as Note);
 }
 
 export async function deleteNote(id: string): Promise<void> {

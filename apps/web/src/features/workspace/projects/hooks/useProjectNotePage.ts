@@ -9,7 +9,17 @@ import {
 } from "@/features/workspace/projects/constants/routes";
 import { useDraftProjectNote } from "@/features/workspace/projects/hooks/useDraftProjectNote";
 import type { ProjectNoteSavePayload } from "@/features/workspace/projects/types/components";
+import type {
+  CreateNoteReferenceLinkInput,
+  NoteReferenceLink,
+} from "@/features/workspace/projects/types/noteReferenceLinks";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import {
+  createNoteReferenceLink,
+  deleteNoteReferenceLink,
+  fetchNoteReferenceLinks,
+  updateNoteReferenceLink,
+} from "@/services/noteReferenceLinksService";
 import {
   createNote,
   deleteNote,
@@ -27,7 +37,10 @@ export function useProjectNotePage() {
   const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
   const [note, setNote] = useState<Note | null>(null);
+  const [referenceLinks, setReferenceLinks] = useState<NoteReferenceLink[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [savingReferenceLink, setSavingReferenceLink] = useState(false);
 
   const { draftNote, startDraft, discardDraft, isDraftId } = useDraftProjectNote(
     projectId,
@@ -40,6 +53,7 @@ export function useProjectNotePage() {
     if (!projectId || !user) return;
     try {
       setLoading(true);
+      setError(null);
       const proj = await fetchProjectById(projectId);
       if (!proj || proj.user_id !== user.id) {
         showToast("error", "Project not found");
@@ -51,6 +65,7 @@ export function useProjectNotePage() {
       if (isNewNote) {
         startDraft();
         setNote(null);
+        setReferenceLinks([]);
         return;
       }
 
@@ -59,15 +74,20 @@ export function useProjectNotePage() {
         return;
       }
 
-      const found = await fetchNoteById(noteId);
+      const [found, links] = await Promise.all([
+        fetchNoteById(noteId),
+        fetchNoteReferenceLinks(noteId),
+      ]);
       if (!found || found.project_id !== projectId) {
         showToast("error", "Note not found");
         navigate(projectPath);
         return;
       }
       setNote(found);
+      setReferenceLinks(links);
     } catch (e) {
       console.error(e);
+      setError("Failed to load note");
       showToast("error", "Failed to load note");
     } finally {
       setLoading(false);
@@ -95,6 +115,7 @@ export function useProjectNotePage() {
             project_id: projectId,
             title: payload.title,
             body: payload.body,
+            category: payload.category,
           });
           discardDraft();
           showToast("success", "Note created successfully");
@@ -107,6 +128,7 @@ export function useProjectNotePage() {
         const updated = await updateNote(id, {
           title: payload.title,
           body: payload.body,
+          category: payload.category,
         });
         setNote(updated);
         showToast("success", "Note saved successfully");
@@ -128,6 +150,7 @@ export function useProjectNotePage() {
           project_id: projectId,
           title: `${source.title} (copy)`,
           body: source.body,
+          category: source.category,
         });
         showToast("success", "Note duplicated");
         navigate(buildProjectNotePath(projectId, duplicated.id));
@@ -160,15 +183,75 @@ export function useProjectNotePage() {
     [isDraftId, handleDiscard, navigate, projectPath],
   );
 
+  const handleAddReferenceLink = useCallback(
+    async (input: CreateNoteReferenceLinkInput) => {
+      if (!user || !note || isNewNote) return;
+      try {
+        setSavingReferenceLink(true);
+        const created = await createNoteReferenceLink(user.id, note.id, input);
+        setReferenceLinks((prev) => [created, ...prev]);
+        showToast("success", "Reference link added.");
+      } catch (e) {
+        console.error(e);
+        showToast("error", "Failed to add reference link.");
+        throw e;
+      } finally {
+        setSavingReferenceLink(false);
+      }
+    },
+    [user, note, isNewNote],
+  );
+
+  const handleUpdateReferenceLink = useCallback(
+    async (linkId: string, input: CreateNoteReferenceLinkInput) => {
+      try {
+        setSavingReferenceLink(true);
+        const updated = await updateNoteReferenceLink(linkId, input);
+        setReferenceLinks((prev) =>
+          prev.map((link) => (link.id === linkId ? updated : link)),
+        );
+        showToast("success", "Reference link updated.");
+      } catch (e) {
+        console.error(e);
+        showToast("error", "Failed to update reference link.");
+        throw e;
+      } finally {
+        setSavingReferenceLink(false);
+      }
+    },
+    [],
+  );
+
+  const handleDeleteReferenceLink = useCallback(async (linkId: string) => {
+    try {
+      setSavingReferenceLink(true);
+      await deleteNoteReferenceLink(linkId);
+      setReferenceLinks((prev) => prev.filter((link) => link.id !== linkId));
+      showToast("success", "Reference link deleted.");
+    } catch (e) {
+      console.error(e);
+      showToast("error", "Failed to delete reference link.");
+      throw e;
+    } finally {
+      setSavingReferenceLink(false);
+    }
+  }, []);
+
   return {
     project,
     note: selectedNote,
     isDraft: Boolean(isNewNote && draftNote),
+    referenceLinks,
     loading,
+    error,
+    savingReferenceLink,
     projectPath,
     handleSaveNote,
     handleDuplicateNote,
     handleDeleteNote,
     handleDiscard,
+    handleAddReferenceLink,
+    handleUpdateReferenceLink,
+    handleDeleteReferenceLink,
   };
 }

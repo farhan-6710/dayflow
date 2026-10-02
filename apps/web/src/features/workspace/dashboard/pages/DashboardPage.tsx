@@ -10,6 +10,7 @@ import { FocusListItem } from "@/features/workspace/dashboard/components/FocusLi
 import { TaskCompletionChart } from "@/features/workspace/dashboard/components/TaskCompletionChart";
 import { useDashboard } from "@/features/workspace/dashboard/hooks/useDashboard";
 import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDialog";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { DateFilters } from "@/shared/components/DateFilters";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -33,6 +34,7 @@ export function DashboardPage() {
     user,
     profile,
     loading,
+    error,
     stats,
     tasks,
     urgentTasks,
@@ -142,6 +144,7 @@ export function DashboardPage() {
       />
 
       <PageContent>
+        {error ? <ErrorBanner message={error} /> : null}
         <StatsCards cards={cards} isLoading={loading} />
 
         <div

@@ -24,5 +24,5 @@ export const projectsDirectoryConfig = {
 export const PROJECTS_STATUS_FILTER_LABELS: Record<ActiveStatusFilterId, string> = {
   all: "All projects",
   active: "Active",
-  inactive: "Archived",
+  inactive: "Inactive",
 };

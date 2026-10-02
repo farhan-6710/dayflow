@@ -27,7 +27,7 @@ export function ClientsTable({
           : clientsDirectoryConfig.emptyMessage
       }
       isLoading={isLoading}
-      isEmpty={clients.length === 0}
+      isEmpty={!isLoading && clients.length === 0}
       headerAside={
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
           <ListingSearchInput

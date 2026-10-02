@@ -24,7 +24,7 @@ export function ReminderNotificationsTable({
       columns={[...reminderNotificationsDirectoryConfig.columns]}
       emptyMessage={reminderNotificationsDirectoryConfig.emptyMessage}
       isLoading={isLoading}
-      isEmpty={notifications.length === 0}
+      isEmpty={!isLoading && notifications.length === 0}
     >
       {notifications.map((notification) => (
         <DirectoryTableRow

@@ -10,20 +10,21 @@ export type ProjectsTableProps = {
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
   onEditProject: (project: Project) => void;
-  onToggleArchive: (project: Project) => void;
+  onToggleActive: (project: Project) => void;
   onDeleteProject: (projectId: string) => void;
 };
 
 export type ProjectsTableRowProps = {
   project: Project;
   onEditProject: (project: Project) => void;
-  onToggleArchive: (project: Project) => void;
+  onToggleActive: (project: Project) => void;
   onDeleteProject: (projectId: string) => void;
 };
 
 export type ProjectNoteSavePayload = {
   title: string;
   body: string | null;
+  category: import("@/features/workspace/projects/constants/noteCategories").NoteCategory;
 };
 
 export type ProjectNotesListProps = {
@@ -95,16 +96,26 @@ export type ProjectForSelectProps = {
   disabled?: boolean;
 };
 
+export type ReferenceLinkItem = {
+  id: string;
+  url: string;
+  label: string | null;
+};
+
+export type ReferenceLinkInput = {
+  url: string;
+  label?: string | null;
+};
+
 export type ProjectReferenceLinksSectionProps = {
-  referenceLinks: import("@/features/workspace/projects/types/referenceLinks").ProjectReferenceLink[];
+  referenceLinks: ReferenceLinkItem[];
   canEdit: boolean;
+  isLoading?: boolean;
   isSaving?: boolean;
-  onAdd: (
-    input: import("@/features/workspace/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
-  ) => Promise<void>;
-  onUpdate: (
-    linkId: string,
-    input: import("@/features/workspace/projects/types/referenceLinks").CreateProjectReferenceLinkInput,
-  ) => Promise<void>;
+  description?: string;
+  dialogDescription?: string;
+  deleteDescription?: string;
+  onAdd: (input: ReferenceLinkInput) => Promise<void>;
+  onUpdate: (linkId: string, input: ReferenceLinkInput) => Promise<void>;
   onDelete: (linkId: string) => Promise<void>;
 };

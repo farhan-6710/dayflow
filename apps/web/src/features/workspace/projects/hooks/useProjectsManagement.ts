@@ -24,6 +24,7 @@ export function useProjectsManagement() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectColor, setProjectColor] = useState<string>(DEFAULT_PROJECT_COLOR);
@@ -37,6 +38,7 @@ export function useProjectsManagement() {
     if (!user) return;
     try {
       setLoading(true);
+      setError(null);
       const [data, clientRows] = await Promise.all([
         fetchProjects(user.id),
         fetchClients(user.id),
@@ -45,6 +47,7 @@ export function useProjectsManagement() {
       setClients(clientRows);
     } catch (e) {
       console.error(e);
+      setError("Failed to load projects");
       showToast("error", "Failed to load projects");
     } finally {
       setLoading(false);
@@ -104,15 +107,15 @@ export function useProjectsManagement() {
     }
   };
 
-  const handleToggleArchive = async (project: Project) => {
+  const handleToggleActive = async (project: Project) => {
     try {
       const updated = await updateProject(project.id, {
-        is_archived: !project.is_archived,
+        is_active: !project.is_active,
       });
       setProjects((prev) => prev.map((p) => (p.id === project.id ? updated : p)));
       showToast(
         "success",
-        project.is_archived ? "Project restored from archive" : "Project archived"
+        project.is_active ? "Project marked as inactive" : "Project marked as active",
       );
     } catch (e) {
       console.error(e);
@@ -135,6 +138,7 @@ export function useProjectsManagement() {
     projects,
     clients,
     loading,
+    error,
     dialogOpen,
     setDialogOpen,
     projectName,
@@ -148,7 +152,7 @@ export function useProjectsManagement() {
     handleOpenCreateDialog,
     handleOpenEditDialog,
     handleSubmit,
-    handleToggleArchive,
+    handleToggleActive,
     handleDeleteProject,
     refresh: loadProjects,
   };

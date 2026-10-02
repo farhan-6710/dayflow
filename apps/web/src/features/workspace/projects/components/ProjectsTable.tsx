@@ -16,7 +16,7 @@ export function ProjectsTable({
   searchQuery,
   onSearchQueryChange,
   onEditProject,
-  onToggleArchive,
+  onToggleActive,
   onDeleteProject,
 }: ProjectsTableProps) {
   return (
@@ -31,7 +31,7 @@ export function ProjectsTable({
           : projectsDirectoryConfig.emptyMessage
       }
       isLoading={isLoading}
-      isEmpty={projects.length === 0}
+      isEmpty={!isLoading && projects.length === 0}
       headerAside={
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
           <ListingSearchInput
@@ -55,7 +55,7 @@ export function ProjectsTable({
           key={project.id}
           project={project}
           onEditProject={onEditProject}
-          onToggleArchive={onToggleArchive}
+          onToggleActive={onToggleActive}
           onDeleteProject={onDeleteProject}
         />
       ))}

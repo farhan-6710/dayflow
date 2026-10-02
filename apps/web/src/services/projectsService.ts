@@ -7,7 +7,7 @@ export type Project = {
   user_id: string;
   name: string;
   color_hex: string;
-  is_archived: boolean;
+  is_active: boolean;
   project_for: string | null;
   project_for_label: string;
   created_at: string;
@@ -25,7 +25,7 @@ type ProjectRow = Omit<Project, "project_for_label"> & {
 };
 
 const CLIENT_PORTAL_PROJECTS_SELECT =
-  "id, user_id, name, color_hex, is_archived, project_for, created_at, updated_at";
+  "id, user_id, name, color_hex, is_active, project_for, created_at, updated_at";
 
 type ClientPortalProjectRow = Omit<ProjectRow, "project_for_client">;
 
@@ -61,7 +61,7 @@ async function fetchClientPortalProjectsViaTable(
   let query = supabase
     .from(DB.PROJECTS.TABLE)
     .select(CLIENT_PORTAL_PROJECTS_SELECT)
-    .eq("is_archived", false)
+    .eq("is_active", true)
     .order("name", { ascending: true });
 
   if (clientId) {
@@ -186,7 +186,7 @@ export async function createProject(userId: string, input: CreateProjectInput): 
       name: input.name,
       color_hex: input.color_hex ?? "#ff7e21",
       project_for: input.project_for ?? null,
-      is_archived: false,
+      is_active: true,
     })
     .select(DB.PROJECTS.SELECT)
     .single();
@@ -197,7 +197,7 @@ export async function createProject(userId: string, input: CreateProjectInput): 
 
 export async function updateProject(
   id: string,
-  updates: Partial<Pick<Project, "name" | "color_hex" | "is_archived" | "project_for">>,
+  updates: Partial<Pick<Project, "name" | "color_hex" | "is_active" | "project_for">>,
 ): Promise<Project> {
   const { data, error } = await supabase
     .from(DB.PROJECTS.TABLE)

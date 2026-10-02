@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 
+import { DEFAULT_NOTE_CATEGORY } from "@/features/workspace/projects/constants/noteCategories";
 import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
 import type { Note } from "@/services/notesService";
 
@@ -10,6 +11,7 @@ function buildDraftProjectNote(projectId: string, userId: string): Note {
     project_id: projectId,
     title: "",
     body: null,
+    category: DEFAULT_NOTE_CATEGORY,
     created_at: "",
     updated_at: "",
   };

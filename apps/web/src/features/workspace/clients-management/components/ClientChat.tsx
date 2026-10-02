@@ -21,6 +21,7 @@ export function ClientChat({
   onSend,
   onRefresh,
   isSending,
+  isLoading = false,
   isRefreshing = false,
   editingMessageId = null,
   onEditMessage,
@@ -99,7 +100,9 @@ export function ClientChat({
         ref={messagesContainerRef}
         className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4 sm:px-5"
       >
-        {messages.length === 0 ? (
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">Loading messages...</p>
+        ) : messages.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             No messages yet. Send the first message to {clientContactLabel}.
           </p>

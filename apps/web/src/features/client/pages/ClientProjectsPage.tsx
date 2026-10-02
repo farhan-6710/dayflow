@@ -6,6 +6,7 @@ import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { fetchProjectsForClientPortal, type Project } from "@/services/projectsService";
@@ -17,6 +18,7 @@ export function ClientProjectsPage() {
   const { user } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user?.id) {
@@ -26,8 +28,12 @@ export function ClientProjectsPage() {
     void (async () => {
       try {
         setLoading(true);
+        setError(null);
         const rows = await fetchProjectsForClientPortal(client.company_name, client.id);
         setProjects(rows);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load projects");
       } finally {
         setLoading(false);
       }
@@ -41,6 +47,7 @@ export function ClientProjectsPage() {
         description="Projects your provider has shared with you."
       />
       <PageContent>
+        {error ? <ErrorBanner message={error} /> : null}
         <DirectoryTable
           title="Your projects"
           description="Select a project to view details and activities."
@@ -48,7 +55,7 @@ export function ClientProjectsPage() {
           columns={[{ label: "Project" }, { label: "Status" }]}
           emptyMessage="No projects have been shared with you yet."
           isLoading={loading}
-          isEmpty={projects.length === 0}
+          isEmpty={!loading && projects.length === 0}
         >
           {projects.map((project) => (
             <DirectoryTableRow
@@ -67,7 +74,7 @@ export function ClientProjectsPage() {
                 <span className="truncate font-medium">{project.name}</span>
               </div>
               <span className="text-sm text-muted-foreground">
-                {project.is_archived ? "Archived" : "Active"}
+                {project.is_active ? "Active" : "Inactive"}
               </span>
             </DirectoryTableRow>
           ))}

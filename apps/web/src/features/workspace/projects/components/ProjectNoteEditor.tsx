@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { Copy, FileText, Save, Trash2 } from "lucide-react";
 
+import {
+  DEFAULT_NOTE_CATEGORY,
+  NOTE_CATEGORIES,
+  NOTE_CATEGORY_LABELS,
+  type NoteCategory,
+} from "@/features/workspace/projects/constants/noteCategories";
 import type { ProjectNoteEditorProps } from "@/features/workspace/projects/types/components";
+import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import {
   containMinWidthClassName,
   toolbarActionsClassName,
@@ -10,6 +17,11 @@ import {
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+
+const categoryOptions = NOTE_CATEGORIES.map((category) => ({
+  value: category,
+  label: NOTE_CATEGORY_LABELS[category],
+}));
 
 export function ProjectNoteEditor({
   note,
@@ -22,10 +34,14 @@ export function ProjectNoteEditor({
 }: ProjectNoteEditorProps) {
   const [title, setTitle] = useState(note?.title ?? "");
   const [body, setBody] = useState(note?.body ?? "");
+  const [category, setCategory] = useState<NoteCategory>(
+    note?.category ?? DEFAULT_NOTE_CATEGORY,
+  );
 
   useEffect(() => {
     setTitle(note?.title ?? "");
     setBody(note?.body ?? "");
+    setCategory(note?.category ?? DEFAULT_NOTE_CATEGORY);
   }, [note]);
 
   if (!note) {
@@ -65,8 +81,16 @@ export function ProjectNoteEditor({
             autoFocus={isDraft}
           />
           <div className={toolbarActionsClassName}>
+            <OptionDropdown
+              value={category}
+              onChange={(next) => setCategory(next as NoteCategory)}
+              options={categoryOptions}
+              disabled={saving}
+              placeholder="Category"
+              className="w-[140px] sm:w-[160px]"
+            />
             {isDraft ? (
-              <Button variant="outline" size="sm" className="h-8 shrink-0" onClick={onDiscard} disabled={saving}>
+              <Button variant="outline" size="sm" className="h-9 shrink-0" onClick={onDiscard} disabled={saving}>
                 Cancel
               </Button>
             ) : (
@@ -74,7 +98,7 @@ export function ProjectNoteEditor({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-8 shrink-0"
+                  className="h-9 shrink-0"
                   disabled={saving}
                   onClick={() => void onDuplicate(note)}
                 >
@@ -84,7 +108,7 @@ export function ProjectNoteEditor({
                 <Button
                   variant="destructive-outline"
                   size="sm"
-                  className="h-8 shrink-0"
+                  className="h-9 shrink-0"
                   disabled={saving}
                   onClick={() => onDelete(note.id)}
                 >
@@ -95,12 +119,13 @@ export function ProjectNoteEditor({
             )}
             <Button
               size="sm"
-              className="h-8 shrink-0"
+              className="h-9 shrink-0"
               disabled={saving || !title.trim()}
               onClick={() =>
                 void onSave(note.id, {
                   title: title.trim(),
                   body: body.trim() || null,
+                  category,
                 })
               }
             >

@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 import { ProjectNoteEditor } from "@/features/workspace/projects/components/ProjectNoteEditor";
+import { ProjectReferenceLinksSection } from "@/features/workspace/projects/components/ProjectReferenceLinksSection";
 import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
 import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 
 export function ProjectNotePage() {
@@ -13,26 +15,56 @@ export function ProjectNotePage() {
     project,
     note,
     isDraft,
+    referenceLinks,
     loading,
+    error,
+    savingReferenceLink,
     projectPath,
     handleSaveNote,
     handleDuplicateNote,
     handleDeleteNote,
     handleDiscard,
+    handleAddReferenceLink,
+    handleUpdateReferenceLink,
+    handleDeleteReferenceLink,
   } = useProjectNotePage();
   const [saving, setSaving] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
-  if (loading && !project) {
-    return <div className="py-12 text-center text-sm text-muted-foreground">Loading note...</div>;
+  if (loading) {
+    return (
+      <div className="py-12 text-center text-sm text-muted-foreground">
+        Loading note...
+      </div>
+    );
   }
 
-  if (!project) return null;
+  if (error) {
+    return (
+      <div className="space-y-4 py-6">
+        <ErrorBanner message={error} />
+        <Link
+          to={projectPath}
+          className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" /> Back to project
+        </Link>
+      </div>
+    );
+  }
+
+  if (!project || !note) {
+    return (
+      <div className="py-12 text-center text-sm text-muted-foreground">
+        Note not found.
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-[calc(100vh-120px)] flex-col space-y-6">
       <PageHeader
-        heading={isDraft ? "New Note" : note?.title.trim() || "Note"}
+        heading={isDraft ? "New Note" : note.title.trim() || "Note"}
         description={`Notes management for ${project.name}.`}
         backButton={
           <Link
@@ -68,16 +100,30 @@ export function ProjectNotePage() {
         }}
       />
 
+      {!isDraft ? (
+        <ProjectReferenceLinksSection
+          referenceLinks={referenceLinks}
+          canEdit={project.is_active}
+          isSaving={savingReferenceLink}
+          description="Links stored with this note."
+          dialogDescription="Store a link with this note (doc, ticket, article, etc.)."
+          deleteDescription="This removes the link from the note. This cannot be undone."
+          onAdd={handleAddReferenceLink}
+          onUpdate={handleUpdateReferenceLink}
+          onDelete={handleDeleteReferenceLink}
+        />
+      ) : null}
+
       <ConfirmationModal
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
         title="Delete note?"
-        description={`Are you sure you want to delete "${note?.title || "this note"}"? This action cannot be undone.`}
+        description={`Are you sure you want to delete "${note.title || "this note"}"? This action cannot be undone.`}
         confirmLabel="Delete"
         confirmVariant="destructive"
         loading={saving}
         onConfirm={async () => {
-          if (!note || note.id === DRAFT_PROJECT_NOTE_ID) return;
+          if (note.id === DRAFT_PROJECT_NOTE_ID) return;
           setSaving(true);
           try {
             await handleDeleteNote(note.id);

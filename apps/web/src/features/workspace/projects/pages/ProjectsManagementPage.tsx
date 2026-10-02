@@ -5,29 +5,20 @@ import { ProjectFormDialog } from "@/features/workspace/projects/components/Proj
 import { ProjectsTable } from "@/features/workspace/projects/components/ProjectsTable";
 import { useProjectsManagement } from "@/features/workspace/projects/hooks/useProjectsManagement";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 import { Button } from "@/shared/ui/button";
+import { filterByActiveStatus } from "@/shared/utils/activeStatusFilterUtils";
 import { matchesListingSearch } from "@/shared/utils/listingSearch";
-
-function filterProjectsByStatus<T extends { is_archived: boolean }>(
-  projects: T[],
-  filter: ActiveStatusFilterId,
-): T[] {
-  const sorted = [...projects].sort(
-    (a, b) => Number(a.is_archived) - Number(b.is_archived),
-  );
-  if (filter === "all") return sorted;
-  if (filter === "active") return projects.filter((project) => !project.is_archived);
-  return projects.filter((project) => project.is_archived);
-}
 
 export function ProjectsManagementPage() {
   const {
     projects,
     clients,
     loading,
+    error,
     dialogOpen,
     setDialogOpen,
     projectName,
@@ -41,7 +32,7 @@ export function ProjectsManagementPage() {
     handleOpenCreateDialog,
     handleOpenEditDialog,
     handleSubmit,
-    handleToggleArchive,
+    handleToggleActive,
     handleDeleteProject,
   } = useProjectsManagement();
 
@@ -51,7 +42,7 @@ export function ProjectsManagementPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredProjects = useMemo(() => {
-    return filterProjectsByStatus(projects, statusFilter).filter((project) =>
+    return filterByActiveStatus(projects, statusFilter).filter((project) =>
       matchesListingSearch(searchQuery, [
         project.name,
         project.project_for_label,
@@ -87,6 +78,7 @@ export function ProjectsManagementPage() {
       />
 
       <PageContent>
+        {error ? <ErrorBanner message={error} /> : null}
         <ProjectsTable
           projects={filteredProjects}
           isLoading={loading}
@@ -95,7 +87,7 @@ export function ProjectsManagementPage() {
           searchQuery={searchQuery}
           onSearchQueryChange={setSearchQuery}
           onEditProject={handleOpenEditDialog}
-          onToggleArchive={(project) => void handleToggleArchive(project)}
+          onToggleActive={(project) => void handleToggleActive(project)}
           onDeleteProject={confirmDelete}
         />
       </PageContent>

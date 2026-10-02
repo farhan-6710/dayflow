@@ -13,6 +13,7 @@ import {
   containMinWidthClassName,
 } from "@/shared/constants/layoutStyles";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
@@ -37,6 +38,7 @@ export function TasksPage() {
   const {
     tasks,
     loading,
+    error,
     dialogOpen,
     setDialogOpen,
     taskTitle,
@@ -107,6 +109,7 @@ export function TasksPage() {
       />
 
       <PageContent>
+        {error ? <ErrorBanner message={error} /> : null}
         <DirectoryTable
           title="All Tasks"
           description={
@@ -128,7 +131,7 @@ export function TasksPage() {
                   placeholder="Search tasks…"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-8 pl-9 text-sm"
+                  className="h-9 pl-9 text-sm"
                 />
               </div>
 

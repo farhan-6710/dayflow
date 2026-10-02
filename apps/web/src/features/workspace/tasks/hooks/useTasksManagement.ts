@@ -8,6 +8,7 @@ export function useTasksManagement() {
   const { user } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [taskTitle, setTaskTitle] = useState("");
@@ -27,9 +28,11 @@ export function useTasksManagement() {
     if (!user) return;
     try {
       setLoading(true);
+      setError(null);
       setTasks(await fetchTasks(user.id));
     } catch (e) {
       console.error(e);
+      setError("Failed to load tasks");
       showToast("error", "Failed to load tasks");
     } finally {
       setLoading(false);
@@ -137,6 +140,7 @@ export function useTasksManagement() {
   return {
     tasks: filteredTasks,
     loading,
+    error,
     dialogOpen,
     setDialogOpen,
     taskTitle,

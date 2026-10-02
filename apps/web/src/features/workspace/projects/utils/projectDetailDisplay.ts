@@ -37,8 +37,8 @@ export function buildProjectDetailMeta(
     `${PROJECT_FOR_LABEL}: ${project.project_for_label}`,
   ];
 
-  if (project.is_archived) {
-    parts.push("Archived");
+  if (!project.is_active) {
+    parts.push("Inactive");
   }
 
   return parts.join(" · ");

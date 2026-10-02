@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { Trash2 } from "lucide-react";
 
+import { getNoteCategoryLabel } from "@/features/workspace/projects/constants/noteCategories";
 import { NOTES_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/projects/constants/notesDirectory";
 import { buildProjectNotePath } from "@/features/workspace/projects/constants/routes";
 import type { ProjectNotesTableRowProps } from "@/features/workspace/projects/types/components";
@@ -36,6 +37,13 @@ export function ProjectNotesTableRow({
           NOTE TITLE
         </span>
         <span className="block truncate">{title}</span>
+      </div>
+
+      <div className="min-w-0 text-sm text-muted-foreground">
+        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+          CATEGORY
+        </span>
+        <span className="truncate">{getNoteCategoryLabel(note.category)}</span>
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">

@@ -14,6 +14,7 @@ import {
   buildProjectDetailMeta,
   buildProjectNotesEmptyMessage,
 } from "@/features/workspace/projects/utils/projectDetailDisplay";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
@@ -27,6 +28,7 @@ export function ProjectDetailPage() {
     referenceLinks,
     clients,
     loading,
+    error,
     dialogOpen,
     setDialogOpen,
     projectName,
@@ -46,10 +48,34 @@ export function ProjectDetailPage() {
   } = useProjectDetail();
 
   if (loading && !project) {
-    return <div className="py-12 text-center text-sm text-muted-foreground">Loading project...</div>;
+    return (
+      <div className="py-12 text-center text-sm text-muted-foreground">
+        Loading project...
+      </div>
+    );
   }
 
-  if (!project) return null;
+  if (error && !project) {
+    return (
+      <div className="space-y-4 py-6">
+        <ErrorBanner message={error} />
+        <Link
+          to={PROJECTS_MANAGEMENT_PATH}
+          className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" /> Back to Projects Management
+        </Link>
+      </div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <div className="py-12 text-center text-sm text-muted-foreground">
+        Project not found.
+      </div>
+    );
+  }
 
   const isClientProject = project.project_for !== null;
 
@@ -94,18 +120,21 @@ export function ProjectDetailPage() {
 
       <PageContent>
         <div className={cn("space-y-6", containMinWidthClassName)}>
+          {error ? <ErrorBanner message={error} /> : null}
+
           <ProjectNotesTable
             projectId={project.id}
             notes={notes}
             isLoading={loading}
             onDeleteNote={handleDeleteNote}
             emptyMessage={buildProjectNotesEmptyMessage(project.name)}
-            canAddNote={!project.is_archived}
+            canAddNote={project.is_active}
           />
 
           <ProjectReferenceLinksSection
             referenceLinks={referenceLinks}
-            canEdit={!project.is_archived}
+            canEdit={project.is_active}
+            isLoading={loading}
             isSaving={savingReferenceLink}
             onAdd={handleAddReferenceLink}
             onUpdate={handleUpdateReferenceLink}
@@ -116,7 +145,7 @@ export function ProjectDetailPage() {
             <ClientActivitiesBlock
               scope="project"
               projectId={project.id}
-              canEdit={!project.is_archived}
+              canEdit={project.is_active}
             />
           ) : null}
         </div>

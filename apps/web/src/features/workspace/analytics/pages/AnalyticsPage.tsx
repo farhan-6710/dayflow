@@ -3,6 +3,7 @@ import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { fetchTasks, type Task } from "@/services/tasksService";
 import { fetchProjects, type Project } from "@/services/projectsService";
 import { fetchNotes, type Note } from "@/services/notesService";
+import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { StatsCards } from "@/shared/components/StatsCards";
@@ -27,11 +28,13 @@ export function AnalyticsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     if (!user) return;
     try {
       setLoading(true);
+      setError(null);
       const [allTasks, allProjects, allNotes] = await Promise.all([
         fetchTasks(user.id),
         fetchProjects(user.id),
@@ -42,6 +45,7 @@ export function AnalyticsPage() {
       setNotes(allNotes);
     } catch (e) {
       console.error(e);
+      setError("Failed to load analytics");
       showToast("error", "Failed to load analytics");
     } finally {
       setLoading(false);
@@ -123,6 +127,7 @@ export function AnalyticsPage() {
       />
 
       <PageContent>
+        {error ? <ErrorBanner message={error} /> : null}
         <StatsCards cards={cards} isLoading={loading} />
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 min-w-0">
