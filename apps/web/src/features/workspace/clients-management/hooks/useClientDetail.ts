@@ -71,6 +71,7 @@ export function useClientDetail() {
   }, [authLoading, clientId, navigate, user]);
 
   useEffect(() => {
+    // eslint-disable-next-line
     void reload();
   }, [reload]);
 
