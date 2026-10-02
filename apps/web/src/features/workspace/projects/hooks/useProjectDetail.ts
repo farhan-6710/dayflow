@@ -23,6 +23,7 @@ import {
   updateProjectReferenceLink,
 } from "@/services/projectReferenceLinksService";
 import {
+  deleteProject,
   fetchProjectById,
   updateProject,
   type Project,
@@ -45,6 +46,8 @@ export function useProjectDetail() {
   const [projectFor, setProjectFor] = useState<string>(MYSELF_PROJECT_FOR_VALUE);
   const [submitting, setSubmitting] = useState(false);
   const [savingReferenceLink, setSavingReferenceLink] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [deletingProject, setDeletingProject] = useState(false);
 
   const loadData = useCallback(async () => {
     if (!projectId || !user) return;
@@ -178,6 +181,44 @@ export function useProjectDetail() {
     }
   }, []);
 
+  const handleToggleActive = useCallback(async () => {
+    if (!project || updatingStatus) return;
+    try {
+      setUpdatingStatus(true);
+      const updated = await updateProject(project.id, {
+        is_active: !project.is_active,
+      });
+      setProject(updated);
+      showToast(
+        "success",
+        project.is_active
+          ? "Project marked as inactive"
+          : "Project marked as active",
+      );
+    } catch (e) {
+      console.error(e);
+      showToast("error", "Failed to update project status");
+    } finally {
+      setUpdatingStatus(false);
+    }
+  }, [project, updatingStatus]);
+
+  const handleDeleteProject = useCallback(async () => {
+    if (!project || deletingProject) return;
+    try {
+      setDeletingProject(true);
+      await deleteProject(project.id);
+      showToast("success", "Project deleted permanently");
+      navigate(PROJECTS_MANAGEMENT_PATH);
+    } catch (e) {
+      console.error(e);
+      showToast("error", "Failed to delete project");
+      throw e;
+    } finally {
+      setDeletingProject(false);
+    }
+  }, [project, deletingProject, navigate]);
+
   return {
     project,
     notes,
@@ -195,11 +236,15 @@ export function useProjectDetail() {
     setProjectFor,
     submitting,
     savingReferenceLink,
+    updatingStatus,
+    deletingProject,
     handleDeleteNote,
     handleOpenEditDialog,
     handleSubmitProject,
     handleAddReferenceLink,
     handleUpdateReferenceLink,
     handleDeleteReferenceLink,
+    handleToggleActive,
+    handleDeleteProject,
   };
 }

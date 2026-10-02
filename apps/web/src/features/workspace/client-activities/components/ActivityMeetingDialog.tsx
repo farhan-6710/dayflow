@@ -71,7 +71,7 @@ export function ActivityMeetingDialog({
           <DialogHeader>
             <DialogTitle>{isEditing ? "Edit meeting" : "Add meeting"}</DialogTitle>
             <DialogDescription>
-              Schedule a meeting for this client project.
+              Schedule a meeting on this project.
             </DialogDescription>
           </DialogHeader>
 

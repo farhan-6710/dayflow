@@ -1,14 +1,19 @@
-import { ArrowLeft, Pencil } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, FolderPlus, Pencil, Trash2 } from "lucide-react";
 import { Link } from "react-router";
 
 import { ClientChat } from "@/features/workspace/clients-management/components/ClientChat";
 import { ClientDetailSummary } from "@/features/workspace/clients-management/components/ClientDetailSummary";
 import { ClientDialog } from "@/features/workspace/clients-management/components/ClientDialog";
+import { ClientProjectsSection } from "@/features/workspace/clients-management/components/ClientProjectsSection";
 import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
 import { CLIENTS_MANAGEMENT_PATH } from "@/features/workspace/clients-management/constants/routes";
 import { useClientChat } from "@/features/workspace/clients-management/hooks/useClientChat";
 import { useClientDetail } from "@/features/workspace/clients-management/hooks/useClientDetail";
+import { ProjectFormDialog } from "@/features/workspace/projects/components/ProjectFormDialog";
+import { PROJECTS_MANAGEMENT_PATH } from "@/features/workspace/projects/constants/routes";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -19,13 +24,28 @@ export function ClientDetailPage() {
   const {
     client,
     messages,
+    projects,
     loading,
     error,
     setError,
     reload,
     openEditDialog,
     dialog,
+    projectDialogOpen,
+    setProjectDialogOpen,
+    projectName,
+    setProjectName,
+    projectColor,
+    setProjectColor,
+    projectFor,
+    setProjectFor,
+    submittingProject,
+    deletingClient,
+    openCreateProjectDialog,
+    handleCreateProject,
+    handleDeleteClient,
   } = useClientDetail();
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const {
     draft,
@@ -36,7 +56,7 @@ export function ClientDetailPage() {
     startEdit,
     cancelEdit,
     requestDelete,
-    deleteConfirmOpen,
+    deleteConfirmOpen: chatDeleteConfirmOpen,
     onDeleteConfirmOpenChange,
     confirmDelete,
     isDeleting,
@@ -88,10 +108,30 @@ export function ClientDetailPage() {
           </Link>
         }
         actions={
-          <Button variant="outline" onClick={() => openEditDialog(client)}>
-            <Pencil className="mr-1 size-4" />
-            Edit Client
-          </Button>
+          <>
+            <Button variant="outline" asChild>
+              <Link to={PROJECTS_MANAGEMENT_PATH}>See all projects</Link>
+            </Button>
+            <Button
+              variant="outline"
+              onClick={openCreateProjectDialog}
+              disabled={!client.is_active}
+            >
+              <FolderPlus className="mr-1 size-4" />
+              New Project
+            </Button>
+            <Button variant="outline" onClick={() => openEditDialog(client)}>
+              <Pencil className="mr-1 size-4" />
+              Edit Client
+            </Button>
+            <Button
+              variant="destructive-outline"
+              onClick={() => setDeleteConfirmOpen(true)}
+            >
+              <Trash2 className="mr-1 size-4" />
+              Delete
+            </Button>
+          </>
         }
       />
 
@@ -114,17 +154,58 @@ export function ClientDetailPage() {
             onEditMessage={startEdit}
             onCancelEdit={cancelEdit}
             onDeleteMessage={requestDelete}
-            deleteConfirmOpen={deleteConfirmOpen}
+            deleteConfirmOpen={chatDeleteConfirmOpen}
             onDeleteConfirmOpenChange={onDeleteConfirmOpenChange}
             onConfirmDelete={() => void confirmDelete()}
             isDeleting={isDeleting}
           />
         </div>
 
-        <ClientActivitiesBlock scope="client" clientId={client.id} />
+        <ClientProjectsSection
+          projects={projects}
+          isLoading={loading}
+          canAddProject={client.is_active}
+          onAddProject={openCreateProjectDialog}
+        />
+
+        <ClientActivitiesBlock
+          scope="client"
+          clientId={client.id}
+          projects={projects}
+        />
       </PageContent>
 
       <ClientDialog {...dialog} />
+
+      <ProjectFormDialog
+        open={projectDialogOpen}
+        onOpenChange={setProjectDialogOpen}
+        isEditing={false}
+        submitting={submittingProject}
+        projectName={projectName}
+        onProjectNameChange={setProjectName}
+        projectColor={projectColor}
+        onProjectColorChange={setProjectColor}
+        projectFor={projectFor}
+        onProjectForChange={setProjectFor}
+        clients={[client]}
+        lockProjectFor
+        onSubmit={handleCreateProject}
+      />
+
+      <ConfirmationModal
+        open={deleteConfirmOpen}
+        onOpenChange={setDeleteConfirmOpen}
+        title="Delete client?"
+        description={`This permanently deletes "${client.company_name}" from your directory.`}
+        confirmLabel="Delete client"
+        confirmVariant="destructive"
+        loading={deletingClient}
+        onConfirm={async () => {
+          await handleDeleteClient();
+          setDeleteConfirmOpen(false);
+        }}
+      />
     </div>
   );
 }

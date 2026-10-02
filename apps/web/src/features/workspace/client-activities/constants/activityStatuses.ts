@@ -11,7 +11,7 @@ export const CLIENT_ACTIVITY_STATUSES: ClientActivityStatus[] = [
 
 export const CLIENT_ACTIVITY_STATUS_LABELS: Record<ClientActivityStatus, string> = {
   pending: "Pending",
-  in_progress: "In progress",
+  in_progress: "In Progress",
   completed: "Completed",
 };
 

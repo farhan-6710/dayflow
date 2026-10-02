@@ -80,6 +80,8 @@ export type ProjectFormDialogProps = {
   projectFor: string;
   onProjectForChange: (value: string) => void;
   clients: import("@/features/workspace/clients-management/types/types").Client[];
+  /** When true, Project for cannot be changed (e.g. creating from a client detail). */
+  lockProjectFor?: boolean;
   onSubmit: (event: React.FormEvent) => void | Promise<void>;
 };
 

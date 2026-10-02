@@ -30,6 +30,7 @@ export function ProjectFormDialog({
   projectFor,
   onProjectForChange,
   clients,
+  lockProjectFor = false,
   onSubmit,
 }: ProjectFormDialogProps) {
   return (
@@ -62,7 +63,7 @@ export function ProjectFormDialog({
               value={projectFor}
               onChange={onProjectForChange}
               clients={clients}
-              disabled={submitting}
+              disabled={submitting || lockProjectFor}
             />
           </div>
 

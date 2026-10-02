@@ -85,13 +85,19 @@ export function ClientActivitiesBlock({
   );
 
   const isClientScope = scopeProps.scope === "client";
+  const parentProjects =
+    scopeProps.scope === "client" ? scopeProps.projects : undefined;
+  const projectOptions = isClientScope
+    ? (parentProjects ?? clientProjects)
+    : undefined;
+
   const sectionProps = {
-    canEdit: canEdit && !loading,
+    canEdit,
     editOnlyRaisedBy,
     isSaving: actions.isSaving,
     showProjectName: isClientScope,
     fixedProjectId: projectId,
-    projectOptions: isClientScope ? clientProjects : undefined,
+    projectOptions,
     requireProjectSelection: isClientScope,
     onSaveTask: actions.saveTask,
     onDeleteTask: actions.removeTask,

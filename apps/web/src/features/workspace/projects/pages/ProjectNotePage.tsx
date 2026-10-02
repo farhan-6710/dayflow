@@ -1,14 +1,16 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 
 import { ProjectNoteEditor } from "@/features/workspace/projects/components/ProjectNoteEditor";
 import { ProjectReferenceLinksSection } from "@/features/workspace/projects/components/ProjectReferenceLinksSection";
 import { DRAFT_PROJECT_NOTE_ID } from "@/features/workspace/projects/constants/projectNotes";
+import { buildProjectNotePath } from "@/features/workspace/projects/constants/routes";
 import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { Button } from "@/shared/ui/button";
 
 export function ProjectNotePage() {
   const {
@@ -73,6 +75,16 @@ export function ProjectNotePage() {
           >
             <ArrowLeft className="size-4" /> Back to {project.name}
           </Link>
+        }
+        actions={
+          !isDraft && project.is_active ? (
+            <Button asChild size="sm">
+              <Link to={buildProjectNotePath(project.id, "new")}>
+                <Plus className="mr-1 size-4" />
+                New Note
+              </Link>
+            </Button>
+          ) : undefined
         }
       />
 

@@ -6,8 +6,6 @@ import type {
   ClientActivityStatus,
   ClientActivityTask,
 } from "@/features/workspace/client-activities/types/types";
-import { DEFAULT_TASK_TIME } from "@/features/workspace/tasks/constants/tasksCalendar";
-
 export type ClientActivityTaskFormValues = {
   projectId: string;
   title: string;
@@ -48,7 +46,7 @@ export function emptyActivityTaskForm(projectId = ""): ClientActivityTaskFormVal
     priority: "medium",
     status: "pending",
     etaDate: "",
-    etaTime: DEFAULT_TASK_TIME,
+    etaTime: "",
   };
 }
 
@@ -61,9 +59,9 @@ export function emptyActivityMeetingForm(
     description: "",
     status: "pending",
     fromDate: "",
-    fromTime: DEFAULT_TASK_TIME,
+    fromTime: "",
     toDate: "",
-    toTime: DEFAULT_TASK_TIME,
+    toTime: "",
     venue: "online",
   };
 }
@@ -75,7 +73,7 @@ export function emptyActivityCallForm(projectId = ""): ClientActivityCallFormVal
     description: "",
     status: "pending",
     startDate: "",
-    startTime: DEFAULT_TASK_TIME,
+    startTime: "",
     durationMinutes: "30",
   };
 }

@@ -57,4 +57,9 @@ export type ClientActivitiesBlockProps =
       /** Use client-portal project fetch (RLS/RPC) instead of workspace-owned filter. */
       forClientPortal?: boolean;
       clientCompanyName?: string | null;
+      /**
+       * When the parent already loaded this client's projects (e.g. client detail),
+       * pass them so Add Activity sees new projects without a full page refresh.
+       */
+      projects?: import("@/services/projectsService").Project[];
     };

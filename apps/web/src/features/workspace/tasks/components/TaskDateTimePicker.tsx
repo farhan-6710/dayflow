@@ -18,7 +18,7 @@ export function TaskDateTimePicker({
   const hasDate = Boolean(dateValue.trim());
   const summaryLabel = hasDate
     ? [dateValue, timeValue.trim() || null].filter(Boolean).join(" · ")
-    : "Pick a due date first";
+    : "Select date first";
 
   return (
     <div className="space-y-2">
@@ -50,13 +50,13 @@ export function TaskDateTimePicker({
           value={dateValue}
           onChange={onDateChange}
           disabled={disabled}
-          placeholder="Pick a due date"
+          placeholder="Select date"
         />
 
         <TaskTimeSelect
           selectedTime={timeValue}
           summaryLabel={summaryLabel}
-          listLabel="Due times"
+          listLabel="Select time"
           disabled={disabled || !hasDate}
           onTimeChange={onTimeChange}
         />

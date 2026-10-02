@@ -1,19 +1,28 @@
-import { ArrowLeft, Folder, Pencil } from "lucide-react";
+import { useState } from "react";
+import {
+  ArrowLeft,
+  CircleOff,
+  Folder,
+  Pencil,
+  RotateCcw,
+  Trash2,
+  UserRound,
+} from "lucide-react";
 import { Link } from "react-router";
 
 import { ProjectFormDialog } from "@/features/workspace/projects/components/ProjectFormDialog";
 import { ProjectNotesTable } from "@/features/workspace/projects/components/ProjectNotesTable";
 import { ProjectReferenceLinksSection } from "@/features/workspace/projects/components/ProjectReferenceLinksSection";
 import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
+import { buildClientDetailPath } from "@/features/workspace/clients-management/constants/routes";
 import { useProjectDetail } from "@/features/workspace/projects/hooks/useProjectDetail";
-import {
-  PROJECTS_MANAGEMENT_PATH,
-} from "@/features/workspace/projects/constants/routes";
+import { PROJECTS_MANAGEMENT_PATH } from "@/features/workspace/projects/constants/routes";
 import {
   buildProjectDetailDescription,
   buildProjectDetailMeta,
   buildProjectNotesEmptyMessage,
 } from "@/features/workspace/projects/utils/projectDetailDisplay";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -39,13 +48,18 @@ export function ProjectDetailPage() {
     setProjectFor,
     submitting,
     savingReferenceLink,
+    updatingStatus,
+    deletingProject,
     handleDeleteNote,
     handleOpenEditDialog,
     handleSubmitProject,
     handleAddReferenceLink,
     handleUpdateReferenceLink,
     handleDeleteReferenceLink,
+    handleToggleActive,
+    handleDeleteProject,
   } = useProjectDetail();
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   if (loading && !project) {
     return (
@@ -111,10 +125,43 @@ export function ProjectDetailPage() {
           </Link>
         }
         actions={
-          <Button variant="outline" onClick={handleOpenEditDialog}>
-            <Pencil className="mr-1 size-4" />
-            Edit Project
-          </Button>
+          <>
+            {isClientProject ? (
+              <Button variant="outline" asChild>
+                <Link to={buildClientDetailPath(project.project_for!)}>
+                  <UserRound className="mr-1 size-4" />
+                  View client
+                </Link>
+              </Button>
+            ) : null}
+            <Button
+              variant="outline"
+              onClick={() => void handleToggleActive()}
+              disabled={updatingStatus}
+            >
+              {project.is_active ? (
+                <CircleOff className="mr-1 size-4" />
+              ) : (
+                <RotateCcw className="mr-1 size-4" />
+              )}
+              {project.is_active ? "Mark inactive" : "Mark active"}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleOpenEditDialog}
+              disabled={!project.is_active}
+            >
+              <Pencil className="mr-1 size-4" />
+              Edit Project
+            </Button>
+            <Button
+              variant="destructive-outline"
+              onClick={() => setDeleteConfirmOpen(true)}
+            >
+              <Trash2 className="mr-1 size-4" />
+              Delete
+            </Button>
+          </>
         }
       />
 
@@ -164,6 +211,20 @@ export function ProjectDetailPage() {
         onProjectForChange={setProjectFor}
         clients={clients}
         onSubmit={handleSubmitProject}
+      />
+
+      <ConfirmationModal
+        open={deleteConfirmOpen}
+        onOpenChange={setDeleteConfirmOpen}
+        title="Delete Project?"
+        description="This action is irreversible. All notes in this project will be deleted forever."
+        confirmLabel="Delete permanently"
+        confirmVariant="destructive"
+        loading={deletingProject}
+        onConfirm={async () => {
+          await handleDeleteProject();
+          setDeleteConfirmOpen(false);
+        }}
       />
     </div>
   );

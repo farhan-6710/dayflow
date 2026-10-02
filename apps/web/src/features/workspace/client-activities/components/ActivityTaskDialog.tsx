@@ -69,7 +69,7 @@ export function ActivityTaskDialog({
           <DialogHeader>
             <DialogTitle>{isEditing ? "Edit task" : "Add task"}</DialogTitle>
             <DialogDescription>
-              Track a follow-up task for this client project.
+              Track a follow-up task on this project.
             </DialogDescription>
           </DialogHeader>
 

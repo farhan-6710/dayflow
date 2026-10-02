@@ -71,7 +71,7 @@ export function ActivityCallDialog({
           <DialogHeader>
             <DialogTitle>{isEditing ? "Edit call" : "Add call"}</DialogTitle>
             <DialogDescription>
-              Log a call activity for this client project.
+              Log a call activity on this project.
             </DialogDescription>
           </DialogHeader>
 

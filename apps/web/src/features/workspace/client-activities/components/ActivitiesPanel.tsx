@@ -29,6 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { showToast } from "@/shared/utils/showToast";
 
 type DialogKind = "task" | "meeting" | "call" | null;
 
@@ -79,6 +80,10 @@ export function ActivitiesPanel({
   );
 
   const openAdd = (kind: Exclude<DialogKind, null>) => {
+    if (requireProjectSelection && projectOptions.length === 0) {
+      showToast("error", "Add a project for this client before creating activities.");
+      return;
+    }
     setEditingTask(null);
     setEditingMeeting(null);
     setEditingCall(null);
@@ -90,11 +95,6 @@ export function ActivitiesPanel({
 
   const closeDialog = () => setDialogKind(null);
 
-  const canAddNew =
-    canEdit &&
-    showAddNew &&
-    (!requireProjectSelection || projectOptions.length > 0);
-
   return (
     <div className="rounded-2xl border border-border bg-card shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
@@ -104,7 +104,7 @@ export function ActivitiesPanel({
           </p>
           <p className="mt-1 text-xs text-muted-foreground">{description}</p>
         </div>
-        {canAddNew ? (
+        {canEdit && showAddNew ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

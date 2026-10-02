@@ -22,9 +22,15 @@ import { showToast } from "@/shared/utils/showToast";
 type UseClientDialogOptions = {
   reload: () => Promise<void>;
   setError: (message: string | null) => void;
+  /** Called after a successful delete (e.g. navigate away from detail). */
+  onDeleted?: () => void;
 };
 
-export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
+export function useClientDialog({
+  reload,
+  setError,
+  onDeleted,
+}: UseClientDialogOptions) {
   const { user } = useAuth();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingClientId, setEditingClientId] = useState<string | null>(null);
@@ -125,9 +131,13 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
     try {
       const companyName = values.companyName.trim();
       await deleteClient(editingClientId);
-      await reload();
       handleDialogOpenChange(false);
       showToast("success", `"${companyName}" removed successfully.`);
+      if (onDeleted) {
+        onDeleted();
+      } else {
+        await reload();
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to delete client.";
       setError(message);
@@ -135,7 +145,15 @@ export function useClientDialog({ reload, setError }: UseClientDialogOptions) {
     } finally {
       setIsSaving(false);
     }
-  }, [editingClientId, handleDialogOpenChange, isSaving, reload, setError, values.companyName]);
+  }, [
+    editingClientId,
+    handleDialogOpenChange,
+    isSaving,
+    onDeleted,
+    reload,
+    setError,
+    values.companyName,
+  ]);
 
   return {
     openAddDialog,
