@@ -18,7 +18,7 @@ export default function LoginRoute() {
       <View className="flex-1 bg-background dark:bg-background-dark">
         <AuthHeader
           title="Log in"
-          subtitle="Organize your day, amplify your flow"
+          subtitle="Organize your day. Elevate your flow."
           showNavigationHeader={true}
           onBackPress={handleBackPress}
         />

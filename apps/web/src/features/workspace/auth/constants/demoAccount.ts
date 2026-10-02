@@ -1,4 +1,4 @@
-/** Shared demo workspace credentials (see docs/README.md). */
+/** Shared demo workspace credentials (see root README.md). */
 export const DEMO_ACCOUNT = {
   email: "dayflow.demo@gmail.com",
   password: "D@1234",

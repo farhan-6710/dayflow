@@ -2,7 +2,7 @@
 
 Vite + React workspace and client portal. Tauri 2 wraps the same UI as a macOS app. Same Supabase project as mobile.
 
-Product overview: [docs/README.md](../../docs/README.md). Conventions: [docs/AGENTS.md](../../docs/AGENTS.md).
+Product overview: [README.md](../../README.md). Conventions: [docs/RULES.md](../../docs/RULES.md).
 
 ## Setup
 

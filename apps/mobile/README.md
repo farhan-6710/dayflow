@@ -2,7 +2,7 @@
 
 Expo (React Native) app. Same Supabase Auth + Postgres as web and desktop — same demo login, same `reminders` rows.
 
-Product overview: [docs/README.md](../../docs/README.md). Shared schema: [docs/DESIGN.md](../../docs/DESIGN.md).
+Product overview: [README.md](../../README.md). Shared schema: [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md).
 
 **Platforms:** Expo SDK 57 · React Native 0.86 · Expo Go compatible
 
@@ -41,7 +41,7 @@ eas build --profile preview --platform android --clear-cache
 - Profile `preview` → internal APK (`eas.json`)
 - iOS: coming soon (needs Apple Developer + registered devices)
 - Pass `google-services.json` via EAS file env if it is not in git
-- Install link is per-build on [expo.dev](https://expo.dev) — update [docs/README.md](../../docs/README.md) when you ship a new APK
+- Install link is per-build on [expo.dev](https://expo.dev) — update the root [README.md](../../README.md) when you ship a new APK
 
 ## Icons & splash
 

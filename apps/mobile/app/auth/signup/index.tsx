@@ -18,7 +18,7 @@ export default function SignupScreen() {
       <View className="flex-1 bg-background dark:bg-background-dark">
         <AuthHeader
           title="Create account"
-          subtitle="Organize your day, amplify your flow"
+          subtitle="Organize your day. Elevate your flow."
           showNavigationHeader={true}
           onBackPress={handleBackPress}
         />
