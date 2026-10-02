@@ -4,7 +4,10 @@ import { useNavigate, useParams } from "react-router";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { CLIENTS_MANAGEMENT_PATH } from "@/features/workspace/clients-management/constants/routes";
 import { useClientDialog } from "@/features/workspace/clients-management/hooks/useClientDialog";
-import type { Client, ClientChatMessage } from "@/features/workspace/clients-management/types/types";
+import type {
+  Client,
+  ClientChatMessage,
+} from "@/features/workspace/clients-management/types/types";
 import { DEFAULT_PROJECT_COLOR } from "@/features/workspace/projects/constants/projectColors";
 import { projectForToSelectValue } from "@/features/workspace/projects/utils/projectFor";
 import { fetchClientChatMessages } from "@/services/clientChatMessagesService";
@@ -27,7 +30,7 @@ export function useClientDetail() {
   const [error, setError] = useState<string | null>(null);
   const [projectDialogOpen, setProjectDialogOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
-  const [projectColor, setProjectColor] = useState(DEFAULT_PROJECT_COLOR);
+  const [projectColor, setProjectColor] = useState<string>(DEFAULT_PROJECT_COLOR);
   const [projectFor, setProjectFor] = useState("");
   const [submittingProject, setSubmittingProject] = useState(false);
   const [deletingClient, setDeletingClient] = useState(false);
