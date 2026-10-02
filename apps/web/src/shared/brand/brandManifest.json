@@ -1,0 +1,76 @@
+{
+  "name": "DayFlow",
+  "tagline": "Organize your day. Elevate your flow.",
+  "description": "A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.",
+  "shortDescription": "A freelancer workspace for clients, projects, tasks, and day-to-day work.",
+  "positioning": "freelancer-workspace",
+  "promotionBanners": {
+    "light": "/brand-promotion-banner-light.png",
+    "dark": "/brand-promotion-banner-dark.png",
+    "note": "Auth promo banners should mirror tagline, description, and portal feature groups in this file."
+  },
+  "portals": {
+    "workspace": {
+      "id": "workspace-portal",
+      "key": "workspace-portal",
+      "name": "Workspace",
+      "label": "Workspace Portal",
+      "subtitle": "Workspace",
+      "description": "Your owner workspace to run client work, personal tasks, and daily operations.",
+      "routeBase": "/workspace",
+      "features": [
+        {
+          "name": "Clients",
+          "description": "Keep client records and conversations organized."
+        },
+        {
+          "name": "Projects",
+          "description": "Track client and personal projects end to end."
+        },
+        {
+          "name": "Tasks & calendar",
+          "description": "Plan, prioritize, and schedule the day."
+        },
+        {
+          "name": "Meetings & calls",
+          "description": "Log client activities alongside project work."
+        },
+        {
+          "name": "Notes",
+          "description": "Capture project context and reference details."
+        },
+        {
+          "name": "Reminders",
+          "description": "Stay on top of recurring daily follow-ups."
+        }
+      ]
+    },
+    "client": {
+      "id": "client-portal",
+      "key": "client-portal",
+      "name": "Client Portal",
+      "label": "Client Portal",
+      "subtitle": "Client Portal",
+      "description": "A focused portal for clients to follow shared work and raise activities.",
+      "routeBase": "/client-portal",
+      "features": [
+        {
+          "name": "Shared projects",
+          "description": "View projects shared by the workspace owner."
+        },
+        {
+          "name": "Raise activities",
+          "description": "Submit tasks, meetings, and calls for review."
+        },
+        {
+          "name": "Progress updates",
+          "description": "Stay aligned with notifications and status changes."
+        },
+        {
+          "name": "Project analytics",
+          "description": "See a clear snapshot of shared project activity."
+        }
+      ]
+    }
+  }
+}

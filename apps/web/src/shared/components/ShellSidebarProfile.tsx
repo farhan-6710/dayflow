@@ -9,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/shared/ui/tooltip";
+import { UserAvatar } from "@/shared/components/UserAvatar";
 import {
   getInitialsFromName,
   getUserAvatarUrl,
@@ -37,23 +38,19 @@ export function ShellSidebarProfile({
   const initials = getInitialsFromName(displayName);
   const avatarUrl = profile?.avatar_url || getUserAvatarUrl(user);
 
-  const avatar = avatarUrl ? (
-    <img
+  const avatar = (
+    <UserAvatar
       src={avatarUrl}
+      name={displayName}
+      initials={initials}
       alt=""
-      className="size-full object-cover"
-    />
-  ) : (
-    <span
-      className={cn(
-        "flex size-full items-center justify-center text-xs font-semibold",
+      initialsClassName={cn(
+        "text-xs font-semibold",
         isActive
           ? "bg-primary-foreground/15 text-primary-foreground"
           : "bg-primary/10 text-primary",
       )}
-    >
-      {initials}
-    </span>
+    />
   );
 
   const link = (

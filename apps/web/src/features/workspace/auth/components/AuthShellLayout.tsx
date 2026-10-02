@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useMemo } from "react";
 
+import { BRAND_DESCRIPTION, BRAND_NAME } from "@/shared/brand/brandManifest";
 import {
   BRAND_PROMOTION_BANNER,
   BRAND_PROMOTION_BANNER_ASPECT,
@@ -63,7 +64,9 @@ export function AuthShellLayout({
           draggable={false}
           className="h-full w-full object-contain object-center"
         />
-        <span className="sr-only">DayFlow</span>
+        <span className="sr-only">
+          {BRAND_NAME}. {BRAND_DESCRIPTION}
+        </span>
       </div>
 
       <div

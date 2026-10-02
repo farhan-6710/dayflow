@@ -1,3 +1,4 @@
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { resolveBrandLogoSrc } from "@/shared/constants/brandAssets";
 import { useTheme } from "@/shared/providers/ThemeProvider";
 import { cn } from "@/shared/lib/utils";
@@ -20,7 +21,7 @@ export function SidebarBrand({
     return (
       <img
         src={iconSrc}
-        alt="DayFlow"
+        alt={BRAND_NAME}
         className={cn("size-9.75 shrink-0 object-contain", className)}
       />
     );
@@ -40,7 +41,7 @@ export function SidebarBrand({
       />
       <div className="min-w-0 shrink-0">
         <p className="font-serif text-[1.25rem] font-semibold leading-none tracking-[0.02em] text-sidebar-foreground">
-          DayFlow
+          {BRAND_NAME}
         </p>
         {subtitle ? (
           <p className="mt-0.5 text-[9px] font-semibold uppercase leading-none tracking-[0.1em] text-muted-foreground">

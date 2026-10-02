@@ -1,3 +1,5 @@
+import { brandManifest } from "@/shared/brand/brandManifest";
+
 /** DayFlow brand images in /public — use these paths only. */
 export const BRAND_LOGO = {
   light: "/logo-light.png",
@@ -7,11 +9,11 @@ export const BRAND_LOGO = {
 } as const;
 
 export const BRAND_PROMOTION_BANNER = {
-  light: "/brand-promotion-banner-light.png",
-  dark: "/brand-promotion-banner-dark.png",
+  light: brandManifest.promotionBanners.light,
+  dark: brandManifest.promotionBanners.dark,
   /** Native asset size — keep in sync if banners are replaced. */
-  width: 1122,
-  height: 1402,
+  width: 864,
+  height: 1152,
 } as const;
 
 /** Width / height — used to size the auth banner column without cropping. */

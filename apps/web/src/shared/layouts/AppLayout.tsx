@@ -10,11 +10,12 @@ import {
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
 import { NotificationsHeaderButton } from "@/features/workspace/notifications/components/NotificationsHeaderButton";
+import { BRAND_NAME, brandManifest } from "@/shared/brand/brandManifest";
 import type { ShellSidebarConfig } from "@/shared/types/components";
 
 const sidebarConfig: ShellSidebarConfig = {
   homeLink: WORKSPACE_DASHBOARD_PATH,
-  brandSubtitle: "Workspace",
+  brandSubtitle: brandManifest.portals.workspace.subtitle,
   nav: [
     { label: "Dashboard", to: WORKSPACE_DASHBOARD_PATH, icon: "dashboard" },
     {
@@ -62,7 +63,7 @@ export function AppLayout() {
       accountPath={WORKSPACE_SETTINGS_PATH}
       settingsPath={WORKSPACE_SETTINGS_PATH}
       headerActions={<NotificationsHeaderButton />}
-      mobileNavDescription="DayFlow workspace navigation and links"
+      mobileNavDescription={`${BRAND_NAME} workspace navigation and links`}
     />
   );
 }

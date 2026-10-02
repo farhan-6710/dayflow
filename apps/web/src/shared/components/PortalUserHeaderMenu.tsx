@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { UserAvatar } from "@/shared/components/UserAvatar";
 import {
   getInitialsFromName,
   getUserAvatarUrl,
@@ -60,17 +61,11 @@ export function PortalUserHeaderMenu({
               avatarUrl && "bg-transparent",
             )}
           >
-            {avatarUrl ? (
-              <img
-                src={avatarUrl}
-                alt={displayName}
-                className="size-full object-cover"
-              />
-            ) : (
-              <span className="flex size-full items-center justify-center bg-primary/10 text-sm font-semibold text-primary">
-                {initials}
-              </span>
-            )}
+            <UserAvatar
+              src={avatarUrl}
+              name={displayName}
+              initials={initials}
+            />
           </Button>
         </DropdownMenuTrigger>
 

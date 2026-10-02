@@ -6,12 +6,13 @@ import {
   CLIENT_PORTAL_SETTINGS_PATH,
 } from "@/app/constants/clientPortalRoutes";
 import { CLIENT_AUTH_HOME } from "@/features/client/constants/routes";
+import { BRAND_NAME, brandManifest } from "@/shared/brand/brandManifest";
 import { AppShellLayout } from "@/shared/layouts/AppShellLayout";
 import type { ShellSidebarConfig } from "@/shared/types/components";
 
 const sidebarConfig: ShellSidebarConfig = {
   homeLink: CLIENT_PORTAL_DASHBOARD_PATH,
-  brandSubtitle: "Client Portal",
+  brandSubtitle: brandManifest.portals.client.subtitle,
   nav: [
     { label: "Dashboard", to: CLIENT_PORTAL_DASHBOARD_PATH, icon: "dashboard" },
     { label: "Projects", to: CLIENT_PORTAL_PROJECTS_PATH, icon: "projects" },
@@ -40,7 +41,7 @@ export function ClientAppLayout() {
       accountPath={CLIENT_PORTAL_SETTINGS_PATH}
       settingsPath={CLIENT_PORTAL_SETTINGS_PATH}
       signOutRedirect={CLIENT_AUTH_HOME}
-      mobileNavDescription="DayFlow client portal navigation"
+      mobileNavDescription={`${BRAND_NAME} client portal navigation`}
     />
   );
 }

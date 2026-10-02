@@ -1,3 +1,4 @@
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { resolveBrandLogoSrc } from "@/shared/constants/brandAssets";
 import { useTheme } from "@/shared/providers/ThemeProvider";
 import { cn } from "@/shared/lib/utils";
@@ -21,7 +22,7 @@ export function DayFlowLogo({
   const image = (
     <img
       src={src}
-      alt="DayFlow"
+      alt={BRAND_NAME}
       className={cn(
         "object-contain object-left",
         variant === "icon" ? "size-9.75" : "h-10 w-auto max-w-[12rem]",

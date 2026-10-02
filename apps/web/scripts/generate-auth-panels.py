@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import math
 from pathlib import Path
 
@@ -63,20 +64,58 @@ THEMES = {
     },
 }
 
-PORTALS = {
-    "admin": {
-        "label": "Admin Portal",
-        "headline": "Run your studio\nwith clarity.",
-        "subline": "Tasks, projects, clients, and reminders — orchestrated in one workspace.",
-        "features": ["Task boards", "Client CRM", "Analytics"],
-    },
-    "client": {
-        "label": "Client Portal",
-        "headline": "Your projects,\nalways in sync.",
-        "subline": "Track progress, review updates, and stay aligned with your team.",
-        "features": ["Live updates", "Project hub", "Activity feed"],
-    },
-}
+BRAND_MANIFEST_PATH = (
+    Path(__file__).resolve().parent.parent / "src" / "shared" / "brand" / "brandManifest.json"
+)
+
+
+def load_portals_from_brand_manifest() -> dict:
+    """Prefer brandManifest.json so auth panels stay aligned with product positioning."""
+    try:
+        data = json.loads(BRAND_MANIFEST_PATH.read_text(encoding="utf-8"))
+    except OSError:
+        data = None
+
+    if not data:
+        return {
+            "admin": {
+                "label": "Workspace Portal",
+                "headline": "Run your studio\nwith clarity.",
+                "subline": (
+                    "A workspace built for freelancers to manage clients, projects, "
+                    "tasks, meetings, notes, reminders, and more — all in one place."
+                ),
+                "features": ["Clients", "Projects", "Tasks & calendar"],
+            },
+            "client": {
+                "label": "Client Portal",
+                "headline": "Your projects,\nalways in sync.",
+                "subline": (
+                    "A focused portal for clients to follow shared work and raise activities."
+                ),
+                "features": ["Shared projects", "Raise activities", "Progress updates"],
+            },
+        }
+
+    workspace = data["portals"]["workspace"]
+    client = data["portals"]["client"]
+    return {
+        "admin": {
+            "label": workspace["label"],
+            "headline": "Run your studio\nwith clarity.",
+            "subline": data["description"],
+            "features": [item["name"] for item in workspace["features"][:3]],
+        },
+        "client": {
+            "label": client["label"],
+            "headline": "Your projects,\nalways in sync.",
+            "subline": client["description"],
+            "features": [item["name"] for item in client["features"][:3]],
+        },
+    }
+
+
+PORTALS = load_portals_from_brand_manifest()
 
 
 def lerp_color(a: tuple[int, ...], b: tuple[int, ...], t: float) -> tuple[int, ...]:
