@@ -1,64 +1,25 @@
-import { CheckCircle2, Clock, CheckCircle } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
 
-import {
-  WORKSPACE_PROJECTS_MANAGEMENT_PATH,
-  WORKSPACE_TASKS_CALENDAR_PATH,
-} from "@/app/constants/workspaceRoutes";
-import { FocusListItem } from "@/features/workspace/dashboard/components/FocusListItem";
-import { TaskCompletionChart } from "@/features/workspace/dashboard/components/TaskCompletionChart";
+import { DashboardChartsSection } from "@/features/workspace/dashboard/components/DashboardChartsSection";
+import { DashboardFocusList } from "@/features/workspace/dashboard/components/DashboardFocusList";
+import { DashboardTasksDialogs } from "@/features/workspace/dashboard/components/DashboardTasksDialogs";
+import { TimeTracker } from "@/features/workspace/dashboard/components/TimeTracker";
 import { useDashboard } from "@/features/workspace/dashboard/hooks/useDashboard";
-import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDialog";
+import { getDashboardCards } from "@/features/workspace/dashboard/utils/getDashboardCards";
+import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
+import { DateFilters } from "@/shared/components/DateFilters";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
-import { DateFilters } from "@/shared/components/DateFilters";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
-import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { useDateFilters } from "@/shared/hooks/useDateFilters";
-import {
-  clientsSparklineData,
-  employeesSparklineData,
-  missedPostsSparklineData,
-  totalPostsSparklineData,
-} from "@/shared/fixtures/sparklines";
 import { cn } from "@/shared/lib/utils";
 import { getWorkspaceDisplayName } from "@/shared/utils/authUserDisplay";
-import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
 
 export function DashboardPage() {
   const { filter, dateFilterProps, periodLabel } = useDateFilters();
-  const {
-    user,
-    profile,
-    loading,
-    error,
-    stats,
-    tasks,
-    urgentTasks,
-    handleOpenEditDialog,
-    handleDeleteTask,
-    dialogOpen,
-    setDialogOpen,
-    editingTask,
-    taskTitle,
-    setTaskTitle,
-    taskDesc,
-    setTaskDesc,
-    taskPriority,
-    setTaskPriority,
-    taskStatus,
-    setTaskStatus,
-    taskDueDate,
-    taskDueTime,
-    setTaskDueTime,
-    submitting,
-    handleDueDateChange,
-    handleClearDueDateTime,
-    handleSubmit,
-  } = useDashboard(filter);
+  const dashboard = useDashboard(filter);
 
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
@@ -70,184 +31,74 @@ export function DashboardPage() {
 
   const handleConfirmDelete = async () => {
     if (taskToDelete) {
-      await handleDeleteTask(taskToDelete);
+      await dashboard.handleDeleteTask(taskToDelete);
     }
     setDeleteConfirmOpen(false);
     setTaskToDelete(null);
   };
 
-  const isDemoAccount = isDemoAccountEmail(user?.email);
-  const greetingName = getWorkspaceDisplayName(user, profile?.display_name);
-  const dashboardHeading = isDemoAccount
+  const isDemoAccount = isDemoAccountEmail(dashboard.user?.email);
+  const greetingName = getWorkspaceDisplayName(dashboard.user, dashboard.profile?.display_name);
+  const heading = isDemoAccount
     ? "Welcome to the DayFlow Demo"
     : `Welcome, ${greetingName}!`;
-  const isAll = periodLabel === "All";
-  const periodDescription = isAll ? "all time" : periodLabel.toLowerCase();
 
-  const cards = [
-    {
-      id: "pending-tasks",
-      label: "Pending Tasks",
-      value: stats.pending,
-      icon: Clock,
-      description: isAll
-        ? "Tasks left to complete across all time"
-        : `Tasks left to complete in ${periodDescription}`,
-      href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparklineData: employeesSparklineData,
-      sparklineColor: "var(--primary)",
-    },
-    {
-      id: "overdue-tasks",
-      label: "Overdue Tasks",
-      value: stats.overdue,
-      icon: Clock,
-      description: isAll
-        ? "Tasks past their due date across all time"
-        : `Tasks past their due date in ${periodDescription}`,
-      href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparklineData: missedPostsSparklineData,
-      sparklineColor: "var(--accent)",
-    },
-    {
-      id: "projects",
-      label: "Total Projects",
-      value: stats.projectsCount,
-      icon: CheckCircle2,
-      description: isAll
-        ? "Note folders in your workspace"
-        : `Note folders created in ${periodDescription}`,
-      href: WORKSPACE_PROJECTS_MANAGEMENT_PATH,
-      sparklineData: clientsSparklineData,
-      sparklineColor: "var(--primary)",
-    },
-    {
-      id: "completed-tasks",
-      label: "Completed Tasks",
-      value: `${stats.completed}/${stats.total}`,
-      icon: CheckCircle,
-      description: isAll
-        ? "Tasks finished successfully across all time"
-        : `Tasks finished successfully in ${periodDescription}`,
-      href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparklineData: totalPostsSparklineData,
-      sparklineColor: "var(--accent)",
-    },
-  ];
+  const cards = getDashboardCards(dashboard.stats, periodLabel);
 
   return (
-    <div className="space-y-6">
+    <div className="relative isolate space-y-6">
       <PageHeader
-        heading={dashboardHeading}
+        heading={heading}
         description="Here is your personal workspace summary for today."
         actions={<DateFilters {...dateFilterProps} />}
       />
 
       <PageContent>
-        {error ? <ErrorBanner message={error} /> : null}
-        <StatsCards cards={cards} isLoading={loading} />
+        {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
 
-        <div
-          className={cn(
-            "grid grid-cols-1 gap-6 lg:grid-cols-3",
-            containMinWidthClassName,
-          )}
-        >
-          <div
-            className={cn("space-y-6 lg:col-span-2", containMinWidthClassName)}
-          >
-            <TaskCompletionChart tasks={tasks} isLoading={loading} />
-          </div>
+        <StatsCards cards={cards} isLoading={dashboard.loading} />
+
+        <div className={cn("grid grid-cols-1 gap-6 lg:grid-cols-3", containMinWidthClassName)}>
+          <DashboardChartsSection
+            tasks={dashboard.tasks}
+            isLoading={dashboard.loading}
+          />
 
           <div className={cn("space-y-6", containMinWidthClassName)}>
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    Focus List
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Your active upcoming action items.
-                  </p>
-                </div>
-                <Link
-                  to={WORKSPACE_TASKS_CALENDAR_PATH}
-                  className="text-xs font-semibold text-primary hover:underline"
-                >
-                  View Tasks Calendar
-                </Link>
-              </div>
-
-              <div className="mt-4 divide-y divide-border">
-                {loading ? (
-                  <div className="py-6 text-center text-sm text-muted-foreground">
-                    Loading tasks...
-                  </div>
-                ) : urgentTasks.length === 0 ? (
-                  <div className="py-8 text-center">
-                    <p className="text-sm text-muted-foreground">
-                      All caught up! No tasks left.
-                    </p>
-                    <Link
-                      to={WORKSPACE_TASKS_CALENDAR_PATH}
-                      className="mt-2 inline-block text-xs font-semibold text-primary hover:underline"
-                    >
-                      Create a Task
-                    </Link>
-                  </div>
-                ) : (
-                  urgentTasks.map((task) => (
-                    <FocusListItem
-                      key={task.id}
-                      task={task}
-                      onEdit={() => handleOpenEditDialog(task)}
-                      onDelete={() => confirmDelete(task.id)}
-                    />
-                  ))
-                )}
-              </div>
-            </div>
+            <DashboardFocusList
+              urgentTasks={dashboard.urgentTasks}
+              loading={dashboard.loading}
+              onEdit={dashboard.handleOpenEditDialog}
+              onDelete={confirmDelete}
+            />
+            <TimeTracker />
           </div>
         </div>
       </PageContent>
 
-      <TaskFormDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        isEditing={Boolean(editingTask)}
-        submitting={submitting}
-        title={taskTitle}
-        description={taskDesc}
-        priority={taskPriority}
-        status={taskStatus}
-        dueDate={taskDueDate}
-        dueTime={taskDueTime}
-        onTitleChange={setTaskTitle}
-        onDescriptionChange={setTaskDesc}
-        onPriorityChange={setTaskPriority}
-        onStatusChange={setTaskStatus}
-        onDueDateChange={handleDueDateChange}
-        onDueTimeChange={setTaskDueTime}
-        onClearDueDateTime={handleClearDueDateTime}
-        onSubmit={(event) => void handleSubmit(event)}
-        onDelete={
-          editingTask
-            ? async () => {
-                await handleDeleteTask(editingTask.id);
-                setDialogOpen(false);
-              }
-            : undefined
-        }
-      />
-
-      <ConfirmationModal
-        open={deleteConfirmOpen}
-        onOpenChange={setDeleteConfirmOpen}
-        title="Delete Task?"
-        description="This action is irreversible. The task will be deleted permanently."
-        confirmLabel="Delete permanently"
-        confirmVariant="destructive"
-        onConfirm={handleConfirmDelete}
+      <DashboardTasksDialogs
+        dialogOpen={dashboard.dialogOpen}
+        setDialogOpen={dashboard.setDialogOpen}
+        editingTask={dashboard.editingTask}
+        submitting={dashboard.submitting}
+        taskTitle={dashboard.taskTitle}
+        taskDesc={dashboard.taskDesc}
+        taskPriority={dashboard.taskPriority}
+        taskStatus={dashboard.taskStatus}
+        taskDueDate={dashboard.taskDueDate}
+        taskDueTime={dashboard.taskDueTime}
+        onTitleChange={dashboard.setTaskTitle}
+        onDescriptionChange={dashboard.setTaskDesc}
+        onPriorityChange={dashboard.setTaskPriority}
+        onStatusChange={dashboard.setTaskStatus}
+        onDueDateChange={dashboard.handleDueDateChange}
+        onDueTimeChange={dashboard.setTaskDueTime}
+        onClearDueDateTime={dashboard.handleClearDueDateTime}
+        onSubmit={dashboard.handleSubmit}
+        onDeleteTask={dashboard.handleDeleteTask}
+        deleteConfirmOpen={deleteConfirmOpen}
+        setDeleteConfirmOpen={setDeleteConfirmOpen}
+        onConfirmDelete={handleConfirmDelete}
       />
     </div>
   );

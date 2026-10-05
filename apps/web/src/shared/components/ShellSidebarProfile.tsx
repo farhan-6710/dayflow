@@ -1,15 +1,10 @@
 import { ChevronRight } from "lucide-react";
-
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { TransitionLink } from "@/shared/components/TransitionLink";
+import { UserAvatar } from "@/shared/components/UserAvatar";
 import { cn } from "@/shared/lib/utils";
 import { usePageTransition } from "@/shared/providers/pageTransitionContext";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/shared/ui/tooltip";
-import { UserAvatar } from "@/shared/components/UserAvatar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import {
   getInitialsFromName,
   getUserAvatarUrl,
@@ -24,11 +19,7 @@ type ShellSidebarProfileProps = {
   onNavigate?: () => void;
 };
 
-export function ShellSidebarProfile({
-  to,
-  collapsed,
-  onNavigate,
-}: ShellSidebarProfileProps) {
+export function ShellSidebarProfile({ to, collapsed, onNavigate }: ShellSidebarProfileProps) {
   const { user, profile } = useAuth();
   const { activePath } = usePageTransition();
   const isActive = routePath(to) === routePath(activePath);
@@ -37,21 +28,6 @@ export function ShellSidebarProfile({
   const email = getUserEmail(user);
   const initials = getInitialsFromName(displayName);
   const avatarUrl = profile?.avatar_url || getUserAvatarUrl(user);
-
-  const avatar = (
-    <UserAvatar
-      src={avatarUrl}
-      name={displayName}
-      initials={initials}
-      alt=""
-      initialsClassName={cn(
-        "text-xs font-semibold",
-        isActive
-          ? "bg-primary-foreground/15 text-primary-foreground"
-          : "bg-primary/10 text-primary",
-      )}
-    />
-  );
 
   const link = (
     <TransitionLink
@@ -72,7 +48,16 @@ export function ShellSidebarProfile({
           isActive ? "border-primary-foreground/20" : "border-border",
         )}
       >
-        {avatar}
+        <UserAvatar
+          src={avatarUrl}
+          name={displayName}
+          initials={initials}
+          alt=""
+          initialsClassName={cn(
+            "text-xs font-semibold",
+            isActive ? "bg-primary-foreground/15 text-primary-foreground" : "bg-primary/10 text-primary",
+          )}
+        />
       </div>
 
       {collapsed ? (
@@ -80,25 +65,13 @@ export function ShellSidebarProfile({
       ) : (
         <>
           <div className="min-w-0 flex-1 text-left">
-            <div className="truncate text-sm font-semibold leading-tight">
-              {displayName}
-            </div>
-            <div
-              className={cn(
-                "mt-0.5 truncate text-xs leading-tight",
-                isActive
-                  ? "text-primary-foreground/75"
-                  : "text-muted-foreground",
-              )}
-            >
+            <div className="truncate text-sm font-semibold leading-tight">{displayName}</div>
+            <div className={cn("mt-0.5 truncate text-xs leading-tight", isActive ? "text-primary-foreground/75" : "text-muted-foreground")}>
               {email}
             </div>
           </div>
           <ChevronRight
-            className={cn(
-              "size-4 shrink-0",
-              isActive ? "text-primary-foreground/80" : "text-muted-foreground",
-            )}
+            className={cn("size-4 shrink-0", isActive ? "text-primary-foreground/80" : "text-muted-foreground")}
             aria-hidden="true"
           />
         </>
@@ -106,9 +79,9 @@ export function ShellSidebarProfile({
     </TransitionLink>
   );
 
-  if (collapsed) {
-    return (
-      <div className="shrink-0 border-t border-sidebar-border/80 p-3">
+  return (
+    <div className="shrink-0 border-t border-sidebar-border/80 p-3">
+      {collapsed ? (
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="w-full">{link}</div>
@@ -118,13 +91,9 @@ export function ShellSidebarProfile({
             <p className="text-xs text-muted-foreground">{email}</p>
           </TooltipContent>
         </Tooltip>
-      </div>
-    );
-  }
-
-  return (
-    <div className="shrink-0 border-t border-sidebar-border/80 p-3">
-      {link}
+      ) : (
+        link
+      )}
     </div>
   );
 }

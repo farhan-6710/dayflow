@@ -7,70 +7,69 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Brand Colors (Converted to OKLCH) */
-  --primary: #028595;
-  --primary-foreground: oklch(0.99 0.003 199.63);
+  /*
+   * Light — slate ink + vivid blue (not logo teal/orange).
+   * Calm canvas, crisp cards, modern SaaS contrast.
+   */
+  --primary: #1f2937;
+  --primary-foreground: #ffffff;
 
-  --background: oklch(0.98 0.005 199.63);
-  --foreground: oklch(0.18 0.02 199.63);
+  --background: #f4f6f8;
+  --foreground: #111827;
 
-  --accent: #e25505; /* #e25505 (Orange Accent) */
-  --accent-foreground: oklch(0.99 0.003 26.74);
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 199.63);
+  --card: #ffffff;
+  --card-foreground: #111827;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 199.63);
+  --popover: #ffffff;
+  --popover-foreground: #111827;
 
-  --secondary: oklch(0.92 0.025 199.63);
-  --secondary-foreground: oklch(0.4 0.07 199.63);
+  --secondary: #e8eef5;
+  --secondary-foreground: #1f2937;
 
-  --muted: oklch(0.95 0.01 199.63);
-  --muted-foreground: oklch(0.48 0.015 199.63);
+  --muted: #eef2f6;
+  --muted-foreground: #6b7280;
 
   --destructive: #c94141;
   --destructive-outline: #922e2e;
   --destructive-foreground: #ffffff;
 
-  --border: oklch(0.9 0.01 199.63);
-  --input: oklch(0.9 0.01 199.63);
-  --ring: oklch(0.568 0.08 199.63);
+  --border: #dbe2ea;
+  --input: #dbe2ea;
+  --ring: #2563eb;
 
-  --glow-bg-primary: #0284950d;
-  --glow-bg-accent: #e2560514;
-  /* Charts */
-  --chart-1: #028595;
-  --chart-2: #1ba4b5;
-  --chart-3: #e25505;
-  --chart-4: #69c8d4;
-  --chart-5: #0f5c67;
+  --glow-bg-primary: #1f29370d;
+  --glow-bg-accent: #2563eb12;
 
-  /* Harmonized Status Colors (Standardized Lightness & Chroma) */
-  --status-not-posted: oklch(0.65 0.02 199.63);
-  --status-scheduled: oklch(0.65 0.12 245);
-  --status-posted: oklch(0.65 0.12 145);
-  --status-missed: oklch(0.65 0.15 27);
-  --status-done: oklch(0.65 0.12 145);
-  --status-muted: oklch(0.88 0.01 199.63);
+  --chart-1: #1f2937;
+  --chart-2: #2563eb;
+  --chart-3: #60a5fa;
+  --chart-4: #94a3b8;
+  --chart-5: #0f172a;
 
-  /* Contribution Grid (Cyan Brand Scale) */
-  --contrib-1: oklch(0.9 0.03 199.63);
-  --contrib-2: oklch(0.78 0.05 199.63);
-  --contrib-3: oklch(0.65 0.07 199.63);
-  --contrib-4: oklch(0.52 0.09 199.63);
+  --status-not-posted: #94a3b8;
+  --status-scheduled: #3b82f6;
+  --status-posted: #16a34a;
+  --status-missed: #dc2626;
+  --status-done: #16a34a;
+  --status-muted: #e8eef5;
 
-  /* Sidebar (Elegant Light-Teal Slate) */
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.25 0.02 199.63);
-  --sidebar-primary: oklch(0.568 0.08 199.63);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.92 0.015 199.63);
-  --sidebar-accent-foreground: oklch(0.568 0.08 199.63);
-  --sidebar-border: oklch(0.9 0.01 199.63);
-  --sidebar-ring: oklch(0.568 0.08 199.63);
+  --contrib-1: #e8eef5;
+  --contrib-2: #bfdbfe;
+  --contrib-3: #60a5fa;
+  --contrib-4: #1d4ed8;
 
-  /* Typography */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2937;
+  --sidebar-primary: #1f2937;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef2f6;
+  --sidebar-accent-foreground: #1f2937;
+  --sidebar-border: #dbe2ea;
+  --sidebar-ring: #2563eb;
+
   --font-sans: "Ovo", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Ovo", ui-serif, Georgia, serif;
   --font-mono: "Fira Code", ui-monospace, SFMono-Regular, monospace;
@@ -79,8 +78,7 @@
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
-  /* Raw coordinates for shadow evaluation */
-  --shadow-color-coords: 0.15 0.02 199.63;
+  --shadow-color-coords: 0.2 0.02 260;
 
   /* Perfect Syntax-Safe Shadows */
   --shadow-2xs: 0 1px 3px 0px oklch(var(--shadow-color-coords) / 0.04);
@@ -105,70 +103,101 @@
   /* Override browser autofill — solid colors only (no color-mix in box-shadow) */
   --input-surface: var(--background);
   --input-autofill-bg: var(--input-surface);
-  /* Matches focus-visible:ring-2 + ring-primary/20 on form controls */
-  --input-focus-ring-shadow: 0 0 0 2px rgb(2 133 149);
+  --input-focus-ring-shadow: 0 0 0 2px #2563eb;
+
+  /* Dashboard creative surfaces (light + dark kept intentional) */
+  --dashboard-panel: #ffffff;
+  --dashboard-panel-border: #dbe2ea;
+  --dashboard-panel-tint: #eef4ff;
+  /* Light hero: airy blue-white surface (not dark) */
+  --dashboard-hero-from: #f8fbff;
+  --dashboard-hero-via: #eef5ff;
+  --dashboard-hero-to: #e8f0fc;
+  --dashboard-hero-glow: #2563eb33;
+  --dashboard-hero-fg: #111827;
+  --dashboard-hero-muted: #4b5563;
+  --dashboard-hero-border: #c7d7f0;
+  --dashboard-pattern: #2563eb14;
 }
 
 .dark {
-  /* Dark Mode Neutrals (Pure Gray/Black Base, Chroma set to 0) */
-  --primary: #00b6cf;
-  --primary-foreground: #000000;
+  /* Dark — mature, executive obsidian and cool slate (no childish purple/blue neon) */
+  --primary: #f3f4f6;
+  --primary-foreground: #0f172a;
 
-  --background: oklch(0.1 0 0); /* Pure obsidian black-gray */
-  --foreground: oklch(0.95 0 0); /* Pure light gray-white */
+  --background: #090a0d;
+  --foreground: #f3f4f6;
 
-  --card: rgb(14, 14, 14); /* Deep neutral gray card background */
-  --card-foreground: oklch(0.95 0 0);
+  --accent: #94a3b8;
+  --accent-foreground: #090a0d;
 
-  --popover: oklch(0.15 0 0);
-  --popover-foreground: oklch(0.95 0 0);
+  --card: #111419;
+  --card-foreground: #f3f4f6;
 
-  --secondary: oklch(0.18 0 0); /* Secondary dark gray containers */
-  --secondary-foreground: oklch(0.9 0 0);
+  --popover: #15181f;
+  --popover-foreground: #f3f4f6;
 
-  --muted: oklch(
-    20.904% 0.00002 271.152
-  ); /* Sit with card — no gray slab on tables */
-  --muted-foreground: oklch(0.65 0 0);
+  --secondary: #1a1e26;
+  --secondary-foreground: #e5e7eb;
+
+  --muted: #171b22;
+  --muted-foreground: #9ca3af;
 
   --destructive: #953333;
   --destructive-outline: #e05555;
   --destructive-foreground: #ffffff;
 
-  --border: oklch(0.24 0 0); /* Neutral gray borders */
-  --input: oklch(0.24 0 0);
-  --ring: oklch(0.568 0.08 199.63);
+  --border: #242933;
+  --input: #242933;
+  --ring: #94a3b8;
 
-  --glow-bg-primary: #00b7cf19;
-  --glow-bg-accent: #e2560514;
+  --glow-bg-primary: #f3f4f614;
+  --glow-bg-accent: #94a3b818;
 
-  /* Contribution Grid (Empty state neutral, active states keep cyan branding) */
-  --contrib-1: oklch(0.18 0 0); /* Neutral gray empty state block */
-  --contrib-2: oklch(0.34 0.05 199.63);
-  --contrib-3: oklch(0.46 0.07 199.63);
-  --contrib-4: oklch(0.58 0.09 199.63);
+  --chart-1: #f3f4f6;
+  --chart-2: #94a3b8;
+  --chart-3: #64748b;
+  --chart-4: #475569;
+  --chart-5: #cbd5e1;
 
-  /* Dark Sidebar (Clean neutral slate depth) */
-  --sidebar: rgb(14, 14, 14); /* Visually distinct depth from main background */
-  --sidebar-foreground: oklch(0.92 0 0);
-  --sidebar-primary: oklch(0.568 0.08 199.63);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.16 0 0);
-  --sidebar-accent-foreground: oklch(0.568 0.08 199.63);
-  --sidebar-border: oklch(0.24 0 0);
-  --sidebar-ring: oklch(0.568 0.08 199.63);
+  --contrib-1: #171b22;
+  --contrib-2: #242933;
+  --contrib-3: #475569;
+  --contrib-4: #94a3b8;
 
-  /* Muted Status Background for Dark Mode */
-  --status-muted: oklch(0.2 0 0);
-  --status-done: oklch(0.72 0.14 145);
+  --sidebar: #111419;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-primary: #f3f4f6;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #1a1e26;
+  --sidebar-accent-foreground: #e5e7eb;
+  --sidebar-border: #242933;
+  --sidebar-ring: #94a3b8;
 
-  /* Shadow Coordinates adjusted to true black shadows for pure neutral contrast */
+  --status-muted: #171b22;
+  --status-done: #4ade80;
+  --status-scheduled: #94a3b8;
+  --status-missed: #f87171;
+  --status-posted: #4ade80;
+  --status-not-posted: #6b7280;
+
   --shadow-color-coords: 0 0 0;
 
-  /* Matches dark:bg-muted/40 on inputs — solid oklch for autofill inset shadow */
-  --input-surface: #121212;
+  --input-surface: #111419;
   --input-autofill-bg: var(--input-surface);
-  --input-focus-ring-shadow: 0 0 0 2px rgb(0 182 207);
+  --input-focus-ring-shadow: 0 0 0 2px #94a3b8;
+
+  --dashboard-panel: #111419;
+  --dashboard-panel-border: #242933;
+  --dashboard-panel-tint: #171a22;
+  --dashboard-hero-from: #0c0e12;
+  --dashboard-hero-via: #111419;
+  --dashboard-hero-to: #090a0d;
+  --dashboard-hero-glow: #ffffff08;
+  --dashboard-hero-fg: #f8fafc;
+  --dashboard-hero-muted: #94a3b8;
+  --dashboard-hero-border: #242933;
+  --dashboard-pattern: #ffffff08;
 }
 
 @theme inline {
@@ -330,4 +359,89 @@ body {
 
 .animate-border-spin {
   animation: border-spin 8s linear infinite;
+}
+
+@keyframes blob-float-1 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  25% {
+    transform: translate(160px, -60px) scale(1.15);
+  }
+  50% {
+    transform: translate(220px, 120px) scale(0.92);
+  }
+  75% {
+    transform: translate(-100px, 80px) scale(1.1);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes blob-float-2 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  25% {
+    transform: translate(-180px, 90px) scale(1.16);
+  }
+  50% {
+    transform: translate(-120px, -80px) scale(0.92);
+  }
+  75% {
+    transform: translate(140px, -50px) scale(1.08);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes blob-float-3 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  25% {
+    transform: translate(140px, 110px) scale(0.94);
+  }
+  50% {
+    transform: translate(-160px, 60px) scale(1.18);
+  }
+  75% {
+    transform: translate(-80px, -100px) scale(1.05);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes blob-float-4 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-160px, -90px) scale(1.2);
+  }
+  66% {
+    transform: translate(120px, 140px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob-1 {
+  animation: blob-float-1 18s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: blob-float-2 22s ease-in-out infinite;
+}
+
+.animate-blob-3 {
+  animation: blob-float-3 20s ease-in-out infinite;
+}
+
+.animate-blob-4 {
+  animation: blob-float-4 25s ease-in-out infinite;
 }

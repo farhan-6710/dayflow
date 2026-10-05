@@ -1,15 +1,17 @@
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 
 import type { SparklinePoint } from "@/shared/types/statsCards";
+import { cn } from "@/shared/lib/utils";
 
 type SparklineProps = {
   data: SparklinePoint[];
   color: string;
+  className?: string;
 };
 
-export function Sparkline({ data, color }: SparklineProps) {
+export function Sparkline({ data, color, className }: SparklineProps) {
   return (
-    <div className="h-10 w-24 shrink-0">
+    <div className={cn("h-7 w-20 shrink-0", className)}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
