@@ -1,6 +1,10 @@
+import { useMemo, useState } from "react";
+
 import { ReminderDialogFormFields } from "@/features/workspace/reminders/components/ReminderDialogFormFields";
 import type { ReminderDialogProps } from "@/features/workspace/reminders/types/components";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { useOpenSnapshot } from "@/shared/unsaved-changes/useOpenSnapshot";
+import { useUnsavedDialogClose } from "@/shared/unsaved-changes/useUnsavedDialogClose";
 import { Button } from "@/shared/ui/button";
 import {
   Dialog,
@@ -10,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { useState } from "react";
 
 export function ReminderDialog({
   open,
@@ -23,10 +26,29 @@ export function ReminderDialog({
   isEditing,
 }: ReminderDialogProps) {
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const snapshot = useOpenSnapshot(open, values);
+  const isDirty = useMemo(() => {
+    if (!snapshot) return false;
+    return JSON.stringify(values) !== JSON.stringify(snapshot);
+  }, [snapshot, values]);
+
+  const { handleOpenChange } = useUnsavedDialogClose({
+    id: "reminder-dialog",
+    open,
+    isDirty,
+    isCreate: !isEditing,
+    onOpenChange,
+    onSave: async () => {
+      if (!values.title.trim()) {
+        throw new Error("Reminder title is required");
+      }
+      await Promise.resolve(onSubmit());
+    },
+  });
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>{isEditing ? "Edit Reminder" : "Add Reminder"}</DialogTitle>
@@ -65,7 +87,7 @@ export function ReminderDialog({
                   type="button"
                   variant="outline"
                   disabled={submitting}
-                  onClick={() => onOpenChange(false)}
+                  onClick={() => handleOpenChange(false)}
                 >
                   Cancel
                 </Button>

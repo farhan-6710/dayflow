@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 
 import { ProjectForSelect } from "@/features/workspace/projects/components/ProjectForSelect";
 import { PROJECT_COLOR_PRESETS } from "@/features/workspace/projects/constants/projectColors";
@@ -10,6 +10,8 @@ import {
   formFieldGroupClassName,
   formLabelClassName,
 } from "@/shared/constants/formStyles";
+import { useOpenSnapshot } from "@/shared/unsaved-changes/useOpenSnapshot";
+import { useUnsavedDialogClose } from "@/shared/unsaved-changes/useUnsavedDialogClose";
 import { Button } from "@/shared/ui/button";
 import {
   Dialog,
@@ -38,10 +40,39 @@ export function ProjectFormDialog({
   onDelete,
 }: ProjectFormDialogProps) {
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const snapshot = useOpenSnapshot(open, {
+    projectName,
+    projectColor,
+    projectFor,
+  });
+  const isDirty = useMemo(() => {
+    if (!snapshot) return false;
+    return (
+      projectName !== snapshot.projectName ||
+      projectColor !== snapshot.projectColor ||
+      projectFor !== snapshot.projectFor
+    );
+  }, [projectColor, projectFor, projectName, snapshot]);
+
+  const { handleOpenChange } = useUnsavedDialogClose({
+    id: "project-form-dialog",
+    open,
+    isDirty,
+    isCreate: !isEditing,
+    onOpenChange,
+    onSave: async () => {
+      if (!projectName.trim()) {
+        throw new Error("Project name is required");
+      }
+      await onSubmit({
+        preventDefault() {},
+      } as FormEvent);
+    },
+  });
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{isEditing ? "Edit Project" : "New Project"}</DialogTitle>
@@ -108,7 +139,7 @@ export function ProjectFormDialog({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => onOpenChange(false)}
+                  onClick={() => handleOpenChange(false)}
                   disabled={submitting}
                 >
                   Cancel

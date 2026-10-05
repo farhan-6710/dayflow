@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Copy, FileText, Save, Trash2 } from "lucide-react";
 
 import {
@@ -15,6 +15,8 @@ import {
   toolbarRowClassName,
 } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
+import { useRegisterUnsavedChanges } from "@/shared/unsaved-changes/useRegisterUnsavedChanges";
+import { showToast } from "@/shared/utils/showToast";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 
@@ -43,6 +45,45 @@ export function ProjectNoteEditor({
     setBody(note?.body ?? "");
     setCategory(note?.category ?? DEFAULT_NOTE_CATEGORY);
   }, [note]);
+
+  const baselineTitle = note?.title ?? "";
+  const baselineBody = note?.body ?? "";
+  const baselineCategory = note?.category ?? DEFAULT_NOTE_CATEGORY;
+
+  const isDirty = useMemo(() => {
+    if (!note) return false;
+    return (
+      title !== baselineTitle ||
+      body !== baselineBody ||
+      category !== baselineCategory
+    );
+  }, [
+    note,
+    title,
+    body,
+    category,
+    baselineTitle,
+    baselineBody,
+    baselineCategory,
+  ]);
+
+  const { confirmIfDirty } = useRegisterUnsavedChanges({
+    id: note ? `project-note:${note.id}` : "project-note:none",
+    enabled: Boolean(note),
+    isDirty,
+    isCreate: isDraft,
+    onSave: async () => {
+      if (!note || !title.trim()) {
+        showToast("error", "Note title is required");
+        throw new Error("Note title is required");
+      }
+      await onSave(note.id, {
+        title: title.trim(),
+        body: body.trim() || null,
+        category,
+      });
+    },
+  });
 
   if (!note) {
     return (
@@ -90,7 +131,21 @@ export function ProjectNoteEditor({
               className="w-[140px] sm:w-[160px]"
             />
             {isDraft ? (
-              <Button variant="outline" size="sm" className="h-9 shrink-0" onClick={onDiscard} disabled={saving}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 shrink-0"
+                onClick={() => {
+                  if (!onDiscard) return;
+                  confirmIfDirty({
+                    proceed: onDiscard,
+                    title: "Discard new note?",
+                    description:
+                      "This note hasn’t been created yet. Create it, or close without saving.",
+                  });
+                }}
+                disabled={saving}
+              >
                 Cancel
               </Button>
             ) : (

@@ -15,6 +15,7 @@ import {
 } from "@/shared/providers/PageTransitionProvider";
 import { SHELL_HEADER_MOTION } from "@/shared/constants/pageMotion";
 import type { AppShellLayoutProps } from "@/shared/types/components";
+import { UnsavedChangesProvider } from "@/shared/unsaved-changes/UnsavedChangesProvider";
 import { Button } from "@/shared/ui/button";
 import { Switch } from "@/shared/ui/switch";
 
@@ -33,7 +34,8 @@ export function AppShellLayout({
   const mainRef = useRef<HTMLElement>(null);
 
   return (
-    <PageTransitionProvider>
+    <UnsavedChangesProvider>
+      <PageTransitionProvider>
       <div className="fixed inset-0 flex w-full overflow-hidden bg-background text-foreground">
         <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
 
@@ -109,6 +111,7 @@ export function AppShellLayout({
         onOpenChange={setIsMobileNavOpen}
         sheetDescription={mobileNavDescription}
       />
-    </PageTransitionProvider>
+      </PageTransitionProvider>
+    </UnsavedChangesProvider>
   );
 }

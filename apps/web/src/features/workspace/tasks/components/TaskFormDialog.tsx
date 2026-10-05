@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 
 import { TASK_STATUS_OPTIONS } from "@/features/workspace/tasks/constants/taskStatus";
 import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
@@ -6,6 +6,8 @@ import type { TaskFormDialogProps } from "@/features/workspace/tasks/types/compo
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
+import { useOpenSnapshot } from "@/shared/unsaved-changes/useOpenSnapshot";
+import { useUnsavedDialogClose } from "@/shared/unsaved-changes/useUnsavedDialogClose";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import {
@@ -45,10 +47,45 @@ export function TaskFormDialog({
   onDelete,
 }: TaskFormDialogProps) {
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const snapshot = useOpenSnapshot(open, {
+    title,
+    description,
+    priority,
+    status,
+    dueDate,
+    dueTime,
+  });
+  const isDirty = useMemo(() => {
+    if (!snapshot) return false;
+    return (
+      title !== snapshot.title ||
+      description !== snapshot.description ||
+      priority !== snapshot.priority ||
+      status !== snapshot.status ||
+      dueDate !== snapshot.dueDate ||
+      dueTime !== snapshot.dueTime
+    );
+  }, [description, dueDate, dueTime, priority, snapshot, status, title]);
+
+  const { handleOpenChange } = useUnsavedDialogClose({
+    id: "task-form-dialog",
+    open,
+    isDirty,
+    isCreate: !isEditing,
+    onOpenChange,
+    onSave: async () => {
+      if (!title.trim()) {
+        throw new Error("Task title is required");
+      }
+      await Promise.resolve(
+        onSubmit({ preventDefault() {} } as FormEvent),
+      );
+    },
+  });
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{isEditing ? "Edit Task" : "Create Task"}</DialogTitle>
@@ -129,7 +166,7 @@ export function TaskFormDialog({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => onOpenChange(false)}
+                  onClick={() => handleOpenChange(false)}
                   disabled={submitting}
                 >
                   Cancel

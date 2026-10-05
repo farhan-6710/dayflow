@@ -24,6 +24,7 @@ import {
   PageTransitionContext,
   type PageTransitionContextValue,
 } from "@/shared/providers/pageTransitionContext";
+import { useOptionalUnsavedChangesContext } from "@/shared/unsaved-changes/unsavedChangesContext";
 import { routePath } from "@/shared/utils/routePath";
 
 const PageTransitionAnimationContext = createContext<{
@@ -39,6 +40,7 @@ function isSameRoute(pathname: string, search: string, to: To) {
 export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const unsavedChanges = useOptionalUnsavedChangesContext();
   const [isVisible, setIsVisible] = useState(true);
   const [activePath, setActivePath] = useState(location.pathname);
   const pendingTo = useRef<To | null>(null);
@@ -52,10 +54,8 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     [navigate],
   );
 
-  const navigateWithTransition = useCallback(
+  const startTransition = useCallback(
     (to: To) => {
-      if (isSameRoute(location.pathname, location.search, to)) return;
-
       setActivePath(routePath(to));
       pendingTo.current = to;
 
@@ -66,7 +66,31 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
 
       setIsVisible(false);
     },
-    [finishTransition, isVisible, location.pathname, location.search],
+    [finishTransition, isVisible],
+  );
+
+  const navigateWithTransition = useCallback(
+    (to: To) => {
+      if (isSameRoute(location.pathname, location.search, to)) return;
+
+      if (unsavedChanges?.isDirty) {
+        unsavedChanges.confirmIfDirty({
+          proceed: () => startTransition(to),
+          title: "Unsaved changes",
+          description:
+            "You have changes that haven’t been saved. Save before leaving, or close without saving.",
+        });
+        return;
+      }
+
+      startTransition(to);
+    },
+    [
+      location.pathname,
+      location.search,
+      startTransition,
+      unsavedChanges,
+    ],
   );
 
   const onExitComplete = useCallback(() => {

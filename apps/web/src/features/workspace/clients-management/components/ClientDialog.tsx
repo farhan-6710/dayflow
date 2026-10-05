@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { ClientDialogBasicFields } from "@/features/workspace/clients-management/components/ClientDialogBasicFields";
 import type { ClientDialogProps } from "@/features/workspace/clients-management/types/components";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ActiveStatusSwitchField } from "@/shared/components/ActiveStatusSwitchField";
+import { useOpenSnapshot } from "@/shared/unsaved-changes/useOpenSnapshot";
+import { useUnsavedDialogClose } from "@/shared/unsaved-changes/useUnsavedDialogClose";
 import { Button } from "@/shared/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -35,10 +36,29 @@ export function ClientDialog({
   }, [open]);
 
   const canSave = values.companyName.trim().length > 0;
+  const snapshot = useOpenSnapshot(open, values);
+  const isDirty = useMemo(() => {
+    if (!snapshot) return false;
+    return JSON.stringify(values) !== JSON.stringify(snapshot);
+  }, [snapshot, values]);
+
+  const { handleOpenChange } = useUnsavedDialogClose({
+    id: "client-dialog",
+    open,
+    isDirty,
+    isCreate: !isEditing,
+    onOpenChange,
+    onSave: async () => {
+      if (!canSave) {
+        throw new Error("Company name is required");
+      }
+      await Promise.resolve(onSave());
+    },
+  });
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent className="flex max-h-[85vh] max-w-lg! flex-col overflow-hidden">
           <DialogHeader className="shrink-0">
             <DialogTitle>{isEditing ? "Edit Client" : "Add Client"}</DialogTitle>
@@ -75,11 +95,13 @@ export function ClientDialog({
                 Remove Client
               </Button>
             ) : null}
-            <DialogClose asChild>
-              <Button variant="outline" disabled={isSaving}>
-                Cancel
-              </Button>
-            </DialogClose>
+            <Button
+              variant="outline"
+              disabled={isSaving}
+              onClick={() => handleOpenChange(false)}
+            >
+              Cancel
+            </Button>
             <Button onClick={onSave} disabled={!canSave || isSaving}>
               {isSaving ? "Saving..." : isEditing ? "Save Changes" : "Add Client"}
             </Button>
