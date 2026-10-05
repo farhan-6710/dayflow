@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 
 import { useTasksCalendarSelection } from "@/features/workspace/tasks/hooks/useTasksCalendarSelection";
@@ -11,6 +11,7 @@ import {
   TASK_STATUS_OPTIONS,
   TASK_STATUS_TEXT_COLORS,
 } from "@/features/workspace/tasks/constants/taskStatus";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -62,7 +63,10 @@ export function TasksCalendarPage() {
     handleOpenCreateDialog,
     handleOpenEditDialog,
     handleSubmit,
+    handleDeleteTask,
   } = useTasksManagement();
+
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   // Build a map: "yyyy-MM-dd" → Task[]
   const tasksByDateKey = useMemo(() => {
@@ -222,29 +226,59 @@ export function TasksCalendarPage() {
             />
           </form>
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setDialogOpen(false)}
-              disabled={submitting}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              form="task-calendar-form"
-              disabled={submitting || !taskTitle.trim()}
-            >
-              {submitting
-                ? "Saving…"
-                : editingTask
-                  ? "Save Changes"
-                  : "Add Task"}
-            </Button>
+          <DialogFooter className="gap-2 sm:justify-between">
+            {editingTask ? (
+              <Button
+                type="button"
+                variant="destructive"
+                disabled={submitting}
+                onClick={() => setDeleteConfirmOpen(true)}
+              >
+                Delete
+              </Button>
+            ) : (
+              <span />
+            )}
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setDialogOpen(false)}
+                disabled={submitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="task-calendar-form"
+                disabled={submitting || !taskTitle.trim()}
+              >
+                {submitting
+                  ? "Saving…"
+                  : editingTask
+                    ? "Save Changes"
+                    : "Add Task"}
+              </Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <ConfirmationModal
+        open={deleteConfirmOpen}
+        onOpenChange={setDeleteConfirmOpen}
+        title="Delete Task?"
+        description="This action is irreversible. The task will be deleted permanently."
+        confirmLabel="Delete permanently"
+        confirmVariant="destructive"
+        loading={submitting}
+        onConfirm={async () => {
+          if (!editingTask) return;
+          await handleDeleteTask(editingTask.id);
+          setDeleteConfirmOpen(false);
+          setDialogOpen(false);
+        }}
+      />
     </PageContent>
   );
 }

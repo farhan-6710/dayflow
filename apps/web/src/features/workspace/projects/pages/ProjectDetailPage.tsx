@@ -211,6 +211,9 @@ export function ProjectDetailPage() {
         onProjectForChange={setProjectFor}
         clients={clients}
         onSubmit={handleSubmitProject}
+        onDelete={async () => {
+          await handleDeleteProject();
+        }}
       />
 
       <ConfirmationModal

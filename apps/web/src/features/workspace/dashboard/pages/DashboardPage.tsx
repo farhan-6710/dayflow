@@ -230,6 +230,14 @@ export function DashboardPage() {
         onDueTimeChange={setTaskDueTime}
         onClearDueDateTime={handleClearDueDateTime}
         onSubmit={(event) => void handleSubmit(event)}
+        onDelete={
+          editingTask
+            ? async () => {
+                await handleDeleteTask(editingTask.id);
+                setDialogOpen(false);
+              }
+            : undefined
+        }
       />
 
       <ConfirmationModal

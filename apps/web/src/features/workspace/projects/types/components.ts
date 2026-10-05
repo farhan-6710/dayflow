@@ -83,6 +83,7 @@ export type ProjectFormDialogProps = {
   /** When true, Project for cannot be changed (e.g. creating from a client detail). */
   lockProjectFor?: boolean;
   onSubmit: (event: React.FormEvent) => void | Promise<void>;
+  onDelete?: () => void | Promise<void>;
 };
 
 export type ProjectNotesTableRowProps = {

@@ -172,6 +172,16 @@ export function ProjectReferenceLinksSection({
           setValues((current) => ({ ...current, [field]: value }))
         }
         onSave={() => void handleSave()}
+        deleteDescription={deleteDescription}
+        onDelete={
+          editingLinkId
+            ? async () => {
+                await onDelete(editingLinkId);
+                setDialogOpen(false);
+                setEditingLinkId(null);
+              }
+            : undefined
+        }
       />
 
       <ConfirmationModal

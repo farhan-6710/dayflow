@@ -1,6 +1,9 @@
+import { useState } from "react";
+
 import { TASK_STATUS_OPTIONS } from "@/features/workspace/tasks/constants/taskStatus";
 import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
 import type { TaskFormDialogProps } from "@/features/workspace/tasks/types/components";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { Button } from "@/shared/ui/button";
@@ -39,87 +42,122 @@ export function TaskFormDialog({
   onDueTimeChange,
   onClearDueDateTime,
   onSubmit,
+  onDelete,
 }: TaskFormDialogProps) {
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Task" : "Create Task"}</DialogTitle>
-          <DialogDescription>
-            Personal tasks are standalone — no project required. Change status
-            from here when you need to.
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{isEditing ? "Edit Task" : "Create Task"}</DialogTitle>
+            <DialogDescription>
+              Personal tasks are standalone — no project required. Change status
+              from here when you need to.
+            </DialogDescription>
+          </DialogHeader>
 
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div className={formFieldGroupClassName}>
-            <label className={formLabelClassName}>Task Title</label>
-            <Input
-              placeholder="What needs to be done?"
-              value={title}
-              onChange={(event) => onTitleChange(event.target.value)}
-              required
-              disabled={submitting}
-            />
-          </div>
-
-          <div className={formFieldGroupClassName}>
-            <label className={formLabelClassName}>Description (Optional)</label>
-            <Input
-              placeholder="Add more details..."
-              value={description}
-              onChange={(event) => onDescriptionChange(event.target.value)}
-              disabled={submitting}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <form onSubmit={onSubmit} className="space-y-4">
             <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>Priority</label>
-              <OptionDropdown
-                value={priority}
-                onChange={(value) => onPriorityChange(value as typeof priority)}
-                options={PRIORITY_OPTIONS}
+              <label className={formLabelClassName}>Task Title</label>
+              <Input
+                placeholder="What needs to be done?"
+                value={title}
+                onChange={(event) => onTitleChange(event.target.value)}
+                required
                 disabled={submitting}
               />
             </div>
 
             <div className={formFieldGroupClassName}>
-              <label className={formLabelClassName}>Status</label>
-              <OptionDropdown
-                value={status}
-                onChange={(value) => onStatusChange(value as typeof status)}
-                options={TASK_STATUS_OPTIONS}
+              <label className={formLabelClassName}>Description (Optional)</label>
+              <Input
+                placeholder="Add more details..."
+                value={description}
+                onChange={(event) => onDescriptionChange(event.target.value)}
                 disabled={submitting}
               />
             </div>
-          </div>
 
-          <TaskDateTimePicker
-            label="Due Date (Optional)"
-            dateValue={dueDate}
-            timeValue={dueTime}
-            onDateChange={onDueDateChange}
-            onTimeChange={onDueTimeChange}
-            onClear={onClearDueDateTime}
-            disabled={submitting}
-          />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className={formFieldGroupClassName}>
+                <label className={formLabelClassName}>Priority</label>
+                <OptionDropdown
+                  value={priority}
+                  onChange={(value) => onPriorityChange(value as typeof priority)}
+                  options={PRIORITY_OPTIONS}
+                  disabled={submitting}
+                />
+              </div>
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
+              <div className={formFieldGroupClassName}>
+                <label className={formLabelClassName}>Status</label>
+                <OptionDropdown
+                  value={status}
+                  onChange={(value) => onStatusChange(value as typeof status)}
+                  options={TASK_STATUS_OPTIONS}
+                  disabled={submitting}
+                />
+              </div>
+            </div>
+
+            <TaskDateTimePicker
+              label="Due Date (Optional)"
+              dateValue={dueDate}
+              timeValue={dueTime}
+              onDateChange={onDueDateChange}
+              onTimeChange={onDueTimeChange}
+              onClear={onClearDueDateTime}
               disabled={submitting}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={submitting || !title.trim()}>
-              {isEditing ? "Save Changes" : "Create Task"}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            />
+
+            <DialogFooter className="gap-2 sm:justify-between">
+              {isEditing && onDelete ? (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  disabled={submitting}
+                  onClick={() => setDeleteOpen(true)}
+                >
+                  Delete
+                </Button>
+              ) : (
+                <span />
+              )}
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => onOpenChange(false)}
+                  disabled={submitting}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={submitting || !title.trim()}>
+                  {isEditing ? "Save Changes" : "Create Task"}
+                </Button>
+              </div>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {onDelete ? (
+        <ConfirmationModal
+          open={deleteOpen}
+          onOpenChange={setDeleteOpen}
+          title="Delete Task?"
+          description="This action is irreversible. The task will be deleted permanently."
+          confirmLabel="Delete permanently"
+          confirmVariant="destructive"
+          loading={submitting}
+          onConfirm={async () => {
+            await onDelete();
+            setDeleteOpen(false);
+          }}
+        />
+      ) : null}
+    </>
   );
 }

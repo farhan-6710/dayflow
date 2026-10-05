@@ -105,6 +105,14 @@ export function ProjectsManagementPage() {
         onProjectForChange={setProjectFor}
         clients={clients}
         onSubmit={handleSubmit}
+        onDelete={
+          editingProject
+            ? async () => {
+                await handleDeleteProject(editingProject.id);
+                setDialogOpen(false);
+              }
+            : undefined
+        }
       />
 
       <ConfirmationModal

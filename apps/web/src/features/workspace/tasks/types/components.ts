@@ -44,6 +44,7 @@ export type TaskFormDialogProps = {
   onDueTimeChange: (value: string) => void;
   onClearDueDateTime: () => void;
   onSubmit: (event: FormEvent) => void;
+  onDelete?: () => void | Promise<void>;
 };
 
 export type TasksWeekDayCellProps = {
