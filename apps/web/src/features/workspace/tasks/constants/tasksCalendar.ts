@@ -8,8 +8,8 @@ export const CALENDAR_DAY_LABELS = [
   "Sun",
 ] as const;
 
-export const CALENDAR_DAY_COLUMN_WIDTH = 112;
-export const CALENDAR_WEEK_COLUMN_MIN_WIDTH = 168;
+/** Min width per Mon–Sun day column. */
+export const CALENDAR_DAY_COLUMN_MIN_WIDTH = 148;
 
 export const DEFAULT_TASK_TIME = "10:00 AM";
 

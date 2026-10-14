@@ -1,8 +1,8 @@
+import { TasksCalendarMonthBar } from "@/features/workspace/tasks/components/TasksCalendarMonthBar";
 import { TasksWeekDayCell } from "@/features/workspace/tasks/components/TasksWeekDayCell";
 import {
-  CALENDAR_DAY_COLUMN_WIDTH,
+  CALENDAR_DAY_COLUMN_MIN_WIDTH,
   CALENDAR_DAY_LABELS,
-  CALENDAR_WEEK_COLUMN_MIN_WIDTH,
 } from "@/features/workspace/tasks/constants/tasksCalendar";
 import type { TasksWeeksTableProps } from "@/features/workspace/tasks/types/components";
 import { isSameCalendarDay } from "@/features/workspace/reminders/utils/calendarUtils";
@@ -10,21 +10,23 @@ import { TABLE_HORIZONTAL_SCROLL_CLASS } from "@/shared/constants/directoryTable
 import { cn } from "@/shared/lib/utils";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 
+const DAY_GAP_PX = 8;
+
 export function TasksWeeksTable({
   year,
   month,
   weeks,
   selectedDate,
   tasksByDateKey,
+  onSelectMonth,
   onOpenDay,
   onEdit,
   statusColors,
-  statusText,
 }: TasksWeeksTableProps) {
-  const weekCount = weeks.length;
-  const gridTemplateColumns = `${CALENDAR_DAY_COLUMN_WIDTH}px repeat(${weekCount}, minmax(${CALENDAR_WEEK_COLUMN_MIN_WIDTH}px, 1fr))`;
+  const dayCount = CALENDAR_DAY_LABELS.length;
+  const gridTemplateColumns = `repeat(${dayCount}, minmax(${CALENDAR_DAY_COLUMN_MIN_WIDTH}px, 1fr))`;
   const minTableWidth =
-    CALENDAR_DAY_COLUMN_WIDTH + weekCount * CALENDAR_WEEK_COLUMN_MIN_WIDTH;
+    dayCount * CALENDAR_DAY_COLUMN_MIN_WIDTH + (dayCount - 1) * DAY_GAP_PX;
 
   return (
     <TooltipProvider>
@@ -34,64 +36,59 @@ export function TasksWeeksTable({
           "rounded-2xl border border-border bg-card shadow-sm",
         )}
       >
-        <div style={{ minWidth: minTableWidth }}>
+        <div
+          className="sticky left-0 z-10 px-4 py-4 sm:px-5"
+          style={{ minWidth: minTableWidth }}
+        >
+          <TasksCalendarMonthBar
+            year={year}
+            month={month}
+            onSelect={onSelectMonth}
+          />
+        </div>
+
+        <div className="space-y-2 p-3 sm:p-4" style={{ minWidth: minTableWidth }}>
           <div
-            className="grid border-b border-border bg-card text-xs font-semibold tracking-wider text-muted-foreground"
+            className="grid gap-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase"
             style={{ gridTemplateColumns }}
           >
-            <div className="sticky left-0 z-10 border-r border-border bg-card px-4 py-3">
-              Day
-            </div>
-            {weeks.map((week) => (
-              <div key={week.label} className="px-4 py-3 text-center">
-                <div className="whitespace-nowrap">{week.label}</div>
-                <div className="whitespace-nowrap text-[11px] text-muted-foreground">
-                  {week.range}
-                </div>
+            {CALENDAR_DAY_LABELS.map((dayLabel) => (
+              <div key={dayLabel} className="px-1 py-1 text-center">
+                {dayLabel}
               </div>
             ))}
           </div>
 
-          <div className="divide-y divide-border">
-            {CALENDAR_DAY_LABELS.map((dayLabel, dayIndex) => (
+          <div className="flex flex-col gap-2">
+            {weeks.map((week) => (
               <div
-                key={dayLabel}
-                className="grid"
+                key={week.label}
+                className="grid gap-2"
                 style={{ gridTemplateColumns }}
               >
-                <div className="sticky left-0 z-10 flex items-center border-r border-border bg-card px-4 py-6 text-sm font-semibold">
-                  {dayLabel}
-                </div>
-                {weeks.map((week) => {
-                  const dateNumber = week.dates[dayIndex];
-
-                  if (!dateNumber) {
-                    return (
-                      <div
-                        key={`${dayLabel}-${week.label}-empty`}
-                        className="min-h-[140px] border-r border-border/70 bg-card"
-                      />
-                    );
-                  }
-
-                  const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(dateNumber).padStart(2, "0")}`;
+                {week.cells.map((cell) => {
+                  const isOutsideMonth =
+                    cell.year !== year || cell.month !== month;
+                  const dateKey = `${cell.year}-${String(cell.month).padStart(2, "0")}-${String(cell.date).padStart(2, "0")}`;
 
                   return (
                     <TasksWeekDayCell
-                      key={`${dayLabel}-${week.label}-${dateNumber}`}
-                      year={year}
-                      month={month}
-                      dateNumber={dateNumber}
+                      key={`${week.label}-${dateKey}`}
+                      year={cell.year}
+                      month={cell.month}
+                      dateNumber={cell.date}
                       tasks={tasksByDateKey.get(dateKey) ?? []}
                       isSelected={isSameCalendarDay(
                         selectedDate,
-                        year,
-                        month,
-                        dateNumber,
+                        cell.year,
+                        cell.month,
+                        cell.date,
                       )}
+                      isOutsideMonth={isOutsideMonth}
                       statusColors={statusColors}
-                      statusText={statusText}
-                      onOpenDay={() => onOpenDay(year, month, dateNumber)}
+                      onOpenDay={() =>
+                        onOpenDay(cell.year, cell.month, cell.date)
+                      }
                       onEdit={onEdit}
                     />
                   );

@@ -9,14 +9,12 @@ import {
   TASK_STATUS_DOT_COLORS,
   TASK_STATUS_LEGEND,
   TASK_STATUS_OPTIONS,
-  TASK_STATUS_TEXT_COLORS,
 } from "@/features/workspace/tasks/constants/taskStatus";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Button } from "@/shared/ui/button";
-import { MonthSelector } from "@/shared/ui/MonthSelector";
 import {
   Dialog,
   DialogContent,
@@ -108,25 +106,15 @@ export function TasksCalendarPage() {
         }
       />
 
-      <div className="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-        {/* Status legend */}
-        <div className="flex flex-wrap items-center gap-3">
-          {TASK_STATUS_LEGEND.map(({ status, label }) => (
-            <div key={status} className="flex items-center gap-1.5">
-              <span
-                className={cn("size-2.5 shrink-0 rounded-full", TASK_STATUS_DOT_COLORS[status])}
-              />
-              <span className="text-[11px] font-medium">{label}</span>
-            </div>
-          ))}
-        </div>
-
-        <MonthSelector
-          year={year}
-          month={month}
-          onSelect={selectDate}
-          className="w-full sm:w-auto"
-        />
+      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+        {TASK_STATUS_LEGEND.map(({ status, label }) => (
+          <div key={status} className="flex items-center gap-1.5">
+            <span
+              className={cn("size-2.5 shrink-0 rounded-full", TASK_STATUS_DOT_COLORS[status])}
+            />
+            <span className="text-[11px] font-medium">{label}</span>
+          </div>
+        ))}
       </div>
 
       {loading ? (
@@ -140,10 +128,10 @@ export function TasksCalendarPage() {
           weeks={calendarWeeks}
           selectedDate={selectedDate}
           tasksByDateKey={tasksByDateKey}
+          onSelectMonth={selectDate}
           onOpenDay={openDayWithCreate}
           onEdit={openEditFromCell}
           statusColors={TASK_STATUS_DOT_COLORS}
-          statusText={TASK_STATUS_TEXT_COLORS}
         />
       )}
 

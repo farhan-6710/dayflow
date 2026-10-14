@@ -1,9 +1,15 @@
 import type { ReminderDayKey } from "@/services/remindersService";
 
+export type WeekCell = {
+  year: number;
+  month: number;
+  date: number;
+};
+
 export type Week = {
   label: string;
   range: string;
-  dates: number[];
+  cells: WeekCell[];
 };
 
 export type ReminderSlotItem = {

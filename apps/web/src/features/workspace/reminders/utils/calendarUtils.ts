@@ -45,30 +45,29 @@ export function buildMonthWeeks(year: number, month: number): Week[] {
   );
 
   return weekStarts.map((weekStart, weekIndex) => {
-    const dates = Array.from({ length: 7 }, (_, dayIndex) => {
+    const cells = Array.from({ length: 7 }, (_, dayIndex) => {
       const cellDate = new Date(weekStart);
       cellDate.setDate(cellDate.getDate() + dayIndex);
 
-      if (
-        cellDate.getFullYear() !== year ||
-        cellDate.getMonth() !== month - 1
-      ) {
-        return 0;
-      }
-
-      return getDate(cellDate);
+      return {
+        year: cellDate.getFullYear(),
+        month: cellDate.getMonth() + 1,
+        date: getDate(cellDate),
+      };
     });
 
-    const validDates = dates.filter((value) => value > 0);
+    const inMonthDates = cells
+      .filter((cell) => cell.year === year && cell.month === month)
+      .map((cell) => cell.date);
     const range =
-      validDates.length > 0
-        ? `${monthName} ${validDates[0]} to ${monthName} ${validDates.at(-1)}`
+      inMonthDates.length > 0
+        ? `${monthName} ${inMonthDates[0]} to ${monthName} ${inMonthDates.at(-1)}`
         : "";
 
     return {
       label: `Week ${weekIndex + 1}`,
       range,
-      dates,
+      cells,
     };
   });
 }

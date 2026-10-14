@@ -53,8 +53,8 @@ export type TasksWeekDayCellProps = {
   dateNumber: number;
   tasks: Task[];
   isSelected: boolean;
+  isOutsideMonth?: boolean;
   statusColors: Record<TaskStatus, string>;
-  statusText: Record<TaskStatus, string>;
   onOpenDay: () => void;
   onEdit: (taskId: string) => void;
 };
@@ -65,8 +65,8 @@ export type TasksWeeksTableProps = {
   weeks: import("@/features/workspace/reminders/types/types").Week[];
   selectedDate: Date;
   tasksByDateKey: Map<string, Task[]>;
+  onSelectMonth: (date: Date) => void;
   onOpenDay: (year: number, month: number, date: number) => void;
   onEdit: (taskId: string) => void;
   statusColors: Record<TaskStatus, string>;
-  statusText: Record<TaskStatus, string>;
 };

@@ -61,9 +61,8 @@ export function RemindersWeeksTable({
                   {dayLabel}
                 </div>
                 {weeks.map((week) => {
-                  const dateNumber = week.dates[dayIndex];
-
-                  if (!dateNumber) {
+                  const cell = week.cells[dayIndex];
+                  if (!cell) {
                     return (
                       <div
                         key={`${dayLabel}-${week.label}-empty`}
@@ -72,20 +71,29 @@ export function RemindersWeeksTable({
                     );
                   }
 
+                  const inMonth =
+                    cell.year === year && cell.month === month;
+
                   return (
                     <ReminderWeekDayCell
-                      key={`${dayLabel}-${week.label}-${dateNumber}`}
-                      year={year}
-                      month={month}
-                      dateNumber={dateNumber}
-                      slot={getSlot(year, month, dateNumber)}
+                      key={`${dayLabel}-${week.label}-${cell.year}-${cell.month}-${cell.date}`}
+                      year={cell.year}
+                      month={cell.month}
+                      dateNumber={cell.date}
+                      slot={
+                        inMonth
+                          ? getSlot(cell.year, cell.month, cell.date)
+                          : null
+                      }
                       isSelected={isSameCalendarDay(
                         selectedDate,
-                        year,
-                        month,
-                        dateNumber,
+                        cell.year,
+                        cell.month,
+                        cell.date,
                       )}
-                      onOpenDay={() => onOpenDay(year, month, dateNumber)}
+                      onOpenDay={() =>
+                        onOpenDay(cell.year, cell.month, cell.date)
+                      }
                       onEdit={onEdit}
                     />
                   );
