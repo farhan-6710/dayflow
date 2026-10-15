@@ -60,7 +60,7 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
             {card.sparklineData && !isLoading ? (
               <Sparkline
                 data={card.sparklineData}
-                color={card.sparklineColor ?? "var(--primary)"}
+                color={card.sparklineColor ?? "var(--chart-1)"}
                 className="h-6 w-16"
               />
             ) : null}

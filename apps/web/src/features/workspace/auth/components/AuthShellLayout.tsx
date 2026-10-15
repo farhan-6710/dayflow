@@ -8,6 +8,7 @@ import {
   BRAND_PROMOTION_BANNER_BACKDROP,
   resolveBrandPromotionBannerSrc,
 } from "@/shared/constants/brandAssets";
+import { Blob } from "@/shared/components/Blob";
 import { useTheme } from "@/shared/providers/ThemeProvider";
 import { cn } from "@/shared/lib/utils";
 
@@ -48,7 +49,8 @@ export function AuthShellLayout({
   }, []);
 
   return (
-    <div className="flex h-dvh max-h-dvh flex-col overflow-hidden bg-background text-foreground lg:flex-row">
+    <div className="relative flex h-dvh max-h-dvh flex-col overflow-hidden bg-background text-foreground lg:flex-row">
+      <Blob />
       <div
         className="relative hidden h-full shrink-0 overflow-hidden lg:flex lg:items-center lg:justify-center"
         style={bannerColumnStyle}

@@ -22,11 +22,11 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
   const chartConfig = {
     currentMonth: {
       label: chart.currentMonthLabel,
-      color: "var(--primary)",
+      color: "var(--chart-1)",
     },
     previousMonth: {
       label: chart.previousMonthLabel,
-      color: "var(--accent)",
+      color: "var(--chart-2)",
     },
   } satisfies ChartConfig;
 

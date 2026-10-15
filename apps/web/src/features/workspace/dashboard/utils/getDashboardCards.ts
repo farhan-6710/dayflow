@@ -38,7 +38,7 @@ export function getDashboardCards(
         : `Tasks left to complete in ${periodDesc}`,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       sparklineData: employeesSparklineData,
-      sparklineColor: "var(--primary)",
+      sparklineColor: "var(--chart-1)",
     },
     {
       id: "overdue-tasks",
@@ -50,7 +50,7 @@ export function getDashboardCards(
         : `Tasks past their due date in ${periodDesc}`,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       sparklineData: missedPostsSparklineData,
-      sparklineColor: "var(--accent)",
+      sparklineColor: "var(--chart-2)",
     },
     {
       id: "projects",
@@ -62,7 +62,7 @@ export function getDashboardCards(
         : `Note folders created in ${periodDesc}`,
       href: WORKSPACE_PROJECTS_MANAGEMENT_PATH,
       sparklineData: clientsSparklineData,
-      sparklineColor: "var(--primary)",
+      sparklineColor: "var(--chart-1)",
     },
     {
       id: "completed-tasks",
@@ -74,7 +74,7 @@ export function getDashboardCards(
         : `Tasks finished successfully in ${periodDesc}`,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       sparklineData: totalPostsSparklineData,
-      sparklineColor: "var(--accent)",
+      sparklineColor: "var(--chart-2)",
     },
   ];
 }

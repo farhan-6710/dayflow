@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Blob } from "@/shared/components/Blob";
 import { ShellHeader } from "@/shared/components/ShellHeader";
 import {
   ShellMobileNavSheet,
@@ -28,7 +29,7 @@ export function AppShellLayout({
     <UnsavedChangesProvider>
       <PageTransitionProvider>
         <div className="fixed inset-0 flex w-full overflow-hidden p-2 text-foreground sm:p-3 md:gap-3.5 md:p-3.5">
-          {/* <Blob /> */}
+          <Blob />
           <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
 
           <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-2.5 overflow-hidden sm:gap-3 md:gap-3.5">
