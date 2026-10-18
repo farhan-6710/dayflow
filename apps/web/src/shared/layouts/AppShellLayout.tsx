@@ -34,7 +34,7 @@ export function AppShellLayout({
           <div className="relative z-10 flex min-h-0 min-w-0 w-full flex-1 md:gap-3.5">
             <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
 
-            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-2.5 overflow-hidden sm:gap-3 md:gap-3.5">
+            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden">
               <ShellHeader
                 sidebarConfig={sidebarConfig}
                 isSidebarCollapsed={isSidebarCollapsed}

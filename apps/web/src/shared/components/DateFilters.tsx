@@ -34,7 +34,7 @@ export function DateFilters({
         className={cn(
           "inline-flex h-7 cursor-pointer items-center rounded-full border px-2.5 text-[11px] font-medium transition-colors",
           isAll
-            ? "border-primary bg-primary/10 text-primary"
+            ? "border-primary bg-primary text-primary-foreground"
             : "border-border bg-card text-muted-foreground hover:text-foreground",
         )}
       >
@@ -55,7 +55,7 @@ export function DateFilters({
             className={cn(
               "inline-flex h-7 cursor-pointer items-center rounded-full border px-2.5 text-[11px] font-medium transition-colors",
               isActive
-                ? "border-primary bg-primary/10 text-primary"
+                ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-card text-muted-foreground hover:text-foreground",
             )}
           >

@@ -28,13 +28,13 @@ export function DateRangePicker({
         <div
           className={cn(
             "inline-flex h-7 items-center overflow-hidden rounded-full border text-[11px] font-medium",
-            "border-primary bg-primary/10 text-primary",
+            "border-primary bg-primary text-primary-foreground",
           )}
         >
           <PopoverTrigger asChild>
             <button
               type="button"
-              className="inline-flex h-full cursor-pointer items-center gap-1.5 px-2.5 transition hover:bg-primary/15"
+              className="inline-flex h-full cursor-pointer items-center gap-1.5 px-2.5 transition hover:bg-primary/90"
             >
               <CalendarRange className="size-3 shrink-0" aria-hidden="true" />
               <span>{rangeLabel}</span>
@@ -47,7 +47,7 @@ export function DateRangePicker({
               event.stopPropagation();
               onClear();
             }}
-            className="inline-flex h-full cursor-pointer items-center border-l border-primary/20 px-2 transition hover:bg-primary/15"
+            className="inline-flex h-full cursor-pointer items-center border-l border-primary-foreground/25 px-2 transition hover:bg-primary/90"
             aria-label="Clear date range"
           >
             <X className="size-3" />
