@@ -1,5 +1,3 @@
-import { applyStoredBrandFavicon } from "@/shared/utils/brandFavicon";
-
 export const THEME_STORAGE_KEY = "DF-theme";
 
 export type ThemePreference = "light" | "dark";
@@ -20,14 +18,26 @@ export function isDarkTheme(theme: ThemePreference) {
   return theme === "dark";
 }
 
+export function getSystemThemePreference(): ThemePreference {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+/** Stored choice wins; otherwise follow the OS. */
 export function resolveInitialThemePreference(): ThemePreference {
-  const stored = getStoredThemePreference();
-  if (stored) return stored;
-  return document.body.classList.contains("dark") ? "dark" : "light";
+  return getStoredThemePreference() ?? getSystemThemePreference();
+}
+
+export function applyThemeClassToDocument(isDark: boolean) {
+  document.body.classList.toggle("dark", isDark);
 }
 
 export function applyStoredThemeClassToDocument() {
   const stored = getStoredThemePreference();
-  document.body.classList.toggle("dark", stored === "dark");
-  applyStoredBrandFavicon();
+  const isDark =
+    stored === "dark" ||
+    (stored == null && getSystemThemePreference() === "dark");
+  applyThemeClassToDocument(isDark);
 }

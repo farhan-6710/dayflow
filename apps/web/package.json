@@ -16,7 +16,8 @@
     "seed:oct-tasks": "bun scripts/seed-october-tasks.ts",
     "seed:august-end-tasks": "bun scripts/seed-august-end-tasks.ts",
     "generate:favicon": "bun scripts/generate-favicon.ts",
-    "generate:logos": "python3 scripts/process-logos.py && python3 scripts/generate-logo-light-from-dark.py",
+    "generate:logos": "python3 scripts/process-logos.py && python3 scripts/generate-logo-light-from-dark.py && bun scripts/generate-favicon.ts",
+    "generate:auth-panels": "python3 scripts/generate-auth-panels.py",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build"

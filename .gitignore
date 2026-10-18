@@ -32,5 +32,8 @@ dist-ssr
 .env.test.local
 .env.production.local
 
+# Generated logo/icon staging
+apps/web/scripts/.cache/
+
 # Hostinger / GoDaddy PHP crons — do not commit after adding secrets
 scripts/php/config.php
