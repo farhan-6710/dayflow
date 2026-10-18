@@ -7,6 +7,7 @@ import { useProjectsManagement } from "@/features/workspace/projects/hooks/usePr
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
+import { ProjectsDirectoryPageSkeleton } from "@/shared/components/pageSkeletons";
 import { PageHeader } from "@/shared/components/PageHeader";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 import { Button } from "@/shared/ui/button";
@@ -81,21 +82,25 @@ export function ProjectsManagementPage() {
         }
       />
 
-      <PageContent>
-        {error ? <ErrorBanner message={error} /> : null}
-        <ProjectsTable
-          projects={filteredProjects}
-          isLoading={loading}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-          searchQuery={searchQuery}
-          onSearchQueryChange={setSearchQuery}
-          onEditProject={handleOpenEditDialog}
-          onToggleActive={(project) => void handleToggleActive(project)}
-          onDeleteProject={confirmDelete}
-          onReorderProjects={handleReorderProjects}
-        />
-      </PageContent>
+      {!loading ? (
+        <PageContent>
+          {error ? <ErrorBanner message={error} /> : null}
+          <ProjectsTable
+            projects={filteredProjects}
+            isLoading={false}
+            statusFilter={statusFilter}
+            onStatusFilterChange={setStatusFilter}
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+            onEditProject={handleOpenEditDialog}
+            onToggleActive={(project) => void handleToggleActive(project)}
+            onDeleteProject={confirmDelete}
+            onReorderProjects={handleReorderProjects}
+          />
+        </PageContent>
+      ) : (
+        <ProjectsDirectoryPageSkeleton />
+      )}
 
       <ProjectFormDialog
         open={dialogOpen}

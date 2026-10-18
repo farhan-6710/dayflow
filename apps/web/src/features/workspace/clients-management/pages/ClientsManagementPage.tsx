@@ -8,6 +8,7 @@ import { useClientsQuery } from "@/features/workspace/clients-management/hooks/u
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
+import { ClientsDirectoryPageSkeleton } from "@/shared/components/pageSkeletons";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Button } from "@/shared/ui/button";
 import { filterByActiveStatus } from "@/shared/utils/activeStatusFilterUtils";
@@ -47,18 +48,22 @@ export function ClientsManagementPage() {
         }
       />
 
-      <PageContent>
-        {error ? <ErrorBanner message={error} /> : null}
-        <ClientsTable
-          clients={filteredClients}
-          isLoading={isLoading}
-          onEditClient={openEditDialog}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-          searchQuery={searchQuery}
-          onSearchQueryChange={setSearchQuery}
-        />
-      </PageContent>
+      {!isLoading ? (
+        <PageContent>
+          {error ? <ErrorBanner message={error} /> : null}
+          <ClientsTable
+            clients={filteredClients}
+            isLoading={false}
+            onEditClient={openEditDialog}
+            statusFilter={statusFilter}
+            onStatusFilterChange={setStatusFilter}
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+          />
+        </PageContent>
+      ) : (
+        <ClientsDirectoryPageSkeleton />
+      )}
 
       <ClientDialog {...dialog} />
     </div>

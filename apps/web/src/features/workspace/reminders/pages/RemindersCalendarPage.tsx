@@ -9,11 +9,8 @@ import {
 import { useRemindersCalendarSelection } from "@/features/workspace/reminders/hooks/useRemindersCalendarSelection";
 import { PageContent } from "@/shared/components/PageContent";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
-import { FluidReveal } from "@/shared/components/FluidReveal";
-import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
-import { cn } from "@/shared/lib/utils";
+import { RemindersCalendarPageSkeleton } from "@/shared/components/pageSkeletons";
 import { MonthSelector } from "@/shared/ui/MonthSelector";
 import { Button } from "@/shared/ui/button";
 
@@ -34,7 +31,7 @@ export function RemindersCalendarPage() {
   useReminderChecker(reminders);
 
   return (
-    <PageContent>
+    <div className="space-y-4">
       <PageHeader
         heading="Reminders Calendar"
         description="Browse recurring reminders by month. Add reminders with days, time, and optional disable periods."
@@ -50,31 +47,23 @@ export function RemindersCalendarPage() {
         }
       />
 
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-          <p>Active reminders appear on matching weekdays at their scheduled time.</p>
-          <MonthSelector
-            year={year}
-            month={month}
-            onSelect={selectDate}
-            className="w-full sm:w-auto"
-          />
-        </div>
-      </div>
+      {!loading ? (
+        <PageContent motionKey={`${year}-${month}`}>
+          <div className="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <p>
+              Active reminders appear on matching weekdays at their scheduled
+              time.
+            </p>
+            <MonthSelector
+              year={year}
+              month={month}
+              onSelect={selectDate}
+              className="w-full sm:w-auto"
+            />
+          </div>
 
-      {error ? <ErrorBanner message={error} /> : null}
+          {error ? <ErrorBanner message={error} /> : null}
 
-      <FluidReveal
-        motionKey={loading ? "loading" : `${year}-${month}`}
-        className={
-          loading
-            ? cn("flex min-h-[320px] items-center justify-center", glassPanelClassName)
-            : undefined
-        }
-      >
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
           <RemindersWeeksTable
             year={year}
             month={month}
@@ -84,10 +73,12 @@ export function RemindersCalendarPage() {
             onOpenDay={() => openAddDialog()}
             onEdit={openEditDialog}
           />
-        )}
-      </FluidReveal>
+        </PageContent>
+      ) : (
+        <RemindersCalendarPageSkeleton />
+      )}
 
       <ReminderDialog {...dialog} />
-    </PageContent>
+    </div>
   );
 }

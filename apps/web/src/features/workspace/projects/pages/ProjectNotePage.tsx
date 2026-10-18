@@ -9,7 +9,9 @@ import { buildProjectNotePath } from "@/features/workspace/projects/constants/ro
 import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { ProjectsDirectoryPageSkeleton } from "@/shared/components/pageSkeletons";
 import { Button } from "@/shared/ui/button";
 
 export function ProjectNotePage() {
@@ -35,8 +37,9 @@ export function ProjectNotePage() {
 
   if (loading) {
     return (
-      <div className="py-12 text-center text-sm text-muted-foreground">
-        Loading note...
+      <div className="space-y-4">
+        <PageHeader heading="Note" description="Loading note…" />
+        <ProjectsDirectoryPageSkeleton rows={4} />
       </div>
     );
   }
@@ -64,7 +67,7 @@ export function ProjectNotePage() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-120px)] flex-col space-y-4">
+    <PageContent className="flex min-h-[calc(100vh-120px)] flex-col">
       <PageHeader
         heading={isDraft ? "New Note" : note.title.trim() || "Note"}
         description={`Notes management for ${project.name}.`}
@@ -145,7 +148,7 @@ export function ProjectNotePage() {
           }
         }}
       />
-    </div>
+    </PageContent>
   );
 }
 

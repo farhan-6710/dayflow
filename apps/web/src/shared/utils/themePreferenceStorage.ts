@@ -2,6 +2,9 @@ export const THEME_STORAGE_KEY = "DF-theme";
 
 export type ThemePreference = "light" | "dark";
 
+/** App default when the user has not stored a choice. */
+export const DEFAULT_THEME_PREFERENCE: ThemePreference = "dark";
+
 export function getStoredThemePreference(): ThemePreference | null {
   const stored = localStorage.getItem(THEME_STORAGE_KEY);
   if (stored === "dark" || stored === "light") {
@@ -18,16 +21,9 @@ export function isDarkTheme(theme: ThemePreference) {
   return theme === "dark";
 }
 
-export function getSystemThemePreference(): ThemePreference {
-  if (typeof window === "undefined") return "light";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
-/** Stored choice wins; otherwise follow the OS. */
+/** Stored choice wins; otherwise dark. */
 export function resolveInitialThemePreference(): ThemePreference {
-  return getStoredThemePreference() ?? getSystemThemePreference();
+  return getStoredThemePreference() ?? DEFAULT_THEME_PREFERENCE;
 }
 
 export function applyThemeClassToDocument(isDark: boolean) {
@@ -35,9 +31,5 @@ export function applyThemeClassToDocument(isDark: boolean) {
 }
 
 export function applyStoredThemeClassToDocument() {
-  const stored = getStoredThemePreference();
-  const isDark =
-    stored === "dark" ||
-    (stored == null && getSystemThemePreference() === "dark");
-  applyThemeClassToDocument(isDark);
+  applyThemeClassToDocument(isDarkTheme(resolveInitialThemePreference()));
 }

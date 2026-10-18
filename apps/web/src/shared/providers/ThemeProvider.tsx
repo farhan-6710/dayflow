@@ -11,8 +11,6 @@ import {
 import {
   applyThemeClassToDocument,
   applyStoredThemeClassToDocument,
-  getStoredThemePreference,
-  getSystemThemePreference,
   isDarkTheme,
   resolveInitialThemePreference,
   setStoredThemePreference,
@@ -34,7 +32,7 @@ type ThemeProviderProps = {
   children: ReactNode;
 };
 
-// Run before the first paint so the first frame matches stored or system theme.
+// Run before the first paint so the first frame matches stored theme or dark default.
 applyStoredThemeClassToDocument();
 applyStoredBrandFavicon();
 
@@ -46,20 +44,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     applyThemeClassToDocument(isDarkMode);
     applyBrandFavicon(isDarkMode);
   }, [isDarkMode]);
-
-  // While the user has not chosen a theme, keep following OS changes.
-  useEffect(() => {
-    if (getStoredThemePreference()) return;
-
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => {
-      if (getStoredThemePreference()) return;
-      setTheme(getSystemThemePreference());
-    };
-
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
 
   const setDarkMode = useCallback((enabled: boolean) => {
     const next: ThemePreference = enabled ? "dark" : "light";

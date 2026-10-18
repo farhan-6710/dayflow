@@ -17,6 +17,7 @@ import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { ClientDetailPageSkeleton } from "@/shared/components/pageSkeletons";
 import { Button } from "@/shared/ui/button";
 
 export function ClientDetailPage() {
@@ -68,8 +69,9 @@ export function ClientDetailPage() {
 
   if (loading && !client) {
     return (
-      <div className="py-12 text-center text-sm text-muted-foreground">
-        Loading client...
+      <div className="space-y-4">
+        <PageHeader heading="Client" description="Loading client details…" />
+        <ClientDetailPageSkeleton />
       </div>
     );
   }
@@ -148,7 +150,7 @@ export function ClientDetailPage() {
             onSend={() => void sendMessage()}
             onRefresh={() => void reload()}
             isSending={isSending}
-            isLoading={loading && messages.length === 0}
+            isLoading={false}
             isRefreshing={loading}
             editingMessageId={editingMessageId}
             onEditMessage={startEdit}
@@ -163,7 +165,7 @@ export function ClientDetailPage() {
 
         <ClientProjectsSection
           projects={projects}
-          isLoading={loading}
+          isLoading={false}
           canAddProject={client.is_active}
           onAddProject={openCreateProjectDialog}
         />

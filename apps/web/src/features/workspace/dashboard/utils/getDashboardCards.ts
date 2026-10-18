@@ -1,4 +1,9 @@
-import { ArrowUpRight } from "lucide-react";
+import {
+  CheckSquare,
+  ClockAlert,
+  FolderKanban,
+  ListTodo,
+} from "lucide-react";
 
 import {
   WORKSPACE_PROJECTS_MANAGEMENT_PATH,
@@ -32,7 +37,7 @@ export function getDashboardCards(
       id: "pending-tasks",
       label: "Pending Tasks",
       value: stats.pending,
-      icon: ArrowUpRight,
+      icon: ListTodo,
       description: isAll
         ? "Tasks left to complete across all time"
         : `Tasks left to complete in ${periodDesc}`,
@@ -44,7 +49,7 @@ export function getDashboardCards(
       id: "overdue-tasks",
       label: "Overdue Tasks",
       value: stats.overdue,
-      icon: ArrowUpRight,
+      icon: ClockAlert,
       description: isAll
         ? "Tasks past their due date across all time"
         : `Tasks past their due date in ${periodDesc}`,
@@ -56,7 +61,7 @@ export function getDashboardCards(
       id: "projects",
       label: "Total Projects",
       value: stats.projectsCount,
-      icon: ArrowUpRight,
+      icon: FolderKanban,
       description: isAll
         ? "Note folders in your workspace"
         : `Note folders created in ${periodDesc}`,
@@ -68,7 +73,7 @@ export function getDashboardCards(
       id: "completed-tasks",
       label: "Completed Tasks",
       value: `${stats.completed}/${stats.total}`,
-      icon: ArrowUpRight,
+      icon: CheckSquare,
       description: isAll
         ? "Tasks finished successfully across all time"
         : `Tasks finished successfully in ${periodDesc}`,

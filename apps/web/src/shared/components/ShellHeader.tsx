@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { PortalUserHeaderMenu } from "@/shared/components/PortalUserHeaderMenu";
 import { ShellNavSearch } from "@/shared/components/ShellNavSearch";
 import { glassPanelClassName } from "@/shared/constants/layoutStyles";
-import { SHELL_HEADER_MOTION } from "@/shared/constants/pageMotion";
+import {
+  SHELL_HEADER_ITEM,
+  SHELL_HEADER_MOTION,
+  SHELL_STAGGER,
+} from "@/shared/constants/pageMotion";
 import { cn } from "@/shared/lib/utils";
 import { useTheme } from "@/shared/providers/ThemeProvider";
 import type { ShellSidebarConfig } from "@/shared/types/components";
@@ -44,54 +48,66 @@ export function ShellHeader({
         glassPanelClassName,
       )}
     >
-      <Button
-        type="button"
-        variant="secondary"
-        onClick={() => setIsMobileNavOpen(true)}
-        aria-label="Open navigation menu"
-        className="inline-flex size-9 items-center justify-center rounded-xl border border-border md:hidden"
+      <motion.div
+        className="flex w-full min-w-0 items-center gap-2 sm:gap-4"
+        {...SHELL_STAGGER}
       >
-        <Menu className="size-4" aria-hidden="true" />
-      </Button>
+        <motion.div variants={SHELL_HEADER_ITEM} className="shrink-0">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setIsMobileNavOpen(true)}
+            aria-label="Open navigation menu"
+            className="inline-flex size-9 items-center justify-center rounded-xl border border-border md:hidden"
+          >
+            <Menu className="size-4" aria-hidden="true" />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setIsSidebarCollapsed((prev) => !prev)}
+            aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            className="hidden size-9 items-center justify-center rounded-xl md:inline-flex"
+          >
+            <Menu className="size-4" aria-hidden="true" />
+          </Button>
+        </motion.div>
 
-      <Button
-        type="button"
-        variant="secondary"
-        onClick={() => setIsSidebarCollapsed((prev) => !prev)}
-        aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        className="hidden size-9 items-center justify-center rounded-xl md:inline-flex"
-      >
-        <Menu className="size-4" aria-hidden="true" />
-      </Button>
-
-      <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
-        <ShellNavSearch
-          nav={sidebarConfig.nav}
-          placeholder={sidebarConfig.searchPlaceholder ?? "Search navigation..."}
-        />
-        {headerCenter}
-      </div>
-
-      <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-3">
-        {headerActions}
-        <div className="flex items-center gap-1.5 text-muted-foreground sm:gap-2">
-          <Sun className="hidden size-4 min-[360px]:block" aria-hidden="true" />
-          <Switch
-            checked={isDarkMode}
-            onCheckedChange={setDarkMode}
-            aria-label="Toggle dark mode"
-            className="cursor-pointer"
+        <motion.div
+          variants={SHELL_HEADER_ITEM}
+          className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4"
+        >
+          <ShellNavSearch
+            nav={sidebarConfig.nav}
+            placeholder={sidebarConfig.searchPlaceholder ?? "Search navigation..."}
           />
-          <Moon className="hidden size-4 min-[360px]:block" aria-hidden="true" />
-        </div>
-        {accountPath ? (
-          <PortalUserHeaderMenu
-            accountPath={accountPath}
-            settingsPath={settingsPath}
-            signOutRedirect={signOutRedirect}
-          />
-        ) : null}
-      </div>
+          {headerCenter}
+        </motion.div>
+
+        <motion.div
+          variants={SHELL_HEADER_ITEM}
+          className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-3"
+        >
+          {headerActions}
+          <div className="flex items-center gap-1.5 text-muted-foreground sm:gap-2">
+            <Sun className="hidden size-4 min-[360px]:block" aria-hidden="true" />
+            <Switch
+              checked={isDarkMode}
+              onCheckedChange={setDarkMode}
+              aria-label="Toggle dark mode"
+              className="cursor-pointer"
+            />
+            <Moon className="hidden size-4 min-[360px]:block" aria-hidden="true" />
+          </div>
+          {accountPath ? (
+            <PortalUserHeaderMenu
+              accountPath={accountPath}
+              settingsPath={settingsPath}
+              signOutRedirect={signOutRedirect}
+            />
+          ) : null}
+        </motion.div>
+      </motion.div>
     </motion.header>
   );
 }

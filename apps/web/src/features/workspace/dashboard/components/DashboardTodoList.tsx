@@ -21,6 +21,26 @@ import { TodoListItem } from "@/features/workspace/dashboard/components/TodoList
 import type { DashboardTodoListProps } from "@/features/workspace/dashboard/types/components";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+import { Skeleton } from "@/shared/ui/skeleton";
+
+/** Mirrors TodoListItem row: grip + checkbox + title/desc + menu (py-3, items-start). */
+function TodoRowSkeleton() {
+  return (
+    <div className="flex min-w-0 items-start gap-2 py-3" aria-hidden="true">
+      <Skeleton className="mt-0.5 size-5 shrink-0 rounded" />
+      <Skeleton className="mt-0.5 size-5 shrink-0 rounded" />
+      <div className="min-w-0 flex-1">
+        <div className="flex h-5 items-center">
+          <Skeleton className="h-3.5 w-3/5 max-w-48" />
+        </div>
+        <div className="mt-0.5 flex h-4 items-center">
+          <Skeleton className="h-3 w-2/5 max-w-32" />
+        </div>
+      </div>
+      <Skeleton className="size-7 shrink-0 rounded-md" />
+    </div>
+  );
+}
 
 export function DashboardTodoList({
   pendingTodos,
@@ -80,8 +100,10 @@ export function DashboardTodoList({
 
       <div className="mt-4 [&>[data-slot=todo-row]+[data-slot=todo-row]]:border-t [&>[data-slot=todo-row]+[data-slot=todo-row]]:border-border">
         {loading ? (
-          <div className="py-6 text-center text-sm text-muted-foreground">
-            Loading todos...
+          <div className="divide-y divide-border" aria-busy="true" aria-label="Loading todos">
+            <TodoRowSkeleton />
+            <TodoRowSkeleton />
+            <TodoRowSkeleton />
           </div>
         ) : pendingTodos.length === 0 ? (
           <div className="py-8 text-center">

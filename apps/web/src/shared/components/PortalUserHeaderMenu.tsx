@@ -65,6 +65,7 @@ export function PortalUserHeaderMenu({
               src={avatarUrl}
               name={displayName}
               initials={initials}
+              initialsClassName="rounded-full bg-transparent text-xs font-semibold text-foreground"
             />
           </Button>
         </DropdownMenuTrigger>

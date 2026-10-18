@@ -1,4 +1,3 @@
-import { ArrowUpRight, Loader2 } from "lucide-react";
 import { Link } from "react-router";
 
 import { Sparkline } from "@/shared/components/Sparkline";
@@ -14,26 +13,17 @@ import {
 
 type StatCardProps = {
   card: StatCardItem;
-  idx: number;
-  isLoading: boolean;
 };
 
-export function StatCard({ card, idx, isLoading }: StatCardProps) {
-  const isAccent = idx % 2 === 1;
+export function StatCard({ card }: StatCardProps) {
+  const Icon = card.icon;
   const tooltipText =
     card.descriptionTooltip ??
     (card.description ? `${card.label}\n${card.description}` : null);
 
   const iconButton = (
-    <span
-      className={cn(
-        "inline-flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-200",
-        isAccent
-          ? "border-accent/30 bg-accent/10 text-accent group-hover/icon:border-accent group-hover/icon:bg-accent group-hover/icon:text-accent-foreground"
-          : "border-primary/30 bg-primary/10 text-primary group-hover/icon:border-primary group-hover/icon:bg-primary group-hover/icon:text-primary-foreground",
-      )}
-    >
-      <ArrowUpRight className="size-3.5 transition-transform duration-200 group-hover/icon:rotate-45" />
+    <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/60 text-primary/60 bg-primary/10 text-primary transition-all duration-200 group-hover/icon:bg-primary group-hover/icon:text-primary-foreground">
+      <Icon className="size-3.5 transition-transform duration-200 group-hover/icon:scale-110" />
     </span>
   );
 
@@ -42,7 +32,7 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
       className={cn(
         "relative px-4 py-3.5 transition-all duration-200",
         glassPanelClassName,
-        isAccent ? "hover:border-accent/50" : "hover:border-primary/50",
+        "hover:border-primary/50",
       )}
     >
       <div className="flex items-start justify-between gap-3">
@@ -52,14 +42,10 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
           </span>
 
           <div className="mt-1.5 flex items-center gap-3">
-            {isLoading ? (
-              <Loader2 className="size-5 animate-spin text-muted-foreground" />
-            ) : (
-              <span className="text-2xl font-semibold tracking-tight text-foreground">
-                {card.value}
-              </span>
-            )}
-            {card.sparklineData && !isLoading ? (
+            <span className="text-2xl font-semibold tracking-tight text-foreground">
+              {card.value}
+            </span>
+            {card.sparklineData ? (
               <Sparkline
                 data={card.sparklineData}
                 color={card.sparklineColor ?? "var(--chart-1)"}
@@ -68,7 +54,7 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
             ) : null}
           </div>
 
-          {card.description && !isLoading ? (
+          {card.description ? (
             tooltipText ? (
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -87,7 +73,7 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
             )
           ) : null}
 
-          {card.delta && card.deltaLabel && !isLoading ? (
+          {card.delta && card.deltaLabel ? (
             <StatCardTrend
               delta={card.delta}
               deltaLabel={card.deltaLabel}

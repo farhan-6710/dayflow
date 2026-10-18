@@ -9,6 +9,7 @@ import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { ProjectsDirectoryPageSkeleton } from "@/shared/components/pageSkeletons";
 import {
   fetchProjectsForClientPortal,
   type Project,
@@ -52,40 +53,44 @@ export function ClientProjectsPage() {
         heading="Projects"
         description="Projects your provider has shared with you."
       />
-      <PageContent>
-        {error ? <ErrorBanner message={error} /> : null}
-        <DirectoryTable
-          title="Your projects"
-          description="Select a project to view details and activities."
-          gridClass={GRID_CLASS}
-          columns={[{ label: "Project" }, { label: "Status" }]}
-          emptyMessage="No projects have been shared with you yet."
-          isLoading={loading}
-          isEmpty={!loading && projects.length === 0}
-        >
-          {projects.map((project) => (
-            <DirectoryTableRow
-              key={project.id}
-              to={buildClientProjectDetailPath(project.id)}
-              className={`grid items-center gap-4 px-6 py-4 ${GRID_CLASS}`}
-            >
-              <div className="flex min-w-0 items-center gap-3">
-                <span
-                  className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
-                  style={{ backgroundColor: project.color_hex }}
-                  aria-hidden="true"
-                >
-                  <Folder className="size-4" />
+      {!loading ? (
+        <PageContent>
+          {error ? <ErrorBanner message={error} /> : null}
+          <DirectoryTable
+            title="Your projects"
+            description="Select a project to view details and activities."
+            gridClass={GRID_CLASS}
+            columns={[{ label: "Project" }, { label: "Status" }]}
+            emptyMessage="No projects have been shared with you yet."
+            isLoading={false}
+            isEmpty={projects.length === 0}
+          >
+            {projects.map((project) => (
+              <DirectoryTableRow
+                key={project.id}
+                to={buildClientProjectDetailPath(project.id)}
+                className={`grid items-center gap-4 px-6 py-4 ${GRID_CLASS}`}
+              >
+                <div className="flex min-w-0 items-center gap-3">
+                  <span
+                    className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
+                    style={{ backgroundColor: project.color_hex }}
+                    aria-hidden="true"
+                  >
+                    <Folder className="size-4" />
+                  </span>
+                  <span className="truncate font-medium">{project.name}</span>
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  {project.is_active ? "Active" : "Inactive"}
                 </span>
-                <span className="truncate font-medium">{project.name}</span>
-              </div>
-              <span className="text-sm text-muted-foreground">
-                {project.is_active ? "Active" : "Inactive"}
-              </span>
-            </DirectoryTableRow>
-          ))}
-        </DirectoryTable>
-      </PageContent>
+              </DirectoryTableRow>
+            ))}
+          </DirectoryTable>
+        </PageContent>
+      ) : (
+        <ProjectsDirectoryPageSkeleton />
+      )}
     </div>
   );
 }

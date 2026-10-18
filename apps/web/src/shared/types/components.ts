@@ -66,6 +66,11 @@ export type PageContentProps = {
   children: ReactNode;
   /** Replay the page stagger when this value changes (filters, selected period). */
   motionKey?: string;
+  /**
+   * When false, children render statically (skeletons). When true, mount with
+   * the fluid stagger — use for data-ready so loading placeholders never animate.
+   */
+  ready?: boolean;
 };
 
 export type FluidRevealProps = {

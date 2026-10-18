@@ -3,8 +3,8 @@ import {
   resolveBrandFaviconHref,
 } from "@/shared/constants/brandAssets";
 import {
-  getStoredThemePreference,
-  getSystemThemePreference,
+  isDarkTheme,
+  resolveInitialThemePreference,
 } from "@/shared/utils/themePreferenceStorage";
 
 const FAVICON_SELECTOR = 'link[data-dayflow-favicon="true"]';
@@ -27,13 +27,9 @@ export function applyBrandFaviconFromDocumentTheme() {
   applyBrandFavicon(document.body.classList.contains("dark"));
 }
 
-/** Initial favicon before React mounts — stored theme, else system. */
+/** Initial favicon before React mounts — stored theme, else dark default. */
 export function applyStoredBrandFavicon() {
-  const stored = getStoredThemePreference();
-  const isDark =
-    stored === "dark" ||
-    (stored == null && getSystemThemePreference() === "dark");
-  applyBrandFavicon(isDark);
+  applyBrandFavicon(isDarkTheme(resolveInitialThemePreference()));
 }
 
 export { BRAND_FAVICON };

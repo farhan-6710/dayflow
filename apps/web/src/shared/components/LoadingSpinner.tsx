@@ -6,6 +6,7 @@ import type {
   LoadingSpinnerProps,
   TableLoadingStateProps,
 } from "@/shared/types/components";
+import { Skeleton } from "@/shared/ui/skeleton";
 
 const sizeClasses = {
   sm: "size-4",
@@ -42,13 +43,22 @@ export function CenteredLoading({ className }: CenteredLoadingProps) {
   );
 }
 
+/** Static table-body placeholder — no entrance motion. */
 export function TableLoadingState({ minHeight = 240 }: TableLoadingStateProps) {
   return (
     <div
-      className="flex items-center justify-center px-6 py-10"
+      className="divide-y divide-border px-6"
       style={{ minHeight }}
+      aria-busy="true"
+      aria-label="Loading"
     >
-      <LoadingSpinner />
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div key={index} className="flex items-center gap-4 py-3.5">
+          <Skeleton className="h-3.5 w-1/4 max-w-40" />
+          <Skeleton className="h-3.5 w-1/5 max-w-28" />
+          <Skeleton className="ml-auto h-3.5 w-16" />
+        </div>
+      ))}
     </div>
   );
 }

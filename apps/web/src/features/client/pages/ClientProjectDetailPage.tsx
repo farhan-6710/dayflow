@@ -7,6 +7,7 @@ import { CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes"
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { ProjectDetailPageSkeleton } from "@/shared/components/pageSkeletons";
 import {
   fetchProjectForClientPortal,
   type Project,
@@ -37,8 +38,20 @@ export function ClientProjectDetailPage() {
 
   if (loading && !project) {
     return (
-      <div className="py-12 text-center text-sm text-muted-foreground">
-        Loading project...
+      <div className="space-y-4">
+        <PageHeader
+          heading="Project"
+          description="Loading project details…"
+          backButton={
+            <Link
+              to={CLIENT_PORTAL_PROJECTS_PATH}
+              className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="size-4" /> Back to Projects
+            </Link>
+          }
+        />
+        <ProjectDetailPageSkeleton />
       </div>
     );
   }

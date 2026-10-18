@@ -9,6 +9,7 @@ import {
 import { useClientDashboard } from "@/features/client/hooks/useClientDashboard";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { PageContent } from "@/shared/components/PageContent";
+import { StatsAndBlockPageSkeleton } from "@/shared/components/pageSkeletons";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { getUserDisplayName } from "@/shared/utils/authUserDisplay";
@@ -101,23 +102,24 @@ export function ClientDashboardPage() {
         description={`${client.company_name} · Your projects and activities at a glance.`}
       />
 
-      <PageContent
-        className="space-y-4"
-        motionKey={loading ? "loading" : "ready"}
-      >
-        <StatsCards cards={cards} isLoading={loading} />
+      {!loading ? (
+        <PageContent className="space-y-4">
+          <StatsCards cards={cards} />
 
-        <div id={ACTIVITIES_SECTION_ID} className="scroll-mt-6">
-          <ClientActivitiesBlock
-            scope="client"
-            clientId={client.id}
-            forClientPortal
-            clientCompanyName={client.company_name}
-            canEdit
-            activityRaisedBy="client"
-          />
-        </div>
-      </PageContent>
+          <div id={ACTIVITIES_SECTION_ID} className="scroll-mt-6">
+            <ClientActivitiesBlock
+              scope="client"
+              clientId={client.id}
+              forClientPortal
+              clientCompanyName={client.company_name}
+              canEdit
+              activityRaisedBy="client"
+            />
+          </div>
+        </PageContent>
+      ) : (
+        <StatsAndBlockPageSkeleton />
+      )}
     </div>
   );
 }

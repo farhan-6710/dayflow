@@ -6,6 +6,7 @@ import { fetchNotes, type Note } from "@/services/notesService";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
+import { AnalyticsPageSkeleton } from "@/shared/components/pageSkeletons";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { showToast } from "@/shared/utils/showToast";
 import {
@@ -131,9 +132,10 @@ export function AnalyticsPage() {
         description="Track task completion and see how notes are distributed across projects."
       />
 
-      <PageContent motionKey={loading ? "loading" : "ready"}>
+      {!loading ? (
+      <PageContent>
         {error ? <ErrorBanner message={error} /> : null}
-        <StatsCards cards={cards} isLoading={loading} />
+        <StatsCards cards={cards} />
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
           <div
@@ -147,11 +149,7 @@ export function AnalyticsPage() {
             </p>
 
             <div className="flex-1 flex items-center justify-center min-h-0 mt-4">
-              {loading ? (
-                <div className="text-sm text-muted-foreground">
-                  Loading chart...
-                </div>
-              ) : totalTasks === 0 ? (
+              {totalTasks === 0 ? (
                 <div className="text-sm text-muted-foreground">
                   No task data to display
                 </div>
@@ -234,11 +232,7 @@ export function AnalyticsPage() {
             </p>
 
             <div className="flex-1 min-h-0 mt-6">
-              {loading ? (
-                <div className="size-full flex items-center justify-center text-sm text-muted-foreground">
-                  Loading chart...
-                </div>
-              ) : notesByProjectData.length === 0 ? (
+              {notesByProjectData.length === 0 ? (
                 <div className="size-full flex items-center justify-center text-sm text-muted-foreground">
                   No note data to display
                 </div>
@@ -297,6 +291,9 @@ export function AnalyticsPage() {
           </div>
         </div>
       </PageContent>
+      ) : (
+        <AnalyticsPageSkeleton />
+      )}
     </div>
   );
 }

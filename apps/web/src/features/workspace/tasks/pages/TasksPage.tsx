@@ -16,6 +16,7 @@ import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
+import { TasksDirectoryPageSkeleton } from "@/shared/components/pageSkeletons";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -108,62 +109,62 @@ export function TasksPage() {
         }
       />
 
-      <PageContent>
-        {error ? <ErrorBanner message={error} /> : null}
-        <DirectoryTable
-          title="All Tasks"
-          description={
-            loading
-              ? "Loading…"
-              : `${tasks.length} task${tasks.length === 1 ? "" : "s"}`
-          }
-          gridClass={tasksDirectoryConfig.gridClass}
-          columns={[...tasksDirectoryConfig.columns]}
-          isLoading={loading}
-          isEmpty={!loading && tasks.length === 0}
-          emptyMessage="No tasks found. Try clearing filters or add a new task."
-          headerAside={
-            <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
-              <div
-                className={cn("relative", containMinWidthClassName, "sm:w-56")}
-              >
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search tasks…"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-9 pl-9 text-sm"
+      {!loading ? (
+        <PageContent>
+          {error ? <ErrorBanner message={error} /> : null}
+          <DirectoryTable
+            title="All Tasks"
+            description={`${tasks.length} task${tasks.length === 1 ? "" : "s"}`}
+            gridClass={tasksDirectoryConfig.gridClass}
+            columns={[...tasksDirectoryConfig.columns]}
+            isLoading={false}
+            isEmpty={tasks.length === 0}
+            emptyMessage="No tasks found. Try clearing filters or add a new task."
+            headerAside={
+              <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
+                <div
+                  className={cn("relative", containMinWidthClassName, "sm:w-56")}
+                >
+                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search tasks…"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="h-9 pl-9 text-sm"
+                  />
+                </div>
+
+                <OptionDropdown
+                  value={filterPriority}
+                  onChange={setFilterPriority}
+                  options={FILTER_PRIORITY_OPTIONS}
+                  placeholder="All Priorities"
+                  className={cn(compactDropdownClassName, "sm:w-36")}
+                />
+                <MultiSelect
+                  value={filterStatus}
+                  onChange={setFilterStatus}
+                  options={TASK_STATUS_OPTIONS}
+                  placeholder="All Statuses"
+                  className="min-w-36 shrink-0"
                 />
               </div>
-
-              <OptionDropdown
-                value={filterPriority}
-                onChange={setFilterPriority}
-                options={FILTER_PRIORITY_OPTIONS}
-                placeholder="All Priorities"
-                className={cn(compactDropdownClassName, "sm:w-36")}
+            }
+          >
+            {tasks.map((task) => (
+              <TaskListItem
+                key={task.id}
+                task={task}
+                onEdit={() => handleOpenEditDialog(task)}
+                onDelete={() => confirmDelete(task.id)}
               />
-              <MultiSelect
-                value={filterStatus}
-                onChange={setFilterStatus}
-                options={TASK_STATUS_OPTIONS}
-                placeholder="All Statuses"
-                className="min-w-36 shrink-0"
-              />
-            </div>
-          }
-        >
-          {tasks.map((task) => (
-            <TaskListItem
-              key={task.id}
-              task={task}
-              onEdit={() => handleOpenEditDialog(task)}
-              onDelete={() => confirmDelete(task.id)}
-            />
-          ))}
-        </DirectoryTable>
-      </PageContent>
+            ))}
+          </DirectoryTable>
+        </PageContent>
+      ) : (
+        <TasksDirectoryPageSkeleton />
+      )}
 
       <TaskFormDialog
         open={dialogOpen}

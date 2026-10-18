@@ -32,7 +32,7 @@ export function UserAvatar({
     return (
       <span
         className={cn(
-          "flex size-full items-center justify-center bg-primary/10 text-sm font-semibold text-primary",
+          "flex size-full items-center justify-center rounded-full bg-background text-sm font-semibold text-foreground",
           initialsClassName,
           className,
         )}
@@ -49,7 +49,7 @@ export function UserAvatar({
       alt={alt ?? name}
       referrerPolicy="no-referrer"
       onError={() => setFailedSrc(src ?? null)}
-      className={cn("size-full object-cover", imgClassName, className)}
+      className={cn("size-full rounded-full object-cover", imgClassName, className)}
     />
   );
 }

@@ -1,4 +1,5 @@
 import { DashboardChartsSection } from "@/features/workspace/dashboard/components/DashboardChartsSection";
+import { DashboardPageSkeleton } from "@/features/workspace/dashboard/components/DashboardPageSkeleton";
 import { DashboardTodoList } from "@/features/workspace/dashboard/components/DashboardTodoList";
 import { TodoFormDialog } from "@/features/workspace/dashboard/components/TodoFormDialog";
 import { TimeTracker } from "@/features/workspace/dashboard/components/TimeTracker";
@@ -22,6 +23,8 @@ export function DashboardPage() {
   const dashboard = useDashboard(filter);
   const todos = useDashboardTodos();
 
+  const pageReady = !dashboard.loading && !todos.loading;
+
   const isDemoAccount = isDemoAccountEmail(dashboard.user?.email);
   const greetingName = getWorkspaceDisplayName(
     dashboard.user,
@@ -41,42 +44,43 @@ export function DashboardPage() {
         actions={<DateFilters {...dateFilterProps} />}
       />
 
-      <PageContent motionKey={periodLabel}>
-        {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
+      {!pageReady ? (
+        <DashboardPageSkeleton />
+      ) : (
+        <PageContent motionKey={periodLabel}>
+          {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
 
-        <StatsCards cards={cards} isLoading={dashboard.loading} />
+          <StatsCards cards={cards} />
 
-        <div
-          className={cn(
-            "grid grid-cols-1 gap-4 lg:grid-cols-3",
-            containMinWidthClassName,
-          )}
-        >
-          <DashboardChartsSection
-            tasks={dashboard.tasks}
-            isLoading={dashboard.loading}
-          />
+          <div
+            className={cn(
+              "grid grid-cols-1 gap-4 lg:grid-cols-3",
+              containMinWidthClassName,
+            )}
+          >
+            <DashboardChartsSection tasks={dashboard.tasks} isLoading={false} />
 
-          <div className={cn("space-y-4", containMinWidthClassName)}>
-            <DashboardTodoList
-              pendingTodos={todos.pendingTodos}
-              completedTodos={todos.completedTodos}
-              loading={todos.loading}
-              busyTodoId={todos.busyTodoId}
-              exitingTodoId={todos.exitingTodoId}
-              completedOpen={todos.completedOpen}
-              onCompletedOpenChange={todos.setCompletedOpen}
-              onAdd={todos.handleOpenAdd}
-              onToggle={todos.handleToggle}
-              onEdit={todos.handleOpenEdit}
-              onDelete={todos.handleAskDelete}
-              onReorderPending={todos.handleReorderPending}
-              onExitComplete={todos.handleExitComplete}
-            />
-            <TimeTracker />
+            <div className={cn("space-y-4", containMinWidthClassName)}>
+              <DashboardTodoList
+                pendingTodos={todos.pendingTodos}
+                completedTodos={todos.completedTodos}
+                loading={false}
+                busyTodoId={todos.busyTodoId}
+                exitingTodoId={todos.exitingTodoId}
+                completedOpen={todos.completedOpen}
+                onCompletedOpenChange={todos.setCompletedOpen}
+                onAdd={todos.handleOpenAdd}
+                onToggle={todos.handleToggle}
+                onEdit={todos.handleOpenEdit}
+                onDelete={todos.handleAskDelete}
+                onReorderPending={todos.handleReorderPending}
+                onExitComplete={todos.handleExitComplete}
+              />
+              <TimeTracker />
+            </div>
           </div>
-        </div>
-      </PageContent>
+        </PageContent>
+      )}
 
       <TodoFormDialog
         open={todos.dialogOpen}

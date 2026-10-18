@@ -4,6 +4,7 @@ import { useNotificationsInbox } from "@/features/workspace/notifications/hooks/
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { NotificationsPageSkeleton } from "@/shared/components/pageSkeletons";
 
 export function NotificationsPage() {
   const {
@@ -16,33 +17,37 @@ export function NotificationsPage() {
   } = useNotificationsInbox();
 
   return (
-    <PageContent>
+    <div className="space-y-4">
       <PageHeader
         heading="Notifications"
         description="In-app alerts for reminders and task updates in your personal workspace."
       />
 
-      {error ? <ErrorBanner message={error} /> : null}
+      {!isLoading ? (
+        <PageContent>
+          {error ? <ErrorBanner message={error} /> : null}
 
-      <div className="space-y-4">
-        <ReminderNotificationsTable
-          notifications={reminderNotifications}
-          isLoading={isLoading}
-          dismissingId={dismissingId}
-          onDismiss={(notificationId) =>
-            void dismissNotification(notificationId)
-          }
-        />
+          <ReminderNotificationsTable
+            notifications={reminderNotifications}
+            isLoading={false}
+            dismissingId={dismissingId}
+            onDismiss={(notificationId) =>
+              void dismissNotification(notificationId)
+            }
+          />
 
-        <TaskNotificationsTable
-          notifications={taskNotifications}
-          isLoading={isLoading}
-          dismissingId={dismissingId}
-          onDismiss={(notificationId) =>
-            void dismissNotification(notificationId)
-          }
-        />
-      </div>
-    </PageContent>
+          <TaskNotificationsTable
+            notifications={taskNotifications}
+            isLoading={false}
+            dismissingId={dismissingId}
+            onDismiss={(notificationId) =>
+              void dismissNotification(notificationId)
+            }
+          />
+        </PageContent>
+      ) : (
+        <NotificationsPageSkeleton />
+      )}
+    </div>
   );
 }

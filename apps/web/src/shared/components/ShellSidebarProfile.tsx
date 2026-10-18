@@ -45,7 +45,7 @@ export function ShellSidebarProfile({ to, collapsed, onNavigate }: ShellSidebarP
       <div
         className={cn(
           "size-9 shrink-0 overflow-hidden rounded-full border",
-          isActive ? "border-primary-foreground/20" : "border-border",
+          isActive ? "border-primary-foreground/25" : "border-border",
         )}
       >
         <UserAvatar
@@ -54,8 +54,10 @@ export function ShellSidebarProfile({ to, collapsed, onNavigate }: ShellSidebarP
           initials={initials}
           alt=""
           initialsClassName={cn(
-            "text-xs font-semibold",
-            isActive ? "bg-primary-foreground/15 text-primary-foreground" : "bg-primary/10 text-primary",
+            "rounded-full text-xs font-semibold",
+            isActive
+              ? "bg-primary-foreground/15 text-primary-foreground"
+              : "bg-background text-foreground",
           )}
         />
       </div>

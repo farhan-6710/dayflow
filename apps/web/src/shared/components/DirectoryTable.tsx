@@ -78,19 +78,21 @@ export function DirectoryTable({
             ))}
           </div>
 
-          <FluidReveal motionKey={tableBodyKey(isLoading, isEmpty, children)}>
-            {isLoading ? (
-              <TableLoadingState />
-            ) : isEmpty ? (
-              <div className="px-6 py-10 text-center text-sm text-muted-foreground">
-                {emptyMessage}
-              </div>
-            ) : (
-              <div className="[&>[data-slot=directory-row]+[data-slot=directory-row]]:border-t [&>[data-slot=directory-row]+[data-slot=directory-row]]:border-border">
-                {children}
-              </div>
-            )}
-          </FluidReveal>
+          {isLoading ? (
+            <TableLoadingState />
+          ) : (
+            <FluidReveal motionKey={tableBodyKey(false, isEmpty, children)}>
+              {isEmpty ? (
+                <div className="px-6 py-10 text-center text-sm text-muted-foreground">
+                  {emptyMessage}
+                </div>
+              ) : (
+                <div className="[&>[data-slot=directory-row]+[data-slot=directory-row]]:border-t [&>[data-slot=directory-row]+[data-slot=directory-row]]:border-border">
+                  {children}
+                </div>
+              )}
+            </FluidReveal>
+          )}
         </div>
       </div>
     </div>

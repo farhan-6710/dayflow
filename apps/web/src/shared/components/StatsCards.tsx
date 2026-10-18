@@ -1,41 +1,34 @@
-import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
-import { FluidReveal } from "@/shared/components/FluidReveal";
 import { StatCard } from "@/shared/components/StatCard";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { StatCardSkeleton } from "@/shared/components/StatCardSkeleton";
+import { FLUID_ITEM, FLUID_LIST } from "@/shared/constants/pageMotion";
 import type { StatsCardsProps } from "@/shared/types/components";
-import { cn } from "@/shared/lib/utils";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 
 const cardGridClass =
   "grid w-full min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4";
 
 export function StatsCards({ cards, isLoading = false }: StatsCardsProps) {
-  if (isLoading && cards.length === 0) {
+  if (isLoading) {
     return (
-      <FluidReveal motionKey="loading" className={cardGridClass}>
+      <div className={cardGridClass} aria-busy="true" aria-label="Loading stats">
         {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className={cn(
-              "flex min-h-20 items-center justify-center px-4 py-3.5",
-              glassPanelClassName,
-            )}
-          >
-            <Loader2 className="size-5 animate-spin text-muted-foreground" />
-          </div>
+          <StatCardSkeleton key={index} />
         ))}
-      </FluidReveal>
+      </div>
     );
   }
 
   return (
     <TooltipProvider>
-      <FluidReveal motionKey="ready" className={cardGridClass}>
-        {cards.map((card, idx) => (
-          <StatCard key={card.id} card={card} idx={idx} isLoading={isLoading} />
+      <motion.div className={cardGridClass} {...FLUID_LIST}>
+        {cards.map((card) => (
+          <motion.div key={card.id} variants={FLUID_ITEM} className="min-w-0">
+            <StatCard card={card} />
+          </motion.div>
         ))}
-      </FluidReveal>
+      </motion.div>
     </TooltipProvider>
   );
 }

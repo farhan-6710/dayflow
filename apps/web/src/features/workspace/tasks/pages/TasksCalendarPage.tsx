@@ -8,12 +8,9 @@ import { useTasksCalendarSelection } from "@/features/workspace/tasks/hooks/useT
 import { useTasksManagement } from "@/features/workspace/tasks/hooks/useTasksManagement";
 import type { Task } from "@/services/tasksService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
-import { FluidReveal } from "@/shared/components/FluidReveal";
-import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
-import { cn } from "@/shared/lib/utils";
+import { TasksCalendarPageSkeleton } from "@/shared/components/pageSkeletons";
 
 export function TasksCalendarPage() {
   const { selectedDate, calendarWeeks, year, month, selectDate } =
@@ -40,27 +37,15 @@ export function TasksCalendarPage() {
   };
 
   return (
-    <PageContent>
+    <div className="space-y-4">
       <PageHeader
         heading="Tasks Calendar"
         description="Pick a day to review its tasks. Add a new one from the side panel."
       />
 
-      <FluidReveal
-        motionKey={tasks.loading ? "loading" : "ready"}
-        className={cn(
-          tasks.loading
-            ? cn(
-                "flex min-h-[320px] items-center justify-center sm:min-h-[420px]",
-                glassPanelClassName,
-              )
-            : "grid min-w-0 grid-cols-1 items-stretch gap-3 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(240px,3fr)]",
-        )}
-      >
-        {tasks.loading ? (
-          <LoadingSpinner />
-        ) : (
-          <>
+      {!tasks.loading ? (
+        <PageContent motionKey="ready">
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-3 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(240px,3fr)]">
             <TasksWeeksTable
               year={year}
               month={month}
@@ -78,9 +63,11 @@ export function TasksCalendarPage() {
               onDeleteTask={setTaskToDelete}
               onReorderTasks={tasks.handleReorderDayTasks}
             />
-          </>
-        )}
-      </FluidReveal>
+          </div>
+        </PageContent>
+      ) : (
+        <TasksCalendarPageSkeleton />
+      )}
 
       <TaskFormDialog
         open={tasks.dialogOpen}
@@ -133,7 +120,7 @@ export function TasksCalendarPage() {
           }
         }}
       />
-    </PageContent>
+    </div>
   );
 }
 

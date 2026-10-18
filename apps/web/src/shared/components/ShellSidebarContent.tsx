@@ -1,7 +1,10 @@
+import { motion } from "framer-motion";
+
 import { SidebarBrand } from "@/shared/components/SidebarBrand";
 import { ShellSidebarProfile } from "@/shared/components/ShellSidebarProfile";
 import { ShellNavGroup, ShellNavLink } from "@/shared/components/ShellNavLink";
 import { TransitionLink } from "@/shared/components/TransitionLink";
+import { SHELL_NAV_ITEM, SHELL_STAGGER } from "@/shared/constants/pageMotion";
 import { cn } from "@/shared/lib/utils";
 import { usePageTransition } from "@/shared/providers/pageTransitionContext";
 import type { ShellSidebarContentProps } from "@/shared/types/components";
@@ -17,8 +20,11 @@ export function ShellSidebarContent({
   const activeNavPath = resolveActiveNavPath(activePath, config.nav);
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="shrink-0 border-b border-sidebar-border/50 dark:border-white/5">
+    <motion.div className="flex h-full flex-col" {...SHELL_STAGGER}>
+      <motion.div
+        variants={SHELL_NAV_ITEM}
+        className="shrink-0 border-b border-sidebar-border/50 dark:border-white/5"
+      >
         <TransitionLink
           to={config.homeLink}
           onClick={onNavigate}
@@ -26,32 +32,34 @@ export function ShellSidebarContent({
         >
           <SidebarBrand collapsed={collapsed} subtitle={config.brandSubtitle} />
         </TransitionLink>
-      </div>
+      </motion.div>
 
       <nav className={cn("min-h-0 flex-1 space-y-1.5 overflow-y-auto", collapsed ? "p-3" : "p-4")}>
         {config.nav.map((item) =>
           item.children && item.children.length > 0 ? (
-            <ShellNavGroup
-              key={item.to}
-              item={item}
-              collapsed={collapsed}
-              activePath={activePath}
-              onNavigate={onNavigate}
-            />
+            <motion.div key={item.to} variants={SHELL_NAV_ITEM}>
+              <ShellNavGroup
+                item={item}
+                collapsed={collapsed}
+                activePath={activePath}
+                onNavigate={onNavigate}
+              />
+            </motion.div>
           ) : (
-            <ShellNavLink
-              key={item.to}
-              item={item}
-              isActive={routePath(item.to) === activeNavPath}
-              collapsed={collapsed}
-              onNavigate={onNavigate}
-            />
+            <motion.div key={item.to} variants={SHELL_NAV_ITEM}>
+              <ShellNavLink
+                item={item}
+                isActive={routePath(item.to) === activeNavPath}
+                collapsed={collapsed}
+                onNavigate={onNavigate}
+              />
+            </motion.div>
           ),
         )}
       </nav>
 
       {!collapsed && config.quickAction ? (
-        <div className="p-4">
+        <motion.div variants={SHELL_NAV_ITEM} className="p-4">
           <div className="rounded-2xl border border-border/60 bg-muted/30 p-4 backdrop-blur-md dark:border-white/5 dark:bg-white/5">
             <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               {config.quickAction.title}
@@ -67,16 +75,18 @@ export function ShellSidebarContent({
               {config.quickAction.buttonLabel}
             </TransitionLink>
           </div>
-        </div>
+        </motion.div>
       ) : null}
 
       {config.profilePath ? (
-        <ShellSidebarProfile
-          to={config.profilePath}
-          collapsed={collapsed}
-          onNavigate={onNavigate}
-        />
+        <motion.div variants={SHELL_NAV_ITEM}>
+          <ShellSidebarProfile
+            to={config.profilePath}
+            collapsed={collapsed}
+            onNavigate={onNavigate}
+          />
+        </motion.div>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

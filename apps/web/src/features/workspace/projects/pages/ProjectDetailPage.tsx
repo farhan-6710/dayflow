@@ -26,6 +26,7 @@ import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { ProjectDetailPageSkeleton } from "@/shared/components/pageSkeletons";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
@@ -64,8 +65,12 @@ export function ProjectDetailPage() {
 
   if (loading && !project) {
     return (
-      <div className="py-12 text-center text-sm text-muted-foreground">
-        Loading project...
+      <div className="space-y-4">
+        <PageHeader
+          heading="Project"
+          description="Loading project details…"
+        />
+        <ProjectDetailPageSkeleton />
       </div>
     );
   }
@@ -173,7 +178,7 @@ export function ProjectDetailPage() {
           <ProjectNotesTable
             projectId={project.id}
             notes={notes}
-            isLoading={loading}
+            isLoading={false}
             onDeleteNote={handleDeleteNote}
             onReorderNotes={handleReorderNotes}
             emptyMessage={buildProjectNotesEmptyMessage(project.name)}
@@ -183,7 +188,7 @@ export function ProjectDetailPage() {
           <ProjectReferenceLinksSection
             referenceLinks={referenceLinks}
             canEdit={project.is_active}
-            isLoading={loading}
+            isLoading={false}
             isSaving={savingReferenceLink}
             onAdd={handleAddReferenceLink}
             onUpdate={handleUpdateReferenceLink}

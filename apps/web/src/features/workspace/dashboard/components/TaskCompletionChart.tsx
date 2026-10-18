@@ -2,9 +2,9 @@ import { DashboardPanel } from "@/features/workspace/dashboard/components/Dashbo
 import { TaskCompletionAreaChart } from "@/features/workspace/dashboard/components/TaskCompletionAreaChart";
 import { TaskCompletionChartHeader } from "@/features/workspace/dashboard/components/TaskCompletionChartHeader";
 import { useTaskCompletionChart } from "@/features/workspace/dashboard/hooks/useTaskCompletionChart";
-import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import type { Task } from "@/services/tasksService";
 import type { ChartConfig } from "@/shared/ui/chart";
+import { Skeleton } from "@/shared/ui/skeleton";
 
 function formatGrowthLabel(growthPercent: number | null, compareLabel: string): string | null {
   if (growthPercent === null) return null;
@@ -49,8 +49,16 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
 
       <div className="h-75 w-full">
         {isLoading ? (
-          <div className="flex h-full items-center justify-center">
-            <LoadingSpinner />
+          <div className="flex h-full flex-col justify-end gap-3 pt-4" aria-busy="true">
+            <Skeleton className="h-[55%] w-full rounded-xl" />
+            <div className="flex items-end gap-2">
+              <Skeleton className="h-16 w-1/6 rounded-md" />
+              <Skeleton className="h-24 w-1/6 rounded-md" />
+              <Skeleton className="h-20 w-1/6 rounded-md" />
+              <Skeleton className="h-28 w-1/6 rounded-md" />
+              <Skeleton className="h-14 w-1/6 rounded-md" />
+              <Skeleton className="h-20 w-1/6 rounded-md" />
+            </div>
           </div>
         ) : (
           <TaskCompletionAreaChart
