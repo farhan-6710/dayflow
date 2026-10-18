@@ -8,6 +8,7 @@ import { useTasksCalendarSelection } from "@/features/workspace/tasks/hooks/useT
 import { useTasksManagement } from "@/features/workspace/tasks/hooks/useTasksManagement";
 import type { Task } from "@/services/tasksService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { TasksCalendarPageSkeleton } from "@/shared/components/pageSkeletons";
@@ -44,25 +45,29 @@ export function TasksCalendarPage() {
       />
 
       {!tasks.loading ? (
-        <PageContent motionKey="ready">
+        <PageContent motionKey="ready" stagger={false}>
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-3 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(240px,3fr)]">
-            <TasksWeeksTable
-              year={year}
-              month={month}
-              weeks={calendarWeeks}
-              selectedDate={selectedDate}
-              tasksByDateKey={tasksByDateKey}
-              onSelectMonth={selectDate}
-              onSelectDay={selectDay}
-            />
-            <TasksDayPanel
-              date={selectedDate}
-              tasks={selectedTasks}
-              onAddTask={() => tasks.handleOpenCreateDialog(selectedKey)}
-              onEditTask={tasks.handleOpenEditDialog}
-              onDeleteTask={setTaskToDelete}
-              onReorderTasks={tasks.handleReorderDayTasks}
-            />
+            <FluidWaveItem index={0} className="flex h-full min-w-0 flex-col">
+              <TasksWeeksTable
+                year={year}
+                month={month}
+                weeks={calendarWeeks}
+                selectedDate={selectedDate}
+                tasksByDateKey={tasksByDateKey}
+                onSelectMonth={selectDate}
+                onSelectDay={selectDay}
+              />
+            </FluidWaveItem>
+            <FluidWaveItem index={1} className="flex h-full min-w-0 flex-col">
+              <TasksDayPanel
+                date={selectedDate}
+                tasks={selectedTasks}
+                onAddTask={() => tasks.handleOpenCreateDialog(selectedKey)}
+                onEditTask={tasks.handleOpenEditDialog}
+                onDeleteTask={setTaskToDelete}
+                onReorderTasks={tasks.handleReorderDayTasks}
+              />
+            </FluidWaveItem>
           </div>
         </PageContent>
       ) : (

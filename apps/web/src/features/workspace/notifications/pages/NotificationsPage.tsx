@@ -2,6 +2,7 @@ import { ReminderNotificationsTable } from "@/features/workspace/notifications/c
 import { TaskNotificationsTable } from "@/features/workspace/notifications/components/TaskNotificationsTable";
 import { useNotificationsInbox } from "@/features/workspace/notifications/hooks/useNotificationsInbox";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { NotificationsPageSkeleton } from "@/shared/components/pageSkeletons";
@@ -24,26 +25,30 @@ export function NotificationsPage() {
       />
 
       {!isLoading ? (
-        <PageContent>
+        <PageContent stagger={false}>
           {error ? <ErrorBanner message={error} /> : null}
 
-          <ReminderNotificationsTable
-            notifications={reminderNotifications}
-            isLoading={false}
-            dismissingId={dismissingId}
-            onDismiss={(notificationId) =>
-              void dismissNotification(notificationId)
-            }
-          />
+          <FluidWaveItem index={0}>
+            <ReminderNotificationsTable
+              notifications={reminderNotifications}
+              isLoading={false}
+              dismissingId={dismissingId}
+              onDismiss={(notificationId) =>
+                void dismissNotification(notificationId)
+              }
+            />
+          </FluidWaveItem>
 
-          <TaskNotificationsTable
-            notifications={taskNotifications}
-            isLoading={false}
-            dismissingId={dismissingId}
-            onDismiss={(notificationId) =>
-              void dismissNotification(notificationId)
-            }
-          />
+          <FluidWaveItem index={1}>
+            <TaskNotificationsTable
+              notifications={taskNotifications}
+              isLoading={false}
+              dismissingId={dismissingId}
+              onDismiss={(notificationId) =>
+                void dismissNotification(notificationId)
+              }
+            />
+          </FluidWaveItem>
         </PageContent>
       ) : (
         <NotificationsPageSkeleton />

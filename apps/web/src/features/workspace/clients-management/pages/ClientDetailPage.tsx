@@ -15,6 +15,7 @@ import { PROJECTS_MANAGEMENT_PATH } from "@/features/workspace/projects/constant
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ClientDetailPageSkeleton } from "@/shared/components/pageSkeletons";
@@ -137,44 +138,52 @@ export function ClientDetailPage() {
         }
       />
 
-      <PageContent>
+      <PageContent stagger={false}>
         {error ? <ErrorBanner message={error} /> : null}
         <div className="grid items-start gap-4 lg:grid-cols-2 lg:items-stretch">
-          <ClientDetailSummary client={client} />
-          <ClientChat
-            clientContactLabel={clientContactLabel}
-            currentUserId={user.id}
-            messages={messages}
-            draft={draft}
-            onDraftChange={setDraft}
-            onSend={() => void sendMessage()}
-            onRefresh={() => void reload()}
-            isSending={isSending}
-            isLoading={false}
-            isRefreshing={loading}
-            editingMessageId={editingMessageId}
-            onEditMessage={startEdit}
-            onCancelEdit={cancelEdit}
-            onDeleteMessage={requestDelete}
-            deleteConfirmOpen={chatDeleteConfirmOpen}
-            onDeleteConfirmOpenChange={onDeleteConfirmOpenChange}
-            onConfirmDelete={() => void confirmDelete()}
-            isDeleting={isDeleting}
-          />
+          <FluidWaveItem index={0} className="flex h-full min-w-0 flex-col">
+            <ClientDetailSummary client={client} />
+          </FluidWaveItem>
+          <FluidWaveItem index={1} className="flex h-full min-w-0 flex-col">
+            <ClientChat
+              clientContactLabel={clientContactLabel}
+              currentUserId={user.id}
+              messages={messages}
+              draft={draft}
+              onDraftChange={setDraft}
+              onSend={() => void sendMessage()}
+              onRefresh={() => void reload()}
+              isSending={isSending}
+              isLoading={false}
+              isRefreshing={loading}
+              editingMessageId={editingMessageId}
+              onEditMessage={startEdit}
+              onCancelEdit={cancelEdit}
+              onDeleteMessage={requestDelete}
+              deleteConfirmOpen={chatDeleteConfirmOpen}
+              onDeleteConfirmOpenChange={onDeleteConfirmOpenChange}
+              onConfirmDelete={() => void confirmDelete()}
+              isDeleting={isDeleting}
+            />
+          </FluidWaveItem>
         </div>
 
-        <ClientProjectsSection
-          projects={projects}
-          isLoading={false}
-          canAddProject={client.is_active}
-          onAddProject={openCreateProjectDialog}
-        />
+        <FluidWaveItem index={2}>
+          <ClientProjectsSection
+            projects={projects}
+            isLoading={false}
+            canAddProject={client.is_active}
+            onAddProject={openCreateProjectDialog}
+          />
+        </FluidWaveItem>
 
-        <ClientActivitiesBlock
-          scope="client"
-          clientId={client.id}
-          projects={projects}
-        />
+        <FluidWaveItem index={3}>
+          <ClientActivitiesBlock
+            scope="client"
+            clientId={client.id}
+            projects={projects}
+          />
+        </FluidWaveItem>
       </PageContent>
 
       <ClientDialog {...dialog} />

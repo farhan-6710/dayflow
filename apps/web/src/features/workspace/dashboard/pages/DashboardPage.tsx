@@ -1,6 +1,9 @@
-import { DashboardChartsSection } from "@/features/workspace/dashboard/components/DashboardChartsSection";
+import { AnimatePresence } from "framer-motion";
+
 import { DashboardPageSkeleton } from "@/features/workspace/dashboard/components/DashboardPageSkeleton";
+import { DashboardPlaceholderCard } from "@/features/workspace/dashboard/components/DashboardPlaceholderCard";
 import { DashboardTodoList } from "@/features/workspace/dashboard/components/DashboardTodoList";
+import { TaskCompletionChart } from "@/features/workspace/dashboard/components/TaskCompletionChart";
 import { TodoFormDialog } from "@/features/workspace/dashboard/components/TodoFormDialog";
 import { TimeTracker } from "@/features/workspace/dashboard/components/TimeTracker";
 import { useDashboard } from "@/features/workspace/dashboard/hooks/useDashboard";
@@ -9,7 +12,7 @@ import { getDashboardCards } from "@/features/workspace/dashboard/utils/getDashb
 import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
 import { DateFilters } from "@/shared/components/DateFilters";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
-import { PageContent } from "@/shared/components/PageContent";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
@@ -18,6 +21,10 @@ import { useDateFilters } from "@/shared/hooks/useDateFilters";
 import { cn } from "@/shared/lib/utils";
 import { getWorkspaceDisplayName } from "@/shared/utils/authUserDisplay";
 
+/**
+ * Wave indices match the four stat-card delays (top-left → bottom-right):
+ * 0 = 1st card · 1 = 2nd card · 2 = 3rd card · 3 = 4th card
+ */
 export function DashboardPage() {
   const { filter, dateFilterProps, periodLabel } = useDateFilters();
   const dashboard = useDashboard(filter);
@@ -47,39 +54,70 @@ export function DashboardPage() {
       {!pageReady ? (
         <DashboardPageSkeleton />
       ) : (
-        <PageContent motionKey={periodLabel}>
-          {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
+        <AnimatePresence mode="wait">
+          <div key={periodLabel} className="w-full min-w-0 space-y-4">
+            {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
 
-          <StatsCards cards={cards} />
+            <StatsCards cards={cards} />
 
-          <div
-            className={cn(
-              "grid grid-cols-1 gap-4 lg:grid-cols-3",
-              containMinWidthClassName,
-            )}
-          >
-            <DashboardChartsSection tasks={dashboard.tasks} isLoading={false} />
+            <div
+              className={cn(
+                "grid grid-cols-1 gap-4 lg:grid-cols-3",
+                containMinWidthClassName,
+              )}
+            >
+              <div
+                className={cn("space-y-4 lg:col-span-2", containMinWidthClassName)}
+              >
+                <FluidWaveItem index={1}>
+                  <TaskCompletionChart
+                    tasks={dashboard.tasks}
+                    isLoading={false}
+                  />
+                </FluidWaveItem>
 
-            <div className={cn("space-y-4", containMinWidthClassName)}>
-              <DashboardTodoList
-                pendingTodos={todos.pendingTodos}
-                completedTodos={todos.completedTodos}
-                loading={false}
-                busyTodoId={todos.busyTodoId}
-                exitingTodoId={todos.exitingTodoId}
-                completedOpen={todos.completedOpen}
-                onCompletedOpenChange={todos.setCompletedOpen}
-                onAdd={todos.handleOpenAdd}
-                onToggle={todos.handleToggle}
-                onEdit={todos.handleOpenEdit}
-                onDelete={todos.handleAskDelete}
-                onReorderPending={todos.handleReorderPending}
-                onExitComplete={todos.handleExitComplete}
-              />
-              <TimeTracker />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FluidWaveItem index={2}>
+                    <DashboardPlaceholderCard
+                      title="Weekly insights"
+                      description="Placeholder for upcoming productivity insights."
+                    />
+                  </FluidWaveItem>
+                  <FluidWaveItem index={3}>
+                    <DashboardPlaceholderCard
+                      title="Activity snapshot"
+                      description="Placeholder for upcoming activity breakdown."
+                    />
+                  </FluidWaveItem>
+                </div>
+              </div>
+
+              <div className={cn("space-y-4", containMinWidthClassName)}>
+                <FluidWaveItem index={2}>
+                  <DashboardTodoList
+                    pendingTodos={todos.pendingTodos}
+                    completedTodos={todos.completedTodos}
+                    loading={false}
+                    busyTodoId={todos.busyTodoId}
+                    exitingTodoId={todos.exitingTodoId}
+                    completedOpen={todos.completedOpen}
+                    onCompletedOpenChange={todos.setCompletedOpen}
+                    onAdd={todos.handleOpenAdd}
+                    onToggle={todos.handleToggle}
+                    onEdit={todos.handleOpenEdit}
+                    onDelete={todos.handleAskDelete}
+                    onReorderPending={todos.handleReorderPending}
+                    onExitComplete={todos.handleExitComplete}
+                  />
+                </FluidWaveItem>
+
+                <FluidWaveItem index={3}>
+                  <TimeTracker />
+                </FluidWaveItem>
+              </div>
             </div>
           </div>
-        </PageContent>
+        </AnimatePresence>
       )}
 
       <TodoFormDialog

@@ -23,6 +23,11 @@ export type PageHeaderProps = {
 export type StatsCardsProps = {
   cards: import("@/shared/types/statsCards").StatCardItem[];
   isLoading?: boolean;
+  /**
+   * Per-card entrance delay in seconds. When set, cards animate individually
+   * (no nested FLUID_LIST) so a page can sequence sections after the wave.
+   */
+  getItemDelay?: (index: number) => number;
 };
 
 export type LoadingSpinnerProps = {
@@ -71,6 +76,11 @@ export type PageContentProps = {
    * the fluid stagger — use for data-ready so loading placeholders never animate.
    */
   ready?: boolean;
+  /**
+   * When false, skip section stagger so children can use FluidWaveItem /
+   * per-card delays for a top-left → bottom-right wave.
+   */
+  stagger?: boolean;
 };
 
 export type FluidRevealProps = {

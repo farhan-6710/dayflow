@@ -7,8 +7,9 @@ import {
   useRemindersManagement,
 } from "@/features/workspace/reminders/hooks/useRemindersManagement";
 import { useRemindersCalendarSelection } from "@/features/workspace/reminders/hooks/useRemindersCalendarSelection";
-import { PageContent } from "@/shared/components/PageContent";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
+import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { RemindersCalendarPageSkeleton } from "@/shared/components/pageSkeletons";
 import { MonthSelector } from "@/shared/ui/MonthSelector";
@@ -48,31 +49,35 @@ export function RemindersCalendarPage() {
       />
 
       {!loading ? (
-        <PageContent motionKey={`${year}-${month}`}>
-          <div className="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-            <p>
-              Active reminders appear on matching weekdays at their scheduled
-              time.
-            </p>
-            <MonthSelector
-              year={year}
-              month={month}
-              onSelect={selectDate}
-              className="w-full sm:w-auto"
-            />
-          </div>
+        <PageContent motionKey={`${year}-${month}`} stagger={false}>
+          <FluidWaveItem index={0}>
+            <div className="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+              <p>
+                Active reminders appear on matching weekdays at their scheduled
+                time.
+              </p>
+              <MonthSelector
+                year={year}
+                month={month}
+                onSelect={selectDate}
+                className="w-full sm:w-auto"
+              />
+            </div>
+          </FluidWaveItem>
 
           {error ? <ErrorBanner message={error} /> : null}
 
-          <RemindersWeeksTable
-            year={year}
-            month={month}
-            weeks={calendarWeeks}
-            selectedDate={selectedDate}
-            getSlot={getSlot}
-            onOpenDay={() => openAddDialog()}
-            onEdit={openEditDialog}
-          />
+          <FluidWaveItem index={1}>
+            <RemindersWeeksTable
+              year={year}
+              month={month}
+              weeks={calendarWeeks}
+              selectedDate={selectedDate}
+              getSlot={getSlot}
+              onOpenDay={() => openAddDialog()}
+              onEdit={openEditDialog}
+            />
+          </FluidWaveItem>
         </PageContent>
       ) : (
         <RemindersCalendarPageSkeleton />

@@ -63,6 +63,21 @@ export const SHELL_HEADER_ITEM = {
   },
 };
 
+/** Stagger timing shared by FLUID_LIST and sequenced page entrances. */
+export const FLUID_STAGGER = 0.09;
+export const FLUID_DELAY_CHILDREN = 0.12;
+export const FLUID_DURATION = 0.58;
+
+/** Delay (seconds) for the Nth item in a fluid stagger wave. */
+export function fluidStaggerDelay(index: number) {
+  return FLUID_DELAY_CHILDREN + index * FLUID_STAGGER;
+}
+
+/** Fade-rise transition with an explicit delay (for sequenced sections). */
+export function fluidRevealTransition(delay = 0) {
+  return { duration: FLUID_DURATION, ease: FLUID_EASE, delay } as const;
+}
+
 /** Staggered list — page sections / card grids (slower wave). */
 export const FLUID_LIST = {
   variants: {
@@ -71,10 +86,10 @@ export const FLUID_LIST = {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.58,
+        duration: FLUID_DURATION,
         ease: FLUID_EASE,
-        staggerChildren: 0.09,
-        delayChildren: 0.12,
+        staggerChildren: FLUID_STAGGER,
+        delayChildren: FLUID_DELAY_CHILDREN,
       },
     },
     exit: {
@@ -93,7 +108,7 @@ export const FLUID_ITEM = {
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.58, ease: FLUID_EASE },
+    transition: { duration: FLUID_DURATION, ease: FLUID_EASE },
   },
   exit: {
     opacity: 0,

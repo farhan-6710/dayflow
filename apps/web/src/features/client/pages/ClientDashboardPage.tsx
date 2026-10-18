@@ -8,6 +8,7 @@ import {
 } from "@/app/constants/clientPortalRoutes";
 import { useClientDashboard } from "@/features/client/hooks/useClientDashboard";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageContent } from "@/shared/components/PageContent";
 import { StatsAndBlockPageSkeleton } from "@/shared/components/pageSkeletons";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -103,19 +104,21 @@ export function ClientDashboardPage() {
       />
 
       {!loading ? (
-        <PageContent className="space-y-4">
+        <PageContent className="space-y-4" stagger={false}>
           <StatsCards cards={cards} />
 
-          <div id={ACTIVITIES_SECTION_ID} className="scroll-mt-6">
-            <ClientActivitiesBlock
-              scope="client"
-              clientId={client.id}
-              forClientPortal
-              clientCompanyName={client.company_name}
-              canEdit
-              activityRaisedBy="client"
-            />
-          </div>
+          <FluidWaveItem index={1}>
+            <div id={ACTIVITIES_SECTION_ID} className="scroll-mt-6">
+              <ClientActivitiesBlock
+                scope="client"
+                clientId={client.id}
+                forClientPortal
+                clientCompanyName={client.company_name}
+                canEdit
+                activityRaisedBy="client"
+              />
+            </div>
+          </FluidWaveItem>
         </PageContent>
       ) : (
         <StatsAndBlockPageSkeleton />

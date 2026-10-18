@@ -1,4 +1,5 @@
 import { useSettings } from "@/features/workspace/settings/hooks/useSettings";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
@@ -60,10 +61,10 @@ export function SettingsPage() {
         description="Configure your personal preferences, theme appearance, and security credentials."
       />
 
-      <PageContent>
+      <PageContent stagger={false}>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
           <div className="space-y-4">
-            <div className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={0} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <User className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -106,9 +107,9 @@ export function SettingsPage() {
                   Save Profile Details
                 </Button>
               </form>
-            </div>
+            </FluidWaveItem>
 
-            <div className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={2} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <Mail className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -159,9 +160,9 @@ export function SettingsPage() {
                   Change email
                 </Button>
               </form>
-            </div>
+            </FluidWaveItem>
 
-            <div className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={4} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <Palette className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -189,11 +190,11 @@ export function SettingsPage() {
                   <Moon className="size-4" />
                 </div>
               </div>
-            </div>
+            </FluidWaveItem>
           </div>
 
           <div className="space-y-4">
-            <div className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={1} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <KeyRound className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -280,9 +281,9 @@ export function SettingsPage() {
                   </Button>
                 </form>
               )}
-            </div>
+            </FluidWaveItem>
 
-            <div className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={3} className={cn("p-6", glassPanelClassName)}>
               <h3 className="text-sm font-semibold tracking-tight text-foreground">
                 DayFlow Environment
               </h3>
@@ -295,7 +296,7 @@ export function SettingsPage() {
               <div className="mt-4 p-3 rounded-xl bg-secondary text-secondary-foreground text-3xs font-semibold leading-relaxed border border-border/80">
                 Connection Status: Secured (Supabase SSL)
               </div>
-            </div>
+            </FluidWaveItem>
           </div>
         </div>
       </PageContent>

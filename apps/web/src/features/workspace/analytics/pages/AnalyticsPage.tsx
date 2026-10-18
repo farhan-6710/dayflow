@@ -4,6 +4,7 @@ import { fetchTasks, type Task } from "@/services/tasksService";
 import { fetchProjects, type Project } from "@/services/projectsService";
 import { fetchNotes, type Note } from "@/services/notesService";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
 import { AnalyticsPageSkeleton } from "@/shared/components/pageSkeletons";
@@ -133,12 +134,13 @@ export function AnalyticsPage() {
       />
 
       {!loading ? (
-      <PageContent>
+      <PageContent stagger={false}>
         {error ? <ErrorBanner message={error} /> : null}
         <StatsCards cards={cards} />
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-          <div
+          <FluidWaveItem
+            index={1}
             className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
           >
             <h3 className="text-sm font-bold tracking-tight text-foreground">
@@ -219,9 +221,10 @@ export function AnalyticsPage() {
                 ))}
               </div>
             ) : null}
-          </div>
+          </FluidWaveItem>
 
-          <div
+          <FluidWaveItem
+            index={2}
             className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
           >
             <h3 className="text-sm font-bold tracking-tight text-foreground">
@@ -288,7 +291,7 @@ export function AnalyticsPage() {
                 </ResponsiveContainer>
               )}
             </div>
-          </div>
+          </FluidWaveItem>
         </div>
       </PageContent>
       ) : (

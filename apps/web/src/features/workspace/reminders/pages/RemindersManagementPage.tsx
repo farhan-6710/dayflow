@@ -6,8 +6,9 @@ import {
   useReminderChecker,
   useRemindersManagement,
 } from "@/features/workspace/reminders/hooks/useRemindersManagement";
-import { PageContent } from "@/shared/components/PageContent";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
+import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { RemindersManagementPageSkeleton } from "@/shared/components/pageSkeletons";
 import { Button } from "@/shared/ui/button";
@@ -42,11 +43,15 @@ export function RemindersManagementPage() {
       />
 
       {!loading ? (
-        <PageContent motionKey={reminders.length === 0 ? "empty" : "list"}>
+        <PageContent
+          motionKey={reminders.length === 0 ? "empty" : "list"}
+          stagger={false}
+        >
           {error ? <ErrorBanner message={error} /> : null}
 
           {reminders.length === 0 ? (
-            <div
+            <FluidWaveItem
+              index={0}
               className={cn(
                 "border-dashed px-6 py-14 text-center",
                 glassPanelClassName,
@@ -64,12 +69,12 @@ export function RemindersManagementPage() {
                 <Plus className="mr-1 size-4" />
                 Create Reminder
               </Button>
-            </div>
+            </FluidWaveItem>
           ) : (
             <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
-              {reminders.map((reminder) => (
+              {reminders.map((reminder, index) => (
+                <FluidWaveItem key={reminder.id} index={index}>
                 <article
-                  key={reminder.id}
                   className={cn(
                     glassPanelClassName,
                     "rounded-3xl p-5 transition",
@@ -160,6 +165,7 @@ export function RemindersManagementPage() {
                     </p>
                   ) : null}
                 </article>
+                </FluidWaveItem>
               ))}
             </div>
           )}

@@ -24,6 +24,7 @@ import {
 } from "@/features/workspace/projects/utils/projectDetailDisplay";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ProjectDetailPageSkeleton } from "@/shared/components/pageSkeletons";
@@ -171,36 +172,42 @@ export function ProjectDetailPage() {
         }
       />
 
-      <PageContent>
+      <PageContent stagger={false}>
         <div className={cn("space-y-4", containMinWidthClassName)}>
           {error ? <ErrorBanner message={error} /> : null}
 
-          <ProjectNotesTable
-            projectId={project.id}
-            notes={notes}
-            isLoading={false}
-            onDeleteNote={handleDeleteNote}
-            onReorderNotes={handleReorderNotes}
-            emptyMessage={buildProjectNotesEmptyMessage(project.name)}
-            canAddNote={project.is_active}
-          />
+          <FluidWaveItem index={0}>
+            <ProjectNotesTable
+              projectId={project.id}
+              notes={notes}
+              isLoading={false}
+              onDeleteNote={handleDeleteNote}
+              onReorderNotes={handleReorderNotes}
+              emptyMessage={buildProjectNotesEmptyMessage(project.name)}
+              canAddNote={project.is_active}
+            />
+          </FluidWaveItem>
 
-          <ProjectReferenceLinksSection
-            referenceLinks={referenceLinks}
-            canEdit={project.is_active}
-            isLoading={false}
-            isSaving={savingReferenceLink}
-            onAdd={handleAddReferenceLink}
-            onUpdate={handleUpdateReferenceLink}
-            onDelete={handleDeleteReferenceLink}
-          />
+          <FluidWaveItem index={1}>
+            <ProjectReferenceLinksSection
+              referenceLinks={referenceLinks}
+              canEdit={project.is_active}
+              isLoading={false}
+              isSaving={savingReferenceLink}
+              onAdd={handleAddReferenceLink}
+              onUpdate={handleUpdateReferenceLink}
+              onDelete={handleDeleteReferenceLink}
+            />
+          </FluidWaveItem>
 
           {isClientProject ? (
-            <ClientActivitiesBlock
-              scope="project"
-              projectId={project.id}
-              canEdit={project.is_active}
-            />
+            <FluidWaveItem index={2}>
+              <ClientActivitiesBlock
+                scope="project"
+                projectId={project.id}
+                canEdit={project.is_active}
+              />
+            </FluidWaveItem>
           ) : null}
         </div>
       </PageContent>
