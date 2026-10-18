@@ -9,6 +9,8 @@ import type { ClientActivitiesBlockProps } from "@/features/workspace/client-act
 import { isClientActivityOpen } from "@/features/workspace/client-activities/utils/activityFormUtils";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 
 export function ClientActivitiesBlock({
   canEdit = true,
@@ -109,7 +111,7 @@ export function ClientActivitiesBlock({
 
   if (loading && tasks.length === 0 && meetings.length === 0 && calls.length === 0) {
     return (
-      <div className="rounded-2xl border border-border bg-card px-6 py-8 text-center text-sm text-muted-foreground shadow-sm">
+      <div className={cn("px-6 py-8 text-center text-sm text-muted-foreground", glassPanelClassName)}>
         Loading activities...
       </div>
     );

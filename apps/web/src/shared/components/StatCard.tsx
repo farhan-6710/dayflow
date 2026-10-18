@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import { Sparkline } from "@/shared/components/Sparkline";
 import { StatCardTrend } from "@/shared/components/StatCardTrend";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import type { StatCardItem } from "@/shared/types/statsCards";
 import { cn } from "@/shared/lib/utils";
 import {
@@ -39,7 +40,8 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
   return (
     <div
       className={cn(
-        "relative rounded-2xl border border-border bg-card px-4 py-3.5 shadow-sm transition-all duration-200",
+        "relative px-4 py-3.5 transition-all duration-200",
+        glassPanelClassName,
         isAccent ? "hover:border-accent/50" : "hover:border-primary/50",
       )}
     >

@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import type { ClientDetailSummaryProps } from "@/features/workspace/clients-management/types/components";
 import { ActiveStatusLabel } from "@/shared/components/ActiveStatusSwitchField";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 
 function DetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (
@@ -90,7 +92,7 @@ export function ClientDetailSummary({ client }: ClientDetailSummaryProps) {
   ];
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-border bg-card shadow-sm">
+    <div className={cn("flex h-full flex-col", glassPanelClassName)}>
       <div className="border-b border-border px-5 py-4 sm:px-6 sm:py-5">
         <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
           Client details

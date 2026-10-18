@@ -13,6 +13,7 @@ import {
 } from "@/features/workspace/projects/utils/projectReferenceLinkFormUtils";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { Button } from "@/shared/ui/button";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 
 export function ProjectReferenceLinksSection({
   referenceLinks,
@@ -65,7 +66,7 @@ export function ProjectReferenceLinksSection({
   };
 
   return (
-    <div className="rounded-2xl border border-border bg-card shadow-sm">
+    <div className={glassPanelClassName}>
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
         <div>
           <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">

@@ -11,6 +11,7 @@ import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldClassName } from "@/shared/constants/formStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 
 export function ClientChat({
   clientContactLabel,
@@ -70,7 +71,7 @@ export function ClientChat({
   };
 
   return (
-    <div className="flex h-full max-h-[min(40rem,calc(100dvh-12rem))] min-h-[24rem] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm lg:min-h-[28rem]">
+    <div className={cn("flex h-full max-h-[min(40rem,calc(100dvh-12rem))] min-h-[24rem] flex-col overflow-hidden lg:min-h-[28rem]", glassPanelClassName)}>
       <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border px-4 py-4 sm:px-5">
         <div className="min-w-0">
           <h3 className="text-sm font-semibold text-foreground">Client chat</h3>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ShellSidebarContent } from "@/shared/components/ShellSidebarContent";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { SHELL_SIDEBAR_MOTION } from "@/shared/constants/pageMotion";
 import { cn } from "@/shared/lib/utils";
 import type { ShellSidebarProps } from "@/shared/types/components";
@@ -18,7 +19,12 @@ export function ShellSidebar({ config, collapsed }: ShellSidebarProps) {
           collapsed ? "md:w-20" : "md:w-64",
         )}
       >
-        <div className="hidden h-full w-full overflow-hidden! rounded-2xl border border-border/70 bg-card/70 shadow-sm backdrop-blur-2xl md:flex md:flex-col dark:border-white/10 dark:bg-card/55">
+        <div
+          className={cn(
+            "hidden h-full w-full overflow-hidden! md:flex md:flex-col",
+            glassPanelClassName,
+          )}
+        >
           <ShellSidebarContent config={config} collapsed={collapsed} />
         </div>
       </MotionAside>

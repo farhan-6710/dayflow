@@ -8,6 +8,8 @@ import {
   ACCOUNT_SET_PASSWORD_HINT,
 } from "@/shared/constants/accountPassword";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Switch } from "@/shared/ui/switch";
@@ -58,7 +60,7 @@ export function SettingsPage() {
       <PageContent>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 min-w-0">
           <div className="space-y-6">
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
+            <div className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <User className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -94,7 +96,7 @@ export function SettingsPage() {
               </form>
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
+            <div className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <Mail className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -145,7 +147,7 @@ export function SettingsPage() {
               </form>
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
+            <div className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <Palette className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -175,7 +177,7 @@ export function SettingsPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
+            <div className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <KeyRound className="size-5 text-primary" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -255,7 +257,7 @@ export function SettingsPage() {
               )}
             </div>
 
-            <div className="rounded-2xl border border-border bg-card/60 p-6 shadow-xs">
+            <div className={cn("p-6", glassPanelClassName)}>
               <h3 className="text-sm font-semibold tracking-tight text-foreground">
                 DayFlow Environment
               </h3>

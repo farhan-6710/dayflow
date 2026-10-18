@@ -8,6 +8,7 @@ import {
 import type { TasksWeeksTableProps } from "@/features/workspace/tasks/types/components";
 import { isSameCalendarDay } from "@/features/workspace/reminders/utils/calendarUtils";
 import { FluidReveal } from "@/shared/components/FluidReveal";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 function toDateKey(year: number, month: number, date: number) {
@@ -26,7 +27,7 @@ export function TasksWeeksTable({
   const today = new Date();
 
   return (
-    <div className="flex h-full min-h-[420px] flex-col rounded-2xl border border-border bg-card shadow-sm">
+    <div className={cn("flex h-full min-h-[420px] flex-col", glassPanelClassName)}>
       <div className="px-4 pt-4 sm:px-5 sm:pt-5">
         <TasksCalendarMonthBar year={year} month={month} onSelect={onSelectMonth} />
       </div>

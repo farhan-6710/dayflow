@@ -5,6 +5,7 @@ import { buildProjectDetailPath } from "@/features/workspace/projects/constants/
 import type { Project } from "@/services/projectsService";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 
 type ClientProjectsSectionProps = {
   projects: Project[];
@@ -20,7 +21,7 @@ export function ClientProjectsSection({
   onAddProject,
 }: ClientProjectsSectionProps) {
   return (
-    <div className="rounded-2xl border border-border bg-card shadow-sm">
+    <div className={glassPanelClassName}>
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
         <div>
           <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">

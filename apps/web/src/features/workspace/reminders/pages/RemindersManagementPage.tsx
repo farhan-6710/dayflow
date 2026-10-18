@@ -11,6 +11,7 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 
 function formatReminderDays(daysOfWeek: string[]) {
   if (daysOfWeek.length === REMINDER_DAY_OPTIONS.length) {
@@ -49,11 +50,16 @@ export function RemindersManagementPage() {
         {error ? <ErrorBanner message={error} /> : null}
 
         {loading ? (
-          <div className="rounded-2xl border border-border bg-card px-6 py-12 text-center text-sm text-muted-foreground shadow-2xs">
+          <div className={cn("px-6 py-12 text-center text-sm text-muted-foreground", glassPanelClassName)}>
             Loading reminders...
           </div>
         ) : reminders.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-card/70 px-6 py-14 text-center shadow-2xs">
+          <div
+            className={cn(
+              "border-dashed px-6 py-14 text-center",
+              glassPanelClassName,
+            )}
+          >
             <BellRing className="mx-auto size-12 text-muted-foreground/60" />
             <h3 className="mt-4 text-base font-semibold text-foreground">
               No reminders yet
@@ -72,10 +78,11 @@ export function RemindersManagementPage() {
               <article
                 key={reminder.id}
                 className={cn(
-                  "rounded-3xl border p-5 shadow-2xs transition",
+                  glassPanelClassName,
+                  "rounded-3xl p-5 transition",
                   reminder.is_disabled
-                    ? "border-border/70 bg-muted/40 text-muted-foreground"
-                    : "border-border bg-card text-foreground",
+                    ? "bg-muted/40 text-muted-foreground"
+                    : "text-foreground",
                 )}
               >
                 <div className="flex items-start justify-between gap-3">

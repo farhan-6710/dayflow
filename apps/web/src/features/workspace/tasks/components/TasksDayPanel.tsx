@@ -9,6 +9,7 @@ import {
 } from "@/features/workspace/tasks/constants/taskStatus";
 import type { TasksDayPanelProps } from "@/features/workspace/tasks/types/components";
 import { compareByPriority } from "@/features/workspace/tasks/utils/taskCalendarSort";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { FLUID_ITEM, FLUID_LIST } from "@/shared/constants/pageMotion";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -19,7 +20,7 @@ export function TasksDayPanel({ date, tasks, onAddTask, onEditTask }: TasksDayPa
   const doneCount = tasks.filter((task) => task.status === "done").length;
 
   return (
-    <aside className="flex h-full min-h-[420px] flex-col rounded-2xl border border-border bg-card shadow-sm">
+    <aside className={cn("flex h-full min-h-[420px] flex-col", glassPanelClassName)}>
       <div className="flex items-start justify-between gap-3 border-b border-border px-5 py-4">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={dateKey} {...FLUID_LIST} className="min-w-0">

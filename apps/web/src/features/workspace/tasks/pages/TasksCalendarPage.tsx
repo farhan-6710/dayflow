@@ -10,6 +10,8 @@ import { FluidReveal } from "@/shared/components/FluidReveal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 
 export function TasksCalendarPage() {
   const { selectedDate, calendarWeeks, year, month, selectDate } =
@@ -42,11 +44,11 @@ export function TasksCalendarPage() {
 
       <FluidReveal
         motionKey={tasks.loading ? "loading" : "ready"}
-        className={
+        className={cn(
           tasks.loading
-            ? "flex min-h-[420px] items-center justify-center rounded-2xl border border-border bg-card"
-            : "grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(280px,3fr)]"
-        }
+            ? cn("flex min-h-[420px] items-center justify-center", glassPanelClassName)
+            : "grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(280px,3fr)]",
+        )}
       >
         {tasks.loading ? (
           <LoadingSpinner />

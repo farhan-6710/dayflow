@@ -21,6 +21,8 @@ import {
   PieChart,
 } from "recharts";
 import { BarChart3, CheckSquare, ListTodo, FileText } from "lucide-react";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 
 export function AnalyticsPage() {
   const { user } = useAuth();
@@ -131,7 +133,7 @@ export function AnalyticsPage() {
         <StatsCards cards={cards} isLoading={loading} />
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 min-w-0">
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-xs flex flex-col h-[380px]">
+          <div className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}>
             <h3 className="text-sm font-bold tracking-tight text-foreground">Task Status Breakdown</h3>
             <p className="text-xs text-muted-foreground mt-0.5">
               Ratio of to-do, in-progress, and completed tasks.
@@ -206,7 +208,7 @@ export function AnalyticsPage() {
             ) : null}
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-xs flex flex-col h-[380px]">
+          <div className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}>
             <h3 className="text-sm font-bold tracking-tight text-foreground">Notes by Project</h3>
             <p className="text-xs text-muted-foreground mt-0.5">
               How your notes are organized across project folders.

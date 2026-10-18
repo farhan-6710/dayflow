@@ -6,7 +6,10 @@ import {
   DIRECTORY_TABLE_MIN_WIDTH_CLASS,
   TABLE_HORIZONTAL_SCROLL_CLASS,
 } from "@/shared/constants/directoryTable";
-import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
+import {
+  containMinWidthClassName,
+  glassPanelClassName,
+} from "@/shared/constants/layoutStyles";
 import type { DirectoryTableProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 
@@ -33,7 +36,7 @@ export function DirectoryTable({
   gridStyle,
 }: DirectoryTableProps) {
   return (
-    <div className="w-full min-w-0 rounded-2xl border border-border bg-card shadow-sm">
+    <div className={cn("w-full min-w-0", glassPanelClassName)}>
       <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <div className={cn("min-w-0", containMinWidthClassName)}>
           <div className="text-sm font-semibold">{title}</div>

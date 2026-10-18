@@ -3,7 +3,9 @@ import { Menu, Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 import { PortalUserHeaderMenu } from "@/shared/components/PortalUserHeaderMenu";
 import { ShellNavSearch } from "@/shared/components/ShellNavSearch";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { SHELL_HEADER_MOTION } from "@/shared/constants/pageMotion";
+import { cn } from "@/shared/lib/utils";
 import { useTheme } from "@/shared/providers/ThemeProvider";
 import type { ShellSidebarConfig } from "@/shared/types/components";
 import { Button } from "@/shared/ui/button";
@@ -37,7 +39,10 @@ export function ShellHeader({
   return (
     <motion.header
       {...SHELL_HEADER_MOTION}
-      className="flex h-16 w-full shrink-0 items-center gap-4 rounded-2xl border border-border/70 bg-card/70 px-4 shadow-sm backdrop-blur-2xl sm:px-6 dark:border-white/10 dark:bg-card/55"
+      className={cn(
+        "flex h-16 w-full shrink-0 items-center gap-4 px-4 sm:px-6",
+        glassPanelClassName,
+      )}
     >
       <Button
         type="button"

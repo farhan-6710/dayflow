@@ -2,7 +2,10 @@ import { Trash2 } from "lucide-react";
 
 import { formatNoteIndex } from "@/features/workspace/projects/constants/projectNotes";
 import type { ProjectNotesListProps } from "@/features/workspace/projects/types/components";
-import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
+import {
+  containMinWidthClassName,
+  glassPanelClassName,
+} from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 export function ProjectNotesList({
@@ -18,7 +21,8 @@ export function ProjectNotesList({
   return (
     <div
       className={cn(
-        "flex min-h-0 flex-col rounded-2xl border border-border bg-card p-4 md:col-span-1",
+        "flex min-h-0 flex-col p-4 md:col-span-1",
+        glassPanelClassName,
         containMinWidthClassName,
       )}
     >

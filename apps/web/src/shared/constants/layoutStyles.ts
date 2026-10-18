@@ -3,9 +3,18 @@ import { cn } from "@/shared/lib/utils";
 /** Prevent grid/flex children from forcing horizontal overflow. */
 export const containMinWidthClassName = "min-w-0";
 
+/**
+ * Shared glass surface — same wash as sidebar/header.
+ * Use on any bordered panel so the blob reads through consistently.
+ */
+export const glassPanelClassName =
+  "rounded-2xl border border-border/70 bg-card/70 shadow-sm backdrop-blur-2xl dark:border-white/10 dark:bg-card/55";
+
 /** Filter/toolbar row: search or input + one or more fixed controls. */
-export const filterBarClassName =
-  "grid grid-cols-1 gap-3 rounded-2xl border border-border bg-card p-4 shadow-2xs sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center";
+export const filterBarClassName = cn(
+  "grid grid-cols-1 gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center",
+  glassPanelClassName,
+);
 
 /** Editor/toolbar row: primary field + trailing actions. */
 export const toolbarRowClassName =

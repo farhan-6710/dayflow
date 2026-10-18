@@ -12,6 +12,8 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { FluidReveal } from "@/shared/components/FluidReveal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 import { MonthSelector } from "@/shared/ui/MonthSelector";
 import { Button } from "@/shared/ui/button";
 
@@ -66,7 +68,7 @@ export function RemindersCalendarPage() {
         motionKey={loading ? "loading" : `${year}-${month}`}
         className={
           loading
-            ? "flex min-h-[320px] items-center justify-center rounded-2xl border border-border bg-card"
+            ? cn("flex min-h-[320px] items-center justify-center", glassPanelClassName)
             : undefined
         }
       >

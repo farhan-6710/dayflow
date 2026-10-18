@@ -2,7 +2,9 @@ import { Loader2 } from "lucide-react";
 
 import { FluidReveal } from "@/shared/components/FluidReveal";
 import { StatCard } from "@/shared/components/StatCard";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import type { StatsCardsProps } from "@/shared/types/components";
+import { cn } from "@/shared/lib/utils";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 
 const cardGridClass =
@@ -15,7 +17,10 @@ export function StatsCards({ cards, isLoading = false }: StatsCardsProps) {
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
-            className="flex min-h-20 items-center justify-center rounded-2xl border border-border bg-card px-4 py-3.5 shadow-sm"
+            className={cn(
+              "flex min-h-20 items-center justify-center px-4 py-3.5",
+              glassPanelClassName,
+            )}
           >
             <Loader2 className="size-5 animate-spin text-muted-foreground" />
           </div>

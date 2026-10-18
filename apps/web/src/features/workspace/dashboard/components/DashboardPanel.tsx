@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 type DashboardPanelProps = {
@@ -16,8 +17,9 @@ export function DashboardPanel({
   return (
     <div
       className={cn(
-        "relative rounded-2xl border border-border bg-card shadow-sm transition-all",
-        variant === "hero" && "border-border bg-card shadow-md",
+        "relative transition-all",
+        glassPanelClassName,
+        variant === "hero" && "shadow-md",
         className,
       )}
     >
