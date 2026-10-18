@@ -23,7 +23,7 @@ function clampSpeed(v: number) {
   return Math.max(-3.2, Math.min(3.2, v));
 }
 
-/** Soft gold wash behind page content. Cards stay opaque so edges stay clean. */
+/** Full-viewport gold wash — sits behind all shell chrome and page content. */
 export function Blob({ className }: BlobProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -32,19 +32,15 @@ export function Blob({ className }: BlobProps) {
     if (!root) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const stage = root.querySelector<HTMLElement>("[data-blob-stage]");
-    if (!stage) return;
-
-    const nodes = Array.from(stage.querySelectorAll<HTMLDivElement>("[data-orb]"));
+    const nodes = Array.from(root.querySelectorAll<HTMLDivElement>("[data-orb]"));
     const orbs: Orb[] = nodes.map((el, index) => {
       const size = el.offsetWidth || 420;
       const dir = index % 2 === 0 ? 1 : -1;
-      const bounds = root.getBoundingClientRect();
       return {
         el,
         size,
-        x: Math.random() * Math.max(bounds.width, 1),
-        y: Math.random() * Math.max(bounds.height, 1),
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
         vx: (1.6 + Math.random() * 1.4) * dir,
         vy: (1.3 + Math.random() * 1.4) * -dir,
       };
@@ -54,9 +50,8 @@ export function Blob({ className }: BlobProps) {
 
     const tick = () => {
       if (!document.hidden) {
-        const bounds = root.getBoundingClientRect();
-        const w = Math.max(bounds.width, 1);
-        const h = Math.max(bounds.height, 1);
+        const w = window.innerWidth;
+        const h = window.innerHeight;
 
         for (const orb of orbs) {
           orb.x += orb.vx;
@@ -90,20 +85,18 @@ export function Blob({ className }: BlobProps) {
       ref={rootRef}
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 z-0 overflow-hidden",
+        "pointer-events-none fixed inset-0 z-0 overflow-hidden",
         className,
       )}
     >
-      <div data-blob-stage className="absolute inset-0">
-        <div
-          data-orb
-          className="absolute left-0 top-0 size-128 rounded-full bg-[#f2cf6b]/35 blur-[110px] will-change-transform dark:bg-[#e9bf55]/22 sm:size-152"
-        />
-        <div
-          data-orb
-          className="absolute left-0 top-0 size-96 rounded-full bg-[#f7e2a1]/45 blur-[90px] will-change-transform dark:bg-[#f0cf7a]/16 sm:size-120"
-        />
-      </div>
+      <div
+        data-orb
+        className="absolute left-0 top-0 size-128 rounded-full bg-[#f2cf6b]/40 blur-[110px] will-change-transform dark:bg-[#e9bf55]/28 sm:size-152"
+      />
+      <div
+        data-orb
+        className="absolute left-0 top-0 size-96 rounded-full bg-[#f7e2a1]/50 blur-[90px] will-change-transform dark:bg-[#f0cf7a]/20 sm:size-120"
+      />
     </div>
   );
 }

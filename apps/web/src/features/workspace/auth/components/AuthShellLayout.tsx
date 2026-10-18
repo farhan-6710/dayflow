@@ -51,7 +51,9 @@ export function AuthShellLayout({
   }, []);
 
   return (
-    <div className="relative flex h-dvh max-h-dvh flex-col overflow-hidden bg-background text-foreground lg:flex-row">
+    <div className="relative flex h-dvh max-h-dvh flex-col overflow-hidden text-foreground lg:flex-row">
+      <Blob />
+
       <div
         className="relative z-10 hidden h-full shrink-0 overflow-hidden lg:flex lg:items-center lg:justify-center"
         style={bannerColumnStyle}
@@ -74,12 +76,11 @@ export function AuthShellLayout({
 
       <div
         className={cn(
-          "relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:h-full",
+          "relative z-10 flex min-h-0 min-w-0 flex-1 flex-col lg:h-full",
           className,
         )}
       >
-        <Blob />
-        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center overflow-y-auto overscroll-contain px-6 py-5 sm:px-10 sm:py-6 lg:px-12 xl:px-16">
+        <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto overscroll-contain px-6 py-5 sm:px-10 sm:py-6 lg:px-12 xl:px-16">
           <motion.div className="w-full max-w-md" {...FLUID_REVEAL}>
             {children}
           </motion.div>

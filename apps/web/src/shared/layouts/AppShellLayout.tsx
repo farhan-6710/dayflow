@@ -28,27 +28,28 @@ export function AppShellLayout({
   return (
     <UnsavedChangesProvider>
       <PageTransitionProvider>
-        <div className="fixed inset-0 flex w-full overflow-hidden bg-background p-2 text-foreground sm:p-3 md:gap-3.5 md:p-3.5">
-          <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
+        <div className="fixed inset-0 flex w-full overflow-hidden p-2 text-foreground sm:p-3 md:gap-3.5 md:p-3.5">
+          <Blob />
 
-          <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-2.5 overflow-hidden sm:gap-3 md:gap-3.5">
-            <ShellHeader
-              sidebarConfig={sidebarConfig}
-              isSidebarCollapsed={isSidebarCollapsed}
-              setIsSidebarCollapsed={setIsSidebarCollapsed}
-              setIsMobileNavOpen={setIsMobileNavOpen}
-              headerCenter={headerCenter}
-              headerActions={headerActions}
-              accountPath={accountPath}
-              settingsPath={settingsPath}
-              signOutRedirect={signOutRedirect}
-            />
+          <div className="relative z-10 flex min-h-0 min-w-0 w-full flex-1 md:gap-3.5">
+            <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
 
-            <div className="relative min-h-0 w-full min-w-0 flex-1 overflow-hidden">
-              <Blob />
+            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-2.5 overflow-hidden sm:gap-3 md:gap-3.5">
+              <ShellHeader
+                sidebarConfig={sidebarConfig}
+                isSidebarCollapsed={isSidebarCollapsed}
+                setIsSidebarCollapsed={setIsSidebarCollapsed}
+                setIsMobileNavOpen={setIsMobileNavOpen}
+                headerCenter={headerCenter}
+                headerActions={headerActions}
+                accountPath={accountPath}
+                settingsPath={settingsPath}
+                signOutRedirect={signOutRedirect}
+              />
+
               <PageTransitionMain
                 mainRef={mainRef}
-                className="relative z-10 h-full min-h-0 w-full min-w-0 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable"
+                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable"
               />
             </div>
           </div>

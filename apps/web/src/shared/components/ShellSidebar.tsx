@@ -18,7 +18,7 @@ export function ShellSidebar({ config, collapsed }: ShellSidebarProps) {
           collapsed ? "md:w-20" : "md:w-64",
         )}
       >
-        <div className="hidden h-full w-full overflow-hidden! rounded-2xl border border-border/80 bg-card/95 shadow-sm backdrop-blur-xl md:flex md:flex-col dark:border-white/10 dark:bg-card/95">
+        <div className="hidden h-full w-full overflow-hidden! rounded-2xl border border-border/70 bg-card/70 shadow-sm backdrop-blur-2xl md:flex md:flex-col dark:border-white/10 dark:bg-card/55">
           <ShellSidebarContent config={config} collapsed={collapsed} />
         </div>
       </MotionAside>
