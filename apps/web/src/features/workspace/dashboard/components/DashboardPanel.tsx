@@ -6,13 +6,11 @@ import { cn } from "@/shared/lib/utils";
 type DashboardPanelProps = {
   children: ReactNode;
   className?: string;
-  variant?: "panel" | "hero";
 };
 
 export function DashboardPanel({
   children,
   className,
-  variant = "panel",
 }: DashboardPanelProps) {
   return (
     <div

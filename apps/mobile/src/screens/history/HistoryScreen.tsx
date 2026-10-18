@@ -198,7 +198,7 @@ const HistoryScreen = React.memo(() => {
                     : "bg-primary dark:bg-primary-dark"
                 }`}
               >
-                <Text className="text-white font-bold text-lg">→</Text>
+                <Text className="text-primary-foreground font-bold text-lg">→</Text>
               </TouchableOpacity>
             </View>
           </View>

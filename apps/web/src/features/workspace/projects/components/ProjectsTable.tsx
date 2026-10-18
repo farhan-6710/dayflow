@@ -1,4 +1,20 @@
-import { ProjectsTableRow } from "@/features/workspace/projects/components/ProjectsTableRow";
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
+import { SortableProjectsTableRow } from "@/features/workspace/projects/components/SortableProjectsTableRow";
 import {
   PROJECTS_STATUS_FILTER_LABELS,
   projectsDirectoryConfig,
@@ -18,7 +34,30 @@ export function ProjectsTable({
   onEditProject,
   onToggleActive,
   onDeleteProject,
+  onReorderProjects,
 }: ProjectsTableProps) {
+  const projectIds = projects.map((project) => project.id);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 6 },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = projectIds.indexOf(String(active.id));
+    const newIndex = projectIds.indexOf(String(over.id));
+    if (oldIndex < 0 || newIndex < 0) return;
+
+    onReorderProjects(arrayMove(projectIds, oldIndex, newIndex));
+  }
+
   return (
     <DirectoryTable
       title={projectsDirectoryConfig.title}
@@ -50,15 +89,26 @@ export function ProjectsTable({
         </div>
       }
     >
-      {projects.map((project) => (
-        <ProjectsTableRow
-          key={project.id}
-          project={project}
-          onEditProject={onEditProject}
-          onToggleActive={onToggleActive}
-          onDeleteProject={onDeleteProject}
-        />
-      ))}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={projectIds}
+          strategy={verticalListSortingStrategy}
+        >
+          {projects.map((project) => (
+            <SortableProjectsTableRow
+              key={project.id}
+              project={project}
+              onEditProject={onEditProject}
+              onToggleActive={onToggleActive}
+              onDeleteProject={onDeleteProject}
+            />
+          ))}
+        </SortableContext>
+      </DndContext>
     </DirectoryTable>
   );
 }

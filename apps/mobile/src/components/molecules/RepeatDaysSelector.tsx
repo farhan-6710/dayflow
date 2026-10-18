@@ -47,7 +47,9 @@ export default function RepeatDaysSelector({
             >
               <Text
                 className={`text-xs font-semibold ${
-                  isSelected ? "text-white" : "text-gray-700 dark:text-gray-300"
+                  isSelected
+                    ? "text-primary-foreground"
+                    : "text-gray-700 dark:text-gray-300"
                 }`}
               >
                 {day.charAt(0).toUpperCase()}

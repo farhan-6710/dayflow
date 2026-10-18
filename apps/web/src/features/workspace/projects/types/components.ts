@@ -12,6 +12,7 @@ export type ProjectsTableProps = {
   onEditProject: (project: Project) => void;
   onToggleActive: (project: Project) => void;
   onDeleteProject: (projectId: string) => void;
+  onReorderProjects: (orderedIds: string[]) => void;
 };
 
 export type ProjectsTableRowProps = {
@@ -64,6 +65,7 @@ export type ProjectNotesTableProps = {
   notes: Note[];
   isLoading: boolean;
   onDeleteNote: (note: Note) => void | Promise<void>;
+  onReorderNotes: (orderedIds: string[]) => void;
   emptyMessage?: string;
   canAddNote?: boolean;
 };

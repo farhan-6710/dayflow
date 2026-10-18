@@ -1,4 +1,17 @@
-import { CircleOff, Edit, Folder, MoreVertical, RotateCcw, Trash2 } from "lucide-react";
+import {
+  CircleOff,
+  Edit,
+  Folder,
+  GripVertical,
+  MoreVertical,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
+import type {
+  DraggableAttributes,
+  DraggableSyntheticListeners,
+} from "@dnd-kit/core";
+import type { CSSProperties } from "react";
 
 import { PROJECTS_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/projects/constants/projectsDirectory";
 import { buildProjectDetailPath } from "@/features/workspace/projects/constants/routes";
@@ -14,23 +27,55 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 
+type ProjectsTableRowViewProps = ProjectsTableRowProps & {
+  dragHandleAttributes?: DraggableAttributes;
+  dragHandleListeners?: DraggableSyntheticListeners;
+  sortableStyle?: CSSProperties;
+  setSortableRef?: (node: HTMLElement | null) => void;
+  isDragging?: boolean;
+};
+
 export function ProjectsTableRow({
   project,
   onEditProject,
   onToggleActive,
   onDeleteProject,
-}: ProjectsTableRowProps) {
+  dragHandleAttributes,
+  dragHandleListeners,
+  sortableStyle,
+  setSortableRef,
+  isDragging = false,
+}: ProjectsTableRowViewProps) {
   const isActive = project.is_active;
 
   return (
     <DirectoryTableRow
+      ref={setSortableRef}
       to={buildProjectDetailPath(project.id)}
+      style={sortableStyle}
       className={cn(
         "grid items-center gap-2 px-6 py-4 sm:gap-4",
         PROJECTS_DIRECTORY_ROW_GRID_CLASS,
         !isActive && "opacity-80",
+        isDragging && "relative z-10 bg-card/90 opacity-70",
       )}
     >
+      <div
+        className="flex items-center justify-center"
+        onClick={stopDirectoryRowNav}
+        onKeyDown={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="flex size-7 cursor-grab items-center justify-center text-muted-foreground touch-none hover:text-foreground active:cursor-grabbing"
+          aria-label={`Reorder ${project.name}`}
+          {...dragHandleAttributes}
+          {...dragHandleListeners}
+        >
+          <GripVertical className="size-4" />
+        </button>
+      </div>
+
       <div className="min-w-0 text-sm font-medium text-foreground">
         <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
           PROJECT NAME

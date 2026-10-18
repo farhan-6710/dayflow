@@ -86,7 +86,9 @@ export function DirectoryTable({
                 {emptyMessage}
               </div>
             ) : (
-              <div className="divide-y divide-border">{children}</div>
+              <div className="[&>[data-slot=directory-row]+[data-slot=directory-row]]:border-t [&>[data-slot=directory-row]+[data-slot=directory-row]]:border-border">
+                {children}
+              </div>
             )}
           </FluidReveal>
         </div>

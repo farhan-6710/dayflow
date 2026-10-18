@@ -105,7 +105,7 @@ const ActionButton = React.memo<ActionButtonProps>(
                 className="w-10 h-10 rounded-xl items-center justify-center mr-3"
                 style={{ backgroundColor: action.colors[0] }}
               >
-                <Ionicons name={action.icon} size={20} color="#ffffff" />
+                <Ionicons name={action.icon} size={20} color="#17140d" />
               </View>
               <Text className="text-sm font-semibold text-foreground dark:text-foreground-dark flex-1">
                 {action.title}

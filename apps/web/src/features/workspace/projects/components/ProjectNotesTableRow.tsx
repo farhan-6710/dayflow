@@ -1,5 +1,10 @@
+import type {
+  DraggableAttributes,
+  DraggableSyntheticListeners,
+} from "@dnd-kit/core";
 import { format } from "date-fns";
-import { Trash2 } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
+import type { CSSProperties } from "react";
 
 import { getNoteCategoryLabel } from "@/features/workspace/projects/constants/noteCategories";
 import { NOTES_DIRECTORY_ROW_GRID_CLASS } from "@/features/workspace/projects/constants/notesDirectory";
@@ -15,23 +20,55 @@ function noteDescriptionPreview(body: string | null): string | null {
   return text || null;
 }
 
+type ProjectNotesTableRowViewProps = ProjectNotesTableRowProps & {
+  dragHandleAttributes?: DraggableAttributes;
+  dragHandleListeners?: DraggableSyntheticListeners;
+  sortableStyle?: CSSProperties;
+  setSortableRef?: (node: HTMLElement | null) => void;
+  isDragging?: boolean;
+};
+
 export function ProjectNotesTableRow({
   projectId,
   note,
   onDeleteNote,
-}: ProjectNotesTableRowProps) {
+  dragHandleAttributes,
+  dragHandleListeners,
+  sortableStyle,
+  setSortableRef,
+  isDragging = false,
+}: ProjectNotesTableRowViewProps) {
   const notePath = buildProjectNotePath(projectId, note.id);
   const title = note.title.trim() || "Untitled note";
   const description = noteDescriptionPreview(note.body);
 
   return (
     <DirectoryTableRow
+      ref={setSortableRef}
       to={notePath}
+      style={sortableStyle}
       className={cn(
         "grid items-center gap-2 px-6 py-4 sm:gap-4",
         NOTES_DIRECTORY_ROW_GRID_CLASS,
+        isDragging && "relative z-10 bg-card/90 opacity-70",
       )}
     >
+      <div
+        className="flex items-center justify-center"
+        onClick={stopDirectoryRowNav}
+        onKeyDown={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="flex size-7 cursor-grab items-center justify-center text-muted-foreground touch-none hover:text-foreground active:cursor-grabbing"
+          aria-label={`Reorder ${title}`}
+          {...dragHandleAttributes}
+          {...dragHandleListeners}
+        >
+          <GripVertical className="size-4" />
+        </button>
+      </div>
+
       <div className="min-w-0 text-sm font-medium text-foreground">
         <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
           NOTE TITLE

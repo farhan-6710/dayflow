@@ -91,7 +91,7 @@ const AIChatInput = React.memo<AIChatInputProps>(
               <Ionicons
                 name="sparkles"
                 size={24}
-                color="#ffffff"
+                color="#17140d"
                 style={{ marginRight: 12 }}
               />
               <View className="flex-1">
@@ -99,9 +99,9 @@ const AIChatInput = React.memo<AIChatInputProps>(
                   value={message}
                   onChangeText={setMessage}
                   placeholder={placeholder}
-                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  placeholderTextColor="rgba(23, 20, 13, 0.55)"
                   className="text-base font-semibold"
-                  style={{ color: "#ffffff" }}
+                  style={{ color: "#17140d" }}
                   multiline={false}
                   maxLength={500}
                 />
@@ -110,11 +110,11 @@ const AIChatInput = React.memo<AIChatInputProps>(
                 className="w-10 h-10 rounded-full items-center justify-center"
                 style={{
                   backgroundColor: message.trim()
-                    ? "rgba(255, 255, 255, 0.2)"
-                    : "rgba(255, 255, 255, 0.1)",
+                    ? "rgba(23, 20, 13, 0.12)"
+                    : "rgba(23, 20, 13, 0.08)",
                 }}
               >
-                <Ionicons name="send" size={20} color="#ffffff" />
+                <Ionicons name="send" size={20} color="#17140d" />
               </View>
             </LinearGradient>
           </Animated.View>

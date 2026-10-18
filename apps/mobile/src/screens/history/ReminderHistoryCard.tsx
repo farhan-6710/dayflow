@@ -84,7 +84,7 @@ const ReminderHistoryCard = React.memo<ReminderHistoryCardProps>(
                 borderBottomLeftRadius: 8,
               }}
             >
-              <Text className="text-[8px] font-semibold tracking-wide uppercase text-white">
+              <Text className="text-[8px] font-semibold tracking-wide uppercase text-primary-foreground">
                 {completionPercentage}%
               </Text>
             </LinearGradient>

@@ -1,10 +1,9 @@
-import { useState } from "react";
-
 import { DashboardChartsSection } from "@/features/workspace/dashboard/components/DashboardChartsSection";
-import { DashboardFocusList } from "@/features/workspace/dashboard/components/DashboardFocusList";
-import { DashboardTasksDialogs } from "@/features/workspace/dashboard/components/DashboardTasksDialogs";
+import { DashboardTodoList } from "@/features/workspace/dashboard/components/DashboardTodoList";
+import { TodoFormDialog } from "@/features/workspace/dashboard/components/TodoFormDialog";
 import { TimeTracker } from "@/features/workspace/dashboard/components/TimeTracker";
 import { useDashboard } from "@/features/workspace/dashboard/hooks/useDashboard";
+import { useDashboardTodos } from "@/features/workspace/dashboard/hooks/useDashboardTodos";
 import { getDashboardCards } from "@/features/workspace/dashboard/utils/getDashboardCards";
 import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
 import { DateFilters } from "@/shared/components/DateFilters";
@@ -12,6 +11,7 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { useDateFilters } from "@/shared/hooks/useDateFilters";
 import { cn } from "@/shared/lib/utils";
@@ -20,22 +20,7 @@ import { getWorkspaceDisplayName } from "@/shared/utils/authUserDisplay";
 export function DashboardPage() {
   const { filter, dateFilterProps, periodLabel } = useDateFilters();
   const dashboard = useDashboard(filter);
-
-  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
-
-  const confirmDelete = (id: string) => {
-    setTaskToDelete(id);
-    setDeleteConfirmOpen(true);
-  };
-
-  const handleConfirmDelete = async () => {
-    if (taskToDelete) {
-      await dashboard.handleDeleteTask(taskToDelete);
-    }
-    setDeleteConfirmOpen(false);
-    setTaskToDelete(null);
-  };
+  const todos = useDashboardTodos();
 
   const isDemoAccount = isDemoAccountEmail(dashboard.user?.email);
   const greetingName = getWorkspaceDisplayName(
@@ -73,40 +58,53 @@ export function DashboardPage() {
           />
 
           <div className={cn("space-y-4", containMinWidthClassName)}>
-            <DashboardFocusList
-              urgentTasks={dashboard.urgentTasks}
-              loading={dashboard.loading}
-              onEdit={dashboard.handleOpenEditDialog}
-              onDelete={confirmDelete}
+            <DashboardTodoList
+              pendingTodos={todos.pendingTodos}
+              completedTodos={todos.completedTodos}
+              loading={todos.loading}
+              busyTodoId={todos.busyTodoId}
+              exitingTodoId={todos.exitingTodoId}
+              completedOpen={todos.completedOpen}
+              onCompletedOpenChange={todos.setCompletedOpen}
+              onAdd={todos.handleOpenAdd}
+              onToggle={todos.handleToggle}
+              onEdit={todos.handleOpenEdit}
+              onDelete={todos.handleAskDelete}
+              onReorderPending={todos.handleReorderPending}
+              onExitComplete={todos.handleExitComplete}
             />
             <TimeTracker />
           </div>
         </div>
       </PageContent>
 
-      <DashboardTasksDialogs
-        dialogOpen={dashboard.dialogOpen}
-        setDialogOpen={dashboard.setDialogOpen}
-        editingTask={dashboard.editingTask}
-        submitting={dashboard.submitting}
-        taskTitle={dashboard.taskTitle}
-        taskDesc={dashboard.taskDesc}
-        taskPriority={dashboard.taskPriority}
-        taskStatus={dashboard.taskStatus}
-        taskDueDate={dashboard.taskDueDate}
-        taskDueTime={dashboard.taskDueTime}
-        onTitleChange={dashboard.setTaskTitle}
-        onDescriptionChange={dashboard.setTaskDesc}
-        onPriorityChange={dashboard.setTaskPriority}
-        onStatusChange={dashboard.setTaskStatus}
-        onDueDateChange={dashboard.handleDueDateChange}
-        onDueTimeChange={dashboard.setTaskDueTime}
-        onClearDueDateTime={dashboard.handleClearDueDateTime}
-        onSubmit={dashboard.handleSubmit}
-        onDeleteTask={dashboard.handleDeleteTask}
-        deleteConfirmOpen={deleteConfirmOpen}
-        setDeleteConfirmOpen={setDeleteConfirmOpen}
-        onConfirmDelete={handleConfirmDelete}
+      <TodoFormDialog
+        open={todos.dialogOpen}
+        onOpenChange={todos.handleDialogOpenChange}
+        isEditing={Boolean(todos.editingTodo)}
+        submitting={todos.submitting}
+        title={todos.title}
+        description={todos.description}
+        status={todos.status}
+        onTitleChange={todos.setTitle}
+        onDescriptionChange={todos.setDescription}
+        onStatusChange={todos.setStatus}
+        onSubmit={todos.handleSubmit}
+      />
+
+      <ConfirmationModal
+        open={todos.deleteOpen}
+        onOpenChange={todos.setDeleteOpen}
+        title="Delete todo?"
+        description={
+          todos.todoToDelete
+            ? `“${todos.todoToDelete.title}” will be permanently removed.`
+            : "This todo will be permanently removed."
+        }
+        confirmLabel="Delete"
+        confirmVariant="destructive"
+        loading={todos.deleting}
+        onConfirm={todos.handleConfirmDelete}
       />
     </div>
   );

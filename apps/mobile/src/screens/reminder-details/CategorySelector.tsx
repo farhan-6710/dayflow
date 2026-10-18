@@ -47,7 +47,7 @@ const CategorySelector = React.memo<CategorySelectorProps>(
                 <Text
                   className={`text-sm font-semibold capitalize ${
                     isSelected
-                      ? "text-white"
+                      ? "text-primary-foreground"
                       : "text-gray-700 dark:text-gray-200"
                   }`}
                 >

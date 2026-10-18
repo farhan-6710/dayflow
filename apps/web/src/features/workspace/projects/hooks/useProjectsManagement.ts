@@ -15,9 +15,16 @@ import {
   createProject,
   updateProject,
   deleteProject,
+  reorderProjects,
   type Project,
 } from "@/services/projectsService";
+import { mergeVisibleOrder } from "@/shared/utils/mergeVisibleOrder";
 import { showToast } from "@/shared/utils/showToast";
+
+function bySortOrder(a: Project, b: Project) {
+  if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
+  return a.created_at.localeCompare(b.created_at);
+}
 
 export function useProjectsManagement() {
   const { user } = useAuth();
@@ -95,7 +102,13 @@ export function useProjectsManagement() {
           color_hex: projectColor,
           project_for: projectForId,
         });
-        setProjects((prev) => [created, ...prev]);
+        setProjects((prev) => {
+          const bumped = prev.map((project) => ({
+            ...project,
+            sort_order: project.sort_order + 1,
+          }));
+          return [created, ...bumped];
+        });
         showToast("success", "Project created successfully");
       }
       setDialogOpen(false);
@@ -134,6 +147,39 @@ export function useProjectsManagement() {
     }
   };
 
+  const handleReorderProjects = async (visibleOrderedIds: string[]) => {
+    if (visibleOrderedIds.length === 0) return;
+
+    let snapshot: Project[] = [];
+    let nextOrderedIds: string[] = [];
+
+    setProjects((prev) => {
+      snapshot = prev;
+      const fullOrderedIds = prev.slice().sort(bySortOrder).map((project) => project.id);
+      nextOrderedIds = mergeVisibleOrder(fullOrderedIds, visibleOrderedIds);
+      const orderMap = new Map(
+        nextOrderedIds.map((id, index) => [id, index + 1]),
+      );
+      return prev
+        .map((project) => ({
+          ...project,
+          sort_order: orderMap.get(project.id) ?? project.sort_order,
+        }))
+        .sort(bySortOrder);
+    });
+
+    try {
+      await reorderProjects(nextOrderedIds);
+    } catch (e) {
+      console.error(e);
+      setProjects(snapshot);
+      showToast(
+        "error",
+        "Couldn't save the new order. Check your connection and try again.",
+      );
+    }
+  };
+
   return {
     projects,
     clients,
@@ -154,6 +200,7 @@ export function useProjectsManagement() {
     handleSubmit,
     handleToggleActive,
     handleDeleteProject,
+    handleReorderProjects,
     refresh: loadProjects,
   };
 }

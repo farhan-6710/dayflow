@@ -17,20 +17,20 @@ export interface AIStatusConfig {
  *
  * @example
  * const config = getAIStatusConfig("active");
- * // Returns: { colors: ["#028595", "#1ba4b5", "#00b6cf"], text: "AI Active", description: "Ready to assist you", icon: "checkmark-circle" }
+ * // Returns: { colors: ["#e9bf55", "#d9a93a", "#f0cf7a"], text: "AI Active", ... }
  */
 export const getAIStatusConfig = (status: AIStatus): AIStatusConfig => {
   switch (status) {
     case "active":
       return {
-        colors: ["#028595", "#1ba4b5", "#00b6cf"],
+        colors: ["#e9bf55", "#d9a93a", "#f0cf7a"],
         text: "AI Active",
         description: "Ready to assist you",
         icon: "checkmark-circle",
       };
     case "thinking":
       return {
-        colors: ["#028595", "#1ba4b5", "#00b6cf"],
+        colors: ["#e9bf55", "#d9a93a", "#f0cf7a"],
         text: "Processing",
         description: "Analyzing your request...",
         icon: "sync",

@@ -10,7 +10,7 @@ export const DB = {
   PROJECTS: {
     TABLE: "projects",
     SELECT:
-      "id, user_id, name, color_hex, is_active, project_for, created_at, updated_at, project_for_client:clients!project_for(company_name)",
+      "id, user_id, name, color_hex, is_active, project_for, sort_order, created_at, updated_at, project_for_client:clients!project_for(company_name)",
   },
   CLIENTS: {
     TABLE: "clients",
@@ -27,9 +27,15 @@ export const DB = {
     SELECT:
       "id, user_id, title, description, status, priority, due_date, due_time, created_at, updated_at",
   },
+  TODOS: {
+    TABLE: "todos",
+    SELECT:
+      "id, user_id, title, description, status, sort_order, created_at, updated_at",
+  },
   NOTES: {
     TABLE: "notes",
-    SELECT: "id, user_id, project_id, title, body, category, created_at, updated_at",
+    SELECT:
+      "id, user_id, project_id, title, body, category, sort_order, created_at, updated_at",
   },
   PROJECT_REFERENCE_LINKS: {
     TABLE: "project_reference_links",

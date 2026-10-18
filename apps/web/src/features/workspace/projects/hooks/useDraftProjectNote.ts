@@ -12,6 +12,7 @@ function buildDraftProjectNote(projectId: string, userId: string): Note {
     title: "",
     body: null,
     category: DEFAULT_NOTE_CATEGORY,
+    sort_order: 1,
     created_at: "",
     updated_at: "",
   };

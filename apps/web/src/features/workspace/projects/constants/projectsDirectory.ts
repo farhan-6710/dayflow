@@ -2,11 +2,12 @@ import type { DirectoryTableColumn } from "@/shared/types/components";
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 
 export const PROJECTS_DIRECTORY_GRID_CLASS =
-  "grid-cols-[1.6fr_1.2fr_0.7fr_0.55fr]";
+  "grid-cols-[2rem_1.6fr_1.2fr_0.7fr_0.55fr]";
 export const PROJECTS_DIRECTORY_ROW_GRID_CLASS =
-  "sm:grid-cols-[1.6fr_1.2fr_0.7fr_0.55fr]";
+  "sm:grid-cols-[2rem_1.6fr_1.2fr_0.7fr_0.55fr]";
 
 export const projectsDirectoryColumns: DirectoryTableColumn[] = [
+  { label: "" },
   { label: "PROJECT NAME" },
   { label: "PROJECT FOR" },
   { label: "STATUS" },

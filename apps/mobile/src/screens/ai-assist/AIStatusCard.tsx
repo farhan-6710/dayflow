@@ -58,7 +58,7 @@ const AIStatusCard = React.memo<AIStatusCardProps>(
                     className="w-12 h-12 rounded-full items-center justify-center shadow-lg"
                     style={{ backgroundColor: config.colors[0] }}
                   >
-                    <Ionicons name={config.icon} size={24} color="#ffffff" />
+                    <Ionicons name={config.icon} size={24} color="#17140d" />
                   </View>
                 </View>
               </View>

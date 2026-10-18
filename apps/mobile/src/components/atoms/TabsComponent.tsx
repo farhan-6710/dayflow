@@ -67,7 +67,7 @@ export default function TabsComponent({ tabs, initialActive = 0 }: TabsProps) {
             <Text
               className={`text-sm ${
                 i === active
-                  ? "text-white font-semibold"
+                  ? "text-primary-foreground font-semibold"
                   : "text-foreground dark:text-foreground-dark"
               }`}
             >

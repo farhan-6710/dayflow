@@ -51,6 +51,7 @@ export function ProjectDetailPage() {
     updatingStatus,
     deletingProject,
     handleDeleteNote,
+    handleReorderNotes,
     handleOpenEditDialog,
     handleSubmitProject,
     handleAddReferenceLink,
@@ -174,6 +175,7 @@ export function ProjectDetailPage() {
             notes={notes}
             isLoading={loading}
             onDeleteNote={handleDeleteNote}
+            onReorderNotes={handleReorderNotes}
             emptyMessage={buildProjectNotesEmptyMessage(project.name)}
             canAddNote={project.is_active}
           />

@@ -16,19 +16,19 @@ export interface InsightConfig {
  *
  * @example
  * const config = getInsightConfig("success");
- * // Returns: { colors: ["#028595", "#1ba4b5"], icon: "checkmark-circle", bgClass: "bg-teal-100 dark:bg-teal-900/30" }
+ * // Returns: { colors: ["#e9bf55", "#d9a93a"], icon: "checkmark-circle", bgClass: "bg-primary/10" }
  */
 export const getInsightConfig = (type: InsightType): InsightConfig => {
   switch (type) {
     case "success":
       return {
-        colors: ["#028595", "#1ba4b5"],
+        colors: ["#4f8a4b", "#e9bf55"],
         icon: "checkmark-circle",
-        bgClass: "bg-teal-100 dark:bg-teal-900/30",
+        bgClass: "bg-primary/10 dark:bg-primary/20",
       };
     case "warning":
       return {
-        colors: ["#F59E0B", "#D97706"],
+        colors: ["#d9a93a", "#e9bf55"],
         icon: "warning",
         bgClass: "bg-amber-100 dark:bg-amber-900/30",
       };

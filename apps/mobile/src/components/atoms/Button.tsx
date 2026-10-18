@@ -101,6 +101,7 @@ export default function Button({
 
     switch (variant) {
       case "primary":
+        return "text-primary-foreground";
       case "danger":
       case "success":
         return "text-white";
@@ -109,26 +110,27 @@ export default function Button({
       case "outline":
         return "text-foreground dark:text-foreground-dark";
       default:
-        return "text-white";
+        return "text-primary-foreground";
     }
   };
 
   const getIconColor = () => {
     if (isDisabled) {
-      return "#FFFFFF";
+      return "#17140d";
     }
 
     switch (variant) {
       case "primary":
+        return colors.primaryForeground ?? "#17140d";
       case "danger":
       case "success":
         return "#FFFFFF";
       case "secondary":
-        return "#374151"; // gray-700
+        return colors.text;
       case "outline":
-        return "#1F2937"; // foreground
+        return colors.text;
       default:
-        return "#FFFFFF";
+        return colors.primaryForeground ?? "#17140d";
     }
   };
 

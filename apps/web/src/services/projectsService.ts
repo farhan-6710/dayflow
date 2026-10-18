@@ -10,6 +10,7 @@ export type Project = {
   is_active: boolean;
   project_for: string | null;
   project_for_label: string;
+  sort_order: number;
   created_at: string;
   updated_at: string;
 };
@@ -25,9 +26,14 @@ type ProjectRow = Omit<Project, "project_for_label"> & {
 };
 
 const CLIENT_PORTAL_PROJECTS_SELECT =
-  "id, user_id, name, color_hex, is_active, project_for, created_at, updated_at";
+  "id, user_id, name, color_hex, is_active, project_for, sort_order, created_at, updated_at";
 
 type ClientPortalProjectRow = Omit<ProjectRow, "project_for_client">;
+
+function sortByOrder(a: Project, b: Project) {
+  if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
+  return a.created_at.localeCompare(b.created_at);
+}
 
 function normalizeRpcProjectRows(data: unknown): ClientPortalProjectRow[] {
   if (data == null) {
@@ -62,6 +68,7 @@ async function fetchClientPortalProjectsViaTable(
     .from(DB.PROJECTS.TABLE)
     .select(CLIENT_PORTAL_PROJECTS_SELECT)
     .eq("is_active", true)
+    .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
   if (clientId) {
@@ -73,9 +80,9 @@ async function fetchClientPortalProjectsViaTable(
     throw error;
   }
 
-  return ((data as ClientPortalProjectRow[]) ?? []).map((row) =>
-    mapProjectRow(row, clientCompanyName),
-  );
+  return ((data as ClientPortalProjectRow[]) ?? [])
+    .map((row) => mapProjectRow(row, clientCompanyName))
+    .sort(sortByOrder);
 }
 
 function mapProjectRow(
@@ -85,6 +92,7 @@ function mapProjectRow(
   return {
     ...row,
     project_for: row.project_for ?? null,
+    sort_order: row.sort_order ?? 0,
     project_for_label: resolveProjectForLabel(row.project_for ?? null, clientName),
   };
 }
@@ -102,6 +110,7 @@ function mapProject(row: ProjectRow): Project {
   return {
     ...project,
     project_for: project.project_for ?? null,
+    sort_order: project.sort_order ?? 0,
     project_for_label: resolveProjectForLabel(
       project.project_for ?? null,
       companyNameFromJoin(related),
@@ -114,10 +123,11 @@ export async function fetchProjects(userId: string): Promise<Project[]> {
     .from(DB.PROJECTS.TABLE)
     .select(DB.PROJECTS.SELECT)
     .eq("user_id", userId)
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
   if (error) throw error;
-  return ((data as ProjectRow[]) ?? []).map(mapProject);
+  return ((data as ProjectRow[]) ?? []).map(mapProject).sort(sortByOrder);
 }
 
 export async function fetchProjectById(id: string): Promise<Project | null> {
@@ -140,10 +150,11 @@ export async function fetchProjectsByClientId(
     .select(DB.PROJECTS.SELECT)
     .eq("user_id", userId)
     .eq("project_for", clientId)
+    .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
   if (error) throw error;
-  return ((data as ProjectRow[]) ?? []).map(mapProject);
+  return ((data as ProjectRow[]) ?? []).map(mapProject).sort(sortByOrder);
 }
 
 export async function fetchProjectsForClientPortal(
@@ -159,7 +170,7 @@ export async function fetchProjectsForClientPortal(
 
   if (!error) {
     const rows = normalizeRpcProjectRows(data);
-    return rows.map((row) => mapProjectRow(row, clientCompanyName));
+    return rows.map((row) => mapProjectRow(row, clientCompanyName)).sort(sortByOrder);
   }
 
   if (error.code !== "PGRST202") {
@@ -179,6 +190,14 @@ export async function fetchProjectForClientPortal(
 }
 
 export async function createProject(userId: string, input: CreateProjectInput): Promise<Project> {
+  const { data: existingRows, error: existingError } = await supabase
+    .from(DB.PROJECTS.TABLE)
+    .select("id")
+    .eq("user_id", userId)
+    .order("sort_order", { ascending: true });
+
+  if (existingError) throw existingError;
+
   const { data, error } = await supabase
     .from(DB.PROJECTS.TABLE)
     .insert({
@@ -187,12 +206,21 @@ export async function createProject(userId: string, input: CreateProjectInput): 
       color_hex: input.color_hex ?? "#ff7e21",
       project_for: input.project_for ?? null,
       is_active: true,
+      sort_order: 1,
     })
     .select(DB.PROJECTS.SELECT)
     .single();
 
   if (error) throw error;
-  return mapProject(data as ProjectRow);
+
+  const created = mapProject(data as ProjectRow);
+  const orderedIds = [
+    created.id,
+    ...((existingRows as { id: string }[] | null) ?? []).map((row) => row.id),
+  ];
+  await reorderProjects(orderedIds);
+
+  return { ...created, sort_order: 1 };
 }
 
 export async function updateProject(
@@ -208,6 +236,23 @@ export async function updateProject(
 
   if (error) throw error;
   return mapProject(data as ProjectRow);
+}
+
+export async function reorderProjects(orderedIds: string[]): Promise<void> {
+  if (orderedIds.length === 0) return;
+
+  const results = await Promise.all(
+    orderedIds.map(async (id, index) => {
+      const { error } = await supabase
+        .from(DB.PROJECTS.TABLE)
+        .update({ sort_order: index + 1 })
+        .eq("id", id);
+      return error;
+    }),
+  );
+
+  const firstError = results.find((error) => error != null);
+  if (firstError) throw firstError;
 }
 
 export async function deleteProject(id: string): Promise<void> {

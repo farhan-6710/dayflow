@@ -1,8 +1,23 @@
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { Link } from "react-router";
 
-import { ProjectNotesTableRow } from "@/features/workspace/projects/components/ProjectNotesTableRow";
+import { SortableProjectNotesTableRow } from "@/features/workspace/projects/components/SortableProjectNotesTableRow";
 import {
   NOTE_CATEGORIES,
   NOTE_CATEGORY_FILTER_ALL,
@@ -35,6 +50,7 @@ export function ProjectNotesTable({
   notes,
   isLoading,
   onDeleteNote,
+  onReorderNotes,
   emptyMessage,
   canAddNote = true,
 }: ProjectNotesTableProps) {
@@ -61,6 +77,28 @@ export function ProjectNotesTable({
       ]);
     });
   }, [notes, searchQuery, categoryFilter]);
+
+  const noteIds = filteredNotes.map((note) => note.id);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 6 },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = noteIds.indexOf(String(active.id));
+    const newIndex = noteIds.indexOf(String(over.id));
+    if (oldIndex < 0 || newIndex < 0) return;
+
+    onReorderNotes(arrayMove(noteIds, oldIndex, newIndex));
+  }
 
   const hasActiveFilters =
     searchQuery.trim().length > 0 || categoryFilter !== NOTE_CATEGORY_FILTER_ALL;
@@ -106,14 +144,25 @@ export function ProjectNotesTable({
           </div>
         }
       >
-        {filteredNotes.map((note) => (
-          <ProjectNotesTableRow
-            key={note.id}
-            projectId={projectId}
-            note={note}
-            onDeleteNote={setNoteToDelete}
-          />
-        ))}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={noteIds}
+            strategy={verticalListSortingStrategy}
+          >
+            {filteredNotes.map((note) => (
+              <SortableProjectNotesTableRow
+                key={note.id}
+                projectId={projectId}
+                note={note}
+                onDeleteNote={setNoteToDelete}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
       </DirectoryTable>
 
       <ConfirmationModal

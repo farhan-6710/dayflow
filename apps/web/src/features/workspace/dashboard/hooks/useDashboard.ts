@@ -2,9 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { useDashboardStats } from "@/features/workspace/dashboard/hooks/useDashboardStats";
-import { useDashboardTaskDialog } from "@/features/workspace/dashboard/hooks/useDashboardTaskDialog";
 import { fetchProjects, type Project } from "@/services/projectsService";
-import { deleteTask, fetchTasks, type Task } from "@/services/tasksService";
+import { fetchTasks, type Task } from "@/services/tasksService";
 import type { DateFiltersFilterState } from "@/shared/types/components";
 import { resolveDateFiltersRange } from "@/shared/utils/dateFiltersUtils";
 import { showToast } from "@/shared/utils/showToast";
@@ -89,19 +88,7 @@ export function useDashboard(filter: DateFiltersFilterState) {
     [tasks, resolvedRange],
   );
 
-  const { stats, urgentTasks } = useDashboardStats(filteredTasks, filteredProjects, tasks);
-  const dialogProps = useDashboardTaskDialog(user, setTasks);
-
-  const handleDeleteTask = async (id: string) => {
-    try {
-      await deleteTask(id);
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-      showToast("success", "Task deleted permanently");
-    } catch (err) {
-      console.error(err);
-      showToast("error", "Failed to delete task");
-    }
-  };
+  const { stats } = useDashboardStats(filteredTasks, filteredProjects);
 
   return {
     user,
@@ -110,9 +97,6 @@ export function useDashboard(filter: DateFiltersFilterState) {
     error,
     stats,
     tasks,
-    urgentTasks,
-    handleDeleteTask,
     refresh,
-    ...dialogProps,
   };
 }

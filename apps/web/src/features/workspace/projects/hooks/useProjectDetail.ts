@@ -15,7 +15,18 @@ import {
 } from "@/features/workspace/projects/utils/projectFor";
 import type { Client } from "@/features/workspace/clients-management/types/types";
 import { fetchClients } from "@/services/clientsService";
-import { fetchNotesByProject, deleteNote, type Note } from "@/services/notesService";
+import {
+  fetchNotesByProject,
+  deleteNote,
+  reorderNotes,
+  type Note,
+} from "@/services/notesService";
+import { mergeVisibleOrder } from "@/shared/utils/mergeVisibleOrder";
+
+function byNoteSortOrder(a: Note, b: Note) {
+  if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
+  return b.updated_at.localeCompare(a.updated_at);
+}
 import {
   createProjectReferenceLink,
   deleteProjectReferenceLink,
@@ -91,6 +102,39 @@ export function useProjectDetail() {
       console.error(e);
       showToast("error", "Failed to delete note");
       throw e;
+    }
+  }, []);
+
+  const handleReorderNotes = useCallback(async (visibleOrderedIds: string[]) => {
+    if (visibleOrderedIds.length === 0) return;
+
+    let snapshot: Note[] = [];
+    let nextOrderedIds: string[] = [];
+
+    setNotes((prev) => {
+      snapshot = prev;
+      const fullOrderedIds = prev.slice().sort(byNoteSortOrder).map((note) => note.id);
+      nextOrderedIds = mergeVisibleOrder(fullOrderedIds, visibleOrderedIds);
+      const orderMap = new Map(
+        nextOrderedIds.map((id, index) => [id, index + 1]),
+      );
+      return prev
+        .map((note) => ({
+          ...note,
+          sort_order: orderMap.get(note.id) ?? note.sort_order,
+        }))
+        .sort(byNoteSortOrder);
+    });
+
+    try {
+      await reorderNotes(nextOrderedIds);
+    } catch (e) {
+      console.error(e);
+      setNotes(snapshot);
+      showToast(
+        "error",
+        "Couldn't save the new order. Check your connection and try again.",
+      );
     }
   }, []);
 
@@ -239,6 +283,7 @@ export function useProjectDetail() {
     updatingStatus,
     deletingProject,
     handleDeleteNote,
+    handleReorderNotes,
     handleOpenEditDialog,
     handleSubmitProject,
     handleAddReferenceLink,

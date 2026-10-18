@@ -34,6 +34,7 @@ export function ProjectsManagementPage() {
     handleSubmit,
     handleToggleActive,
     handleDeleteProject,
+    handleReorderProjects,
   } = useProjectsManagement();
 
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -92,6 +93,7 @@ export function ProjectsManagementPage() {
           onEditProject={handleOpenEditDialog}
           onToggleActive={(project) => void handleToggleActive(project)}
           onDeleteProject={confirmDelete}
+          onReorderProjects={handleReorderProjects}
         />
       </PageContent>
 

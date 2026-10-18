@@ -39,7 +39,7 @@ profiles
   │     └── client_activity_* (raised_by: workspace | client)
   ├── clients (owner_user_id, auth_user_id, email)
   │     └── client_conversation_messages
-  ├── tasks, reminders → reminder_occurrences
+  ├── tasks, todos, reminders → reminder_occurrences
   ├── notifications
   └── expo_push_tokens
 ```
@@ -67,7 +67,7 @@ Never grant `SELECT ON auth.users TO authenticated`. Clients read activities on 
 
 ## Services (web/desktop)
 
-`authService` · `projectsService` · `clientsService` · `clientPortalService` · `clientActivitiesService` · `notificationsService` · `tasksService` · `remindersService` · `notesService`
+`authService` · `projectsService` · `clientsService` · `clientPortalService` · `clientActivitiesService` · `notificationsService` · `tasksService` · `todosService` · `remindersService` · `notesService`
 
 Table names live in each app’s `db.ts` only.
 
@@ -75,4 +75,4 @@ Table names live in each app’s `db.ts` only.
 
 - **Desktop:** `apps/web/src-tauri/` — Tauri 2; Google OAuth via system browser + `dayflow://` deep link + PKCE bridge
 - **Mobile:** reminders + `expo_push_tokens` for the same `auth.uid()`
-- **Migrations:** `scripts/migrations/` (001–033+) — append-only; never edit applied files
+- **Migrations:** `scripts/migrations/` (001–036+) — append-only; never edit applied files

@@ -7,7 +7,6 @@ import type { Task } from "@/services/tasksService";
 export function useDashboardStats(
   filteredTasks: Task[],
   filteredProjects: Project[],
-  allTasks: Task[],
 ) {
   const stats = useMemo(() => {
     const total = filteredTasks.length;
@@ -28,11 +27,5 @@ export function useDashboardStats(
     };
   }, [filteredProjects.length, filteredTasks]);
 
-  const urgentTasks = useMemo(() => {
-    return allTasks
-      .filter((t) => !isClosedTaskStatus(t.status))
-      .slice(0, 5);
-  }, [allTasks]);
-
-  return { stats, urgentTasks };
+  return { stats };
 }
