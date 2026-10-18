@@ -19,7 +19,6 @@ export function DashboardPanel({
       className={cn(
         "relative transition-all",
         glassPanelClassName,
-        variant === "hero" && "shadow-md",
         className,
       )}
     >

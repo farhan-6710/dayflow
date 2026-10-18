@@ -8,7 +8,7 @@ export const containMinWidthClassName = "min-w-0";
  * Use on any bordered panel so the blob reads through consistently.
  */
 export const glassPanelClassName =
-  "rounded-2xl border border-border/70 bg-card/70 shadow-sm backdrop-blur-2xl dark:border-white/10 dark:bg-card/55";
+  "rounded-2xl border border-border/70 bg-card/70 backdrop-blur-2xl dark:border-white/10 dark:bg-card/55";
 
 /** Filter/toolbar row: search or input + one or more fixed controls. */
 export const filterBarClassName = cn(

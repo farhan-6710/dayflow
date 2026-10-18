@@ -15,7 +15,7 @@ export function ShellMobileNavSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="left"
-        className="w-64 max-w-[85vw] gap-0 border-r border-white/70 bg-white/75 p-0 text-sidebar-foreground shadow-2xl backdrop-blur-2xl sm:max-w-xs dark:border-white/10 dark:bg-card/75"
+        className="w-64 max-w-[85vw] gap-0 border-r border-white/70 bg-white/75 p-0 text-sidebar-foreground backdrop-blur-2xl sm:max-w-xs dark:border-white/10 dark:bg-card/75"
       >
         <SheetTitle className="sr-only">Navigation menu</SheetTitle>
         <SheetDescription className="sr-only">

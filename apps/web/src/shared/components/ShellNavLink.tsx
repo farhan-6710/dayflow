@@ -13,7 +13,7 @@ const navLinkClass = (isActive: boolean, collapsed: boolean) =>
     "flex items-center rounded-2xl text-sm font-medium transition gap-3",
     collapsed ? "justify-center px-4 py-4" : "px-4 py-2.5",
     isActive
-      ? "bg-primary text-primary-foreground shadow-sm"
+      ? "bg-primary text-primary-foreground"
       : "text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground",
   );
 
@@ -21,7 +21,7 @@ const subLinkClass = (isActive: boolean) =>
   cn(
     "flex items-center rounded-xl px-3 py-2 text-sm transition",
     isActive
-      ? "bg-primary font-medium text-primary-foreground shadow-sm"
+      ? "bg-primary font-medium text-primary-foreground"
       : "text-sidebar-foreground/65 hover:bg-secondary/70 hover:text-secondary-foreground",
   );
 

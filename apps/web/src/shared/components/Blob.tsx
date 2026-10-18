@@ -91,11 +91,11 @@ export function Blob({ className }: BlobProps) {
     >
       <div
         data-orb
-        className="absolute left-0 top-0 size-128 rounded-full bg-[#f2cf6b]/40 blur-[110px] will-change-transform dark:bg-[#e9bf55]/28 sm:size-152"
+        className="absolute left-0 top-0 size-128 rounded-full bg-[#f2cf6b]/40 blur-[110px] will-change-transform dark:bg-[#e9bf55]/10 sm:size-152"
       />
       <div
         data-orb
-        className="absolute left-0 top-0 size-96 rounded-full bg-[#f7e2a1]/50 blur-[90px] will-change-transform dark:bg-[#f0cf7a]/20 sm:size-120"
+        className="absolute left-0 top-0 size-96 rounded-full bg-[#f7e2a1]/50 blur-[90px] will-change-transform dark:bg-[#f0cf7a]/10 sm:size-120"
       />
     </div>
   );

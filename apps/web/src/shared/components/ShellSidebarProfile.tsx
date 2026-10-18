@@ -38,7 +38,7 @@ export function ShellSidebarProfile({ to, collapsed, onNavigate }: ShellSidebarP
         "flex items-center rounded-2xl transition",
         collapsed ? "justify-center p-1.5" : "gap-3 px-3 py-2.5",
         isActive
-          ? "bg-primary text-primary-foreground shadow-sm"
+          ? "bg-primary text-primary-foreground"
           : "text-sidebar-foreground hover:bg-secondary hover:text-secondary-foreground",
       )}
     >
