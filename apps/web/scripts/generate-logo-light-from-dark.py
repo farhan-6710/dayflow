@@ -9,7 +9,9 @@ from __future__ import annotations
 import math
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 WEB_ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = WEB_ROOT / "public"
@@ -95,11 +97,11 @@ def remap_pixel(
     a: int,
     targets: dict[str, tuple[int, int, int]],
 ) -> tuple[int, int, int, int]:
-    if a < 8:
+    if a < 4:
         return (0, 0, 0, 0)
 
-    # Treat near-black as transparent (icon masters often have black mats)
-    if max(r, g, b) < 18:
+    # Only crush solid black mats — keep dark anti-aliased fringe.
+    if max(r, g, b) < 12 and a > 240:
         return (0, 0, 0, 0)
 
     region = nearest_region(r, g, b)
@@ -126,6 +128,166 @@ def remap_image(
         for x in range(width):
             pixels[x, y] = remap_pixel(*pixels[x, y], targets)
     return out
+
+
+def decontaminate_edges(image: Image.Image) -> Image.Image:
+    """Remove plate bleed from semi-transparent edges using similar-ink neighbors."""
+    rgba = image.convert("RGBA")
+    src = rgba.load()
+    width, height = rgba.size
+    out = rgba.copy()
+    dst = out.load()
+
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = src[x, y]
+            if a < 8 or a > 250:
+                continue
+
+            samples: list[tuple[int, int, int]] = []
+            for dy in (-2, -1, 0, 1, 2):
+                for dx in (-2, -1, 0, 1, 2):
+                    if dx == 0 and dy == 0:
+                        continue
+                    nx, ny = x + dx, y + dy
+                    if nx < 0 or ny < 0 or nx >= width or ny >= height:
+                        continue
+                    nr, ng, nb, na = src[nx, ny]
+                    if na < 200:
+                        continue
+                    # Prefer neighbors in the same ink family (ink vs gold).
+                    if color_distance((r, g, b), (nr, ng, nb)) > 90:
+                        continue
+                    samples.append((nr, ng, nb))
+            if not samples:
+                continue
+
+            sr = sum(c[0] for c in samples) / len(samples)
+            sg = sum(c[1] for c in samples) / len(samples)
+            sb = sum(c[2] for c in samples) / len(samples)
+            t = min(0.85, 1.0 - (a / 255.0))
+            dst[x, y] = (
+                int(round(r * (1 - t) + sr * t)),
+                int(round(g * (1 - t) + sg * t)),
+                int(round(b * (1 - t) + sb * t)),
+                a,
+            )
+    return out
+
+
+def _smoothstep(t: np.ndarray) -> np.ndarray:
+    t = np.clip(t, 0.0, 1.0)
+    return t * t * (3.0 - 2.0 * t)
+
+
+def _smooth_silhouette(binary: np.ndarray, sigma: float) -> np.ndarray:
+    """Round stair-stepped outlines before distance-field AA."""
+    closed = ndimage.binary_closing(binary, iterations=1)
+    if sigma <= 0:
+        return closed
+    soft = ndimage.gaussian_filter(closed.astype(np.float64), sigma=sigma)
+    return soft >= 0.45
+
+
+def rebuild_alpha_aa(
+    alpha: Image.Image,
+    feather_px: float = 1.35,
+    smooth_sigma: float = 1.25,
+) -> Image.Image:
+    """
+    Rebuild a clean anti-aliased alpha from a jagged matte:
+    smooth silhouette geometry, then signed-distance feathering.
+    """
+    a = np.array(alpha, dtype=np.uint8)
+    binary = _smooth_silhouette(a >= 110, sigma=smooth_sigma)
+
+    dist_in = ndimage.distance_transform_edt(binary)
+    dist_out = ndimage.distance_transform_edt(~binary)
+    signed = dist_in - dist_out
+    t = _smoothstep((signed + feather_px) / (2.0 * feather_px))
+    out = (t * 255.0).astype(np.uint8)
+    return Image.fromarray(out, mode="L")
+
+
+def _layer_from_mask(
+    rgba: Image.Image,
+    mask: np.ndarray,
+    feather_px: float,
+    smooth_sigma: float,
+) -> Image.Image:
+    """Build a single ink layer with distance-field AA from a boolean mask."""
+    arr = np.array(rgba)
+    layer = np.zeros_like(arr)
+    if not mask.any():
+        return Image.fromarray(layer, mode="RGBA")
+
+    # Use opaque-core colors only so fringe never tint the fill.
+    core = mask & (arr[:, :, 3] > 200)
+    samples = arr[core] if core.any() else arr[mask]
+    fill = np.median(samples[:, :3], axis=0).astype(np.uint8)
+    layer[:, :, 0] = fill[0]
+    layer[:, :, 1] = fill[1]
+    layer[:, :, 2] = fill[2]
+
+    clean = _smooth_silhouette(mask, sigma=smooth_sigma)
+    alpha_img = Image.fromarray((clean.astype(np.uint8) * 255), mode="L")
+    # Silhouette already smoothed — only feather here.
+    soft = rebuild_alpha_aa(alpha_img, feather_px=feather_px, smooth_sigma=0.0)
+    layer[:, :, 3] = np.array(soft)
+    return Image.fromarray(layer, mode="RGBA")
+
+
+def polish_edges(
+    image: Image.Image,
+    supersample: int = 4,
+    split_layers: bool = True,
+) -> Image.Image:
+    """
+    Rebuild anti-aliased coverage. Marks split ink/gold layers; wordmarks
+    only rebuild the outer alpha so letterforms stay intact.
+    """
+    rgba = image.convert("RGBA")
+    width, height = rgba.size
+    scale = max(2, supersample)
+    big = rgba.resize((width * scale, height * scale), Image.Resampling.LANCZOS)
+    feather = 1.4 * scale / 2.0
+
+    if not split_layers:
+        r_ch, g_ch, b_ch, a_ch = big.split()
+        a_ch = rebuild_alpha_aa(a_ch, feather_px=feather)
+        big = decontaminate_edges(Image.merge("RGBA", (r_ch, g_ch, b_ch, a_ch)))
+        polished = big.resize((width, height), Image.Resampling.LANCZOS)
+        r_ch, g_ch, b_ch, a_ch = polished.split()
+        a_ch = rebuild_alpha_aa(a_ch, feather_px=1.1)
+        return decontaminate_edges(Image.merge("RGBA", (r_ch, g_ch, b_ch, a_ch)))
+
+    arr = np.array(big)
+    r = arr[:, :, 0].astype(np.int16)
+    g = arr[:, :, 1].astype(np.int16)
+    b = arr[:, :, 2].astype(np.int16)
+    a = arr[:, :, 3]
+
+    visible = a >= 50
+    # Strict gold: bright warm F/checkmark only (never dark D fringe).
+    gold = (
+        visible
+        & (r >= 150)
+        & (g >= 110)
+        & (r > b + 45)
+        & (g > b + 20)
+        & ((r - b) > 55)
+    )
+    ink = visible & ~gold
+
+    # Smooth in supersampled space so stair-steps collapse before AA feathering.
+    geo_sigma = max(1.4, 1.55 * scale / 2.0)
+    ink_layer = _layer_from_mask(big, ink, feather_px=feather, smooth_sigma=geo_sigma)
+    gold_layer = _layer_from_mask(big, gold, feather_px=feather, smooth_sigma=geo_sigma)
+
+    composed = Image.new("RGBA", big.size, (0, 0, 0, 0))
+    composed.alpha_composite(ink_layer)
+    composed.alpha_composite(gold_layer)
+    return composed.resize((width, height), Image.Resampling.LANCZOS)
 
 
 def crop_to_content(image: Image.Image, padding: int = 12) -> Image.Image:
@@ -169,18 +331,33 @@ def extract_mark_icon(logo: Image.Image, padding: int = 10) -> Image.Image:
     return crop_to_content(mark, padding=padding)
 
 
+# Manual horizontal nudge as a fraction of canvas width (positive = right).
+MARK_NUDGE_X_RATIO = 0.05
+
+
 def fit_square(image: Image.Image, size: int, pad_ratio: float = 0.12) -> Image.Image:
-    """Center mark on a transparent square canvas."""
+    """Place mark on a transparent square (bbox-centered, then nudged)."""
     mark = crop_to_content(image.convert("RGBA"), padding=0)
-    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    max_inner = int(size * (1 - pad_ratio * 2))
+    # Compose at 3× so the final LANCZOS downscale rebuilds clean edges.
+    work = max(size * 3, 96)
+    canvas = Image.new("RGBA", (work, work), (0, 0, 0, 0))
+
+    # Leave slack so the 5% right nudge does not clip the mark.
+    max_inner = max(1, int(work * (1 - pad_ratio * 2 - abs(MARK_NUDGE_X_RATIO))))
     scale = min(max_inner / mark.width, max_inner / mark.height)
     new_size = (max(1, int(mark.width * scale)), max(1, int(mark.height * scale)))
     resized = mark.resize(new_size, Image.Resampling.LANCZOS)
-    ox = (size - resized.width) // 2
-    oy = (size - resized.height) // 2
+
+    ox = (work - resized.width) // 2 + int(round(work * MARK_NUDGE_X_RATIO))
+    oy = (work - resized.height) // 2
+    ox = max(0, min(ox, work - resized.width))
+    oy = max(0, min(oy, work - resized.height))
+
     canvas.paste(resized, (ox, oy), resized)
-    return canvas
+    r_ch, g_ch, b_ch, a_ch = canvas.split()
+    a_ch = rebuild_alpha_aa(a_ch, feather_px=1.2)
+    canvas = Image.merge("RGBA", (r_ch, g_ch, b_ch, a_ch))
+    return canvas.resize((size, size), Image.Resampling.LANCZOS)
 
 
 def save(image: Image.Image, path: Path) -> None:
@@ -199,6 +376,7 @@ def compose_on_background(
     background: tuple[int, int, int],
     pad_ratio: float = 0.18,
 ) -> Image.Image:
+    """Compose optically centered mark onto a solid brand plate."""
     canvas = Image.new("RGBA", (size, size), (*background, 255))
     fitted = fit_square(mark, size, pad_ratio=pad_ratio)
     canvas.alpha_composite(fitted)
@@ -226,10 +404,20 @@ def main() -> None:
     else:
         icon_master = extract_mark_icon(source_logo)
 
-    dark_logo = remap_image(source_logo, DARK_TARGETS)
-    light_logo = remap_image(source_logo, LIGHT_TARGETS)
-    dark_icon = fit_square(remap_image(icon_master, DARK_TARGETS), 512)
-    light_icon = fit_square(remap_image(icon_master, LIGHT_TARGETS), 512)
+    dark_logo = polish_edges(
+        remap_image(source_logo, DARK_TARGETS), supersample=3, split_layers=False
+    )
+    light_logo = polish_edges(
+        remap_image(source_logo, LIGHT_TARGETS), supersample=3, split_layers=False
+    )
+    dark_mark = polish_edges(
+        remap_image(icon_master, DARK_TARGETS), supersample=4, split_layers=True
+    )
+    light_mark = polish_edges(
+        remap_image(icon_master, LIGHT_TARGETS), supersample=4, split_layers=True
+    )
+    dark_icon = fit_square(dark_mark, 512)
+    light_icon = fit_square(light_mark, 512)
 
     save(dark_logo, PUBLIC / "logo-dark.png")
     save(light_logo, PUBLIC / "logo-light.png")
@@ -240,12 +428,12 @@ def main() -> None:
     save(dark_icon, MOBILE_BRAND / "logo-dark-icon.png")
     save(light_icon, MOBILE_BRAND / "logo-light-icon.png")
 
-    # App / splash style icons on brand surfaces
+    # App / splash style icons on brand surfaces (optical center from raw mark)
     cream = (246, 243, 234)  # --background light #f6f3ea
     obsidian = (11, 11, 11)  # --background dark #0b0b0b
-    app_light = compose_on_background(light_icon, 1024, cream)
-    app_dark = compose_on_background(dark_icon, 1024, obsidian)
-    app_tinted = compose_on_background(dark_icon, 1024, (233, 191, 85))  # gold
+    app_light = compose_on_background(light_mark, 1024, cream)
+    app_dark = compose_on_background(dark_mark, 1024, obsidian)
+    app_tinted = compose_on_background(dark_mark, 1024, (233, 191, 85))  # gold
 
     save(app_light, MOBILE_ASSETS / "icon.png")
     save(app_light, MOBILE_ICONS / "ios-light.png")
@@ -256,10 +444,10 @@ def main() -> None:
     save(app_light, MOBILE_ICONS / "splash-icon.png")
     save(app_light, MOBILE_ICONS / "splash-icon-light.png")
     save(app_dark, MOBILE_ICONS / "splash-icon-dark.png")
-    save(fit_square(light_icon, 48), MOBILE_ASSETS / "favicon.png")
+    save(fit_square(light_mark, 48), MOBILE_ASSETS / "favicon.png")
 
     # Staging icon for `bunx tauri icon <path>` (solid cream plate + mark)
-    tauri_source = compose_on_background(light_icon, 1024, cream, pad_ratio=0.16)
+    tauri_source = compose_on_background(light_mark, 1024, cream, pad_ratio=0.16)
     staging_dir = WEB_ROOT / "scripts" / ".cache"
     staging = staging_dir / "tauri-icon-source.png"
     save(tauri_source, staging)
