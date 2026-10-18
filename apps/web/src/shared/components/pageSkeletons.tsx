@@ -270,9 +270,9 @@ export function TasksCalendarPageSkeleton() {
             ))}
           </div>
 
-          {/* 6 weeks × 7 days — same cell mins as TasksWeekDayCell */}
-          <div className="grid min-w-0 flex-1 grid-cols-7 content-stretch gap-px overflow-hidden rounded-b-lg border border-t-0 border-border bg-border">
-            {Array.from({ length: 42 }).map((_, index) => (
+          {/* 5 weeks × 7 — typical month; same mins/layout as TasksWeeksTable */}
+          <div className="grid min-w-0 flex-1 grid-cols-7 content-start gap-px overflow-hidden rounded-b-lg border border-t-0 border-border bg-border">
+            {Array.from({ length: 35 }).map((_, index) => (
               <div
                 key={index}
                 className="flex min-h-14 flex-col justify-between gap-1 bg-card p-1 sm:min-h-[4.75rem] sm:p-2"

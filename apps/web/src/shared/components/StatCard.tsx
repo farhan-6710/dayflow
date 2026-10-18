@@ -5,11 +5,7 @@ import { StatCardTrend } from "@/shared/components/StatCardTrend";
 import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import type { StatCardItem } from "@/shared/types/statsCards";
 import { cn } from "@/shared/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/shared/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
 type StatCardProps = {
   card: StatCardItem;
@@ -22,7 +18,7 @@ export function StatCard({ card }: StatCardProps) {
     (card.description ? `${card.label}\n${card.description}` : null);
 
   const iconButton = (
-    <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/60 text-primary/60 bg-primary/10 text-primary transition-all duration-200 group-hover/icon:bg-primary group-hover/icon:text-primary-foreground">
+    <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/60 text-primary/60 bg-primary/10 transition-all duration-200 group-hover/icon:bg-primary group-hover/icon:text-primary-foreground">
       <Icon className="size-3.5 transition-transform duration-200 group-hover/icon:scale-110" />
     </span>
   );
@@ -62,7 +58,10 @@ export function StatCard({ card }: StatCardProps) {
                     {card.description}
                   </p>
                 </TooltipTrigger>
-                <TooltipContent side="bottom" className="max-w-xs whitespace-pre-line">
+                <TooltipContent
+                  side="bottom"
+                  className="max-w-xs whitespace-pre-line"
+                >
                   {tooltipText}
                 </TooltipContent>
               </Tooltip>
