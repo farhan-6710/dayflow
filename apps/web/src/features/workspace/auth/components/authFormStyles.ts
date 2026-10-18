@@ -4,10 +4,10 @@ export const authFormStyles = {
   label: formLabelClassName,
   input: formInputClassName,
   googleButton:
-    "h-10 w-full rounded-full border border-ring/60 bg-card text-sm font-medium text-foreground shadow-xs hover:bg-muted/50",
+    "h-10 w-full rounded-full border border-border bg-card text-sm font-medium text-foreground hover:bg-muted/50",
   oauthButton:
-    "h-10 w-full rounded-full border border-ring/60 bg-card text-sm font-medium text-foreground shadow-xs hover:bg-muted/50",
-  submitButton: "h-10 w-full rounded-full font-medium shadow-sm",
+    "h-10 w-full rounded-full border border-border bg-card text-sm font-medium text-foreground hover:bg-muted/50",
+  submitButton: "h-10 w-full rounded-full font-medium",
   divider:
     "bg-card px-2 text-[11px] font-medium tracking-wider text-muted-foreground uppercase",
   errorAlert:

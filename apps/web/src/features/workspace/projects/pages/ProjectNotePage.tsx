@@ -64,7 +64,7 @@ export function ProjectNotePage() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-120px)] flex-col space-y-6">
+    <div className="flex min-h-[calc(100vh-120px)] flex-col space-y-4">
       <PageHeader
         heading={isDraft ? "New Note" : note.title.trim() || "Note"}
         description={`Notes management for ${project.name}.`}

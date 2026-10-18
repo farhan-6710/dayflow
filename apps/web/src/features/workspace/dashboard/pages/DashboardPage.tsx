@@ -38,7 +38,10 @@ export function DashboardPage() {
   };
 
   const isDemoAccount = isDemoAccountEmail(dashboard.user?.email);
-  const greetingName = getWorkspaceDisplayName(dashboard.user, dashboard.profile?.display_name);
+  const greetingName = getWorkspaceDisplayName(
+    dashboard.user,
+    dashboard.profile?.display_name,
+  );
   const heading = isDemoAccount
     ? "Welcome to the DayFlow Demo"
     : `Welcome, ${greetingName}!`;
@@ -46,7 +49,7 @@ export function DashboardPage() {
   const cards = getDashboardCards(dashboard.stats, periodLabel);
 
   return (
-    <div className="relative space-y-6">
+    <div className="relative space-y-4">
       <PageHeader
         heading={heading}
         description="Here is your personal workspace summary for today."
@@ -58,13 +61,18 @@ export function DashboardPage() {
 
         <StatsCards cards={cards} isLoading={dashboard.loading} />
 
-        <div className={cn("grid grid-cols-1 gap-6 lg:grid-cols-3", containMinWidthClassName)}>
+        <div
+          className={cn(
+            "grid grid-cols-1 gap-4 lg:grid-cols-3",
+            containMinWidthClassName,
+          )}
+        >
           <DashboardChartsSection
             tasks={dashboard.tasks}
             isLoading={dashboard.loading}
           />
 
-          <div className={cn("space-y-6", containMinWidthClassName)}>
+          <div className={cn("space-y-4", containMinWidthClassName)}>
             <DashboardFocusList
               urgentTasks={dashboard.urgentTasks}
               loading={dashboard.loading}

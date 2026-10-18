@@ -23,8 +23,11 @@ export function ForgotPasswordForm({
     useForgotPasswordForm(redirectPath);
 
   return (
-    <div className="space-y-6">
-      <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
+    <div className="space-y-4">
+      <form
+        onSubmit={(event) => void handleSubmit(event)}
+        className="space-y-4"
+      >
         <AuthEmailField
           id="forgot-password-email"
           value={email}

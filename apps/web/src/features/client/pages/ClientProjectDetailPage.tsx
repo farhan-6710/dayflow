@@ -7,7 +7,10 @@ import { CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes"
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { fetchProjectForClientPortal, type Project } from "@/services/projectsService";
+import {
+  fetchProjectForClientPortal,
+  type Project,
+} from "@/services/projectsService";
 
 export function ClientProjectDetailPage() {
   const { id: projectId = "" } = useParams();
@@ -20,7 +23,11 @@ export function ClientProjectDetailPage() {
     void (async () => {
       try {
         setLoading(true);
-        const row = await fetchProjectForClientPortal(projectId, client.company_name, client.id);
+        const row = await fetchProjectForClientPortal(
+          projectId,
+          client.company_name,
+          client.id,
+        );
         setProject(row);
       } finally {
         setLoading(false);
@@ -45,7 +52,7 @@ export function ClientProjectDetailPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading={
           <div className="flex min-w-0 items-center gap-3">

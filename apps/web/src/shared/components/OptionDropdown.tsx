@@ -41,7 +41,7 @@ export function OptionDropdown({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "h-9 min-w-0 w-full justify-between gap-2 rounded-lg border border-ring/60 bg-card px-3 text-sm font-medium shadow-xs",
+            "h-9 min-w-0 w-full justify-between gap-2 rounded-lg border border-border bg-background px-3 text-sm font-medium dark:border-input dark:bg-muted/40",
             className,
           )}
         >

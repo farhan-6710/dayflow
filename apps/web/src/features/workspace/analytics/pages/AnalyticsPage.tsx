@@ -60,7 +60,8 @@ export function AnalyticsPage() {
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((t) => t.status === "done").length;
-  const taskCompletionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  const taskCompletionRate =
+    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   const cards = [
     {
@@ -108,10 +109,12 @@ export function AnalyticsPage() {
   }, [tasks, completedTasks]);
 
   const notesByProjectData = useMemo(() => {
-    const rows: Array<{ name: string; count: number }> = projects.map((project) => ({
-      name: project.name,
-      count: notes.filter((note) => note.project_id === project.id).length,
-    }));
+    const rows: Array<{ name: string; count: number }> = projects.map(
+      (project) => ({
+        name: project.name,
+        count: notes.filter((note) => note.project_id === project.id).length,
+      }),
+    );
 
     const unassigned = notes.filter((note) => !note.project_id).length;
     if (unassigned > 0) {
@@ -122,7 +125,7 @@ export function AnalyticsPage() {
   }, [projects, notes]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Workspace Analytics"
         description="Track task completion and see how notes are distributed across projects."
@@ -132,22 +135,32 @@ export function AnalyticsPage() {
         {error ? <ErrorBanner message={error} /> : null}
         <StatsCards cards={cards} isLoading={loading} />
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 min-w-0">
-          <div className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}>
-            <h3 className="text-sm font-bold tracking-tight text-foreground">Task Status Breakdown</h3>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+          <div
+            className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
+          >
+            <h3 className="text-sm font-bold tracking-tight text-foreground">
+              Task Status Breakdown
+            </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
               Ratio of to-do, in-progress, and completed tasks.
             </p>
 
             <div className="flex-1 flex items-center justify-center min-h-0 mt-4">
               {loading ? (
-                <div className="text-sm text-muted-foreground">Loading chart...</div>
+                <div className="text-sm text-muted-foreground">
+                  Loading chart...
+                </div>
               ) : totalTasks === 0 ? (
-                <div className="text-sm text-muted-foreground">No task data to display</div>
+                <div className="text-sm text-muted-foreground">
+                  No task data to display
+                </div>
               ) : (
                 <div className="relative size-full max-w-[280px] max-h-[220px]">
                   <div className="pointer-events-none absolute inset-0 z-0 flex flex-col items-center justify-center">
-                    <span className="text-2xl font-bold tracking-tight">{taskCompletionRate}%</span>
+                    <span className="text-2xl font-bold tracking-tight">
+                      {taskCompletionRate}%
+                    </span>
                     <span className="text-3xs text-muted-foreground uppercase font-bold tracking-wider">
                       Completed
                     </span>
@@ -178,7 +191,9 @@ export function AnalyticsPage() {
                                 <p className="font-medium">{item.name}</p>
                                 <p className="mt-0.5 text-muted-foreground">
                                   Tasks :{" "}
-                                  <span className="font-medium text-foreground">{item.value}</span>
+                                  <span className="font-medium text-foreground">
+                                    {item.value}
+                                  </span>
                                 </p>
                               </div>
                             );
@@ -192,7 +207,7 @@ export function AnalyticsPage() {
             </div>
 
             {!loading && totalTasks > 0 ? (
-              <div className="flex items-center justify-center gap-6 text-xs mt-4">
+              <div className="flex items-center justify-center gap-4 text-xs mt-4">
                 {statusData.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <span
@@ -208,8 +223,12 @@ export function AnalyticsPage() {
             ) : null}
           </div>
 
-          <div className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}>
-            <h3 className="text-sm font-bold tracking-tight text-foreground">Notes by Project</h3>
+          <div
+            className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
+          >
+            <h3 className="text-sm font-bold tracking-tight text-foreground">
+              Notes by Project
+            </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
               How your notes are organized across project folders.
             </p>
@@ -229,30 +248,48 @@ export function AnalyticsPage() {
                     data={notesByProjectData}
                     margin={{ top: 0, right: 10, left: -20, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="var(--border)"
+                    />
                     <XAxis
                       dataKey="name"
                       tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
                     />
-                    <YAxis tick={{ fill: "var(--muted-foreground)", fontSize: 10 }} />
+                    <YAxis
+                      tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
+                    />
                     <RechartsTooltip
-                      cursor={{ fill: "color-mix(in oklch, var(--foreground) 8%, transparent)" }}
+                      cursor={{
+                        fill: "color-mix(in oklch, var(--foreground) 8%, transparent)",
+                      }}
                       content={({ active, payload, label }) => {
                         if (!active || !payload?.length) return null;
                         return (
                           <div className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground shadow-xl">
                             <p className="font-medium">{label}</p>
                             {payload.map((item) => (
-                              <p key={String(item.dataKey)} className="mt-0.5 text-muted-foreground">
+                              <p
+                                key={String(item.dataKey)}
+                                className="mt-0.5 text-muted-foreground"
+                              >
                                 {item.name} :{" "}
-                                <span className="font-medium text-foreground">{item.value}</span>
+                                <span className="font-medium text-foreground">
+                                  {item.value}
+                                </span>
                               </p>
                             ))}
                           </div>
                         );
                       }}
                     />
-                    <Bar dataKey="count" name="Notes" fill="#ff7e21" radius={[4, 4, 0, 0]} />
+                    <Bar
+                      dataKey="count"
+                      name="Notes"
+                      fill="#ff7e21"
+                      radius={[4, 4, 0, 0]}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               )}

@@ -14,9 +14,9 @@ export function DashboardChartsSection({
   isLoading,
 }: DashboardChartsSectionProps) {
   return (
-    <div className={cn("space-y-6 lg:col-span-2", containMinWidthClassName)}>
+    <div className={cn("space-y-4 lg:col-span-2", containMinWidthClassName)}>
       <TaskCompletionChart tasks={tasks} isLoading={isLoading} />
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <DashboardPlaceholderCard
           title="Weekly insights"
           description="Placeholder for upcoming productivity insights."

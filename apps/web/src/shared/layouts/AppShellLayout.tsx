@@ -49,7 +49,7 @@ export function AppShellLayout({
 
               <PageTransitionMain
                 mainRef={mainRef}
-                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable"
+                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable  pt-2.5 overflow-hidden sm:pt-3 md:pt-5"
               />
             </div>
           </div>

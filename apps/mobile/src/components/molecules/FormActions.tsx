@@ -11,7 +11,7 @@ export const FormActions: React.FC<FormActionsProps> = ({
   const spacingClasses = {
     small: "gap-2",
     medium: "gap-4",
-    large: "gap-6",
+    large: "gap-4",
   };
 
   return (

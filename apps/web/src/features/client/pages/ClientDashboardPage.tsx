@@ -1,13 +1,11 @@
-import {
-  CalendarDays,
-  CheckSquare,
-  FolderKanban,
-  Phone,
-} from "lucide-react";
+import { CalendarDays, CheckSquare, FolderKanban, Phone } from "lucide-react";
 
 import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
-import { CLIENT_PORTAL_DASHBOARD_PATH, CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes";
+import {
+  CLIENT_PORTAL_DASHBOARD_PATH,
+  CLIENT_PORTAL_PROJECTS_PATH,
+} from "@/app/constants/clientPortalRoutes";
 import { useClientDashboard } from "@/features/client/hooks/useClientDashboard";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { PageContent } from "@/shared/components/PageContent";
@@ -97,13 +95,16 @@ export function ClientDashboardPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading={`Welcome, ${welcomeName}`}
         description={`${client.company_name} · Your projects and activities at a glance.`}
       />
 
-      <PageContent className="space-y-6" motionKey={loading ? "loading" : "ready"}>
+      <PageContent
+        className="space-y-4"
+        motionKey={loading ? "loading" : "ready"}
+      >
         <StatsCards cards={cards} isLoading={loading} />
 
         <div id={ACTIVITIES_SECTION_ID} className="scroll-mt-6">

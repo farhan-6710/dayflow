@@ -85,7 +85,7 @@ export function TasksPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Tasks"
         description="Standalone personal tasks — workouts, errands, goals, and anything else."
@@ -124,7 +124,9 @@ export function TasksPage() {
           emptyMessage="No tasks found. Try clearing filters or add a new task."
           headerAside={
             <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
-              <div className={cn("relative", containMinWidthClassName, "sm:w-56")}>
+              <div
+                className={cn("relative", containMinWidthClassName, "sm:w-56")}
+              >
                 <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="text"

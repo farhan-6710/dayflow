@@ -65,12 +65,15 @@ export function ProjectsManagementPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Projects Management"
         description="Organize notes into project folders — tasks stay standalone."
         actions={
-          <Button onClick={handleOpenCreateDialog} className="rounded-full shadow-sm">
+          <Button
+            onClick={handleOpenCreateDialog}
+            className="rounded-full shadow-sm"
+          >
             <Plus className="mr-2 size-4" />
             New Project
           </Button>

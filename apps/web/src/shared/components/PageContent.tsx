@@ -15,7 +15,7 @@ export function PageContent({
     <AnimatePresence mode="wait">
       <motion.div
         key={motionKey}
-        className={cn("w-full min-w-0 space-y-8", className)}
+        className={cn("w-full min-w-0 space-y-4", className)}
         {...FLUID_LIST}
       >
         {Children.toArray(children).map((child, index) => (

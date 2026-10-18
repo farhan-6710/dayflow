@@ -31,10 +31,16 @@ export function ProjectNotesWorkspace({
   const pendingNote = notes.find((note) => note.id === pendingDeleteId);
 
   return (
-    <div className={cn("flex min-h-0 flex-1 flex-col gap-4", containMinWidthClassName)}>
+    <div
+      className={cn(
+        "flex min-h-0 flex-1 flex-col gap-4",
+        containMinWidthClassName,
+      )}
+    >
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs text-muted-foreground">
-          {notes.length} {notes.length === 1 ? "note" : "notes"} in this project.
+          {notes.length} {notes.length === 1 ? "note" : "notes"} in this
+          project.
         </p>
         <Button size="sm" onClick={onStartDraft}>
           <Plus className="mr-1 size-4" />
@@ -42,7 +48,12 @@ export function ProjectNotesWorkspace({
         </Button>
       </div>
 
-      <div className={cn("grid min-h-0 flex-1 grid-cols-1 gap-6 md:grid-cols-3", containMinWidthClassName)}>
+      <div
+        className={cn(
+          "grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-3",
+          containMinWidthClassName,
+        )}
+      >
         <ProjectNotesList
           notes={notes}
           draftNote={draftNote}
@@ -87,7 +98,8 @@ export function ProjectNotesWorkspace({
         confirmVariant="destructive"
         loading={saving}
         onConfirm={async () => {
-          if (!pendingDeleteId || pendingDeleteId === DRAFT_PROJECT_NOTE_ID) return;
+          if (!pendingDeleteId || pendingDeleteId === DRAFT_PROJECT_NOTE_ID)
+            return;
           setSaving(true);
           try {
             await onDelete(pendingDeleteId);

@@ -24,19 +24,23 @@ export function NotificationsPage() {
 
       {error ? <ErrorBanner message={error} /> : null}
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         <ReminderNotificationsTable
           notifications={reminderNotifications}
           isLoading={isLoading}
           dismissingId={dismissingId}
-          onDismiss={(notificationId) => void dismissNotification(notificationId)}
+          onDismiss={(notificationId) =>
+            void dismissNotification(notificationId)
+          }
         />
 
         <TaskNotificationsTable
           notifications={taskNotifications}
           isLoading={isLoading}
           dismissingId={dismissingId}
-          onDismiss={(notificationId) => void dismissNotification(notificationId)}
+          onDismiss={(notificationId) =>
+            void dismissNotification(notificationId)
+          }
         />
       </div>
     </PageContent>

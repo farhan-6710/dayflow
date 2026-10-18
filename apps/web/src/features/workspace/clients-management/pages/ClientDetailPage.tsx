@@ -95,7 +95,7 @@ export function ClientDetailPage() {
     client.client_name?.trim() || client.company_name.trim();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading={client.company_name}
         description={`Client details and chat with ${clientContactLabel}.`}

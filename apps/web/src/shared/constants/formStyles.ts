@@ -15,13 +15,20 @@ export const formFieldGroupClassName = "flex flex-col gap-3";
 
 /** Canonical text input styles — used by shared/ui/input and auth forms. */
 export const formInputClassName = cn(
-  "h-10 w-full min-w-0 rounded-lg border border-ring/60 bg-background px-3 py-2 text-sm text-foreground shadow-xs transition-[border-color,box-shadow]",
+  "h-10 w-full min-w-0 rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground transition-[border-color,box-shadow]",
   "placeholder:text-muted-foreground",
   "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-muted/40 disabled:opacity-50",
   "aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20",
   "dark:border-input dark:bg-muted/40 dark:disabled:bg-muted/30",
   "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/30",
   formControlFocusRingClassName,
+);
+
+/** Shared trigger surface for selects / dropdowns — neutral border, gold only on focus. */
+export const formTriggerClassName = cn(
+  "rounded-lg border border-border bg-background text-sm font-medium text-foreground transition-[border-color,box-shadow]",
+  "hover:bg-muted/50 dark:border-input dark:bg-muted/40",
+  focusRingClassName,
 );
 
 /** Canonical textarea styles — same surface as inputs. */

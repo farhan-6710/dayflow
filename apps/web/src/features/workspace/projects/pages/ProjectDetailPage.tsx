@@ -94,7 +94,7 @@ export function ProjectDetailPage() {
   const isClientProject = project.project_for !== null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading={
           <div className="flex min-w-0 items-center gap-3">
@@ -166,7 +166,7 @@ export function ProjectDetailPage() {
       />
 
       <PageContent>
-        <div className={cn("space-y-6", containMinWidthClassName)}>
+        <div className={cn("space-y-4", containMinWidthClassName)}>
           {error ? <ErrorBanner message={error} /> : null}
 
           <ProjectNotesTable

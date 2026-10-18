@@ -7,7 +7,10 @@ import {
   ACCOUNT_RESET_PASSWORD_HINT,
   ACCOUNT_SET_PASSWORD_HINT,
 } from "@/shared/constants/accountPassword";
-import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
+import {
+  formFieldGroupClassName,
+  formLabelClassName,
+} from "@/shared/constants/formStyles";
 import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -51,15 +54,15 @@ export function SettingsPage() {
     newEmail.trim().toLowerCase() !== currentEmail.toLowerCase();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Settings"
         description="Configure your personal preferences, theme appearance, and security credentials."
       />
 
       <PageContent>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 min-w-0">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+          <div className="space-y-4">
             <div className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <User className="size-5 text-primary" />
@@ -68,7 +71,10 @@ export function SettingsPage() {
                 </h3>
               </div>
 
-              <form onSubmit={(e) => void handleUpdateProfile(e)} className="space-y-4">
+              <form
+                onSubmit={(e) => void handleUpdateProfile(e)}
+                className="space-y-4"
+              >
                 <div className={formFieldGroupClassName}>
                   <label className={formLabelClassName}>Display Name</label>
                   <Input
@@ -81,7 +87,9 @@ export function SettingsPage() {
                 </div>
 
                 <div className={formFieldGroupClassName}>
-                  <label className={formLabelClassName}>Avatar URL (Optional)</label>
+                  <label className={formLabelClassName}>
+                    Avatar URL (Optional)
+                  </label>
                   <Input
                     placeholder="https://example.com/avatar.png"
                     value={avatarUrl}
@@ -90,7 +98,11 @@ export function SettingsPage() {
                   />
                 </div>
 
-                <Button type="submit" disabled={savingProfile} className="w-full">
+                <Button
+                  type="submit"
+                  disabled={savingProfile}
+                  className="w-full"
+                >
                   Save Profile Details
                 </Button>
               </form>
@@ -131,7 +143,9 @@ export function SettingsPage() {
                 {pendingEmail ? (
                   <p className="rounded-lg border border-border bg-muted/40 px-2.5 py-2 text-3xs text-muted-foreground">
                     Pending change to{" "}
-                    <span className="font-medium text-foreground">{pendingEmail}</span>
+                    <span className="font-medium text-foreground">
+                      {pendingEmail}
+                    </span>
                     — finish confirming both inbox links to complete it.
                   </p>
                 ) : null}
@@ -167,7 +181,9 @@ export function SettingsPage() {
                   <Sun className="size-4" />
                   <Switch
                     checked={isDarkMode}
-                    onCheckedChange={(checked) => void handleUpdateTheme(checked)}
+                    onCheckedChange={(checked) =>
+                      void handleUpdateTheme(checked)
+                    }
                     className="cursor-pointer"
                   />
                   <Moon className="size-4" />
@@ -176,7 +192,7 @@ export function SettingsPage() {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <KeyRound className="size-5 text-primary" />
@@ -209,11 +225,16 @@ export function SettingsPage() {
                     className="w-full"
                     variant="outline"
                   >
-                    {sendingResetLink ? "Sending link…" : "Send password reset link"}
+                    {sendingResetLink
+                      ? "Sending link…"
+                      : "Send password reset link"}
                   </Button>
                 </form>
               ) : (
-                <form onSubmit={(e) => void handleSetPassword(e)} className="space-y-4">
+                <form
+                  onSubmit={(e) => void handleSetPassword(e)}
+                  className="space-y-4"
+                >
                   <div className={formFieldGroupClassName}>
                     <label className={formLabelClassName}>New password</label>
                     <Input
@@ -228,7 +249,9 @@ export function SettingsPage() {
                   </div>
 
                   <div className={formFieldGroupClassName}>
-                    <label className={formLabelClassName}>Confirm password</label>
+                    <label className={formLabelClassName}>
+                      Confirm password
+                    </label>
                     <Input
                       type="password"
                       autoComplete="new-password"
@@ -246,7 +269,9 @@ export function SettingsPage() {
                   <Button
                     type="submit"
                     disabled={
-                      settingPassword || !password.trim() || !confirmPassword.trim()
+                      settingPassword ||
+                      !password.trim() ||
+                      !confirmPassword.trim()
                     }
                     className="w-full"
                     variant="outline"
@@ -262,9 +287,10 @@ export function SettingsPage() {
                 DayFlow Environment
               </h3>
               <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
-                This is a private personal command center. Your data is protected by Row
-                Level Security (RLS) policies inside Supabase, and authenticated sessions
-                are maintained securely in your browser cache.
+                This is a private personal command center. Your data is
+                protected by Row Level Security (RLS) policies inside Supabase,
+                and authenticated sessions are maintained securely in your
+                browser cache.
               </p>
               <div className="mt-4 p-3 rounded-xl bg-secondary text-secondary-foreground text-3xs font-semibold leading-relaxed border border-border/80">
                 Connection Status: Secured (Supabase SSL)

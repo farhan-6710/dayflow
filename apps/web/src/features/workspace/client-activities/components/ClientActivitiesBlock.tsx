@@ -38,12 +38,7 @@ export function ClientActivitiesBlock({
       };
     }
     return null;
-  }, [
-    scopeProps,
-    projectId,
-    clientId,
-    user?.id,
-  ]);
+  }, [scopeProps, projectId, clientId, user?.id]);
 
   const {
     tasks,
@@ -56,7 +51,11 @@ export function ClientActivitiesBlock({
     reload,
   } = useClientActivitiesQuery(queryScope);
 
-  const actions = useClientActivityActions({ reload, setError, raisedBy: activityRaisedBy });
+  const actions = useClientActivityActions({
+    reload,
+    setError,
+    raisedBy: activityRaisedBy,
+  });
 
   const editOnlyRaisedBy: ClientActivityRaisedBy | undefined =
     activityRaisedBy === "client" ? "client" : undefined;
@@ -109,16 +108,26 @@ export function ClientActivitiesBlock({
     onDeleteCall: actions.removeCall,
   };
 
-  if (loading && tasks.length === 0 && meetings.length === 0 && calls.length === 0) {
+  if (
+    loading &&
+    tasks.length === 0 &&
+    meetings.length === 0 &&
+    calls.length === 0
+  ) {
     return (
-      <div className={cn("px-6 py-8 text-center text-sm text-muted-foreground", glassPanelClassName)}>
+      <div
+        className={cn(
+          "px-6 py-8 text-center text-sm text-muted-foreground",
+          glassPanelClassName,
+        )}
+      >
         Loading activities...
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {error ? <ErrorBanner message={error} /> : null}
       <OpenActivitiesSection
         {...sectionProps}

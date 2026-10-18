@@ -35,7 +35,7 @@ export function ClientsManagementPage() {
   }, [clients, searchQuery, statusFilter]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Clients Management"
         description="Manage client companies and contact details for freelance and office work."

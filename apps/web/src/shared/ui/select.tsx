@@ -2,6 +2,7 @@ import * as React from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { Select as SelectPrimitive } from "radix-ui";
 
+import { formTriggerClassName } from "@/shared/constants/formStyles";
 import { cn } from "@/shared/lib/utils";
 
 function Select({
@@ -25,7 +26,8 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "flex h-9 w-full items-center justify-between gap-2 rounded-lg border border-ring/60 bg-background px-3 py-2 text-sm text-foreground shadow-xs outline-none transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-muted-foreground dark:border-input dark:bg-muted/40 [&>span]:line-clamp-1 [&>span]:min-w-0",
+        "flex h-9 w-full items-center justify-between gap-2 px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-muted-foreground [&>span]:line-clamp-1 [&>span]:min-w-0",
+        formTriggerClassName,
         className,
       )}
       {...props}

@@ -29,7 +29,7 @@ export function ReminderTimeSelect({
           disabled={disabled}
           aria-expanded={open}
           aria-haspopup="listbox"
-          className="h-auto w-full justify-between gap-2 rounded-lg border border-ring/60 bg-card px-3 py-2 text-sm font-medium shadow-xs hover:bg-muted/50"
+          className="h-auto w-full justify-between gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-muted/50 dark:border-input dark:bg-muted/40"
         >
           <span className="flex items-center gap-2">
             <Clock3 className="size-3.5 opacity-70" aria-hidden="true" />

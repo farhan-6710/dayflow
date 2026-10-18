@@ -22,19 +22,13 @@ function formatReminderDays(daysOfWeek: string[]) {
 }
 
 export function RemindersManagementPage() {
-  const {
-    reminders,
-    loading,
-    error,
-    dialog,
-    openAddDialog,
-    openEditDialog,
-  } = useRemindersManagement();
+  const { reminders, loading, error, dialog, openAddDialog, openEditDialog } =
+    useRemindersManagement();
 
   useReminderChecker(reminders);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Daily Reminders"
         description="Manage recurring reminders by weekday and time. Use this space for repeatable nudges, not date-based tasks."
@@ -46,11 +40,20 @@ export function RemindersManagementPage() {
         }
       />
 
-      <PageContent motionKey={loading ? "loading" : reminders.length === 0 ? "empty" : "list"}>
+      <PageContent
+        motionKey={
+          loading ? "loading" : reminders.length === 0 ? "empty" : "list"
+        }
+      >
         {error ? <ErrorBanner message={error} /> : null}
 
         {loading ? (
-          <div className={cn("px-6 py-12 text-center text-sm text-muted-foreground", glassPanelClassName)}>
+          <div
+            className={cn(
+              "px-6 py-12 text-center text-sm text-muted-foreground",
+              glassPanelClassName,
+            )}
+          >
             Loading reminders...
           </div>
         ) : reminders.length === 0 ? (
@@ -65,7 +68,8 @@ export function RemindersManagementPage() {
               No reminders yet
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Add your first recurring reminder for workouts, medicine, study blocks, or any weekday routine.
+              Add your first recurring reminder for workouts, medicine, study
+              blocks, or any weekday routine.
             </p>
             <Button className="mt-5" onClick={openAddDialog}>
               <Plus className="mr-1 size-4" />
@@ -134,7 +138,9 @@ export function RemindersManagementPage() {
                   <p
                     className={cn(
                       "mt-4 text-sm leading-relaxed",
-                      reminder.is_disabled ? "text-muted-foreground" : "text-muted-foreground",
+                      reminder.is_disabled
+                        ? "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   >
                     {reminder.description}

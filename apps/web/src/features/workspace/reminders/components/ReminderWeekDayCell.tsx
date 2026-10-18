@@ -58,7 +58,7 @@ export function ReminderWeekDayCell({
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between gap-2 rounded-xl border border-border bg-background/70 px-3 py-1.5 text-left transition hover:border-ring/50"
+                    className="flex w-full items-center justify-between gap-2 rounded-xl border border-border bg-background/70 px-3 py-1.5 text-left transition hover:border-foreground/20"
                     onClick={(event) => {
                       event.stopPropagation();
                       onEdit(reminder.id);

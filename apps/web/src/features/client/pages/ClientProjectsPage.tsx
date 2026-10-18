@@ -9,7 +9,10 @@ import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { fetchProjectsForClientPortal, type Project } from "@/services/projectsService";
+import {
+  fetchProjectsForClientPortal,
+  type Project,
+} from "@/services/projectsService";
 
 const GRID_CLASS = "grid-cols-[minmax(0,1fr)_8rem]";
 
@@ -29,7 +32,10 @@ export function ClientProjectsPage() {
       try {
         setLoading(true);
         setError(null);
-        const rows = await fetchProjectsForClientPortal(client.company_name, client.id);
+        const rows = await fetchProjectsForClientPortal(
+          client.company_name,
+          client.id,
+        );
         setProjects(rows);
       } catch (err) {
         console.error(err);
@@ -41,7 +47,7 @@ export function ClientProjectsPage() {
   }, [client.id, client.company_name, user?.id]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         heading="Projects"
         description="Projects your provider has shared with you."
