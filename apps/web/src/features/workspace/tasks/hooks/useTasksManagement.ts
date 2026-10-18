@@ -1,7 +1,15 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { DEFAULT_TASK_TIME } from "@/features/workspace/tasks/constants/tasksCalendar";
-import { fetchTasks, createTask, updateTask, deleteTask, type Task } from "@/services/tasksService";
+import {
+  fetchTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+  reorderTasks,
+  type Task,
+} from "@/services/tasksService";
+import { compareBySortOrder } from "@/features/workspace/tasks/utils/taskCalendarSort";
 import { showToast } from "@/shared/utils/showToast";
 
 export function useTasksManagement() {
@@ -102,7 +110,14 @@ export function useTasksManagement() {
         showToast("success", "Task updated successfully");
       } else {
         const created = await createTask(user.id, input);
-        setTasks((prev) => [created, ...prev]);
+        setTasks((prev) => {
+          const sameDay = (task: Task) =>
+            (task.due_date ?? null) === (created.due_date ?? null);
+          const bumped = prev.map((task) =>
+            sameDay(task) ? { ...task, sort_order: task.sort_order + 1 } : task,
+          );
+          return [created, ...bumped];
+        });
         showToast("success", "Task created successfully");
       }
       setDialogOpen(false);
@@ -122,6 +137,38 @@ export function useTasksManagement() {
     } catch (e) {
       console.error(e);
       showToast("error", "Failed to delete task");
+    }
+  };
+
+  const handleReorderDayTasks = async (orderedIds: string[]) => {
+    if (orderedIds.length === 0) return;
+
+    let snapshot: Task[] = [];
+    setTasks((prev) => {
+      snapshot = prev;
+      const orderMap = new Map(orderedIds.map((id, index) => [id, index + 1]));
+      return prev
+        .map((task) =>
+          orderMap.has(task.id)
+            ? { ...task, sort_order: orderMap.get(task.id)! }
+            : task,
+        )
+        .slice()
+        .sort((a, b) => {
+          if (a.due_date === b.due_date) return compareBySortOrder(a, b);
+          return (a.due_date ?? "").localeCompare(b.due_date ?? "");
+        });
+    });
+
+    try {
+      await reorderTasks(orderedIds);
+    } catch (e) {
+      console.error(e);
+      setTasks(snapshot);
+      showToast(
+        "error",
+        "Couldn't save the new order. Check your connection and try again.",
+      );
     }
   };
 
@@ -168,6 +215,7 @@ export function useTasksManagement() {
     handleOpenEditDialog,
     handleSubmit,
     handleDeleteTask,
+    handleReorderDayTasks,
     refresh: loadData,
   };
 }

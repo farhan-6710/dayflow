@@ -73,4 +73,6 @@ export type TasksDayPanelProps = {
   tasks: Task[];
   onAddTask: () => void;
   onEditTask: (task: Task) => void;
+  onDeleteTask: (task: Task) => void;
+  onReorderTasks: (orderedIds: string[]) => void;
 };

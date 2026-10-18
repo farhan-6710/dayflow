@@ -75,4 +75,4 @@ Table names live in each app’s `db.ts` only.
 
 - **Desktop:** `apps/web/src-tauri/` — Tauri 2; Google OAuth via system browser + `dayflow://` deep link + PKCE bridge
 - **Mobile:** reminders + `expo_push_tokens` for the same `auth.uid()`
-- **Migrations:** `scripts/migrations/` (001–036+) — append-only; never edit applied files
+- **Migrations:** `scripts/migrations/` (001–037+) — append-only; never edit applied files

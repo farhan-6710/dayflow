@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { format } from "date-fns";
 
 import { TasksDayPanel } from "@/features/workspace/tasks/components/TasksDayPanel";
@@ -6,6 +6,8 @@ import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDi
 import { TasksWeeksTable } from "@/features/workspace/tasks/components/TasksWeeksTable";
 import { useTasksCalendarSelection } from "@/features/workspace/tasks/hooks/useTasksCalendarSelection";
 import { useTasksManagement } from "@/features/workspace/tasks/hooks/useTasksManagement";
+import type { Task } from "@/services/tasksService";
+import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { FluidReveal } from "@/shared/components/FluidReveal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
@@ -17,6 +19,8 @@ export function TasksCalendarPage() {
   const { selectedDate, calendarWeeks, year, month, selectDate } =
     useTasksCalendarSelection();
   const tasks = useTasksManagement();
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const tasksByDateKey = useMemo(() => {
     const map = new Map<string, typeof tasks.tasks>();
@@ -46,8 +50,11 @@ export function TasksCalendarPage() {
         motionKey={tasks.loading ? "loading" : "ready"}
         className={cn(
           tasks.loading
-            ? cn("flex min-h-[420px] items-center justify-center", glassPanelClassName)
-            : "grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(280px,3fr)]",
+            ? cn(
+                "flex min-h-[320px] items-center justify-center sm:min-h-[420px]",
+                glassPanelClassName,
+              )
+            : "grid min-w-0 grid-cols-1 items-stretch gap-3 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(240px,3fr)]",
         )}
       >
         {tasks.loading ? (
@@ -68,6 +75,8 @@ export function TasksCalendarPage() {
               tasks={selectedTasks}
               onAddTask={() => tasks.handleOpenCreateDialog(selectedKey)}
               onEditTask={tasks.handleOpenEditDialog}
+              onDeleteTask={setTaskToDelete}
+              onReorderTasks={tasks.handleReorderDayTasks}
             />
           </>
         )}
@@ -97,6 +106,32 @@ export function TasksCalendarPage() {
             ? () => tasks.handleDeleteTask(tasks.editingTask!.id)
             : undefined
         }
+      />
+
+      <ConfirmationModal
+        open={Boolean(taskToDelete)}
+        onOpenChange={(open) => {
+          if (!open) setTaskToDelete(null);
+        }}
+        title="Delete task?"
+        description={
+          taskToDelete
+            ? `“${taskToDelete.title}” will be permanently removed.`
+            : "This task will be permanently removed."
+        }
+        confirmLabel="Delete"
+        confirmVariant="destructive"
+        loading={deleting}
+        onConfirm={async () => {
+          if (!taskToDelete) return;
+          setDeleting(true);
+          try {
+            await tasks.handleDeleteTask(taskToDelete.id);
+            setTaskToDelete(null);
+          } finally {
+            setDeleting(false);
+          }
+        }}
       />
     </PageContent>
   );

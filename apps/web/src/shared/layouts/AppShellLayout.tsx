@@ -28,7 +28,7 @@ export function AppShellLayout({
   return (
     <UnsavedChangesProvider>
       <PageTransitionProvider>
-        <div className="fixed inset-0 flex w-full overflow-hidden p-2 text-foreground sm:p-3 md:gap-3.5 md:p-3.5">
+        <div className="fixed inset-0 flex w-full min-w-0 overflow-hidde text-foreground p-3 md:gap-3.5 md:p-3.5">
           <Blob />
 
           <div className="relative z-10 flex min-h-0 min-w-0 w-full flex-1 md:gap-3.5">
@@ -49,7 +49,7 @@ export function AppShellLayout({
 
               <PageTransitionMain
                 mainRef={mainRef}
-                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable  pt-2.5 overflow-hidden sm:pt-3 md:pt-5"
+                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable pt-5"
               />
             </div>
           </div>

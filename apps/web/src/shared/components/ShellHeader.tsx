@@ -40,7 +40,7 @@ export function ShellHeader({
     <motion.header
       {...SHELL_HEADER_MOTION}
       className={cn(
-        "flex h-16 w-full shrink-0 items-center gap-4 px-4 sm:px-6",
+        "flex h-14 w-full min-w-0 shrink-0 items-center gap-2 px-2 sm:h-16 sm:gap-4 sm:px-6",
         glassPanelClassName,
       )}
     >
@@ -64,7 +64,7 @@ export function ShellHeader({
         <Menu className="size-4" aria-hidden="true" />
       </Button>
 
-      <div className="flex min-w-0 flex-1 items-center gap-4">
+      <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
         <ShellNavSearch
           nav={sidebarConfig.nav}
           placeholder={sidebarConfig.searchPlaceholder ?? "Search navigation..."}
@@ -72,17 +72,17 @@ export function ShellHeader({
         {headerCenter}
       </div>
 
-      <div className="ml-auto flex items-center gap-3">
+      <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-3">
         {headerActions}
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <Sun className="size-4" aria-hidden="true" />
+        <div className="flex items-center gap-1.5 text-muted-foreground sm:gap-2">
+          <Sun className="hidden size-4 min-[360px]:block" aria-hidden="true" />
           <Switch
             checked={isDarkMode}
             onCheckedChange={setDarkMode}
             aria-label="Toggle dark mode"
             className="cursor-pointer"
           />
-          <Moon className="size-4" aria-hidden="true" />
+          <Moon className="hidden size-4 min-[360px]:block" aria-hidden="true" />
         </div>
         {accountPath ? (
           <PortalUserHeaderMenu

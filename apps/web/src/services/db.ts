@@ -25,7 +25,7 @@ export const DB = {
   TASKS: {
     TABLE: "tasks",
     SELECT:
-      "id, user_id, title, description, status, priority, due_date, due_time, created_at, updated_at",
+      "id, user_id, title, description, status, priority, due_date, due_time, sort_order, created_at, updated_at",
   },
   TODOS: {
     TABLE: "todos",

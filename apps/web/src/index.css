@@ -279,11 +279,17 @@
   .grid > * {
     min-width: 0;
   }
-  body {
-    @apply font-sans antialiased bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    overflow-x: hidden;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+  #root {
+    min-width: 0;
   }
 }
 

@@ -21,16 +21,16 @@ export function TasksCalendarMonthBar({
   const label = format(new Date(year, month - 1, 1), "MMMM yyyy");
 
   return (
-    <div className="flex items-center justify-between gap-3">
-      <h2 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+    <div className="flex min-w-0 items-center justify-between gap-2 sm:gap-3">
+      <h2 className="min-w-0 truncate text-base font-semibold tracking-tight text-foreground sm:text-xl">
         {label}
       </h2>
-      <div className="flex items-center gap-2">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-2">
         <Button
           type="button"
           variant="outline"
           size="sm"
-          className="h-8 rounded-full px-3 text-xs"
+          className="h-7 rounded-full px-2 text-[11px] sm:h-8 sm:px-3 sm:text-xs"
           onClick={() => onSelect(new Date())}
         >
           Today
@@ -39,7 +39,7 @@ export function TasksCalendarMonthBar({
           type="button"
           variant="outline"
           size="icon"
-          className="size-8 rounded-full"
+          className="size-7 rounded-full sm:size-8"
           aria-label="Previous month"
           onClick={() => onSelect(shiftMonth(year, month, -1))}
         >
@@ -49,7 +49,7 @@ export function TasksCalendarMonthBar({
           type="button"
           variant="outline"
           size="icon"
-          className="size-8 rounded-full"
+          className="size-7 rounded-full sm:size-8"
           aria-label="Next month"
           onClick={() => onSelect(shiftMonth(year, month, 1))}
         >
