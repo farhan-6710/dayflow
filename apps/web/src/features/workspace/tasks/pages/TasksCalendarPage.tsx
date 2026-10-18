@@ -1,271 +1,100 @@
-import { useMemo, useState } from "react";
-import { Plus } from "lucide-react";
+import { useMemo } from "react";
+import { format } from "date-fns";
 
+import { TasksDayPanel } from "@/features/workspace/tasks/components/TasksDayPanel";
+import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDialog";
+import { TasksWeeksTable } from "@/features/workspace/tasks/components/TasksWeeksTable";
 import { useTasksCalendarSelection } from "@/features/workspace/tasks/hooks/useTasksCalendarSelection";
 import { useTasksManagement } from "@/features/workspace/tasks/hooks/useTasksManagement";
-import { TasksWeeksTable } from "@/features/workspace/tasks/components/TasksWeeksTable";
-import { TaskDateTimePicker } from "@/features/workspace/tasks/components/TaskDateTimePicker";
-import {
-  TASK_STATUS_DOT_COLORS,
-  TASK_STATUS_LEGEND,
-  TASK_STATUS_OPTIONS,
-} from "@/features/workspace/tasks/constants/taskStatus";
-import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { FluidReveal } from "@/shared/components/FluidReveal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { Button } from "@/shared/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/dialog";
-import { formTextareaClassName } from "@/shared/constants/formStyles";
-import { Input } from "@/shared/ui/input";
-import { cn } from "@/shared/lib/utils";
-import { OptionDropdown } from "@/shared/components/OptionDropdown";
-
-const PRIORITY_OPTIONS = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
-];
 
 export function TasksCalendarPage() {
   const { selectedDate, calendarWeeks, year, month, selectDate } =
     useTasksCalendarSelection();
+  const tasks = useTasksManagement();
 
-  const {
-    tasks,
-    loading,
-    dialogOpen,
-    setDialogOpen,
-    taskTitle,
-    setTaskTitle,
-    taskDesc,
-    setTaskDesc,
-    taskPriority,
-    setTaskPriority,
-    taskStatus,
-    setTaskStatus,
-    taskDueDate,
-    taskDueTime,
-    setTaskDueTime,
-    handleDueDateChange,
-    handleClearDueDateTime,
-    submitting,
-    editingTask,
-    handleOpenCreateDialog,
-    handleOpenEditDialog,
-    handleSubmit,
-    handleDeleteTask,
-  } = useTasksManagement();
-
-  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
-
-  // Build a map: "yyyy-MM-dd" → Task[]
   const tasksByDateKey = useMemo(() => {
-    const map = new Map<string, typeof tasks>();
-    for (const task of tasks) {
+    const map = new Map<string, typeof tasks.tasks>();
+    for (const task of tasks.tasks) {
       if (!task.due_date) continue;
       const existing = map.get(task.due_date) ?? [];
       map.set(task.due_date, [...existing, task]);
     }
     return map;
-  }, [tasks]);
+  }, [tasks.tasks]);
 
-  const openEditFromCell = (taskId: string) => {
-    const task = tasks.find((t) => t.id === taskId);
-    if (task) {
-      handleOpenEditDialog(task);
-    }
-  };
+  const selectedKey = format(selectedDate, "yyyy-MM-dd");
+  const selectedTasks = tasksByDateKey.get(selectedKey) ?? [];
 
-  const openDayWithCreate = (y: number, m: number, d: number) => {
-    const iso = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-    selectDate(new Date(y, m - 1, d));
-    handleOpenCreateDialog(iso);
+  const selectDay = (nextYear: number, nextMonth: number, date: number) => {
+    selectDate(new Date(nextYear, nextMonth - 1, date));
   };
 
   return (
     <PageContent>
       <PageHeader
         heading="Tasks Calendar"
-        description="Browse and manage tasks by day. Open any date to add a task or edit an existing one."
-        actions={
-          <Button
-            className="gap-2 rounded-full px-5 shadow-sm"
-            onClick={() => handleOpenCreateDialog()}
-          >
-            <Plus className="size-4" />
-            Add Task
-          </Button>
-        }
+        description="Pick a day to review its tasks. Add a new one from the side panel."
       />
 
-      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-        {TASK_STATUS_LEGEND.map(({ status, label }) => (
-          <div key={status} className="flex items-center gap-1.5">
-            <span
-              className={cn("size-2.5 shrink-0 rounded-full", TASK_STATUS_DOT_COLORS[status])}
-            />
-            <span className="text-[11px] font-medium">{label}</span>
-          </div>
-        ))}
-      </div>
-
-      {loading ? (
-        <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-border bg-card">
+      <FluidReveal
+        motionKey={tasks.loading ? "loading" : "ready"}
+        className={
+          tasks.loading
+            ? "flex min-h-[420px] items-center justify-center rounded-2xl border border-border bg-card"
+            : "grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(280px,3fr)]"
+        }
+      >
+        {tasks.loading ? (
           <LoadingSpinner />
-        </div>
-      ) : (
-        <TasksWeeksTable
-          year={year}
-          month={month}
-          weeks={calendarWeeks}
-          selectedDate={selectedDate}
-          tasksByDateKey={tasksByDateKey}
-          onSelectMonth={selectDate}
-          onOpenDay={openDayWithCreate}
-          onEdit={openEditFromCell}
-          statusColors={TASK_STATUS_DOT_COLORS}
-        />
-      )}
-
-      {/* Add / Edit Task Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="flex max-h-[85vh] max-w-lg! flex-col overflow-hidden">
-          <DialogHeader>
-            <DialogTitle>{editingTask ? "Edit Task" : "Add Task"}</DialogTitle>
-            <DialogDescription>
-              {editingTask
-                ? "Update the task details below."
-                : "Fill in the details to create a new task."}
-            </DialogDescription>
-          </DialogHeader>
-
-          <form
-            id="task-calendar-form"
-            onSubmit={(e) => void handleSubmit(e)}
-            className="flex flex-col gap-4 overflow-y-auto py-1 pr-1"
-          >
-            <label className="block text-xs font-semibold text-muted-foreground">
-              Title *
-              <Input
-                value={taskTitle}
-                onChange={(e) => setTaskTitle(e.target.value)}
-                placeholder="e.g. Write blog post"
-                disabled={submitting}
-                required
-                className="mt-1.5"
-              />
-            </label>
-
-            <label className="block text-xs font-semibold text-muted-foreground">
-              Description
-              <textarea
-                value={taskDesc}
-                onChange={(e) => setTaskDesc(e.target.value)}
-                placeholder="Optional details…"
-                disabled={submitting}
-                rows={3}
-                className={cn(formTextareaClassName, "mt-1.5 min-h-[4.5rem]")}
-              />
-            </label>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <span className="block text-xs font-semibold text-muted-foreground">
-                  Priority
-                </span>
-                <OptionDropdown
-                  value={taskPriority}
-                  options={PRIORITY_OPTIONS}
-                  placeholder="Priority"
-                  onChange={(v) => setTaskPriority(v as typeof taskPriority)}
-                  disabled={submitting}
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <span className="block text-xs font-semibold text-muted-foreground">
-                  Status
-                </span>
-                <OptionDropdown
-                  value={taskStatus}
-                  options={TASK_STATUS_OPTIONS}
-                  placeholder="Status"
-                  onChange={(v) => setTaskStatus(v as typeof taskStatus)}
-                  disabled={submitting}
-                />
-              </div>
-            </div>
-
-            <TaskDateTimePicker
-              dateValue={taskDueDate}
-              timeValue={taskDueTime}
-              onDateChange={handleDueDateChange}
-              onTimeChange={setTaskDueTime}
-              onClear={handleClearDueDateTime}
-              disabled={submitting}
+        ) : (
+          <>
+            <TasksWeeksTable
+              year={year}
+              month={month}
+              weeks={calendarWeeks}
+              selectedDate={selectedDate}
+              tasksByDateKey={tasksByDateKey}
+              onSelectMonth={selectDate}
+              onSelectDay={selectDay}
             />
-          </form>
+            <TasksDayPanel
+              date={selectedDate}
+              tasks={selectedTasks}
+              onAddTask={() => tasks.handleOpenCreateDialog(selectedKey)}
+              onEditTask={tasks.handleOpenEditDialog}
+            />
+          </>
+        )}
+      </FluidReveal>
 
-          <DialogFooter className="gap-2 sm:justify-between">
-            {editingTask ? (
-              <Button
-                type="button"
-                variant="destructive"
-                disabled={submitting}
-                onClick={() => setDeleteConfirmOpen(true)}
-              >
-                Delete
-              </Button>
-            ) : (
-              <span />
-            )}
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setDialogOpen(false)}
-                disabled={submitting}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                form="task-calendar-form"
-                disabled={submitting || !taskTitle.trim()}
-              >
-                {submitting
-                  ? "Saving…"
-                  : editingTask
-                    ? "Save Changes"
-                    : "Add Task"}
-              </Button>
-            </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <ConfirmationModal
-        open={deleteConfirmOpen}
-        onOpenChange={setDeleteConfirmOpen}
-        title="Delete Task?"
-        description="This action is irreversible. The task will be deleted permanently."
-        confirmLabel="Delete permanently"
-        confirmVariant="destructive"
-        loading={submitting}
-        onConfirm={async () => {
-          if (!editingTask) return;
-          await handleDeleteTask(editingTask.id);
-          setDeleteConfirmOpen(false);
-          setDialogOpen(false);
-        }}
+      <TaskFormDialog
+        open={tasks.dialogOpen}
+        onOpenChange={tasks.setDialogOpen}
+        isEditing={Boolean(tasks.editingTask)}
+        submitting={tasks.submitting}
+        title={tasks.taskTitle}
+        description={tasks.taskDesc}
+        priority={tasks.taskPriority}
+        status={tasks.taskStatus}
+        dueDate={tasks.taskDueDate}
+        dueTime={tasks.taskDueTime}
+        onTitleChange={tasks.setTaskTitle}
+        onDescriptionChange={tasks.setTaskDesc}
+        onPriorityChange={tasks.setTaskPriority}
+        onStatusChange={tasks.setTaskStatus}
+        onDueDateChange={tasks.handleDueDateChange}
+        onDueTimeChange={tasks.setTaskDueTime}
+        onClearDueDateTime={tasks.handleClearDueDateTime}
+        onSubmit={(event) => void tasks.handleSubmit(event)}
+        onDelete={
+          tasks.editingTask
+            ? () => tasks.handleDeleteTask(tasks.editingTask!.id)
+            : undefined
+        }
       />
     </PageContent>
   );

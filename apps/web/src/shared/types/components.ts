@@ -64,6 +64,14 @@ export type DirectoryTableProps = {
 export type PageContentProps = {
   className?: string;
   children: ReactNode;
+  /** Replay the page stagger when this value changes (filters, selected period). */
+  motionKey?: string;
+};
+
+export type FluidRevealProps = {
+  motionKey: string;
+  className?: string;
+  children: ReactNode;
 };
 
 export type ShellNavSubItem = {

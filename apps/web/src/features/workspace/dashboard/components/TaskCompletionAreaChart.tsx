@@ -26,7 +26,7 @@ export function TaskCompletionAreaChart({
       <AreaChart
         accessibilityLayer
         data={points}
-        margin={{ top: 8, right: 10, left: -16, bottom: 0 }}
+        margin={{ top: 8, right: 10, left: 0, bottom: 0 }}
       >
         <defs>
           <linearGradient id={`${gradientId}-current`} x1="0" y1="0" x2="0" y2="1">

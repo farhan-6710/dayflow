@@ -46,14 +46,14 @@ export function DashboardPage() {
   const cards = getDashboardCards(dashboard.stats, periodLabel);
 
   return (
-    <div className="relative isolate space-y-6">
+    <div className="relative space-y-6">
       <PageHeader
         heading={heading}
         description="Here is your personal workspace summary for today."
         actions={<DateFilters {...dateFilterProps} />}
       />
 
-      <PageContent>
+      <PageContent motionKey={periodLabel}>
         {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
 
         <StatsCards cards={cards} isLoading={dashboard.loading} />

@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
 
 import { BRAND_DESCRIPTION, BRAND_NAME } from "@/shared/brand/brandManifest";
 import {
@@ -9,6 +10,7 @@ import {
   resolveBrandPromotionBannerSrc,
 } from "@/shared/constants/brandAssets";
 import { Blob } from "@/shared/components/Blob";
+import { FLUID_REVEAL } from "@/shared/constants/pageMotion";
 import { useTheme } from "@/shared/providers/ThemeProvider";
 import { cn } from "@/shared/lib/utils";
 
@@ -50,9 +52,8 @@ export function AuthShellLayout({
 
   return (
     <div className="relative flex h-dvh max-h-dvh flex-col overflow-hidden bg-background text-foreground lg:flex-row">
-      <Blob />
       <div
-        className="relative hidden h-full shrink-0 overflow-hidden lg:flex lg:items-center lg:justify-center"
+        className="relative z-10 hidden h-full shrink-0 overflow-hidden lg:flex lg:items-center lg:justify-center"
         style={bannerColumnStyle}
         aria-hidden="true"
       >
@@ -73,12 +74,15 @@ export function AuthShellLayout({
 
       <div
         className={cn(
-          "flex min-h-0 min-w-0 flex-1 flex-col lg:h-full",
+          "relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:h-full",
           className,
         )}
       >
-        <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto overscroll-contain px-6 py-5 sm:px-10 sm:py-6 lg:px-12 xl:px-16">
-          <div className="w-full max-w-md">{children}</div>
+        <Blob />
+        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center overflow-y-auto overscroll-contain px-6 py-5 sm:px-10 sm:py-6 lg:px-12 xl:px-16">
+          <motion.div className="w-full max-w-md" {...FLUID_REVEAL}>
+            {children}
+          </motion.div>
         </div>
       </div>
     </div>

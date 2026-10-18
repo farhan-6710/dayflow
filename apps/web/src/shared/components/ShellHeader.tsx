@@ -37,7 +37,7 @@ export function ShellHeader({
   return (
     <motion.header
       {...SHELL_HEADER_MOTION}
-      className="flex h-16 w-full shrink-0 items-center gap-4 rounded-2xl border border-white/70 bg-white/60 px-4 shadow-[0_8px_32px_0_rgba(15,23,42,0.06),inset_0_1px_1px_0_rgba(255,255,255,0.85)] backdrop-blur-2xl backdrop-saturate-150 sm:px-6 dark:border-white/10 dark:bg-card/50 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.06)]"
+      className="flex h-16 w-full shrink-0 items-center gap-4 rounded-2xl border border-border/80 bg-card/95 px-4 shadow-sm backdrop-blur-xl sm:px-6 dark:border-white/10 dark:bg-card/95"
     >
       <Button
         type="button"

@@ -29,8 +29,17 @@ export function TasksCalendarMonthBar({
         <Button
           type="button"
           variant="outline"
+          size="sm"
+          className="h-8 rounded-full px-3 text-xs"
+          onClick={() => onSelect(new Date())}
+        >
+          Today
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
           size="icon"
-          className="size-9 rounded-full border-border bg-background shadow-sm"
+          className="size-8 rounded-full"
           aria-label="Previous month"
           onClick={() => onSelect(shiftMonth(year, month, -1))}
         >
@@ -40,7 +49,7 @@ export function TasksCalendarMonthBar({
           type="button"
           variant="outline"
           size="icon"
-          className="size-9 rounded-full border-border bg-background shadow-sm"
+          className="size-8 rounded-full"
           aria-label="Next month"
           onClick={() => onSelect(shiftMonth(year, month, 1))}
         >

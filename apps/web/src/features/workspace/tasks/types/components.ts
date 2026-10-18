@@ -53,10 +53,9 @@ export type TasksWeekDayCellProps = {
   dateNumber: number;
   tasks: Task[];
   isSelected: boolean;
+  isToday: boolean;
   isOutsideMonth?: boolean;
-  statusColors: Record<TaskStatus, string>;
-  onOpenDay: () => void;
-  onEdit: (taskId: string) => void;
+  onSelect: () => void;
 };
 
 export type TasksWeeksTableProps = {
@@ -66,7 +65,12 @@ export type TasksWeeksTableProps = {
   selectedDate: Date;
   tasksByDateKey: Map<string, Task[]>;
   onSelectMonth: (date: Date) => void;
-  onOpenDay: (year: number, month: number, date: number) => void;
-  onEdit: (taskId: string) => void;
-  statusColors: Record<TaskStatus, string>;
+  onSelectDay: (year: number, month: number, date: number) => void;
+};
+
+export type TasksDayPanelProps = {
+  date: Date;
+  tasks: Task[];
+  onAddTask: () => void;
+  onEditTask: (task: Task) => void;
 };

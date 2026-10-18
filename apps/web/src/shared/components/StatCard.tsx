@@ -39,7 +39,7 @@ export function StatCard({ card, idx, isLoading }: StatCardProps) {
   return (
     <div
       className={cn(
-        "relative rounded-2xl border border-white/70 bg-white/60 px-4 py-3.5 shadow-[0_8px_32px_0_rgba(15,23,42,0.06),inset_0_1px_1px_0_rgba(255,255,255,0.85)] backdrop-blur-2xl backdrop-saturate-150 transition-all duration-200 hover:border-white/95 dark:border-white/12 dark:bg-card/45 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.08)]",
+        "relative rounded-2xl border border-border bg-card px-4 py-3.5 shadow-sm transition-all duration-200",
         isAccent ? "hover:border-accent/50" : "hover:border-primary/50",
       )}
     >

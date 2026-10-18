@@ -9,6 +9,7 @@ import {
 import { useRemindersCalendarSelection } from "@/features/workspace/reminders/hooks/useRemindersCalendarSelection";
 import { PageContent } from "@/shared/components/PageContent";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { FluidReveal } from "@/shared/components/FluidReveal";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { MonthSelector } from "@/shared/ui/MonthSelector";
@@ -61,21 +62,28 @@ export function RemindersCalendarPage() {
 
       {error ? <ErrorBanner message={error} /> : null}
 
-      {loading ? (
-        <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-border bg-card">
+      <FluidReveal
+        motionKey={loading ? "loading" : `${year}-${month}`}
+        className={
+          loading
+            ? "flex min-h-[320px] items-center justify-center rounded-2xl border border-border bg-card"
+            : undefined
+        }
+      >
+        {loading ? (
           <LoadingSpinner />
-        </div>
-      ) : (
-        <RemindersWeeksTable
-          year={year}
-          month={month}
-          weeks={calendarWeeks}
-          selectedDate={selectedDate}
-          getSlot={getSlot}
-          onOpenDay={() => openAddDialog()}
-          onEdit={openEditDialog}
-        />
-      )}
+        ) : (
+          <RemindersWeeksTable
+            year={year}
+            month={month}
+            weeks={calendarWeeks}
+            selectedDate={selectedDate}
+            getSlot={getSlot}
+            onOpenDay={() => openAddDialog()}
+            onEdit={openEditDialog}
+          />
+        )}
+      </FluidReveal>
 
       <ReminderDialog {...dialog} />
     </PageContent>

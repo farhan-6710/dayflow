@@ -126,7 +126,7 @@ export function AnalyticsPage() {
         description="Track task completion and see how notes are distributed across projects."
       />
 
-      <PageContent>
+      <PageContent motionKey={loading ? "loading" : "ready"}>
         {error ? <ErrorBanner message={error} /> : null}
         <StatsCards cards={cards} isLoading={loading} />
 

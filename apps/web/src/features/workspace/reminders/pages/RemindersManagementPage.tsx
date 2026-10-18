@@ -45,7 +45,7 @@ export function RemindersManagementPage() {
         }
       />
 
-      <PageContent>
+      <PageContent motionKey={loading ? "loading" : reminders.length === 0 ? "empty" : "list"}>
         {error ? <ErrorBanner message={error} /> : null}
 
         {loading ? (

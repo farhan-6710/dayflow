@@ -103,7 +103,7 @@ export function ClientDashboardPage() {
         description={`${client.company_name} · Your projects and activities at a glance.`}
       />
 
-      <PageContent className="space-y-6">
+      <PageContent className="space-y-6" motionKey={loading ? "loading" : "ready"}>
         <StatsCards cards={cards} isLoading={loading} />
 
         <div id={ACTIVITIES_SECTION_ID} className="scroll-mt-6">

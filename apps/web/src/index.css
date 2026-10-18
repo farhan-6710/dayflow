@@ -127,7 +127,7 @@
   --primary: #e9bf55;
   --primary-foreground: #17140d;
 
-  --background: #090a0d;
+  --background: #0b0b0b;
   --foreground: #f3f4f6;
 
   --accent: #f0cf7a;
@@ -135,7 +135,7 @@
 
   --ink: #f3efe4;
 
-  --card: #111419;
+  --card: #101010;
   --card-foreground: #f3f4f6;
 
   --popover: #15181f;
@@ -144,7 +144,7 @@
   --secondary: #1c1a14;
   --secondary-foreground: #ece4cf;
 
-  --muted: #1a1813;
+  --muted: #292929;
   --muted-foreground: #a39a85;
 
   --destructive: #a8412f;

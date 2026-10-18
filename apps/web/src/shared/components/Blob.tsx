@@ -15,14 +15,15 @@ type Orb = {
   size: number;
 };
 
-function jitter(amount = 0.4) {
+function jitter(amount = 0.35) {
   return (Math.random() - 0.5) * amount;
 }
 
 function clampSpeed(v: number) {
-  return Math.max(-4.8, Math.min(4.8, v));
+  return Math.max(-3.2, Math.min(3.2, v));
 }
 
+/** Soft gold wash behind page content. Cards stay opaque so edges stay clean. */
 export function Blob({ className }: BlobProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -31,18 +32,21 @@ export function Blob({ className }: BlobProps) {
     if (!root) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const nodes = Array.from(root.querySelectorAll<HTMLDivElement>("[data-orb]"));
+    const stage = root.querySelector<HTMLElement>("[data-blob-stage]");
+    if (!stage) return;
+
+    const nodes = Array.from(stage.querySelectorAll<HTMLDivElement>("[data-orb]"));
     const orbs: Orb[] = nodes.map((el, index) => {
-      const size = el.offsetWidth || 320;
+      const size = el.offsetWidth || 420;
       const dir = index % 2 === 0 ? 1 : -1;
+      const bounds = root.getBoundingClientRect();
       return {
         el,
         size,
-        // Track the orb center inside the viewport.
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        vx: (2.4 + Math.random() * 2.2) * dir,
-        vy: (2.0 + Math.random() * 2.2) * -dir,
+        x: Math.random() * Math.max(bounds.width, 1),
+        y: Math.random() * Math.max(bounds.height, 1),
+        vx: (1.6 + Math.random() * 1.4) * dir,
+        vy: (1.3 + Math.random() * 1.4) * -dir,
       };
     });
 
@@ -50,8 +54,9 @@ export function Blob({ className }: BlobProps) {
 
     const tick = () => {
       if (!document.hidden) {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+        const bounds = root.getBoundingClientRect();
+        const w = Math.max(bounds.width, 1);
+        const h = Math.max(bounds.height, 1);
 
         for (const orb of orbs) {
           orb.x += orb.vx;
@@ -59,20 +64,17 @@ export function Blob({ className }: BlobProps) {
 
           if (orb.x <= 0 || orb.x >= w) {
             orb.vx = clampSpeed(-orb.vx + jitter());
-            orb.vy = clampSpeed(orb.vy + jitter(0.8));
+            orb.vy = clampSpeed(orb.vy + jitter(0.6));
             orb.x = Math.max(0, Math.min(orb.x, w));
           }
 
           if (orb.y <= 0 || orb.y >= h) {
             orb.vy = clampSpeed(-orb.vy + jitter());
-            orb.vx = clampSpeed(orb.vx + jitter(0.8));
+            orb.vx = clampSpeed(orb.vx + jitter(0.6));
             orb.y = Math.max(0, Math.min(orb.y, h));
           }
 
-          // Draw from top-left so the center sits on (x, y).
-          const left = orb.x - orb.size / 2;
-          const top = orb.y - orb.size / 2;
-          orb.el.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+          orb.el.style.transform = `translate3d(${orb.x - orb.size / 2}px, ${orb.y - orb.size / 2}px, 0)`;
         }
       }
 
@@ -88,18 +90,20 @@ export function Blob({ className }: BlobProps) {
       ref={rootRef}
       aria-hidden="true"
       className={cn(
-        "pointer-events-none fixed inset-0 -z-10 overflow-hidden",
+        "pointer-events-none absolute inset-0 z-0 overflow-hidden",
         className,
       )}
     >
-      <div
-        data-orb
-        className="absolute left-0 top-0 size-128 rounded-full bg-[#f2cf6b]/50 blur-[110px] will-change-transform dark:bg-[#e9bf55]/14 sm:size-152"
-      />
-      <div
-        data-orb
-        className="absolute left-0 top-0 size-96 rounded-full bg-[#f7e2a1]/55 blur-[90px] will-change-transform dark:bg-[#f0cf7a]/10 sm:size-120"
-      />
+      <div data-blob-stage className="absolute inset-0">
+        <div
+          data-orb
+          className="absolute left-0 top-0 size-128 rounded-full bg-[#f2cf6b]/35 blur-[110px] will-change-transform dark:bg-[#e9bf55]/22 sm:size-152"
+        />
+        <div
+          data-orb
+          className="absolute left-0 top-0 size-96 rounded-full bg-[#f7e2a1]/45 blur-[90px] will-change-transform dark:bg-[#f0cf7a]/16 sm:size-120"
+        />
+      </div>
     </div>
   );
 }
