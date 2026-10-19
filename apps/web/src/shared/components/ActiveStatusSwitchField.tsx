@@ -50,7 +50,7 @@ export function ActiveStatusLabel({ isActive }: { isActive: boolean }) {
     <span
       className={cn(
         "text-sm font-medium",
-        isActive ? "text-primary" : "text-muted-foreground",
+        isActive ? "text-primary-text" : "text-muted-foreground",
       )}
     >
       {isActive ? "Active" : "Inactive"}

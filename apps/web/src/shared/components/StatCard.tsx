@@ -18,7 +18,7 @@ export function StatCard({ card }: StatCardProps) {
     (card.description ? `${card.label}\n${card.description}` : null);
 
   const iconButton = (
-    <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/60 text-primary/60 bg-primary/10 transition-all duration-200 group-hover/icon:bg-primary group-hover/icon:text-primary-foreground">
+    <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/60 text-primary-text/60 bg-primary/10 transition-all duration-200 group-hover/icon:bg-primary group-hover/icon:text-primary-foreground">
       <Icon className="size-3.5 transition-transform duration-200 group-hover/icon:scale-110" />
     </span>
   );

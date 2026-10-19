@@ -91,7 +91,7 @@ export function RemindersManagementPage() {
                             "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold",
                             reminder.is_disabled
                               ? "bg-background/70 text-muted-foreground"
-                              : "bg-primary/10 text-primary",
+                              : "bg-primary/10 text-primary-text",
                           )}
                         >
                           <Clock3 className="size-3.5" />

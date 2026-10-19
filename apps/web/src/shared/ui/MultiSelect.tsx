@@ -116,7 +116,7 @@ export function MultiSelect({
                     className={cn(
                       "flex w-full min-w-0 items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors hover:bg-muted/60",
                       isSelected
-                        ? "bg-primary/10 text-primary"
+                        ? "bg-primary/10 text-primary-text"
                         : "text-foreground hover:bg-muted",
                     )}
                   >

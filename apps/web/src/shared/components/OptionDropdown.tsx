@@ -53,7 +53,7 @@ export function OptionDropdown({
         {options.map((option) => (
           <DropdownMenuItem
             key={option.value}
-            className={cn(value === option.value && "bg-primary/10 text-primary")}
+            className={cn(value === option.value && "bg-primary/10 text-primary-text")}
             onClick={() => onChange(option.value)}
           >
             {option.label}

@@ -13,6 +13,8 @@
    */
   --primary: #e9bf55;
   --primary-foreground: #17140d;
+  /* Links / status text on cream — darker than brand gold for contrast */
+  --primary-text: #8a6a1e;
 
   --background: #f6f3ea;
   --foreground: #1c1a17;
@@ -126,6 +128,7 @@
   /* Dark — 60 obsidian / 30 honey-gold / 10 cream ink for graph contrast */
   --primary: #e9bf55;
   --primary-foreground: #17140d;
+  --primary-text: #e9bf55;
 
   --background: #0b0b0b;
   --foreground: #f3f4f6;
@@ -213,6 +216,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-text: var(--primary-text);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);

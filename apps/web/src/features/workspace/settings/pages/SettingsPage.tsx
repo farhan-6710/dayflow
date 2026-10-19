@@ -66,7 +66,7 @@ export function SettingsPage() {
           <div className="space-y-4">
             <FluidWaveItem index={0} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
-                <User className="size-5 text-primary" />
+                <User className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
                   Profile Information
                 </h3>
@@ -111,7 +111,7 @@ export function SettingsPage() {
 
             <FluidWaveItem index={2} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
-                <Mail className="size-5 text-primary" />
+                <Mail className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
                   Change Email
                 </h3>
@@ -164,7 +164,7 @@ export function SettingsPage() {
 
             <FluidWaveItem index={4} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
-                <Palette className="size-5 text-primary" />
+                <Palette className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
                   Workspace Appearance
                 </h3>
@@ -196,7 +196,7 @@ export function SettingsPage() {
           <div className="space-y-4">
             <FluidWaveItem index={1} className={cn("p-6", glassPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
-                <KeyRound className="size-5 text-primary" />
+                <KeyRound className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
                   {hasPasswordLogin ? "Reset Password" : "Set Password"}
                 </h3>

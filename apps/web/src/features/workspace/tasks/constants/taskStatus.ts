@@ -23,14 +23,14 @@ export const TASK_STATUS_DOT_COLORS: Record<TaskStatus, string> = {
 
 export const TASK_STATUS_TEXT_COLORS: Record<TaskStatus, string> = {
   todo: "text-muted-foreground",
-  in_progress: "text-primary",
+  in_progress: "text-primary-text",
   done: "text-status-done",
   missed: "text-status-missed",
 };
 
 export const TASK_STATUS_BADGE_CLASS: Record<TaskStatus, string> = {
   todo: "bg-muted text-muted-foreground",
-  in_progress: "bg-primary/10 text-primary",
+  in_progress: "bg-primary/10 text-primary-text",
   done: "bg-status-done/15 text-status-done",
   missed: "bg-status-missed/15 text-status-missed",
 };

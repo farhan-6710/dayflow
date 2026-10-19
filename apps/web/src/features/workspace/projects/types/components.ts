@@ -120,6 +120,7 @@ export type ProjectReferenceLinksSectionProps = {
   description?: string;
   dialogDescription?: string;
   deleteDescription?: string;
+  className?: string;
   onAdd: (input: ReferenceLinkInput) => Promise<void>;
   onUpdate: (linkId: string, input: ReferenceLinkInput) => Promise<void>;
   onDelete: (linkId: string) => Promise<void>;

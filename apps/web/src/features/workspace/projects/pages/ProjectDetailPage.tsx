@@ -176,29 +176,37 @@ export function ProjectDetailPage() {
         <div className={cn("space-y-4", containMinWidthClassName)}>
           {error ? <ErrorBanner message={error} /> : null}
 
-          <FluidWaveItem index={0}>
-            <ProjectNotesTable
-              projectId={project.id}
-              notes={notes}
-              isLoading={false}
-              onDeleteNote={handleDeleteNote}
-              onReorderNotes={handleReorderNotes}
-              emptyMessage={buildProjectNotesEmptyMessage(project.name)}
-              canAddNote={project.is_active}
-            />
-          </FluidWaveItem>
+          <div
+            className={cn(
+              "grid min-w-0 grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,22rem)]",
+              containMinWidthClassName,
+            )}
+          >
+            <FluidWaveItem index={0} className="flex min-w-0 flex-col">
+              <ProjectNotesTable
+                projectId={project.id}
+                notes={notes}
+                isLoading={false}
+                onDeleteNote={handleDeleteNote}
+                onReorderNotes={handleReorderNotes}
+                emptyMessage={buildProjectNotesEmptyMessage(project.name)}
+                canAddNote={project.is_active}
+              />
+            </FluidWaveItem>
 
-          <FluidWaveItem index={1}>
-            <ProjectReferenceLinksSection
-              referenceLinks={referenceLinks}
-              canEdit={project.is_active}
-              isLoading={false}
-              isSaving={savingReferenceLink}
-              onAdd={handleAddReferenceLink}
-              onUpdate={handleUpdateReferenceLink}
-              onDelete={handleDeleteReferenceLink}
-            />
-          </FluidWaveItem>
+            <FluidWaveItem index={1} className="flex min-w-0 flex-col">
+              <ProjectReferenceLinksSection
+                className="h-full min-h-[24rem]"
+                referenceLinks={referenceLinks}
+                canEdit={project.is_active}
+                isLoading={false}
+                isSaving={savingReferenceLink}
+                onAdd={handleAddReferenceLink}
+                onUpdate={handleUpdateReferenceLink}
+                onDelete={handleDeleteReferenceLink}
+              />
+            </FluidWaveItem>
+          </div>
 
           {isClientProject ? (
             <FluidWaveItem index={2}>

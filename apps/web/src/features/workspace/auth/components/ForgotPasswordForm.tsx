@@ -58,7 +58,7 @@ export function ForgotPasswordForm({
         Remembered your password?{" "}
         <Link
           to={loginPath}
-          className="font-semibold text-primary hover:underline"
+          className="font-semibold text-primary-text hover:underline"
         >
           Sign in
         </Link>

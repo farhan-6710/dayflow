@@ -90,7 +90,7 @@ export function ClientsTableRow({
         {email ? (
           <a
             href={`mailto:${email}`}
-            className="block truncate text-primary hover:underline"
+            className="block truncate text-primary-text hover:underline"
             title={email}
             onClick={stopDirectoryRowNav}
           >
@@ -107,7 +107,7 @@ export function ClientsTableRow({
             href={website.startsWith("http") ? website : `https://${website}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="block truncate text-primary hover:underline"
+            className="block truncate text-primary-text hover:underline"
             title={website}
             onClick={stopDirectoryRowNav}
           >

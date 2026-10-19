@@ -44,7 +44,7 @@ export function ClientDetailSummary({ client }: ClientDetailSummaryProps) {
       value: client.email ? (
         <a
           href={`mailto:${client.email}`}
-          className="text-primary hover:underline"
+          className="text-primary-text hover:underline"
           onClick={stopDirectoryRowNav}
         >
           {client.email}
@@ -68,7 +68,7 @@ export function ClientDetailSummary({ client }: ClientDetailSummaryProps) {
           href={website.startsWith("http") ? website : `https://${website}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:underline"
+          className="text-primary-text hover:underline"
           onClick={stopDirectoryRowNav}
         >
           {website}

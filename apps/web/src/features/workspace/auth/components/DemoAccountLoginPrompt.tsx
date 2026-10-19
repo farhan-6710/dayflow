@@ -64,7 +64,7 @@ export function DemoAccountLoginPrompt({
 
       <div className="space-y-3">
         <div className="flex items-start gap-3 pr-6">
-          <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary-text">
             <Sparkles className="size-4" aria-hidden="true" />
           </div>
 

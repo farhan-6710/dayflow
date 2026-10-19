@@ -12,8 +12,9 @@ import {
   type ProjectReferenceLinkFormValues,
 } from "@/features/workspace/projects/utils/projectReferenceLinkFormUtils";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
-import { Button } from "@/shared/ui/button";
 import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
+import { Button } from "@/shared/ui/button";
 
 export function ProjectReferenceLinksSection({
   referenceLinks,
@@ -23,6 +24,7 @@ export function ProjectReferenceLinksSection({
   description = "Links stored with this project.",
   dialogDescription = "Store a link with this project (proposal, deck, sheet, etc.).",
   deleteDescription = "This removes the link from the project. This cannot be undone.",
+  className,
   onAdd,
   onUpdate,
   onDelete,
@@ -66,7 +68,13 @@ export function ProjectReferenceLinksSection({
   };
 
   return (
-    <div className={glassPanelClassName}>
+    <div
+      className={cn(
+        "flex min-w-0 flex-col",
+        glassPanelClassName,
+        className,
+      )}
+    >
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
         <div>
           <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
@@ -89,13 +97,13 @@ export function ProjectReferenceLinksSection({
         ) : null}
       </div>
 
-      <div className="px-6 py-5">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
         {isLoading ? (
           <p className="py-8 text-center text-sm text-muted-foreground">
             Loading reference links...
           </p>
         ) : referenceLinks.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">
+          <p className="flex h-full min-h-[12rem] items-center justify-center text-center text-sm text-muted-foreground">
             No reference links
           </p>
         ) : (

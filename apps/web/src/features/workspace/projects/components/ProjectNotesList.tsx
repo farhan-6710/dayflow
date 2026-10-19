@@ -47,7 +47,7 @@ export function ProjectNotesList({
                 className={cn(
                   "group flex w-full cursor-pointer flex-col gap-1.5 rounded-xl border border-border/80 p-3 text-left transition",
                   selected
-                    ? "border-primary bg-primary/10 text-primary"
+                    ? "border-primary bg-primary/10 text-primary-text"
                     : "bg-background text-foreground hover:bg-muted",
                 )}
               >

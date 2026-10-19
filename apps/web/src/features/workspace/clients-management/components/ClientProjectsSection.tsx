@@ -75,7 +75,7 @@ export function ClientProjectsSection({
                   to={buildProjectDetailPath(project.id)}
                   className={cn(
                     "flex items-center gap-3 py-3 first:pt-0 last:pb-0",
-                    "text-sm font-medium text-foreground hover:text-primary",
+                    "text-sm font-medium text-foreground hover:text-primary-text",
                     !project.is_active && "opacity-70",
                   )}
                 >

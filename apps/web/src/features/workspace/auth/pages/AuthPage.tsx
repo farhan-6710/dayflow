@@ -127,7 +127,7 @@ export function AuthPage() {
                 : "Don't have an account?"}{" "}
               <Link
                 to={switchFormPath}
-                className="font-semibold text-primary hover:underline"
+                className="font-semibold text-primary-text hover:underline"
               >
                 {formType === AUTH_FORM_TYPES.signup ? "Sign in" : "Sign up"}
               </Link>

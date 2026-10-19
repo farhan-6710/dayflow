@@ -12,14 +12,11 @@ import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import {
   containMinWidthClassName,
   glassPanelClassName,
-  toolbarActionsClassName,
-  toolbarRowClassName,
 } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { useRegisterUnsavedChanges } from "@/shared/unsaved-changes/useRegisterUnsavedChanges";
 import { showToast } from "@/shared/utils/showToast";
 import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
 
 const categoryOptions = NOTE_CATEGORIES.map((category) => ({
   value: category,
@@ -98,7 +95,8 @@ export function ProjectNoteEditor({
         <FileText className="size-16 text-muted-foreground/40" />
         <h3 className="mt-4 text-sm font-semibold">No note selected</h3>
         <p className="mt-1 max-w-60 text-xs text-muted-foreground">
-          Create a note or select one from the list to start editing without leaving this project.
+          Create a note or select one from the list to start editing without
+          leaving this project.
         </p>
       </div>
     );
@@ -107,96 +105,107 @@ export function ProjectNoteEditor({
   return (
     <div
       className={cn(
-        "flex min-h-0 flex-1 flex-col p-6",
+        "flex h-full min-h-[32rem] min-w-0 flex-1 flex-col",
         glassPanelClassName,
         containMinWidthClassName,
       )}
     >
-      <div className="flex min-h-0 flex-1 flex-col space-y-4">
-        <div className={cn(toolbarRowClassName, "border-b border-border pb-4")}>
-          <Input
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            className={cn(
-              "h-8 w-full min-w-0 border-none p-0 text-lg font-bold shadow-none focus-visible:ring-0",
-              containMinWidthClassName,
-            )}
-            placeholder={isDraft ? "New note title" : "Note Title"}
-            autoFocus={isDraft}
-          />
-          <div className={toolbarActionsClassName}>
-            <OptionDropdown
-              value={category}
-              onChange={(next) => setCategory(next as NoteCategory)}
-              options={categoryOptions}
-              disabled={saving}
-              placeholder="Category"
-              className="w-[140px] sm:w-[160px]"
-            />
-            {isDraft ? (
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 shrink-0"
-                onClick={() => {
-                  if (!onDiscard) return;
-                  confirmIfDirty({
-                    proceed: onDiscard,
-                    title: "Discard new note?",
-                    description:
-                      "This note hasn’t been created yet. Create it, or close without saving.",
-                  });
-                }}
-                disabled={saving}
-              >
-                Cancel
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 shrink-0"
-                  disabled={saving}
-                  onClick={() => void onDuplicate(note)}
-                >
-                  <Copy className="mr-1 size-3.5" />
-                  Duplicate
-                </Button>
-                <Button
-                  variant="destructive-outline"
-                  size="sm"
-                  className="h-9 shrink-0"
-                  disabled={saving}
-                  onClick={() => onDelete(note.id)}
-                >
-                  <Trash2 className="mr-1 size-3.5" />
-                  Delete
-                </Button>
-              </>
-            )}
+      {/* Compact chrome — stays secondary to the document title */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/70 px-5 py-3 sm:px-6">
+        <OptionDropdown
+          value={category}
+          onChange={(next) => setCategory(next as NoteCategory)}
+          options={categoryOptions}
+          disabled={saving}
+          placeholder="Category"
+          className="w-[9.5rem] sm:w-[10.5rem]"
+        />
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          {isDraft ? (
             <Button
+              variant="ghost"
               size="sm"
-              className="h-9 shrink-0"
-              disabled={saving || !title.trim()}
-              onClick={() =>
-                void onSave(note.id, {
-                  title: title.trim(),
-                  body: body.trim() || null,
-                  category,
-                })
-              }
+              className="h-8 shrink-0"
+              onClick={() => {
+                if (!onDiscard) return;
+                confirmIfDirty({
+                  proceed: onDiscard,
+                  title: "Discard new note?",
+                  description:
+                    "This note hasn’t been created yet. Create it, or close without saving.",
+                });
+              }}
+              disabled={saving}
             >
-              <Save className="mr-1 size-3.5" />
-              {saving ? "Saving..." : "Save Note"}
+              Cancel
             </Button>
-          </div>
+          ) : (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 shrink-0 text-muted-foreground"
+                disabled={saving}
+                onClick={() => void onDuplicate(note)}
+              >
+                <Copy className="mr-1 size-3.5" />
+                Duplicate
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 shrink-0 text-destructive hover:text-destructive"
+                disabled={saving}
+                onClick={() => onDelete(note.id)}
+              >
+                <Trash2 className="mr-1 size-3.5" />
+                Delete
+              </Button>
+            </>
+          )}
+          <Button
+            size="sm"
+            className="h-8 shrink-0"
+            disabled={saving || !title.trim()}
+            onClick={() =>
+              void onSave(note.id, {
+                title: title.trim(),
+                body: body.trim() || null,
+                category,
+              })
+            }
+          >
+            <Save className="mr-1 size-3.5" />
+            {saving ? "Saving..." : "Save"}
+          </Button>
         </div>
+      </div>
+
+      {/* Document body — title + note share the same content column */}
+      <div className="flex min-h-0 flex-1 flex-col px-5 py-5 sm:px-6 sm:py-6">
+        <input
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          className={cn(
+            "w-full min-w-0 border-0 bg-transparent p-0 text-[1.65rem] font-semibold leading-snug tracking-tight text-foreground shadow-none",
+            "placeholder:text-muted-foreground/55",
+            "outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+            containMinWidthClassName,
+          )}
+          placeholder={isDraft ? "Untitled note" : "Note title"}
+          aria-label="Note title"
+          autoFocus={isDraft}
+        />
 
         <textarea
           value={body}
           onChange={(event) => setBody(event.target.value)}
-          className="w-full flex-1 resize-none border-none bg-transparent p-0 text-sm leading-relaxed text-foreground outline-none placeholder:text-muted-foreground focus:ring-0"
+          className={cn(
+            "mt-4 min-h-[18rem] w-full flex-1 resize-none border-0 bg-transparent p-0 text-[15px] leading-7 text-foreground shadow-none",
+            "placeholder:text-muted-foreground/60",
+            "outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+            containMinWidthClassName,
+          )}
           placeholder="Start typing your plans, links, or notes..."
         />
       </div>

@@ -57,6 +57,17 @@ export function ProjectReferenceLinkDialog({
 
           <div className="space-y-4 py-2">
             <label className="block text-xs font-semibold text-muted-foreground">
+              Name
+              <input
+                type="text"
+                value={values.label}
+                onChange={(event) => onFieldChange("label", event.target.value)}
+                disabled={isSaving}
+                placeholder="e.g. Proposal PDF"
+                className={cn(formFieldClassName, "mt-2")}
+              />
+            </label>
+            <label className="block text-xs font-semibold text-muted-foreground">
               Link URL
               <input
                 type="url"
@@ -64,17 +75,6 @@ export function ProjectReferenceLinkDialog({
                 onChange={(event) => onFieldChange("url", event.target.value)}
                 disabled={isSaving}
                 placeholder="https://"
-                className={cn(formFieldClassName, "mt-2")}
-              />
-            </label>
-            <label className="block text-xs font-semibold text-muted-foreground">
-              Label (optional)
-              <input
-                type="text"
-                value={values.label}
-                onChange={(event) => onFieldChange("label", event.target.value)}
-                disabled={isSaving}
-                placeholder="e.g. Proposal PDF"
                 className={cn(formFieldClassName, "mt-2")}
               />
             </label>

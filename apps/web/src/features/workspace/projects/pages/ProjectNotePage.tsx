@@ -12,6 +12,8 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ProjectsDirectoryPageSkeleton } from "@/shared/components/pageSkeletons";
+import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
 export function ProjectNotePage() {
@@ -67,7 +69,10 @@ export function ProjectNotePage() {
   }
 
   return (
-    <PageContent className="flex min-h-[calc(100vh-120px)] flex-col">
+    <PageContent
+      stagger={false}
+      className="flex min-h-[calc(100vh-120px)] flex-col"
+    >
       <PageHeader
         heading={isDraft ? "New Note" : note.title.trim() || "Note"}
         description={`Notes management for ${project.name}.`}
@@ -91,43 +96,51 @@ export function ProjectNotePage() {
         }
       />
 
-      <ProjectNoteEditor
-        note={note}
-        isDraft={isDraft}
-        saving={saving}
-        onDiscard={handleDiscard}
-        onDelete={() => setDeleteOpen(true)}
-        onDuplicate={async (source) => {
-          setSaving(true);
-          try {
-            await handleDuplicateNote(source);
-          } finally {
-            setSaving(false);
-          }
-        }}
-        onSave={async (noteId, payload) => {
-          setSaving(true);
-          try {
-            await handleSaveNote(noteId, payload);
-          } finally {
-            setSaving(false);
-          }
-        }}
-      />
-
-      {!isDraft ? (
-        <ProjectReferenceLinksSection
-          referenceLinks={referenceLinks}
-          canEdit={project.is_active}
-          isSaving={savingReferenceLink}
-          description="Links stored with this note."
-          dialogDescription="Store a link with this note (doc, ticket, article, etc.)."
-          deleteDescription="This removes the link from the note. This cannot be undone."
-          onAdd={handleAddReferenceLink}
-          onUpdate={handleUpdateReferenceLink}
-          onDelete={handleDeleteReferenceLink}
+      <div
+        className={cn(
+          "grid min-w-0 flex-1 grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,22rem)]",
+          containMinWidthClassName,
+        )}
+      >
+        <ProjectNoteEditor
+          note={note}
+          isDraft={isDraft}
+          saving={saving}
+          onDiscard={handleDiscard}
+          onDelete={() => setDeleteOpen(true)}
+          onDuplicate={async (source) => {
+            setSaving(true);
+            try {
+              await handleDuplicateNote(source);
+            } finally {
+              setSaving(false);
+            }
+          }}
+          onSave={async (noteId, payload) => {
+            setSaving(true);
+            try {
+              await handleSaveNote(noteId, payload);
+            } finally {
+              setSaving(false);
+            }
+          }}
         />
-      ) : null}
+
+        {!isDraft ? (
+          <ProjectReferenceLinksSection
+            className="h-full min-h-[32rem]"
+            referenceLinks={referenceLinks}
+            canEdit={project.is_active}
+            isSaving={savingReferenceLink}
+            description="Links stored with this note."
+            dialogDescription="Store a link with this note (doc, ticket, article, etc.)."
+            deleteDescription="This removes the link from the note. This cannot be undone."
+            onAdd={handleAddReferenceLink}
+            onUpdate={handleUpdateReferenceLink}
+            onDelete={handleDeleteReferenceLink}
+          />
+        ) : null}
+      </div>
 
       <ConfirmationModal
         open={deleteOpen}
