@@ -6,14 +6,19 @@ import {
   useReminderChecker,
   useRemindersManagement,
 } from "@/features/workspace/reminders/hooks/useRemindersManagement";
+import { DayflowImage } from "@/shared/components/DayflowImage";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageContent } from "@/shared/components/PageContent";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { RemindersManagementPageSkeleton } from "@/shared/components/pageSkeletons";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import {
+  raisedPanelClassName,
+  raisedStaticPanelClassName,
+} from "@/shared/constants/layoutStyles";
 
 function formatReminderDays(daysOfWeek: string[]) {
   if (daysOfWeek.length === REMINDER_DAY_OPTIONS.length) {
@@ -54,10 +59,16 @@ export function RemindersManagementPage() {
               index={0}
               className={cn(
                 "border-dashed px-6 py-14 text-center",
-                glassPanelClassName,
+                raisedStaticPanelClassName,
               )}
             >
-              <BellRing className="mx-auto size-12 text-muted-foreground/60" />
+              <DayflowImage
+                src={DAYFLOW_IMAGES.emptyReminders}
+                className="mx-auto size-24 animate-rise"
+                fallback={
+                  <BellRing className="mx-auto size-12 text-muted-foreground/60" />
+                }
+              />
               <h3 className="mt-4 text-base font-semibold text-foreground">
                 No reminders yet
               </h3>
@@ -74,97 +85,99 @@ export function RemindersManagementPage() {
             <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
               {reminders.map((reminder, index) => (
                 <FluidWaveItem key={reminder.id} index={index}>
-                <article
-                  className={cn(
-                    glassPanelClassName,
-                    "rounded-3xl p-5 transition",
-                    reminder.is_disabled
-                      ? "bg-muted/40 text-muted-foreground"
-                      : "text-foreground",
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
+                  <article
+                    className={cn(
+                      raisedPanelClassName,
+                      "rounded-3xl p-5 transition",
+                      reminder.is_disabled
+                        ? "bg-muted/40 text-muted-foreground"
+                        : "text-foreground",
+                    )}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span
+                            className={cn(
+                              "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold",
+                              reminder.is_disabled
+                                ? "bg-background/70 text-muted-foreground"
+                                : "bg-primary/10 text-primary-text",
+                            )}
+                          >
+                            <Clock3 className="size-3.5" />
+                            {reminder.reminder_time}
+                          </span>
+                          {reminder.is_disabled ? (
+                            <span className="rounded-full border border-border bg-background/80 px-2.5 py-1 text-[11px] font-semibold">
+                              Disabled
+                            </span>
+                          ) : null}
+                        </div>
+                        <h3
                           className={cn(
-                            "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold",
-                            reminder.is_disabled
-                              ? "bg-background/70 text-muted-foreground"
-                              : "bg-primary/10 text-primary-text",
+                            "mt-4 text-base font-semibold leading-tight",
+                            reminder.is_disabled && "text-foreground/70",
                           )}
                         >
-                          <Clock3 className="size-3.5" />
-                          {reminder.reminder_time}
-                        </span>
-                        {reminder.is_disabled ? (
-                          <span className="rounded-full border border-border bg-background/80 px-2.5 py-1 text-[11px] font-semibold">
-                            Disabled
-                          </span>
-                        ) : null}
+                          {reminder.title}
+                        </h3>
+                        <p className="mt-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                          {formatReminderDays(reminder.days_of_week)}
+                        </p>
                       </div>
-                      <h3
-                        className={cn(
-                          "mt-4 text-base font-semibold leading-tight",
-                          reminder.is_disabled && "text-foreground/70",
-                        )}
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="shrink-0 rounded-full"
+                        onClick={() => openEditDialog(reminder.id)}
                       >
-                        {reminder.title}
-                      </h3>
-                      <p className="mt-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                        {formatReminderDays(reminder.days_of_week)}
-                      </p>
+                        <PencilLine className="size-4" />
+                        <span className="sr-only">Edit reminder</span>
+                      </Button>
                     </div>
 
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="shrink-0 rounded-full"
-                      onClick={() => openEditDialog(reminder.id)}
-                    >
-                      <PencilLine className="size-4" />
-                      <span className="sr-only">Edit reminder</span>
-                    </Button>
-                  </div>
+                    {reminder.description ? (
+                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                        {reminder.description}
+                      </p>
+                    ) : (
+                      <p className="mt-4 text-sm italic text-muted-foreground">
+                        No extra description added.
+                      </p>
+                    )}
 
-                  {reminder.description ? (
-                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                      {reminder.description}
-                    </p>
-                  ) : (
-                    <p className="mt-4 text-sm italic text-muted-foreground">
-                      No extra description added.
-                    </p>
-                  )}
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {REMINDER_DAY_OPTIONS.map((day) => {
+                        const isSelected = reminder.days_of_week.includes(
+                          day.key,
+                        );
 
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {REMINDER_DAY_OPTIONS.map((day) => {
-                      const isSelected = reminder.days_of_week.includes(day.key);
+                        return (
+                          <span
+                            key={day.key}
+                            className={cn(
+                              "inline-flex size-9 items-center justify-center rounded-full border text-xs font-semibold",
+                              isSelected && !reminder.is_disabled
+                                ? "border-primary bg-primary text-primary-foreground"
+                                : "border-border bg-background/60 text-muted-foreground",
+                            )}
+                            title={day.label}
+                          >
+                            {day.initial}
+                          </span>
+                        );
+                      })}
+                    </div>
 
-                      return (
-                        <span
-                          key={day.key}
-                          className={cn(
-                            "inline-flex size-9 items-center justify-center rounded-full border text-xs font-semibold",
-                            isSelected && !reminder.is_disabled
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border bg-background/60 text-muted-foreground",
-                          )}
-                          title={day.label}
-                        >
-                          {day.initial}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                  {reminder.is_disabled && reminder.disabled_until ? (
-                    <p className="mt-4 text-xs font-medium text-muted-foreground">
-                      Disabled until {reminder.disabled_until}
-                    </p>
-                  ) : null}
-                </article>
+                    {reminder.is_disabled && reminder.disabled_until ? (
+                      <p className="mt-4 text-xs font-medium text-muted-foreground">
+                        Disabled until {reminder.disabled_until}
+                      </p>
+                    ) : null}
+                  </article>
                 </FluidWaveItem>
               ))}
             </div>

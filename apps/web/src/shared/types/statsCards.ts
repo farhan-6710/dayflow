@@ -19,4 +19,6 @@ export type StatCardItem = {
       sparklineColor?: string;
       href?: string;
   icon: LucideIcon;
+  /** Optional 3D icon path from DAYFLOW_IMAGES; Lucide icon is the fallback. */
+  imageSrc?: string;
 };

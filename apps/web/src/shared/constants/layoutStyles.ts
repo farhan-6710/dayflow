@@ -10,6 +10,19 @@ export const containMinWidthClassName = "min-w-0";
 export const glassPanelClassName =
   "rounded-2xl border border-border/70 bg-card/70 backdrop-blur-2xl dark:border-white/10 dark:bg-card/55";
 
+/** Glass + honey bevel elevation (dashboard cards, interactive panels). */
+export const raisedPanelClassName = cn(glassPanelClassName, "surface-raised");
+
+/** Same depth without hover lift — large tables, editors, calendars. */
+export const raisedStaticPanelClassName = cn(
+  glassPanelClassName,
+  "surface-raised-static",
+);
+
+/** Recessed chip / nested row inside a raised panel. */
+export const insetChipClassName =
+  "surface-inset rounded-xl border border-border/50";
+
 /** Filter/toolbar row: search or input + one or more fixed controls. */
 export const filterBarClassName = cn(
   "grid grid-cols-1 gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center",

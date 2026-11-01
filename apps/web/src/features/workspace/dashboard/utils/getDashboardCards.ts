@@ -1,14 +1,10 @@
-import {
-  CheckSquare,
-  ClockAlert,
-  FolderKanban,
-  ListTodo,
-} from "lucide-react";
+import { CheckSquare, ClockAlert, FolderKanban, ListTodo } from "lucide-react";
 
 import {
   WORKSPACE_PROJECTS_MANAGEMENT_PATH,
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import {
   clientsSparklineData,
   employeesSparklineData,
@@ -38,6 +34,7 @@ export function getDashboardCards(
       label: "Pending Tasks",
       value: stats.pending,
       icon: ListTodo,
+      imageSrc: DAYFLOW_IMAGES.statPending,
       description: isAll
         ? "Tasks left to complete across all time"
         : `Tasks left to complete in ${periodDesc}`,
@@ -50,6 +47,7 @@ export function getDashboardCards(
       label: "Overdue Tasks",
       value: stats.overdue,
       icon: ClockAlert,
+      imageSrc: DAYFLOW_IMAGES.statOverdue,
       description: isAll
         ? "Tasks past their due date across all time"
         : `Tasks past their due date in ${periodDesc}`,
@@ -62,6 +60,7 @@ export function getDashboardCards(
       label: "Total Projects",
       value: stats.projectsCount,
       icon: FolderKanban,
+      imageSrc: DAYFLOW_IMAGES.statProjects,
       description: isAll
         ? "Note folders in your workspace"
         : `Note folders created in ${periodDesc}`,
@@ -74,6 +73,7 @@ export function getDashboardCards(
       label: "Completed Tasks",
       value: `${stats.completed}/${stats.total}`,
       icon: CheckSquare,
+      imageSrc: DAYFLOW_IMAGES.statCompleted,
       description: isAll
         ? "Tasks finished successfully across all time"
         : `Tasks finished successfully in ${periodDesc}`,

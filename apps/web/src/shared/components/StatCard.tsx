@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 
+import { DayflowImage } from "@/shared/components/DayflowImage";
 import { Sparkline } from "@/shared/components/Sparkline";
 import { StatCardTrend } from "@/shared/components/StatCardTrend";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedPanelClassName } from "@/shared/constants/layoutStyles";
 import type { StatCardItem } from "@/shared/types/statsCards";
 import { cn } from "@/shared/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
@@ -17,18 +18,35 @@ export function StatCard({ card }: StatCardProps) {
     card.descriptionTooltip ??
     (card.description ? `${card.label}\n${card.description}` : null);
 
+  const lucideFallback = (
+    <Icon className="size-5 text-primary-text transition-transform duration-200 group-hover/icon:scale-110" />
+  );
+
+  const iconVisual = card.imageSrc ? (
+    <DayflowImage
+      src={card.imageSrc}
+      alt=""
+      className="size-11 drop-shadow-sm transition-transform duration-200 group-hover/icon:scale-110"
+      fallback={lucideFallback}
+    />
+  ) : (
+    <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl border border-primary/40 bg-primary/10">
+      {lucideFallback}
+    </span>
+  );
+
   const iconButton = (
-    <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/60 text-primary-text/60 bg-primary/10 transition-all duration-200 group-hover/icon:bg-primary group-hover/icon:text-primary-foreground">
-      <Icon className="size-3.5 transition-transform duration-200 group-hover/icon:scale-110" />
+    <span className="group/icon inline-flex shrink-0 items-center justify-center">
+      {iconVisual}
     </span>
   );
 
   return (
     <div
       className={cn(
-        "relative px-4 py-3.5 transition-all duration-200",
-        glassPanelClassName,
-        "hover:border-primary/50",
+        "relative px-4 py-3.5",
+        raisedPanelClassName,
+        "hover:border-primary/45",
       )}
     >
       <div className="flex items-start justify-between gap-3">
@@ -85,7 +103,7 @@ export function StatCard({ card }: StatCardProps) {
           <Link
             to={card.href}
             aria-label={`Open ${card.label}`}
-            className="group/icon shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="shrink-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {iconButton}
           </Link>

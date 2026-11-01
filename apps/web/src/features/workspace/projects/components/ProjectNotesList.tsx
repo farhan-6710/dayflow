@@ -2,9 +2,11 @@ import { Trash2 } from "lucide-react";
 
 import { formatNoteIndex } from "@/features/workspace/projects/constants/projectNotes";
 import type { ProjectNotesListProps } from "@/features/workspace/projects/types/components";
+import { DayflowImage } from "@/shared/components/DayflowImage";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import {
   containMinWidthClassName,
-  glassPanelClassName,
+  raisedStaticPanelClassName,
 } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -22,7 +24,7 @@ export function ProjectNotesList({
     <div
       className={cn(
         "flex min-h-0 flex-col p-4 md:col-span-1",
-        glassPanelClassName,
+        raisedStaticPanelClassName,
         containMinWidthClassName,
       )}
     >
@@ -34,7 +36,13 @@ export function ProjectNotesList({
         {loading ? (
           <div className="py-6 text-center text-sm text-muted-foreground">Loading notes...</div>
         ) : items.length === 0 ? (
-          <div className="py-8 text-center text-xs text-muted-foreground">No notes in this project yet.</div>
+          <div className="flex flex-col items-center gap-3 py-8 text-center text-xs text-muted-foreground">
+            <DayflowImage
+              src={DAYFLOW_IMAGES.emptyNotes}
+              className="size-14 animate-rise"
+            />
+            No notes in this project yet.
+          </div>
         ) : (
           items.map((note, index) => {
             const isDraft = Boolean(draftNote && note.id === draftNote.id);

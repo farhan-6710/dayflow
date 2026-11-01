@@ -1,4 +1,4 @@
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Skeleton } from "@/shared/ui/skeleton";
 
@@ -9,7 +9,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 export function StatCardSkeleton() {
   return (
     <div
-      className={cn("relative px-4 py-3.5", glassPanelClassName)}
+      className={cn("relative px-4 py-3.5", raisedStaticPanelClassName)}
       aria-hidden="true"
     >
       <div className="flex items-start justify-between gap-3">

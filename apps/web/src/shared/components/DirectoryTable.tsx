@@ -1,5 +1,6 @@
 import { Children, isValidElement, type ReactNode } from "react";
 
+import { DayflowImage } from "@/shared/components/DayflowImage";
 import { FluidReveal } from "@/shared/components/FluidReveal";
 import { TableLoadingState } from "@/shared/components/LoadingSpinner";
 import {
@@ -8,12 +9,16 @@ import {
 } from "@/shared/constants/directoryTable";
 import {
   containMinWidthClassName,
-  glassPanelClassName,
+  raisedStaticPanelClassName,
 } from "@/shared/constants/layoutStyles";
 import type { DirectoryTableProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 
-function tableBodyKey(isLoading: boolean, isEmpty: boolean, children: ReactNode) {
+function tableBodyKey(
+  isLoading: boolean,
+  isEmpty: boolean,
+  children: ReactNode,
+) {
   if (isLoading) return "loading";
   if (isEmpty) return "empty";
   const keys = Children.map(children, (child) =>
@@ -30,13 +35,14 @@ export function DirectoryTable({
   isLoading,
   isEmpty,
   emptyMessage,
+  emptyImageSrc,
   headerAside,
   children,
   divided = false,
   gridStyle,
 }: DirectoryTableProps) {
   return (
-    <div className={cn("w-full min-w-0", glassPanelClassName)}>
+    <div className={cn("w-full min-w-0", raisedStaticPanelClassName)}>
       <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <div className={cn("min-w-0", containMinWidthClassName)}>
           <div className="text-sm font-semibold">{title}</div>
@@ -83,8 +89,14 @@ export function DirectoryTable({
           ) : (
             <FluidReveal motionKey={tableBodyKey(false, isEmpty, children)}>
               {isEmpty ? (
-                <div className="px-6 py-10 text-center text-sm text-muted-foreground">
-                  {emptyMessage}
+                <div className="flex flex-col items-center gap-3 px-6 py-10 text-center text-sm text-muted-foreground">
+                  {emptyImageSrc ? (
+                    <DayflowImage
+                      src={emptyImageSrc}
+                      className="size-20 animate-rise object-contain"
+                    />
+                  ) : null}
+                  <p className="max-w-sm">{emptyMessage}</p>
                 </div>
               ) : (
                 <div className="[&>[data-slot=directory-row]+[data-slot=directory-row]]:border-t [&>[data-slot=directory-row]+[data-slot=directory-row]]:border-border">

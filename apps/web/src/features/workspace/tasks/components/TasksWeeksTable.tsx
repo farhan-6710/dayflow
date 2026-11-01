@@ -8,7 +8,7 @@ import {
 import type { TasksWeeksTableProps } from "@/features/workspace/tasks/types/components";
 import { isSameCalendarDay } from "@/features/workspace/reminders/utils/calendarUtils";
 import { FluidReveal } from "@/shared/components/FluidReveal";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 function toDateKey(year: number, month: number, date: number) {
@@ -30,7 +30,7 @@ export function TasksWeeksTable({
     <div
       className={cn(
         "flex h-full min-h-[360px] min-w-0 flex-col sm:min-h-[420px]",
-        glassPanelClassName,
+        raisedStaticPanelClassName,
       )}
     >
       <div className="px-2 pt-3 sm:px-5 sm:pt-5">

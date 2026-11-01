@@ -5,6 +5,7 @@ import { reminderNotificationsDirectoryConfig } from "@/features/workspace/notif
 import type { ReminderNotificationsTableProps } from "@/features/workspace/notifications/types/components";
 import { WORKSPACE_DAILY_REMINDERS_PATH } from "@/app/constants/workspaceRoutes";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
@@ -22,6 +23,7 @@ export function ReminderNotificationsTable({
       description={reminderNotificationsDirectoryConfig.description}
       gridClass={reminderNotificationsDirectoryConfig.gridClass}
       columns={[...reminderNotificationsDirectoryConfig.columns]}
+      emptyImageSrc={DAYFLOW_IMAGES.emptyReminders}
       emptyMessage={reminderNotificationsDirectoryConfig.emptyMessage}
       isLoading={isLoading}
       isEmpty={!isLoading && notifications.length === 0}

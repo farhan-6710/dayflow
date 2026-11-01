@@ -1,5 +1,5 @@
 import { StatCardSkeleton } from "@/shared/components/StatCardSkeleton";
-import { containMinWidthClassName, glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { containMinWidthClassName, raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Skeleton } from "@/shared/ui/skeleton";
 
@@ -39,7 +39,7 @@ export function DashboardPageSkeleton() {
       >
         <div className={cn("space-y-4 lg:col-span-2", containMinWidthClassName)}>
           {/* Task completion chart panel */}
-          <div className={cn("p-6", glassPanelClassName)}>
+          <div className={cn("p-6", raisedStaticPanelClassName)}>
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
               <div className="min-w-0 space-y-2">
                 <Skeleton className="h-6 w-40" />
@@ -67,7 +67,7 @@ export function DashboardPageSkeleton() {
             {Array.from({ length: 2 }).map((_, index) => (
               <div
                 key={index}
-                className={cn("flex min-h-44 flex-col p-5", glassPanelClassName)}
+                className={cn("flex min-h-44 flex-col p-5", raisedStaticPanelClassName)}
               >
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="mt-2 h-3 w-48 max-w-full" />
@@ -79,7 +79,7 @@ export function DashboardPageSkeleton() {
 
         <div className={cn("space-y-4", containMinWidthClassName)}>
           {/* Todo list panel */}
-          <div className={cn("p-6", glassPanelClassName)}>
+          <div className={cn("p-6", raisedStaticPanelClassName)}>
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-2">
                 <Skeleton className="h-6 w-28" />
@@ -95,7 +95,7 @@ export function DashboardPageSkeleton() {
           </div>
 
           {/* Time tracker panel */}
-          <div className={cn("px-6 py-7", glassPanelClassName)}>
+          <div className={cn("px-6 py-7", raisedStaticPanelClassName)}>
             <Skeleton className="h-4 w-28" />
             <div className="mt-6 flex justify-center">
               <Skeleton className="h-12 w-48 sm:h-14" />

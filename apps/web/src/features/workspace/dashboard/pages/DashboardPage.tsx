@@ -11,14 +11,17 @@ import { useDashboardTodos } from "@/features/workspace/dashboard/hooks/useDashb
 import { getDashboardCards } from "@/features/workspace/dashboard/utils/getDashboardCards";
 import { isDemoAccountEmail } from "@/features/workspace/auth/constants/demoAccount";
 import { DateFilters } from "@/shared/components/DateFilters";
+import { DayflowImage } from "@/shared/components/DayflowImage";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
 import { useDateFilters } from "@/shared/hooks/useDateFilters";
 import { cn } from "@/shared/lib/utils";
+import { useTheme } from "@/shared/providers/ThemeProvider";
 import { getWorkspaceDisplayName } from "@/shared/utils/authUserDisplay";
 
 /**
@@ -29,8 +32,12 @@ export function DashboardPage() {
   const { filter, dateFilterProps, periodLabel } = useDateFilters();
   const dashboard = useDashboard(filter);
   const todos = useDashboardTodos();
+  const { isDarkMode } = useTheme();
 
   const pageReady = !dashboard.loading && !todos.loading;
+  const cornerSrc = isDarkMode
+    ? DAYFLOW_IMAGES.dashboardCornerDark
+    : DAYFLOW_IMAGES.dashboardCornerLight;
 
   const isDemoAccount = isDemoAccountEmail(dashboard.user?.email);
   const greetingName = getWorkspaceDisplayName(
@@ -45,6 +52,13 @@ export function DashboardPage() {
 
   return (
     <div className="relative space-y-4">
+      <DayflowImage
+        src={cornerSrc}
+        alt=""
+        className="pointer-events-none absolute -right-2 bottom-0 z-0 hidden w-44 select-none opacity-80 lg:block xl:w-52 dark:opacity-55"
+        fallback={null}
+      />
+
       <PageHeader
         heading={heading}
         description="Here is your personal workspace summary for today."
@@ -55,7 +69,10 @@ export function DashboardPage() {
         <DashboardPageSkeleton />
       ) : (
         <AnimatePresence mode="wait">
-          <div key={periodLabel} className="w-full min-w-0 space-y-4">
+          <div
+            key={periodLabel}
+            className="relative z-[1] w-full min-w-0 space-y-4"
+          >
             {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
 
             <StatsCards cards={cards} />
@@ -67,7 +84,10 @@ export function DashboardPage() {
               )}
             >
               <div
-                className={cn("space-y-4 lg:col-span-2", containMinWidthClassName)}
+                className={cn(
+                  "space-y-4 lg:col-span-2",
+                  containMinWidthClassName,
+                )}
               >
                 <FluidWaveItem index={1}>
                   <TaskCompletionChart

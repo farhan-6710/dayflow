@@ -2,9 +2,10 @@ import { ClientsTableRow } from "@/features/workspace/clients-management/compone
 import { clientsDirectoryConfig } from "@/features/workspace/clients-management/constants/clientsDirectory";
 import type { ClientsTableProps } from "@/features/workspace/clients-management/types/components";
 import { ActiveStatusFilter } from "@/shared/components/ActiveStatusFilter";
+import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
 import { ACTIVE_STATUS_FILTER_LABELS } from "@/shared/constants/activeStatusFilter";
-import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 
 export function ClientsTable({
   clients,
@@ -26,6 +27,7 @@ export function ClientsTable({
           ? "No clients match that search."
           : clientsDirectoryConfig.emptyMessage
       }
+      emptyImageSrc={DAYFLOW_IMAGES.emptyClients}
       isLoading={isLoading}
       isEmpty={!isLoading && clients.length === 0}
       headerAside={

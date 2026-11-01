@@ -41,7 +41,7 @@ export function ClientsManagementPage() {
         heading="Clients Management"
         description="Manage client companies and contact details for freelance and office work."
         actions={
-          <Button onClick={openAddDialog} className="rounded-full shadow-sm">
+          <Button onClick={openAddDialog} className="rounded-full">
             <Plus className="mr-2 size-4" />
             Add Client
           </Button>

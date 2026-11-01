@@ -9,7 +9,7 @@ import type { ClientActivitiesBlockProps } from "@/features/workspace/client-act
 import { isClientActivityOpen } from "@/features/workspace/client-activities/utils/activityFormUtils";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 export function ClientActivitiesBlock({
@@ -118,7 +118,7 @@ export function ClientActivitiesBlock({
       <div
         className={cn(
           "px-6 py-8 text-center text-sm text-muted-foreground",
-          glassPanelClassName,
+          raisedPanelClassName,
         )}
       >
         Loading activities...

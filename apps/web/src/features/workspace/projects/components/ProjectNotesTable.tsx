@@ -30,6 +30,7 @@ import type { ProjectNotesTableProps } from "@/features/workspace/projects/types
 import type { Note } from "@/services/notesService";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { compactDropdownClassName } from "@/shared/constants/layoutStyles";
@@ -57,8 +58,9 @@ export function ProjectNotesTable({
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] =
-    useState<NoteCategoryFilterId>(NOTE_CATEGORY_FILTER_ALL);
+  const [categoryFilter, setCategoryFilter] = useState<NoteCategoryFilterId>(
+    NOTE_CATEGORY_FILTER_ALL,
+  );
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
@@ -101,7 +103,8 @@ export function ProjectNotesTable({
   }
 
   const hasActiveFilters =
-    searchQuery.trim().length > 0 || categoryFilter !== NOTE_CATEGORY_FILTER_ALL;
+    searchQuery.trim().length > 0 ||
+    categoryFilter !== NOTE_CATEGORY_FILTER_ALL;
 
   return (
     <>
@@ -110,6 +113,7 @@ export function ProjectNotesTable({
         description={notesDirectoryConfig.description}
         gridClass={notesDirectoryConfig.gridClass}
         columns={[...notesDirectoryConfig.columns]}
+        emptyImageSrc={DAYFLOW_IMAGES.emptyNotes}
         emptyMessage={
           hasActiveFilters
             ? "No notes match your search or category filter."
@@ -127,7 +131,9 @@ export function ProjectNotesTable({
             />
             <OptionDropdown
               value={categoryFilter}
-              onChange={(next) => setCategoryFilter(next as NoteCategoryFilterId)}
+              onChange={(next) =>
+                setCategoryFilter(next as NoteCategoryFilterId)
+              }
               options={categoryFilterOptions}
               disabled={isLoading}
               placeholder="Filter by category"

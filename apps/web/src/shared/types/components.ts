@@ -60,6 +60,7 @@ export type DirectoryTableProps = {
   isLoading: boolean;
   isEmpty: boolean;
   emptyMessage: string;
+  emptyImageSrc?: string;
   headerAside?: ReactNode;
   children: ReactNode;
   divided?: boolean;
@@ -204,11 +205,16 @@ export type DateRangePickerProps = {
 
 export type DateFiltersFilterState =
   | { mode: "all" }
-  | { mode: "period"; period: import("@/shared/constants/dateFilters").DateFilterPeriodId }
+  | {
+      mode: "period";
+      period: import("@/shared/constants/dateFilters").DateFilterPeriodId;
+    }
   | { mode: "range"; from: Date; to: Date };
 
 export type DateFiltersProps = {
-  activeQuickPeriod: import("@/shared/constants/dateFilters").DateFilterPeriodId | null;
+  activeQuickPeriod:
+    | import("@/shared/constants/dateFilters").DateFilterPeriodId
+    | null;
   isDateRangeActive: boolean;
   periodLabel: string;
   rangeButtonLabel: string;

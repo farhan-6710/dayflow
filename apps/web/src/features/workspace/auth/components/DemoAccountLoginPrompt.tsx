@@ -95,7 +95,7 @@ export function DemoAccountLoginPrompt({
 
         <Button
           type="button"
-          className="h-9 w-full rounded-full text-sm font-medium shadow-sm"
+          className="h-9 w-full rounded-full text-sm font-medium"
           disabled={disabled}
           onClick={() => void onDemoLogin()}
         >

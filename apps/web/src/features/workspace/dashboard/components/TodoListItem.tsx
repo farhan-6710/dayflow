@@ -1,4 +1,11 @@
-import { Check, Edit, GripVertical, Loader2, MoreVertical, Trash2 } from "lucide-react";
+import {
+  Check,
+  Edit,
+  GripVertical,
+  Loader2,
+  MoreVertical,
+  Trash2,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 import type { TodoListItemProps } from "@/features/workspace/dashboard/types/components";
@@ -83,7 +90,11 @@ export function TodoListItem({
           {busy ? (
             <Loader2 className="size-3 animate-spin" aria-hidden="true" />
           ) : completed ? (
-            <Check className="size-3.5" strokeWidth={2.5} aria-hidden="true" />
+            <Check
+              className="size-3.5 animate-check-pop"
+              strokeWidth={2.5}
+              aria-hidden="true"
+            />
           ) : null}
         </button>
 

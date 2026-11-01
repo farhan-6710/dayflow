@@ -74,7 +74,7 @@ export function ProjectsManagementPage() {
         actions={
           <Button
             onClick={handleOpenCreateDialog}
-            className="rounded-full shadow-sm"
+            className="rounded-full"
           >
             <Plus className="mr-2 size-4" />
             New Project

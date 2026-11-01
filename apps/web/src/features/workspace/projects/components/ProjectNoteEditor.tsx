@@ -11,7 +11,7 @@ import type { ProjectNoteEditorProps } from "@/features/workspace/projects/types
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import {
   containMinWidthClassName,
-  glassPanelClassName,
+  raisedStaticPanelClassName,
 } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { useRegisterUnsavedChanges } from "@/shared/unsaved-changes/useRegisterUnsavedChanges";
@@ -88,7 +88,7 @@ export function ProjectNoteEditor({
       <div
         className={cn(
           "flex min-h-0 flex-col items-center justify-center p-8 text-center",
-          glassPanelClassName,
+          raisedStaticPanelClassName,
           containMinWidthClassName,
         )}
       >
@@ -106,7 +106,7 @@ export function ProjectNoteEditor({
     <div
       className={cn(
         "flex h-full min-h-[32rem] min-w-0 flex-1 flex-col",
-        glassPanelClassName,
+        raisedStaticPanelClassName,
         containMinWidthClassName,
       )}
     >

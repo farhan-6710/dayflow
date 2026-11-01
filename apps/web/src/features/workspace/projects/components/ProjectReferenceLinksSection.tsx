@@ -12,7 +12,7 @@ import {
   type ProjectReferenceLinkFormValues,
 } from "@/features/workspace/projects/utils/projectReferenceLinkFormUtils";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
@@ -71,7 +71,7 @@ export function ProjectReferenceLinksSection({
     <div
       className={cn(
         "flex min-w-0 flex-col",
-        glassPanelClassName,
+        raisedStaticPanelClassName,
         className,
       )}
     >

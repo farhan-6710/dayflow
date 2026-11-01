@@ -16,7 +16,7 @@ import {
 } from "@/shared/constants/directoryTable";
 import {
   containMinWidthClassName,
-  glassPanelClassName,
+  raisedStaticPanelClassName,
 } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -44,7 +44,7 @@ export function DirectoryPageSkeleton({
 }: DirectoryPageSkeletonProps) {
   return (
     <div
-      className={cn("w-full min-w-0", glassPanelClassName, className)}
+      className={cn("w-full min-w-0", raisedStaticPanelClassName, className)}
       aria-busy="true"
       aria-label="Loading"
     >
@@ -247,7 +247,7 @@ export function TasksCalendarPageSkeleton() {
       <div
         className={cn(
           "flex h-full min-h-[360px] min-w-0 flex-col sm:min-h-[420px]",
-          glassPanelClassName,
+          raisedStaticPanelClassName,
         )}
       >
         <div className="px-2 pt-3 sm:px-5 sm:pt-5">
@@ -298,7 +298,7 @@ export function TasksCalendarPageSkeleton() {
       <aside
         className={cn(
           "flex h-full min-h-[320px] min-w-0 flex-col sm:min-h-[420px]",
-          glassPanelClassName,
+          raisedStaticPanelClassName,
         )}
       >
         <div className="flex items-start justify-between gap-2 border-b border-border px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
@@ -346,7 +346,7 @@ export function RemindersCalendarPageSkeleton() {
       <div
         className={cn(
           "flex min-h-[360px] min-w-0 flex-col sm:min-h-[420px]",
-          glassPanelClassName,
+          raisedStaticPanelClassName,
         )}
       >
         <div className="grid grid-cols-7 border-b border-border px-3 pt-4">
@@ -382,7 +382,7 @@ export function AnalyticsPageSkeleton() {
         {Array.from({ length: 2 }).map((_, index) => (
           <div
             key={index}
-            className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
+            className={cn("flex h-[380px] flex-col p-6", raisedStaticPanelClassName)}
           >
             <Skeleton className="h-4 w-40" />
             <Skeleton className="mt-1.5 h-3 w-56 max-w-full" />
@@ -413,7 +413,7 @@ export function RemindersManagementPageSkeleton() {
       aria-label="Loading reminders"
     >
       {Array.from({ length: 6 }).map((_, index) => (
-        <div key={index} className={cn("rounded-3xl p-5", glassPanelClassName)}>
+        <div key={index} className={cn("rounded-3xl p-5", raisedStaticPanelClassName)}>
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-2">
               <Skeleton className="h-5 w-36" />
@@ -442,7 +442,7 @@ export function StatsAndBlockPageSkeleton() {
           <StatCardSkeleton key={index} />
         ))}
       </div>
-      <div className={cn("min-h-64 p-6", glassPanelClassName)}>
+      <div className={cn("min-h-64 p-6", raisedStaticPanelClassName)}>
         <Skeleton className="h-5 w-40" />
         <Skeleton className="mt-2 h-3 w-56" />
         <div className="mt-6 space-y-3">
@@ -468,12 +468,12 @@ export function ProjectDetailPageSkeleton() {
         <Skeleton className="h-4 w-72 max-w-full" />
       </div>
       <ProjectsDirectoryPageSkeleton rows={5} />
-      <div className={cn("p-6", glassPanelClassName)}>
+      <div className={cn("p-6", raisedStaticPanelClassName)}>
         <Skeleton className="h-5 w-36" />
         <Skeleton className="mt-4 h-10 w-full rounded-lg" />
         <Skeleton className="mt-2 h-10 w-full rounded-lg" />
       </div>
-      <div className={cn("min-h-48 p-6", glassPanelClassName)}>
+      <div className={cn("min-h-48 p-6", raisedStaticPanelClassName)}>
         <Skeleton className="h-5 w-40" />
         <Skeleton className="mt-4 h-24 w-full rounded-xl" />
       </div>
@@ -490,7 +490,7 @@ export function ClientDetailPageSkeleton() {
         <Skeleton className="h-4 w-64 max-w-full" />
       </div>
       <div className="grid items-start gap-4 lg:grid-cols-2">
-        <div className={cn("min-h-64 p-6", glassPanelClassName)}>
+        <div className={cn("min-h-64 p-6", raisedStaticPanelClassName)}>
           <Skeleton className="h-5 w-32" />
           <div className="mt-4 space-y-3">
             <Skeleton className="h-4 w-full" />
@@ -498,7 +498,7 @@ export function ClientDetailPageSkeleton() {
             <Skeleton className="h-4 w-3/5" />
           </div>
         </div>
-        <div className={cn("min-h-64 p-6", glassPanelClassName)}>
+        <div className={cn("min-h-64 p-6", raisedStaticPanelClassName)}>
           <Skeleton className="h-5 w-24" />
           <div className="mt-4 space-y-3">
             {Array.from({ length: 4 }).map((_, index) => (

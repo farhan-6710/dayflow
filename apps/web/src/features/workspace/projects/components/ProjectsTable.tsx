@@ -22,6 +22,7 @@ import {
 import type { ProjectsTableProps } from "@/features/workspace/projects/types/components";
 import { ActiveStatusFilter } from "@/shared/components/ActiveStatusFilter";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
 
 export function ProjectsTable({
@@ -64,6 +65,7 @@ export function ProjectsTable({
       description={projectsDirectoryConfig.description}
       gridClass={projectsDirectoryConfig.gridClass}
       columns={[...projectsDirectoryConfig.columns]}
+      emptyImageSrc={DAYFLOW_IMAGES.statProjects}
       emptyMessage={
         searchQuery.trim()
           ? "No projects match that search."

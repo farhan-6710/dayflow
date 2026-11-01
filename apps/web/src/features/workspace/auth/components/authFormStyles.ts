@@ -1,4 +1,7 @@
-import { formInputClassName, formLabelClassName } from "@/shared/constants/formStyles";
+import {
+  formInputClassName,
+  formLabelClassName,
+} from "@/shared/constants/formStyles";
 
 export const authFormStyles = {
   label: formLabelClassName,

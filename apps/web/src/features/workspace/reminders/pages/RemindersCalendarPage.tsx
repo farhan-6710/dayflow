@@ -39,7 +39,7 @@ export function RemindersCalendarPage() {
         actions={
           <Button
             type="button"
-            className="gap-2 rounded-full px-5 shadow-sm"
+            className="gap-2 rounded-full px-5"
             onClick={openAddDialog}
           >
             <Plus className="size-4" />

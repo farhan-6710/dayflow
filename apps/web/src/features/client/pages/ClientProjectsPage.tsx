@@ -5,6 +5,7 @@ import { buildClientProjectDetailPath } from "@/app/constants/clientPortalRoutes
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { useClientPortal } from "@/features/client/providers/ClientPortalProvider";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageContent } from "@/shared/components/PageContent";
@@ -61,6 +62,7 @@ export function ClientProjectsPage() {
             description="Select a project to view details and activities."
             gridClass={GRID_CLASS}
             columns={[{ label: "Project" }, { label: "Status" }]}
+            emptyImageSrc={DAYFLOW_IMAGES.statProjects}
             emptyMessage="No projects have been shared with you yet."
             isLoading={false}
             isEmpty={projects.length === 0}

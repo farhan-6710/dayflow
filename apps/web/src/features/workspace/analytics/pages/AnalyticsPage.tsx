@@ -23,7 +23,7 @@ import {
   PieChart,
 } from "recharts";
 import { BarChart3, CheckSquare, ListTodo, FileText } from "lucide-react";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 export function AnalyticsPage() {
@@ -141,7 +141,7 @@ export function AnalyticsPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
           <FluidWaveItem
             index={1}
-            className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
+            className={cn("flex h-[380px] flex-col p-6", raisedStaticPanelClassName)}
           >
             <h3 className="text-sm font-bold tracking-tight text-foreground">
               Task Status Breakdown
@@ -225,7 +225,7 @@ export function AnalyticsPage() {
 
           <FluidWaveItem
             index={2}
-            className={cn("flex h-[380px] flex-col p-6", glassPanelClassName)}
+            className={cn("flex h-[380px] flex-col p-6", raisedStaticPanelClassName)}
           >
             <h3 className="text-sm font-bold tracking-tight text-foreground">
               Notes by Project

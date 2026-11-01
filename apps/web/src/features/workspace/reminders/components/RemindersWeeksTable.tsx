@@ -7,7 +7,7 @@ import {
 import type { RemindersWeeksTableProps } from "@/features/workspace/reminders/types/components";
 import { isSameCalendarDay } from "@/features/workspace/reminders/utils/calendarUtils";
 import { TABLE_HORIZONTAL_SCROLL_CLASS } from "@/shared/constants/directoryTable";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 
@@ -28,7 +28,7 @@ export function RemindersWeeksTable({
   return (
     <TooltipProvider>
       <div
-        className={cn(TABLE_HORIZONTAL_SCROLL_CLASS, glassPanelClassName)}
+        className={cn(TABLE_HORIZONTAL_SCROLL_CLASS, raisedStaticPanelClassName)}
       >
         <div style={{ minWidth: minTableWidth }}>
           <div

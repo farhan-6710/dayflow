@@ -12,7 +12,10 @@ import {
   formFieldGroupClassName,
   formLabelClassName,
 } from "@/shared/constants/formStyles";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import {
+  insetChipClassName,
+  raisedStaticPanelClassName,
+} from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -64,7 +67,7 @@ export function SettingsPage() {
       <PageContent stagger={false}>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
           <div className="space-y-4">
-            <FluidWaveItem index={0} className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={0} className={cn("p-6", raisedStaticPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <User className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -109,7 +112,7 @@ export function SettingsPage() {
               </form>
             </FluidWaveItem>
 
-            <FluidWaveItem index={2} className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={2} className={cn("p-6", raisedStaticPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <Mail className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -162,7 +165,7 @@ export function SettingsPage() {
               </form>
             </FluidWaveItem>
 
-            <FluidWaveItem index={4} className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={4} className={cn("p-6", raisedStaticPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <Palette className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -194,7 +197,7 @@ export function SettingsPage() {
           </div>
 
           <div className="space-y-4">
-            <FluidWaveItem index={1} className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={1} className={cn("p-6", raisedStaticPanelClassName)}>
               <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
                 <KeyRound className="size-5 text-primary-text" />
                 <h3 className="font-semibold text-sm tracking-tight text-foreground">
@@ -283,7 +286,7 @@ export function SettingsPage() {
               )}
             </FluidWaveItem>
 
-            <FluidWaveItem index={3} className={cn("p-6", glassPanelClassName)}>
+            <FluidWaveItem index={3} className={cn("p-6", raisedStaticPanelClassName)}>
               <h3 className="text-sm font-semibold tracking-tight text-foreground">
                 DayFlow Environment
               </h3>
@@ -293,7 +296,10 @@ export function SettingsPage() {
                 and authenticated sessions are maintained securely in your
                 browser cache.
               </p>
-              <div className="mt-4 p-3 rounded-xl bg-secondary text-secondary-foreground text-3xs font-semibold leading-relaxed border border-border/80">
+              <div className={cn(
+                  "mt-4 p-3 text-3xs font-semibold leading-relaxed text-secondary-foreground",
+                  insetChipClassName,
+                )}>
                 Connection Status: Secured (Supabase SSL)
               </div>
             </FluidWaveItem>

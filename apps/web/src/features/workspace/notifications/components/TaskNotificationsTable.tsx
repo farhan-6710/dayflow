@@ -5,6 +5,7 @@ import { WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
 import { taskNotificationsDirectoryConfig } from "@/features/workspace/notifications/constants/notificationTypes";
 import type { TaskNotificationsTableProps } from "@/features/workspace/notifications/types/components";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 import { Button } from "@/shared/ui/button";
@@ -22,6 +23,7 @@ export function TaskNotificationsTable({
       description={taskNotificationsDirectoryConfig.description}
       gridClass={taskNotificationsDirectoryConfig.gridClass}
       columns={[...taskNotificationsDirectoryConfig.columns]}
+      emptyImageSrc={DAYFLOW_IMAGES.emptyTasks}
       emptyMessage={taskNotificationsDirectoryConfig.emptyMessage}
       isLoading={isLoading}
       isEmpty={!isLoading && notifications.length === 0}

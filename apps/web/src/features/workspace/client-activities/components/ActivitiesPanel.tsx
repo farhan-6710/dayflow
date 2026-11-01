@@ -22,7 +22,7 @@ import {
   type ClientActivityMeetingFormValues,
   type ClientActivityTaskFormValues,
 } from "@/features/workspace/client-activities/utils/activityFormUtils";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import {
@@ -98,7 +98,7 @@ export function ActivitiesPanel({
   const closeDialog = () => setDialogKind(null);
 
   return (
-    <div className={cn(glassPanelClassName)}>
+    <div className={cn(raisedStaticPanelClassName)}>
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
         <div>
           <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">

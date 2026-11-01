@@ -20,7 +20,9 @@ import { CalendarPlus, Plus } from "lucide-react";
 import { SortableTasksDayTaskItem } from "@/features/workspace/tasks/components/SortableTasksDayTaskItem";
 import type { TasksDayPanelProps } from "@/features/workspace/tasks/types/components";
 import { compareBySortOrder } from "@/features/workspace/tasks/utils/taskCalendarSort";
-import { glassPanelClassName } from "@/shared/constants/layoutStyles";
+import { DayflowImage } from "@/shared/components/DayflowImage";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { FLUID_ITEM, FLUID_LIST } from "@/shared/constants/pageMotion";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -62,7 +64,7 @@ export function TasksDayPanel({
     <aside
       className={cn(
         "flex h-full min-h-[320px] min-w-0 flex-col sm:min-h-[420px]",
-        glassPanelClassName,
+        raisedStaticPanelClassName,
       )}
     >
       <div className="flex items-start justify-between gap-2 border-b border-border px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
@@ -100,7 +102,16 @@ export function TasksDayPanel({
                 variants={FLUID_ITEM}
                 className="mt-2 flex flex-col items-center gap-3 rounded-xl border border-dashed border-border px-4 py-10 text-center"
               >
-                <CalendarPlus className="size-6 text-muted-foreground" aria-hidden="true" />
+                <DayflowImage
+                  src={DAYFLOW_IMAGES.emptyTasks}
+                  className="size-16"
+                  fallback={
+                    <CalendarPlus
+                      className="size-6 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                  }
+                />
                 <p className="text-sm text-muted-foreground">
                   Nothing planned for this day.
                 </p>

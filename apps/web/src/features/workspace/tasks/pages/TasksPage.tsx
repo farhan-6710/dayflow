@@ -13,6 +13,7 @@ import {
   containMinWidthClassName,
 } from "@/shared/constants/layoutStyles";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
+import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
@@ -99,7 +100,7 @@ export function TasksPage() {
               </Link>
             </Button>
             <Button
-              className="gap-2 rounded-full px-5 shadow-sm"
+              className="gap-2 rounded-full px-5"
               onClick={() => handleOpenCreateDialog()}
             >
               <Plus className="size-4" />
@@ -119,11 +120,16 @@ export function TasksPage() {
             columns={[...tasksDirectoryConfig.columns]}
             isLoading={false}
             isEmpty={tasks.length === 0}
+            emptyImageSrc={DAYFLOW_IMAGES.emptyTasks}
             emptyMessage="No tasks found. Try clearing filters or add a new task."
             headerAside={
               <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center">
                 <div
-                  className={cn("relative", containMinWidthClassName, "sm:w-56")}
+                  className={cn(
+                    "relative",
+                    containMinWidthClassName,
+                    "sm:w-56",
+                  )}
                 >
                   <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                   <Input

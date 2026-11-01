@@ -43,7 +43,7 @@ export function MonthSelector({
           type="button"
           variant="outline"
           className={cn(
-            "h-7 w-full justify-between gap-1.5 rounded-full border-border bg-card px-2.5 py-0 text-[11px] font-medium text-foreground shadow-sm transition hover:bg-muted/50 sm:w-auto sm:justify-start",
+            "h-7 w-full justify-between gap-1.5 rounded-full px-2.5 py-0 text-[11px] font-medium sm:w-auto sm:justify-start",
             className,
           )}
         >
