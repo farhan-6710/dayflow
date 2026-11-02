@@ -85,12 +85,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
 
       startTransition(to);
     },
-    [
-      location.pathname,
-      location.search,
-      startTransition,
-      unsavedChanges,
-    ],
+    [location.pathname, location.search, startTransition, unsavedChanges],
   );
 
   const onExitComplete = useCallback(() => {
@@ -151,7 +146,7 @@ export function PageTransitionMain({
         {isVisible ? (
           <motion.div
             key={pathname}
-            className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-6 lg:px-10 lg:py-10"
+            className="mx-auto w-full min-w-0 px-4 py-8 sm:px-6 lg:px-30 lg:py-10"
             {...PAGE_MAIN_MOTION}
           >
             <Outlet />

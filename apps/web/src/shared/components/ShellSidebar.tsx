@@ -15,7 +15,7 @@ export function ShellSidebar({ config, collapsed }: ShellSidebarProps) {
         className={cn(
           "min-h-0 w-0 shrink-0 overflow-hidden border-0 bg-transparent text-sidebar-foreground",
           "transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
-          collapsed ? "md:w-20" : "md:w-64",
+          collapsed ? "md:w-20" : "md:w-70",
         )}
       >
         <div
