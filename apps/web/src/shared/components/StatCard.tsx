@@ -19,7 +19,7 @@ export function StatCard({ card, tone }: StatCardProps) {
     (card.description ? `${card.label}\n${card.description}` : null);
 
   const lucideFallback = (
-    <span className="grid size-14 shrink-0 place-items-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+    <span className="grid size-14 shrink-0 place-items-center rounded-full border border-tint/30 bg-[color-mix(in_srgb,var(--tint)_42%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none">
       <Icon className="size-6 text-primary-text" aria-hidden />
     </span>
   );

@@ -30,7 +30,7 @@ export const TASK_STATUS_TEXT_COLORS: Record<TaskStatus, string> = {
 
 export const TASK_STATUS_BADGE_CLASS: Record<TaskStatus, string> = {
   todo: "bg-secondary text-secondary-foreground",
-  in_progress: "bg-[color-mix(in_srgb,var(--primary)_28%,var(--card))] text-primary-text",
+  in_progress: "bg-[color-mix(in_srgb,var(--tint)_28%,var(--card))] text-primary-text",
   done: "bg-status-done/15 text-status-done",
   missed: "bg-status-missed/15 text-status-missed",
 };

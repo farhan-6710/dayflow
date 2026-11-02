@@ -23,7 +23,7 @@ function AuthBrandPanel({ portal }: { portal: BrandPortalKey }) {
     <aside className="relative hidden overflow-hidden border-r bg-sidebar lg:flex lg:flex-col lg:justify-between lg:p-12">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 -right-40 size-[28rem] rounded-full bg-primary/10 blur-3xl"
+        className="pointer-events-none absolute -top-40 -right-40 size-[28rem] rounded-full bg-tint/10 blur-3xl"
       />
       <SidebarBrand subtitle={subtitle} className="animate-hero" />
 

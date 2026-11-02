@@ -40,8 +40,8 @@ export function TasksWeekDayCell({
         "group flex min-h-14 flex-col justify-between gap-1 rounded-[0.65rem] p-1 text-left outline-none transition-[filter,transform,background-color] focus-visible:ring-3 focus-visible:ring-ring/50 sm:min-h-[4.75rem] sm:p-2",
         "focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
         isSelected
-          ? "z-[1] border border-primary/50 bg-[color-mix(in_srgb,var(--primary)_22%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
-          : "surface-chip bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] hover:-translate-y-px hover:brightness-[1.02]",
+          ? "z-[1] border border-tint/50 bg-[color-mix(in_srgb,var(--tint)_22%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
+          : "surface-chip bg-[color-mix(in_srgb,var(--tint)_5%,var(--card))] hover:-translate-y-px hover:brightness-[1.02]",
         isOutsideMonth && !isSelected && "opacity-45",
       )}
     >

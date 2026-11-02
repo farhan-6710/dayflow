@@ -22,7 +22,7 @@ import {
 } from "@/shared/utils/authUserDisplay";
 
 const avatarInitialsClassName =
-  "rounded-full bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] text-[0.65rem] font-semibold text-foreground";
+  "rounded-full bg-[color-mix(in_srgb,var(--tint)_42%,var(--card))] text-[0.65rem] font-semibold text-foreground";
 import type { PortalUserHeaderMenuProps } from "@/shared/types/components";
 
 export function PortalUserHeaderMenu({

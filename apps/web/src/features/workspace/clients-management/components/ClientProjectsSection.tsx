@@ -73,7 +73,7 @@ export function ClientProjectsSection({
                 <Link
                   to={buildProjectDetailPath(project.id)}
                   className={cn(
-                    "surface-chip bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] group flex items-center gap-3 rounded-[0.8rem] px-4 py-2.5",
+                    "surface-chip bg-[color-mix(in_srgb,var(--tint)_5%,var(--card))] group flex items-center gap-3 rounded-[0.8rem] px-4 py-2.5",
                     "text-sm font-medium text-foreground transition-[filter,transform] hover:-translate-y-px hover:brightness-[1.02]",
                     !project.is_active && "opacity-70",
                   )}

@@ -20,7 +20,7 @@ export function ClientChatMessage({
       className={cn(
         "max-w-[90%] rounded-[0.9rem] px-3.5 py-2.5 text-sm sm:max-w-[85%]",
         isMine
-          ? "ml-auto border border-primary/40 bg-[color-mix(in_srgb,var(--primary)_45%,var(--card))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
+          ? "ml-auto border border-tint/40 bg-[color-mix(in_srgb,var(--tint)_45%,var(--card))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
           : "surface-chip text-foreground",
         isEditing && "ring-3 ring-ring/50",
       )}

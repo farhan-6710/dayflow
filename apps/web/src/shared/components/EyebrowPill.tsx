@@ -16,7 +16,7 @@ export function EyebrowPill({
     <p
       style={style}
       className={cn(
-        "inline-flex h-7 max-w-full items-center truncate rounded-full border border-primary/20 bg-[color-mix(in_srgb,var(--primary)_28%,var(--card))] px-3.5 text-[0.6875rem] font-medium tracking-[0.08em] text-primary-text uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] dark:shadow-none",
+        "inline-flex h-7 max-w-full items-center truncate rounded-full border border-tint/20 bg-[color-mix(in_srgb,var(--tint)_28%,var(--card))] px-3.5 text-[0.6875rem] font-medium tracking-[0.08em] text-primary-text uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] dark:shadow-none",
         className,
       )}
     >

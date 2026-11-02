@@ -55,7 +55,7 @@ export function TodoListItem({
           if (exiting) onExitComplete?.();
         }}
         className={cn(
-          "surface-chip flex min-w-0 items-start gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] py-2.5 pr-1.5 pl-2 transition-colors hover:border-primary/40",
+          "surface-chip flex min-w-0 items-start gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--tint)_5%,var(--card))] py-2.5 pr-1.5 pl-2 transition-colors hover:border-tint/40",
           isDragging && "shadow-md",
         )}
       >

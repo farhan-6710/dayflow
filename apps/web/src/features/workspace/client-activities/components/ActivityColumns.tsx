@@ -38,7 +38,7 @@ function ColumnShell({
         <p className="min-w-0 flex-1 truncate text-sm font-semibold text-foreground">
           {title}
         </p>
-        <span className="tabular inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_35%,var(--card))] px-2 text-xs font-semibold text-foreground">
+        <span className="tabular inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-tint/30 bg-[color-mix(in_srgb,var(--tint)_35%,var(--card))] px-2 text-xs font-semibold text-foreground">
           {count}
         </span>
       </div>

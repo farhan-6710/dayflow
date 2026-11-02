@@ -29,7 +29,7 @@ export const toastStyleByType: Record<ToastType, ToastStyleConfig> = {
   info: {
     icon: InfoIcon,
     toastClassName:
-      "border-primary/30 bg-card text-foreground shadow-md",
+      "border-tint/30 bg-card text-foreground shadow-md",
     iconClassName: "text-primary-text",
   },
 };

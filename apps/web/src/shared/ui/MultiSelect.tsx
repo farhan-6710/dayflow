@@ -72,7 +72,7 @@ export function MultiSelect({
                   title={
                     labelByValue.get(selectedValue) ?? fallbackSelectedLabel
                   }
-                  className="shrink-0 whitespace-nowrap rounded-full border border-primary/25 bg-[color-mix(in_srgb,var(--primary)_28%,var(--card))] px-2 py-0.5 text-xs font-medium text-foreground"
+                  className="shrink-0 whitespace-nowrap rounded-full border border-tint/25 bg-[color-mix(in_srgb,var(--tint)_28%,var(--card))] px-2 py-0.5 text-xs font-medium text-foreground"
                 >
                   {labelByValue.get(selectedValue) ?? fallbackSelectedLabel}
                 </span>

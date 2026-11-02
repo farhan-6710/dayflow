@@ -29,8 +29,8 @@ export function ReminderWeekDayCell({
       role="button"
       tabIndex={0}
       className={cn(
-        "group flex min-h-[140px] cursor-pointer flex-col border-r border-foreground/10 p-4 text-left transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--primary)_6%,var(--card))] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset",
-        isSelected && "bg-[color-mix(in_srgb,var(--primary)_14%,var(--card))] shadow-[inset_0_0_0_2px_color-mix(in_srgb,var(--primary)_70%,transparent)]",
+        "group flex min-h-[140px] cursor-pointer flex-col border-r border-foreground/10 p-4 text-left transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--tint)_6%,var(--card))] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset",
+        isSelected && "bg-[color-mix(in_srgb,var(--tint)_14%,var(--card))] shadow-[inset_0_0_0_2px_color-mix(in_srgb,var(--tint)_70%,transparent)]",
       )}
       aria-label={`View reminders for ${dayName} ${formatMonthDayLabel(year, month, dateNumber)}`}
       aria-current={isSelected ? "date" : undefined}
@@ -58,7 +58,7 @@ export function ReminderWeekDayCell({
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    className="surface-chip flex w-full items-center justify-between gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] px-3 py-1.5 text-left transition-colors hover:border-primary/40"
+                    className="surface-chip flex w-full items-center justify-between gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--tint)_5%,var(--card))] px-3 py-1.5 text-left transition-colors hover:border-tint/40"
                     onClick={(event) => {
                       event.stopPropagation();
                       onEdit(reminder.id);

@@ -71,7 +71,7 @@ export function TasksDayPanel({
       <div className="flex items-start justify-between gap-2 px-3 pt-4 pb-3 sm:gap-3 sm:px-5 sm:pt-5">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={dateKey} {...FLUID_LIST} className="min-w-0">
-            <span className="tabular inline-flex h-7 items-center gap-1.5 rounded-full border border-primary/40 bg-[linear-gradient(165deg,color-mix(in_srgb,var(--primary)_55%,white),color-mix(in_srgb,var(--primary)_38%,var(--card)))] px-3 text-xs font-semibold tracking-wide text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_3px_color-mix(in_srgb,var(--primary)_28%,transparent)] dark:bg-[color-mix(in_srgb,var(--primary)_25%,var(--card))] dark:shadow-none">
+            <span className="tabular inline-flex h-7 items-center gap-1.5 rounded-full border border-tint/40 bg-[linear-gradient(165deg,color-mix(in_srgb,var(--tint)_55%,white),color-mix(in_srgb,var(--tint)_38%,var(--card)))] px-3 text-xs font-semibold tracking-wide text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_3px_color-mix(in_srgb,var(--tint)_28%,transparent)] dark:bg-none dark:bg-[color-mix(in_srgb,var(--tint)_25%,var(--card))] dark:shadow-none">
               <span
                 aria-hidden
                 className="size-1.5 rounded-full bg-[color-mix(in_srgb,var(--chart-5)_75%,var(--warning-foreground))]"

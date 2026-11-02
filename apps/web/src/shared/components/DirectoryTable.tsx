@@ -62,7 +62,7 @@ export function DirectoryTable({
         <div className={DIRECTORY_TABLE_MIN_WIDTH_CLASS}>
           <div
             className={cn(
-              "grid w-full items-center bg-[color-mix(in_srgb,var(--primary)_8%,var(--card))] px-6 text-xs font-medium tracking-wide text-muted-foreground uppercase max-sm:hidden",
+              "grid w-full items-center bg-[color-mix(in_srgb,var(--tint)_8%,var(--card))] px-6 text-xs font-medium tracking-wide text-muted-foreground uppercase max-sm:hidden",
               divided
                 ? "items-stretch divide-x divide-foreground/10 border-b border-foreground/10"
                 : "gap-4 border-b border-foreground/10 py-3",

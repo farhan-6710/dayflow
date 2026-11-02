@@ -34,7 +34,7 @@ export function ShellHeader({
   const ThemeIcon = isDarkMode ? Sun : Moon;
 
   return (
-    <header className="animate-shell-down sticky top-0 z-10 flex h-14 w-full min-w-0 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur-md md:rounded-t-xl">
+    <header className="animate-shell-down sticky top-0 z-10 flex h-14 w-full min-w-0 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur-md rounded-t-xl">
       <Button
         type="button"
         variant="ghost"

@@ -26,7 +26,7 @@ export function EmptyState({
   className,
 }: EmptyStateProps) {
   const iconBadge = Icon ? (
-    <span className="grid size-14 place-items-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_6px_-2px_color-mix(in_srgb,var(--primary)_45%,transparent)] dark:shadow-none">
+    <span className="grid size-14 place-items-center rounded-full border border-tint/30 bg-[color-mix(in_srgb,var(--tint)_42%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_6px_-2px_color-mix(in_srgb,var(--tint)_45%,transparent)] dark:shadow-none">
       <Icon
         className="size-6 text-primary-text"
         aria-hidden

@@ -84,7 +84,7 @@ export function RemindersManagementPage() {
                               "tabular inline-flex h-6 items-center gap-1.5 rounded-full border px-2.5 text-xs font-semibold",
                               reminder.is_disabled
                                 ? "border-border bg-secondary text-muted-foreground"
-                                : "border-primary/40 bg-[linear-gradient(165deg,color-mix(in_srgb,var(--primary)_55%,white),color-mix(in_srgb,var(--primary)_38%,var(--card)))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:bg-[color-mix(in_srgb,var(--primary)_25%,var(--card))] dark:shadow-none",
+                                : "border-tint/40 bg-[linear-gradient(165deg,color-mix(in_srgb,var(--tint)_55%,white),color-mix(in_srgb,var(--tint)_38%,var(--card)))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:bg-none dark:bg-[color-mix(in_srgb,var(--tint)_25%,var(--card))] dark:shadow-none",
                             )}
                           >
                             <Clock3 className="size-3.5" />
@@ -144,7 +144,7 @@ export function RemindersManagementPage() {
                             className={cn(
                               "grid size-8 place-items-center rounded-full border text-xs font-semibold",
                               isSelected && !reminder.is_disabled
-                                ? "border-primary/40 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
+                                ? "border-tint/40 bg-[color-mix(in_srgb,var(--tint)_42%,var(--card))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
                                 : "border-foreground/10 bg-transparent text-muted-foreground",
                             )}
                             title={day.label}

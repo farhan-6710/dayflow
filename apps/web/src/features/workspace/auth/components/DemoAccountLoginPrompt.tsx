@@ -64,7 +64,7 @@ export function DemoAccountLoginPrompt({
 
       <div className="space-y-3">
         <div className="flex items-start gap-3 pr-6">
-          <div className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] text-primary-text">
+          <div className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border border-tint/30 bg-[color-mix(in_srgb,var(--tint)_42%,var(--card))] text-primary-text">
             <Sparkles className="size-4" aria-hidden="true" />
           </div>
 

@@ -32,10 +32,10 @@ export function RemindersWeeksTable({
       >
         <div style={{ minWidth: minTableWidth }}>
           <div
-            className="grid border-b border-foreground/10 bg-[color-mix(in_srgb,var(--primary)_8%,var(--card))] text-xs font-medium tracking-wide text-muted-foreground uppercase"
+            className="grid border-b border-foreground/10 bg-[color-mix(in_srgb,var(--tint)_8%,var(--card))] text-xs font-medium tracking-wide text-muted-foreground uppercase"
             style={{ gridTemplateColumns }}
           >
-            <div className="sticky left-0 z-10 border-r border-foreground/10 bg-[color-mix(in_srgb,var(--primary)_8%,var(--card))] px-4 py-3">
+            <div className="sticky left-0 z-10 border-r border-foreground/10 bg-[color-mix(in_srgb,var(--tint)_8%,var(--card))] px-4 py-3">
               Day
             </div>
             {weeks.map((week) => (

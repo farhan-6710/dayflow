@@ -40,7 +40,7 @@ export const DirectoryTableRow = forwardRef<
       tabIndex={0}
       style={style}
       className={cn(
-        "cursor-pointer transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--primary)_7%,var(--card))] focus-visible:bg-[color-mix(in_srgb,var(--primary)_10%,var(--card))]",
+        "cursor-pointer transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--tint)_7%,var(--card))] focus-visible:bg-[color-mix(in_srgb,var(--tint)_10%,var(--card))]",
         className,
       )}
       onClick={go}
