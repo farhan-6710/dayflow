@@ -1,19 +1,23 @@
 import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 cursor-pointer",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 cursor-pointer",
   {
     variants: {
       variant: {
-        default: "btn-raised btn-raised-primary",
-        outline: "btn-raised btn-raised-outline",
-        secondary: "btn-raised btn-raised-secondary",
+        default:
+          "btn-elevated btn-primary ![background-clip:padding-box,border-box] focus-visible:ring-0 focus-visible:outline-none",
+        outline:
+          "btn-elevated btn-outline ![background-clip:padding-box,border-box] focus-visible:ring-0 focus-visible:outline-none aria-expanded:brightness-95",
+        secondary:
+          "btn-elevated btn-secondary ![background-clip:padding-box,border-box] focus-visible:ring-0 focus-visible:outline-none aria-expanded:brightness-95",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 active:not-aria-[haspopup]:translate-y-px",
-        destructive: "btn-raised btn-raised-destructive",
+          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+        destructive:
+          "btn-elevated btn-destructive ![background-clip:padding-box,border-box] focus-visible:ring-0 focus-visible:outline-none",
         "destructive-outline":
-          "border border-destructive-outline bg-transparent text-destructive-outline hover:border-destructive-outline/55 hover:bg-destructive-outline/10 focus-visible:ring-destructive-outline/25 dark:border-destructive-outline/50 dark:hover:bg-destructive-outline/15 dark:text-destructive-outline active:not-aria-[haspopup]:translate-y-px",
-        link: "text-primary-text underline-offset-4 hover:underline",
+          "btn-elevated btn-outline ![background-clip:padding-box,border-box] text-destructive! focus-visible:ring-0 focus-visible:outline-none dark:text-destructive-outline!",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default:

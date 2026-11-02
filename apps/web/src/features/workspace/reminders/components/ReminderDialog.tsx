@@ -49,9 +49,9 @@ export function ReminderDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{isEditing ? "Edit Reminder" : "Add Reminder"}</DialogTitle>
+            <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit Reminder" : "Add Reminder"}</DialogTitle>
             <DialogDescription>
               Set a recurring reminder with days, time, and optional disable period.
             </DialogDescription>

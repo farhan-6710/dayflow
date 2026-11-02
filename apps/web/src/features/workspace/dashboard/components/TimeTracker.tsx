@@ -54,9 +54,9 @@ export function TimeTracker() {
   }
 
   return (
-    <DashboardPanel className="px-6 py-7">
-      <p className="text-sm font-medium text-muted-foreground">Time Tracker</p>
-      <p className="mt-6 text-center font-mono text-4xl font-semibold tracking-[0.08em] tabular-nums text-foreground sm:text-5xl">
+    <DashboardPanel className="tone-primary px-5 pt-5 pb-6">
+      <h3 className="pl-1 text-2xl leading-none font-bold">Time Tracker</h3>
+      <p className="tabular mt-6 text-center font-heading text-5xl leading-none font-bold tracking-[0.04em] text-foreground sm:text-[3.5rem]">
         {formatElapsed(elapsedMs)}
       </p>
 
@@ -66,7 +66,7 @@ export function TimeTracker() {
           size="icon"
           onClick={handleStartPause}
           aria-label={running ? "Pause stopwatch" : "Start stopwatch"}
-          className="size-11 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+          className="size-11 rounded-full"
         >
           {running ? (
             <Pause className="size-5 fill-current" />
@@ -80,7 +80,7 @@ export function TimeTracker() {
           variant="outline"
           onClick={handleReset}
           aria-label="Reset stopwatch"
-          className="size-11 rounded-full border-border/80 bg-background/50 hover:bg-muted"
+          className="size-11 rounded-full"
         >
           <RotateCcw className="size-4 text-muted-foreground" />
         </Button>

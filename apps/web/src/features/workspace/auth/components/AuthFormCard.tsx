@@ -15,15 +15,13 @@ export function AuthFormCard({
 }: AuthFormCardProps) {
   return (
     <div className="w-full">
-      <div className="mb-5 space-y-1 lg:mb-6">
-        <h1 className="text-xl font-semibold tracking-tight lg:text-2xl">{title}</h1>
-        <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
-      </div>
+      <header className="mb-8 space-y-2">
+        <h1 className="animate-hero text-3xl">{title}</h1>
+        <p className="animate-hero text-sm text-muted-foreground">{description}</p>
+      </header>
 
-      <div className="space-y-5">
-        {children}
-        {footer}
-      </div>
+      <div className="animate-hero space-y-6">{children}</div>
+      {footer ? <div className="animate-hero mt-8">{footer}</div> : null}
     </div>
   );
 }

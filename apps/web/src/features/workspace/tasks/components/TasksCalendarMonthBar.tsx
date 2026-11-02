@@ -22,7 +22,7 @@ export function TasksCalendarMonthBar({
 
   return (
     <div className="flex min-w-0 items-center justify-between gap-2 sm:gap-3">
-      <h2 className="min-w-0 truncate text-base font-semibold tracking-tight text-foreground sm:text-xl">
+      <h2 className="min-w-0 truncate pl-1 text-2xl leading-none font-bold">
         {label}
       </h2>
       <div className="flex shrink-0 items-center gap-1 sm:gap-2">
@@ -30,7 +30,7 @@ export function TasksCalendarMonthBar({
           type="button"
           variant="outline"
           size="sm"
-          className="h-7 rounded-full px-2 text-[11px] sm:h-8 sm:px-3 sm:text-xs"
+          className="h-7 px-2.5 text-xs"
           onClick={() => onSelect(new Date())}
         >
           Today
@@ -39,7 +39,7 @@ export function TasksCalendarMonthBar({
           type="button"
           variant="outline"
           size="icon"
-          className="size-7 rounded-full sm:size-8"
+          className="size-7"
           aria-label="Previous month"
           onClick={() => onSelect(shiftMonth(year, month, -1))}
         >
@@ -49,7 +49,7 @@ export function TasksCalendarMonthBar({
           type="button"
           variant="outline"
           size="icon"
-          className="size-7 rounded-full sm:size-8"
+          className="size-7"
           aria-label="Next month"
           onClick={() => onSelect(shiftMonth(year, month, 1))}
         >

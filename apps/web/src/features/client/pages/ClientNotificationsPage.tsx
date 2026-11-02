@@ -8,6 +8,7 @@ export function ClientNotificationsPage() {
   return (
     <PageContent stagger={false}>
       <PageHeader
+        eyebrow="Inbox"
         heading="Notifications"
         description="Updates from your provider."
       />

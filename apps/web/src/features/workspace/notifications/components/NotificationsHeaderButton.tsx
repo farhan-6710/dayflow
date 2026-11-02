@@ -14,8 +14,8 @@ export function NotificationsHeaderButton() {
     <Button
       asChild
       type="button"
-      variant="secondary"
-      className="relative size-9 rounded-xl border border-border p-0"
+      variant="outline"
+      className="relative size-9 rounded-md p-0"
       aria-label={
         showBadge
           ? `Open notifications, ${unreadCount} unread`
@@ -28,7 +28,7 @@ export function NotificationsHeaderButton() {
           <span
             className={cn(
               "absolute -right-1 -top-2 flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full leading-none",
-              "bg-primary px-1 text-[10px] font-semibold text-primary-foreground",
+              "bg-primary px-1 text-[0.7rem] font-semibold text-primary-foreground",
             )}
           >
             {unreadCount > 9 ? "9+" : unreadCount}

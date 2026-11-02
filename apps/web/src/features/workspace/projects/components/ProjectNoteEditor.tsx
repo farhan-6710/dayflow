@@ -93,7 +93,7 @@ export function ProjectNoteEditor({
         )}
       >
         <FileText className="size-16 text-muted-foreground/40" />
-        <h3 className="mt-4 text-sm font-semibold">No note selected</h3>
+        <h3 className="mt-4 text-2xl font-bold">No note selected</h3>
         <p className="mt-1 max-w-60 text-xs text-muted-foreground">
           Create a note or select one from the list to start editing without
           leaving this project.
@@ -111,7 +111,7 @@ export function ProjectNoteEditor({
       )}
     >
       {/* Compact chrome — stays secondary to the document title */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/70 px-5 py-3 sm:px-6">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-foreground/10/70 px-5 py-3 sm:px-6">
         <OptionDropdown
           value={category}
           onChange={(next) => setCategory(next as NoteCategory)}
@@ -148,7 +148,7 @@ export function ProjectNoteEditor({
                 disabled={saving}
                 onClick={() => void onDuplicate(note)}
               >
-                <Copy className="mr-1 size-3.5" />
+                <Copy className="size-3.5" />
                 Duplicate
               </Button>
               <Button
@@ -158,7 +158,7 @@ export function ProjectNoteEditor({
                 disabled={saving}
                 onClick={() => onDelete(note.id)}
               >
-                <Trash2 className="mr-1 size-3.5" />
+                <Trash2 className="size-3.5" />
                 Delete
               </Button>
             </>
@@ -175,7 +175,7 @@ export function ProjectNoteEditor({
               })
             }
           >
-            <Save className="mr-1 size-3.5" />
+            <Save className="size-3.5" />
             {saving ? "Saving..." : "Save"}
           </Button>
         </div>
@@ -187,7 +187,7 @@ export function ProjectNoteEditor({
           value={title}
           onChange={(event) => setTitle(event.target.value)}
           className={cn(
-            "w-full min-w-0 border-0 bg-transparent p-0 text-[1.65rem] font-semibold leading-snug tracking-tight text-foreground shadow-none",
+            "w-full min-w-0 border-0 bg-transparent p-0 font-heading text-[1.75rem] leading-snug font-bold tracking-tight text-foreground shadow-none",
             "placeholder:text-muted-foreground/55",
             "outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0",
             containMinWidthClassName,

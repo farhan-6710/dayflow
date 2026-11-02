@@ -3,29 +3,30 @@ import { cn } from "@/shared/lib/utils";
 /** Prevent grid/flex children from forcing horizontal overflow. */
 export const containMinWidthClassName = "min-w-0";
 
-/**
- * Shared glass surface — same wash as sidebar/header.
- * Use on any bordered panel so the blob reads through consistently.
- */
-export const glassPanelClassName =
-  "rounded-2xl border border-border/70 bg-card/70 backdrop-blur-2xl dark:border-white/10 dark:bg-card/55";
+/** Raised cream panel — the base surface for every card, table and section. */
+export const glassPanelClassName = "surface-elevated rounded-[1.25rem]";
 
-/** Glass + honey bevel elevation (dashboard cards, interactive panels). */
-export const raisedPanelClassName = cn(glassPanelClassName, "surface-raised");
-
-/** Same depth without hover lift — large tables, editors, calendars. */
-export const raisedStaticPanelClassName = cn(
+/** Raised panel that lifts on hover (clickable cards). */
+export const raisedPanelClassName = cn(
   glassPanelClassName,
-  "surface-raised-static",
+  "transition-transform hover:-translate-y-0.5",
 );
 
-/** Recessed chip / nested row inside a raised panel. */
-export const insetChipClassName =
-  "surface-inset rounded-xl border border-border/50";
+/** Same surface without hover lift — large tables, editors, calendars. */
+export const raisedStaticPanelClassName = glassPanelClassName;
+
+/** Nested row / chip inside a raised panel. */
+export const insetChipClassName = "surface-chip rounded-[0.8rem]";
+
+/** Section heading inside a raised panel (Ovo, bold). */
+export const panelTitleClassName = "pl-1 text-2xl leading-none font-bold";
+
+/** Supporting copy under a panel heading. */
+export const panelDescriptionClassName = "mt-2 pl-1 text-sm text-foreground/75";
 
 /** Filter/toolbar row: search or input + one or more fixed controls. */
 export const filterBarClassName = cn(
-  "grid grid-cols-1 gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center",
+  "grid grid-cols-1 gap-3 p-3 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center",
   glassPanelClassName,
 );
 
@@ -42,6 +43,9 @@ export const inlineFormClassName = "flex min-w-0 items-center gap-2";
 
 /** Standard width for compact filter/action dropdowns. */
 export const compactDropdownClassName = "w-full sm:w-40";
+
+/** Amber eyebrow text used for kickers above headings. */
+export const eyebrowTextClassName = "text-primary-text";
 
 export function toolbarRowClassNames(className?: string) {
   return cn(toolbarRowClassName, className);

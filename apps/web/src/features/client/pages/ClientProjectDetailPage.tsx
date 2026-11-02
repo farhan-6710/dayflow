@@ -38,7 +38,7 @@ export function ClientProjectDetailPage() {
 
   if (loading && !project) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <PageHeader
           heading="Project"
           description="Loading project details…"
@@ -65,7 +65,7 @@ export function ClientProjectDetailPage() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
         heading={
           <div className="flex min-w-0 items-center gap-3">

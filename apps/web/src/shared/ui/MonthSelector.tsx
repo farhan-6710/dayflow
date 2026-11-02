@@ -43,7 +43,7 @@ export function MonthSelector({
           type="button"
           variant="outline"
           className={cn(
-            "h-7 w-full justify-between gap-1.5 rounded-full px-2.5 py-0 text-[11px] font-medium sm:w-auto sm:justify-start",
+            "h-8 w-full justify-between gap-1.5 rounded-full px-3 py-0 text-xs font-medium sm:w-auto sm:justify-start",
             className,
           )}
         >
@@ -53,10 +53,10 @@ export function MonthSelector({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[min(100vw-2rem,17.5rem)] border-muted-foreground/10 p-0 shadow-2xl"
+        className="w-[min(100vw-2rem,17.5rem)] overflow-hidden rounded-xl p-0 shadow-md"
         align="start"
       >
-        <div className="bg-background p-2">
+        <div className="bg-popover p-2">
           <div className="relative flex items-center justify-between px-1">
             <Button
               type="button"
@@ -112,11 +112,10 @@ export function MonthSelector({
                   }}
                   className={cn(
                     "cursor-pointer rounded-md px-2 py-2.5 text-sm font-medium transition-colors",
-                    "hover:bg-muted/70",
                     focusRingClassName,
                     isSelected
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : "text-foreground",
+                      ? "btn-elevated btn-primary"
+                      : "text-foreground hover:bg-accent hover:text-accent-foreground",
                   )}
                 >
                   {monthLabel}

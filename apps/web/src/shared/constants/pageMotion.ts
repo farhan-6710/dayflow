@@ -4,18 +4,19 @@ export const MOTION_EASE = [0.22, 1, 0.36, 1] as const;
 /** Same curve as the tasks day panel — watery ease-out. */
 export const FLUID_EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Route transition on <main> — no filter, so glass backdrops stay intact. */
+/**
+ * Route swap on <main> — a quick cross-fade only. Page sections run their own
+ * entrance (`animate-hero` / `animate-enter`, see shared/lib/entranceMotion.ts).
+ */
 export const PAGE_MAIN_MOTION = {
-  initial: { opacity: 0, y: 22 },
+  initial: { opacity: 0 },
   animate: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, ease: FLUID_EASE, delay: 0.08 },
+    transition: { duration: 0.18, ease: FLUID_EASE },
   },
   exit: {
     opacity: 0,
-    y: -12,
-    transition: { duration: 0.24, ease: FLUID_EASE },
+    transition: { duration: 0.14, ease: FLUID_EASE },
   },
 };
 

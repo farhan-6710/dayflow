@@ -1,5 +1,3 @@
-import { AnimatePresence } from "framer-motion";
-
 import { DashboardPageSkeleton } from "@/features/workspace/dashboard/components/DashboardPageSkeleton";
 import { DashboardPlaceholderCard } from "@/features/workspace/dashboard/components/DashboardPlaceholderCard";
 import { DashboardTodoList } from "@/features/workspace/dashboard/components/DashboardTodoList";
@@ -18,7 +16,10 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
-import { containMinWidthClassName } from "@/shared/constants/layoutStyles";
+import {
+  containMinWidthClassName,
+  eyebrowTextClassName,
+} from "@/shared/constants/layoutStyles";
 import { useDateFilters } from "@/shared/hooks/useDateFilters";
 import { cn } from "@/shared/lib/utils";
 import { useTheme } from "@/shared/providers/ThemeProvider";
@@ -38,28 +39,43 @@ export function DashboardPage() {
   const cornerSrc = isDarkMode
     ? DAYFLOW_IMAGES.dashboardCornerDark
     : DAYFLOW_IMAGES.dashboardCornerLight;
+  const today = new Date().toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 
   const isDemoAccount = isDemoAccountEmail(dashboard.user?.email);
   const greetingName = getWorkspaceDisplayName(
     dashboard.user,
     dashboard.profile?.display_name,
   );
-  const heading = isDemoAccount
-    ? "Welcome to the DayFlow Demo"
-    : `Welcome, ${greetingName}!`;
+  const heading = isDemoAccount ? (
+    <>
+      Welcome to the <span className={eyebrowTextClassName}>DayFlow Demo</span>
+    </>
+  ) : (
+    <>
+      Welcome, <span className={eyebrowTextClassName}>{greetingName}</span>
+      <span aria-hidden className="ml-1.5 inline-block text-[0.8em]">
+        👋
+      </span>
+    </>
+  );
 
   const cards = getDashboardCards(dashboard.stats, periodLabel);
 
   return (
-    <div className="relative space-y-4">
+    <div className="relative isolate lg:-mx-4 min-[90rem]:-mx-7">
       <DayflowImage
         src={cornerSrc}
         alt=""
-        className="pointer-events-none absolute -right-2 bottom-0 z-0 hidden w-44 select-none opacity-80 lg:block xl:w-52 dark:opacity-55"
+        className="animate-enter pointer-events-none absolute -right-4 -bottom-8 -z-10 hidden w-52 select-none sm:-right-6 md:block lg:-bottom-10"
         fallback={null}
       />
 
       <PageHeader
+        eyebrow={`${today} · ${periodLabel === "All" ? "All time" : periodLabel}`}
         heading={heading}
         description="Here is your personal workspace summary for today."
         actions={<DateFilters {...dateFilterProps} />}
@@ -68,24 +84,20 @@ export function DashboardPage() {
       {!pageReady ? (
         <DashboardPageSkeleton />
       ) : (
-        <AnimatePresence mode="wait">
-          <div
-            key={periodLabel}
-            className="relative z-[1] w-full min-w-0 space-y-4"
-          >
+        <div key={periodLabel} className="w-full min-w-0 space-y-6">
             {dashboard.error ? <ErrorBanner message={dashboard.error} /> : null}
 
             <StatsCards cards={cards} />
 
             <div
               className={cn(
-                "grid grid-cols-1 gap-4 lg:grid-cols-3",
+                "grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_23.8rem]",
                 containMinWidthClassName,
               )}
             >
               <div
                 className={cn(
-                  "space-y-4 lg:col-span-2",
+                  "space-y-5",
                   containMinWidthClassName,
                 )}
               >
@@ -96,7 +108,7 @@ export function DashboardPage() {
                   />
                 </FluidWaveItem>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <FluidWaveItem index={2}>
                     <DashboardPlaceholderCard
                       title="Weekly insights"
@@ -112,7 +124,7 @@ export function DashboardPage() {
                 </div>
               </div>
 
-              <div className={cn("space-y-4", containMinWidthClassName)}>
+              <div className={cn("space-y-4.5", containMinWidthClassName)}>
                 <FluidWaveItem index={2}>
                   <DashboardTodoList
                     pendingTodos={todos.pendingTodos}
@@ -136,8 +148,7 @@ export function DashboardPage() {
                 </FluidWaveItem>
               </div>
             </div>
-          </div>
-        </AnimatePresence>
+        </div>
       )}
 
       <TodoFormDialog

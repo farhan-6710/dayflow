@@ -26,7 +26,7 @@ function ClientTableCell({
       className={cn("min-w-0 overflow-hidden text-sm text-muted-foreground", className)}
       title={title}
     >
-      <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+      <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
         {label}
       </span>
       {children}
@@ -119,7 +119,7 @@ export function ClientsTableRow({
       </ClientTableCell>
 
       <div className="min-w-0">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           STATUS
         </span>
         <ActiveStatusLabel isActive={client.is_active} />

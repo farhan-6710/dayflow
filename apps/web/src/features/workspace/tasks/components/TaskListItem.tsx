@@ -48,7 +48,7 @@ export function TaskListItem({
       <div>
         <span
           className={cn(
-            "inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+            "inline-flex rounded-full px-2 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider",
             task.priority === "high" && "bg-destructive/10 text-destructive",
             task.priority === "medium" && "bg-accent/10 text-accent",
             task.priority === "low" && "bg-secondary text-secondary-foreground",
@@ -61,7 +61,7 @@ export function TaskListItem({
       <div>
         <span
           className={cn(
-            "inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+            "inline-flex rounded-full px-2 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wider",
             TASK_STATUS_BADGE_CLASS[task.status],
           )}
         >
@@ -105,14 +105,14 @@ export function TaskListItem({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={onEdit}>
-              <Edit className="mr-2 size-4" />
+              <Edit className="size-4" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={onDelete}
-              className="text-destructive focus:text-destructive"
+              variant="destructive"
             >
-              <Trash2 className="mr-2 size-4" />
+              <Trash2 className="size-4" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

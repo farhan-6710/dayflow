@@ -57,7 +57,7 @@ export function ReminderDialogFormFields({
         />
       </div>
 
-      <div className="rounded-xl border border-border bg-muted/20 p-4 space-y-4">
+      <div className="surface-chip space-y-4 rounded-[0.8rem] p-4">
         <div className="flex items-center justify-between gap-4">
           <div>
             <Label htmlFor="reminder-disabled" className={formLabelClassName}>Disable reminder</Label>

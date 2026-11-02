@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { raisedPanelClassName } from "@/shared/constants/layoutStyles";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 type DashboardPanelProps = {
@@ -13,7 +13,7 @@ export function DashboardPanel({
   className,
 }: DashboardPanelProps) {
   return (
-    <div className={cn("relative", raisedPanelClassName, className)}>
+    <div className={cn("relative", glassPanelClassName, className)}>
       {children}
     </div>
   );

@@ -9,7 +9,7 @@ export function TasksManagementStatusLegend() {
       {TASK_STATUS_LEGEND.map(({ status, label }) => (
         <div
           key={status}
-          className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1"
+          className="surface-chip flex h-7 items-center gap-2 rounded-full px-3 text-xs"
         >
           <span className={`size-2 rounded-full ${TASK_STATUS_DOT_COLORS[status]}`} />
           <span>{label}</span>

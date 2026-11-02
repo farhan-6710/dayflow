@@ -55,8 +55,8 @@ export function TodoListItem({
           if (exiting) onExitComplete?.();
         }}
         className={cn(
-          "flex min-w-0 items-start gap-2 py-3",
-          isDragging && "rounded-md bg-card/90",
+          "surface-chip flex min-w-0 items-start gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] py-2.5 pr-1.5 pl-2 transition-colors hover:border-primary/40",
+          isDragging && "shadow-md",
         )}
       >
         {sortable ? (
@@ -80,10 +80,10 @@ export function TodoListItem({
             completed ? `Mark ${todo.title} pending` : `Complete ${todo.title}`
           }
           className={cn(
-            "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded border transition-colors",
+            "mt-0.5 flex size-[1.15rem] shrink-0 items-center justify-center rounded-full border transition-colors",
             completed
               ? "border-primary bg-primary text-primary-foreground"
-              : "border-border bg-background hover:border-primary/60",
+              : "border-foreground/25 bg-transparent hover:border-primary",
             (busy || exiting) && "opacity-60",
           )}
         >
@@ -134,14 +134,14 @@ export function TodoListItem({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={onEdit}>
-              <Edit className="mr-2 size-4" />
+              <Edit className="size-4" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={onDelete}
-              className="text-destructive focus:text-destructive"
+              variant="destructive"
             >
-              <Trash2 className="mr-2 size-4" />
+              <Trash2 className="size-4" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

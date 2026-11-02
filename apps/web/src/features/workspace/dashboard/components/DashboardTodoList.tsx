@@ -26,7 +26,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 /** Mirrors TodoListItem row: grip + checkbox + title/desc + menu (py-3, items-start). */
 function TodoRowSkeleton() {
   return (
-    <div className="flex min-w-0 items-start gap-2 py-3" aria-hidden="true">
+    <div className="surface-chip flex min-w-0 items-start gap-2 rounded-[0.65rem] px-3 py-2.5" aria-hidden="true">
       <Skeleton className="mt-0.5 size-5 shrink-0 rounded" />
       <Skeleton className="mt-0.5 size-5 shrink-0 rounded" />
       <div className="min-w-0 flex-1">
@@ -84,11 +84,11 @@ export function DashboardTodoList({
   }
 
   return (
-    <DashboardPanel className="p-6">
+    <DashboardPanel className="px-5 pt-5 pb-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-lg font-semibold tracking-tight">Todo List</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h3 className="pl-1 text-2xl leading-none font-bold">Todo List</h3>
+          <p className="mt-2 pl-1 text-sm text-foreground/75">
             Simple checklist for the day.
           </p>
         </div>
@@ -98,9 +98,9 @@ export function DashboardTodoList({
         </Button>
       </div>
 
-      <div className="mt-4 [&>[data-slot=todo-row]+[data-slot=todo-row]]:border-t [&>[data-slot=todo-row]+[data-slot=todo-row]]:border-border">
+      <div className="mt-4 space-y-2.5">
         {loading ? (
-          <div className="divide-y divide-border" aria-busy="true" aria-label="Loading todos">
+          <div className="space-y-2.5" aria-busy="true" aria-label="Loading todos">
             <TodoRowSkeleton />
             <TodoRowSkeleton />
             <TodoRowSkeleton />
@@ -141,7 +141,7 @@ export function DashboardTodoList({
       </div>
 
       {completedCount > 0 ? (
-        <div className="mt-4 border-t border-border pt-3">
+        <div className="mt-4 border-t border-foreground/10 pt-3">
           <button
             type="button"
             onClick={() => onCompletedOpenChange(!completedOpen)}
@@ -150,7 +150,7 @@ export function DashboardTodoList({
           >
             <span className="flex items-center gap-2">
               Completed
-              <span className="inline-flex min-w-5 items-center justify-center rounded-md bg-muted px-1.5 py-0.5 text-[11px] font-semibold text-foreground">
+              <span className="tabular inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_35%,var(--card))] px-2 text-xs font-semibold text-foreground">
                 {completedCount}
               </span>
             </span>
@@ -163,7 +163,7 @@ export function DashboardTodoList({
           </button>
 
           {completedOpen ? (
-            <div className="mt-1 [&>[data-slot=todo-row]+[data-slot=todo-row]]:border-t [&>[data-slot=todo-row]+[data-slot=todo-row]]:border-border">
+            <div className="mt-2 space-y-2.5">
               {visibleCompleted.map((todo) => (
                 <TodoListItem
                   key={todo.id}

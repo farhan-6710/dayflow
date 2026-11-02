@@ -8,7 +8,8 @@ Durable context for future sessions. Prefer short facts over narrative.
 - Canonical description: *A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.*
 - Tagline: *Organize your day. Elevate your flow.*
 - Docs banner: `apps/web/public/brand-promotion-banner-img-dark.png`
-- Auth UI banners: `brand-promotion-banner-light.png` / `brand-promotion-banner-dark.png` (manifest `promotionBanners`)
+- Promo banners: `brand-promotion-banner-light.png` / `brand-promotion-banner-dark.png` (manifest `promotionBanners`) — no longer shown in the auth UI, which renders manifest copy in a Trail-style brand panel.
+- Design system: DayFlow follows Trail (`../trail`) as the single source of truth for tokens, surfaces, and motion (see `docs/DESIGN.md`).
 
 ## Architecture decisions
 

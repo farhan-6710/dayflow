@@ -36,13 +36,14 @@ export function ClientsManagementPage() {
   }, [clients, searchQuery, statusFilter]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Directory"
         heading="Clients Management"
         description="Manage client companies and contact details for freelance and office work."
         actions={
-          <Button onClick={openAddDialog} className="rounded-full">
-            <Plus className="mr-2 size-4" />
+          <Button onClick={openAddDialog}>
+            <Plus className="size-4" />
             Add Client
           </Button>
         }

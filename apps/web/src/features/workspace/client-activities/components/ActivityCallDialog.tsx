@@ -69,7 +69,7 @@ export function ActivityCallDialog({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{isEditing ? "Edit call" : "Add call"}</DialogTitle>
+            <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit call" : "Add call"}</DialogTitle>
             <DialogDescription>
               Log a call activity on this project.
             </DialogDescription>

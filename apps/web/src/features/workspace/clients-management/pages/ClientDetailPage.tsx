@@ -70,7 +70,7 @@ export function ClientDetailPage() {
 
   if (loading && !client) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <PageHeader heading="Client" description="Loading client details…" />
         <ClientDetailPageSkeleton />
       </div>
@@ -98,7 +98,7 @@ export function ClientDetailPage() {
     client.client_name?.trim() || client.company_name.trim();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
         heading={client.company_name}
         description={`Client details and chat with ${clientContactLabel}.`}
@@ -120,18 +120,18 @@ export function ClientDetailPage() {
               onClick={openCreateProjectDialog}
               disabled={!client.is_active}
             >
-              <FolderPlus className="mr-1 size-4" />
+              <FolderPlus className="size-4" />
               New Project
             </Button>
             <Button variant="outline" onClick={() => openEditDialog(client)}>
-              <Pencil className="mr-1 size-4" />
+              <Pencil className="size-4" />
               Edit Client
             </Button>
             <Button
               variant="destructive-outline"
               onClick={() => setDeleteConfirmOpen(true)}
             >
-              <Trash2 className="mr-1 size-4" />
+              <Trash2 className="size-4" />
               Delete
             </Button>
           </>

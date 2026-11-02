@@ -32,14 +32,15 @@ export function RemindersCalendarPage() {
   useReminderChecker(reminders);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Daily routine"
         heading="Reminders Calendar"
         description="Browse recurring reminders by month. Add reminders with days, time, and optional disable periods."
         actions={
           <Button
             type="button"
-            className="gap-2 rounded-full px-5"
+            className="gap-2"
             onClick={openAddDialog}
           >
             <Plus className="size-4" />

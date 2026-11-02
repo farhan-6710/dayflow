@@ -6,7 +6,7 @@ import {
   useReminderChecker,
   useRemindersManagement,
 } from "@/features/workspace/reminders/hooks/useRemindersManagement";
-import { DayflowImage } from "@/shared/components/DayflowImage";
+import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
@@ -15,10 +15,7 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { RemindersManagementPageSkeleton } from "@/shared/components/pageSkeletons";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
-import {
-  raisedPanelClassName,
-  raisedStaticPanelClassName,
-} from "@/shared/constants/layoutStyles";
+import { glassPanelClassName } from "@/shared/constants/layoutStyles";
 
 function formatReminderDays(daysOfWeek: string[]) {
   if (daysOfWeek.length === REMINDER_DAY_OPTIONS.length) {
@@ -35,13 +32,14 @@ export function RemindersManagementPage() {
   useReminderChecker(reminders);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Daily routine"
         heading="Daily Reminders"
         description="Manage recurring reminders by weekday and time. Use this space for repeatable nudges, not date-based tasks."
         actions={
           <Button onClick={openAddDialog}>
-            <Plus className="mr-1 size-4" />
+            <Plus className="size-4" />
             Add Reminder
           </Button>
         }
@@ -55,43 +53,27 @@ export function RemindersManagementPage() {
           {error ? <ErrorBanner message={error} /> : null}
 
           {reminders.length === 0 ? (
-            <FluidWaveItem
-              index={0}
-              className={cn(
-                "border-dashed px-6 py-14 text-center",
-                raisedStaticPanelClassName,
-              )}
-            >
-              <DayflowImage
-                src={DAYFLOW_IMAGES.emptyReminders}
-                className="mx-auto size-24 animate-rise"
-                fallback={
-                  <BellRing className="mx-auto size-12 text-muted-foreground/60" />
-                }
-              />
-              <h3 className="mt-4 text-base font-semibold text-foreground">
-                No reminders yet
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Add your first recurring reminder for workouts, medicine, study
-                blocks, or any weekday routine.
-              </p>
-              <Button className="mt-5" onClick={openAddDialog}>
-                <Plus className="mr-1 size-4" />
-                Create Reminder
-              </Button>
-            </FluidWaveItem>
+            <EmptyState
+              imageSrc={DAYFLOW_IMAGES.emptyReminders}
+              icon={BellRing}
+              title="No reminders yet"
+              description="Add your first recurring reminder for workouts, medicine, study blocks, or any weekday routine."
+              action={
+                <Button onClick={openAddDialog}>
+                  <Plus className="size-4" />
+                  Create Reminder
+                </Button>
+              }
+            />
           ) : (
-            <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {reminders.map((reminder, index) => (
-                <FluidWaveItem key={reminder.id} index={index}>
+                <FluidWaveItem key={reminder.id} index={index} className="flex [&>article]:flex-1">
                   <article
                     className={cn(
-                      raisedPanelClassName,
-                      "rounded-3xl p-5 transition",
-                      reminder.is_disabled
-                        ? "bg-muted/40 text-muted-foreground"
-                        : "text-foreground",
+                      glassPanelClassName,
+                      "flex h-full flex-col p-5",
+                      reminder.is_disabled ? "opacity-70" : "tone-primary",
                     )}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -99,30 +81,30 @@ export function RemindersManagementPage() {
                         <div className="flex flex-wrap items-center gap-2">
                           <span
                             className={cn(
-                              "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold",
+                              "tabular inline-flex h-6 items-center gap-1.5 rounded-full border px-2.5 text-xs font-semibold",
                               reminder.is_disabled
-                                ? "bg-background/70 text-muted-foreground"
-                                : "bg-primary/10 text-primary-text",
+                                ? "border-border bg-secondary text-muted-foreground"
+                                : "border-primary/40 bg-[linear-gradient(165deg,color-mix(in_srgb,var(--primary)_55%,white),color-mix(in_srgb,var(--primary)_38%,var(--card)))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:bg-[color-mix(in_srgb,var(--primary)_25%,var(--card))] dark:shadow-none",
                             )}
                           >
                             <Clock3 className="size-3.5" />
                             {reminder.reminder_time}
                           </span>
                           {reminder.is_disabled ? (
-                            <span className="rounded-full border border-border bg-background/80 px-2.5 py-1 text-[11px] font-semibold">
+                            <span className="inline-flex h-6 items-center rounded-full border border-border bg-secondary px-2.5 text-xs font-medium text-muted-foreground">
                               Disabled
                             </span>
                           ) : null}
                         </div>
                         <h3
                           className={cn(
-                            "mt-4 text-base font-semibold leading-tight",
+                            "mt-3 text-xl leading-snug font-bold text-pretty",
                             reminder.is_disabled && "text-foreground/70",
                           )}
                         >
                           {reminder.title}
                         </h3>
-                        <p className="mt-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                        <p className="mt-1.5 text-xs font-medium tracking-[0.08em] text-primary-text uppercase">
                           {formatReminderDays(reminder.days_of_week)}
                         </p>
                       </div>
@@ -130,8 +112,8 @@ export function RemindersManagementPage() {
                       <Button
                         type="button"
                         variant="ghost"
-                        size="sm"
-                        className="shrink-0 rounded-full"
+                        size="icon-sm"
+                        className="-mt-1 -mr-2 shrink-0 text-muted-foreground"
                         onClick={() => openEditDialog(reminder.id)}
                       >
                         <PencilLine className="size-4" />
@@ -140,7 +122,7 @@ export function RemindersManagementPage() {
                     </div>
 
                     {reminder.description ? (
-                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      <p className="mt-4 line-clamp-4 text-sm leading-relaxed text-foreground/70">
                         {reminder.description}
                       </p>
                     ) : (
@@ -148,8 +130,9 @@ export function RemindersManagementPage() {
                         No extra description added.
                       </p>
                     )}
+                    <div className="min-h-4 flex-1" />
 
-                    <div className="mt-5 flex flex-wrap gap-2">
+                    <div className="mt-auto flex flex-wrap gap-1.5 border-t border-foreground/10 pt-4">
                       {REMINDER_DAY_OPTIONS.map((day) => {
                         const isSelected = reminder.days_of_week.includes(
                           day.key,
@@ -159,10 +142,10 @@ export function RemindersManagementPage() {
                           <span
                             key={day.key}
                             className={cn(
-                              "inline-flex size-9 items-center justify-center rounded-full border text-xs font-semibold",
+                              "grid size-8 place-items-center rounded-full border text-xs font-semibold",
                               isSelected && !reminder.is_disabled
-                                ? "border-primary bg-primary text-primary-foreground"
-                                : "border-border bg-background/60 text-muted-foreground",
+                                ? "border-primary/40 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
+                                : "border-foreground/10 bg-transparent text-muted-foreground",
                             )}
                             title={day.label}
                           >

@@ -18,6 +18,7 @@ import { buildProjectDetailPath } from "@/features/workspace/projects/constants/
 import type { ProjectsTableRowProps } from "@/features/workspace/projects/types/components";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
+import { StatusPill } from "@/shared/components/StatusPill";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import {
@@ -77,7 +78,7 @@ export function ProjectsTableRow({
       </div>
 
       <div className="min-w-0 text-sm font-medium text-foreground">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           PROJECT NAME
         </span>
         <span className="flex min-w-0 items-center gap-3">
@@ -94,24 +95,17 @@ export function ProjectsTableRow({
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           PROJECT FOR
         </span>
         <span className="truncate">{project.project_for_label}</span>
       </div>
 
       <div>
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           STATUS
         </span>
-        <span
-          className={cn(
-            "text-sm font-medium",
-            isActive ? "text-primary-text" : "text-muted-foreground",
-          )}
-        >
-          {isActive ? "Active" : "Inactive"}
-        </span>
+        <StatusPill active={isActive}>{isActive ? "Active" : "Inactive"}</StatusPill>
       </div>
 
       <div
@@ -133,22 +127,22 @@ export function ProjectsTableRow({
           <DropdownMenuContent align="end">
             {isActive ? (
               <DropdownMenuItem onClick={() => onEditProject(project)}>
-                <Edit className="mr-2 size-4" /> Edit
+                <Edit className="size-4" /> Edit
               </DropdownMenuItem>
             ) : null}
             <DropdownMenuItem onClick={() => onToggleActive(project)}>
               {isActive ? (
-                <CircleOff className="mr-2 size-4" />
+                <CircleOff className="size-4" />
               ) : (
-                <RotateCcw className="mr-2 size-4" />
+                <RotateCcw className="size-4" />
               )}
               {isActive ? "Mark as inactive" : "Mark as active"}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => onDeleteProject(project.id)}
-              className="text-destructive focus:text-destructive"
+              variant="destructive"
             >
-              <Trash2 className="mr-2 size-4" /> Delete
+              <Trash2 className="size-4" /> Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

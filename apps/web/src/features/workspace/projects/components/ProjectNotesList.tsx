@@ -28,7 +28,7 @@ export function ProjectNotesList({
         containMinWidthClassName,
       )}
     >
-      <h3 className="border-b border-border pb-3 text-sm font-semibold tracking-tight">
+      <h3 className="border-b border-foreground/10 pb-3 pl-1 text-2xl leading-none font-bold">
         Project Notes
       </h3>
 
@@ -61,7 +61,7 @@ export function ProjectNotesList({
               >
                 <div className="flex w-full items-center justify-between gap-2">
                   <span className="flex min-w-0 items-center gap-2">
-                    <span className="shrink-0 font-mono text-[10px] font-semibold tabular-nums text-muted-foreground">
+                    <span className="shrink-0 font-mono text-[0.7rem] font-semibold tabular-nums text-muted-foreground">
                       {formatNoteIndex(isDraft ? notes.length : index - (draftNote ? 1 : 0))}
                     </span>
                     <span className="truncate text-sm leading-snug font-semibold">
@@ -89,7 +89,7 @@ export function ProjectNotesList({
                     </span>
                   )}
                 </div>
-                <span className="text-3xs text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   {isDraft
                     ? "Unsaved draft"
                     : note.updated_at

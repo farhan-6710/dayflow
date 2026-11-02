@@ -5,6 +5,12 @@ import { DATE_FILTER_PERIODS } from "@/shared/constants/dateFilters";
 import type { DateFiltersProps } from "@/shared/types/components";
 import { cn } from "@/shared/lib/utils";
 
+const filterPillClassName =
+  "inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-xs font-medium transition-[filter,transform] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none";
+const filterPillActiveClassName = "btn-elevated btn-primary";
+const filterPillIdleClassName =
+  "surface-chip text-foreground/75 hover:-translate-y-px hover:text-foreground hover:brightness-[1.02]";
+
 export function DateFilters({
   activeQuickPeriod,
   isDateRangeActive,
@@ -32,10 +38,8 @@ export function DateFilters({
           onClearFilters();
         }}
         className={cn(
-          "inline-flex h-7 cursor-pointer items-center rounded-full border px-2.5 text-[11px] font-medium transition-colors",
-          isAll
-            ? "border-primary bg-primary text-primary-foreground"
-            : "border-border bg-card text-muted-foreground hover:text-foreground",
+          filterPillClassName,
+          isAll ? filterPillActiveClassName : filterPillIdleClassName,
         )}
       >
         All
@@ -53,10 +57,8 @@ export function DateFilters({
               onToggleQuickPeriod(period.id);
             }}
             className={cn(
-              "inline-flex h-7 cursor-pointer items-center rounded-full border px-2.5 text-[11px] font-medium transition-colors",
-              isActive
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border bg-card text-muted-foreground hover:text-foreground",
+              filterPillClassName,
+              isActive ? filterPillActiveClassName : filterPillIdleClassName,
             )}
           >
             {period.label}

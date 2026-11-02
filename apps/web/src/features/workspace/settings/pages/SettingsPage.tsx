@@ -58,19 +58,20 @@ export function SettingsPage() {
     newEmail.trim().toLowerCase() !== currentEmail.toLowerCase();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Preferences"
         heading="Settings"
         description="Configure your personal preferences, theme appearance, and security credentials."
       />
 
       <PageContent stagger={false}>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-          <div className="space-y-4">
-            <FluidWaveItem index={0} className={cn("p-6", raisedStaticPanelClassName)}>
-              <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
+        <div className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="space-y-5">
+            <FluidWaveItem index={0} className={cn("px-5 pt-5 pb-5", raisedStaticPanelClassName)}>
+              <div className="mb-5 flex items-center gap-2.5">
                 <User className="size-5 text-primary-text" />
-                <h3 className="font-semibold text-sm tracking-tight text-foreground">
+                <h3 className="text-2xl leading-none font-bold">
                   Profile Information
                 </h3>
               </div>
@@ -112,10 +113,10 @@ export function SettingsPage() {
               </form>
             </FluidWaveItem>
 
-            <FluidWaveItem index={2} className={cn("p-6", raisedStaticPanelClassName)}>
-              <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
+            <FluidWaveItem index={2} className={cn("px-5 pt-5 pb-5", raisedStaticPanelClassName)}>
+              <div className="mb-5 flex items-center gap-2.5">
                 <Mail className="size-5 text-primary-text" />
-                <h3 className="font-semibold text-sm tracking-tight text-foreground">
+                <h3 className="text-2xl leading-none font-bold">
                   Change Email
                 </h3>
               </div>
@@ -145,7 +146,7 @@ export function SettingsPage() {
                 </div>
 
                 {pendingEmail ? (
-                  <p className="rounded-lg border border-border bg-muted/40 px-2.5 py-2 text-3xs text-muted-foreground">
+                  <p className="surface-chip rounded-[0.8rem] px-3 py-2 text-xs text-muted-foreground">
                     Pending change to{" "}
                     <span className="font-medium text-foreground">
                       {pendingEmail}
@@ -165,17 +166,17 @@ export function SettingsPage() {
               </form>
             </FluidWaveItem>
 
-            <FluidWaveItem index={4} className={cn("p-6", raisedStaticPanelClassName)}>
-              <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
+            <FluidWaveItem index={4} className={cn("px-5 pt-5 pb-5", raisedStaticPanelClassName)}>
+              <div className="mb-5 flex items-center gap-2.5">
                 <Palette className="size-5 text-primary-text" />
-                <h3 className="font-semibold text-sm tracking-tight text-foreground">
+                <h3 className="text-2xl leading-none font-bold">
                   Workspace Appearance
                 </h3>
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="surface-chip flex items-center justify-between gap-4 rounded-[0.8rem] px-4 py-3">
                 <div>
-                  <h4 className="text-sm font-semibold">Dark Mode Option</h4>
+                  <h4 className="font-sans text-sm font-semibold">Dark Mode Option</h4>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     Toggle light/dark appearance for your workspace.
                   </p>
@@ -196,11 +197,11 @@ export function SettingsPage() {
             </FluidWaveItem>
           </div>
 
-          <div className="space-y-4">
-            <FluidWaveItem index={1} className={cn("p-6", raisedStaticPanelClassName)}>
-              <div className="flex items-center gap-2 pb-4 border-b border-border mb-6">
+          <div className="space-y-5">
+            <FluidWaveItem index={1} className={cn("px-5 pt-5 pb-5", raisedStaticPanelClassName)}>
+              <div className="mb-5 flex items-center gap-2.5">
                 <KeyRound className="size-5 text-primary-text" />
-                <h3 className="font-semibold text-sm tracking-tight text-foreground">
+                <h3 className="text-2xl leading-none font-bold">
                   {hasPasswordLogin ? "Reset Password" : "Set Password"}
                 </h3>
               </div>
@@ -218,7 +219,7 @@ export function SettingsPage() {
                       disabled
                       className="bg-muted text-muted-foreground"
                     />
-                    <p className="text-3xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       {ACCOUNT_RESET_PASSWORD_HINT}
                     </p>
                   </div>
@@ -265,7 +266,7 @@ export function SettingsPage() {
                       required
                       disabled={settingPassword}
                     />
-                    <p className="text-3xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       {ACCOUNT_SET_PASSWORD_HINT}
                     </p>
                   </div>
@@ -286,18 +287,18 @@ export function SettingsPage() {
               )}
             </FluidWaveItem>
 
-            <FluidWaveItem index={3} className={cn("p-6", raisedStaticPanelClassName)}>
-              <h3 className="text-sm font-semibold tracking-tight text-foreground">
+            <FluidWaveItem index={3} className={cn("px-5 pt-5 pb-5", raisedStaticPanelClassName)}>
+              <h3 className="text-2xl leading-none font-bold">
                 DayFlow Environment
               </h3>
-              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+              <p className="mt-2 text-sm leading-relaxed text-foreground/75">
                 This is a private personal command center. Your data is
                 protected by Row Level Security (RLS) policies inside Supabase,
                 and authenticated sessions are maintained securely in your
                 browser cache.
               </p>
               <div className={cn(
-                  "mt-4 p-3 text-3xs font-semibold leading-relaxed text-secondary-foreground",
+                  "mt-4 p-3 text-xs font-semibold leading-relaxed text-secondary-foreground",
                   insetChipClassName,
                 )}>
                 Connection Status: Secured (Supabase SSL)

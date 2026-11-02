@@ -43,7 +43,7 @@ export function ProjectNotesWorkspace({
           project.
         </p>
         <Button size="sm" onClick={onStartDraft}>
-          <Plus className="mr-1 size-4" />
+          <Plus className="size-4" />
           Add Note
         </Button>
       </div>

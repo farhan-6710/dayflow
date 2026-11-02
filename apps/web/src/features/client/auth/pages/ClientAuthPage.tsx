@@ -1,6 +1,7 @@
 import { Link, Navigate, useLocation, useSearchParams } from "react-router";
 
 import { AuthFormCard } from "@/features/workspace/auth/components/AuthFormCard";
+import { authFormStyles } from "@/features/workspace/auth/components/authFormStyles";
 import { AuthShellLayout } from "@/features/workspace/auth/components/AuthShellLayout";
 import { ForgotPasswordForm } from "@/features/workspace/auth/components/ForgotPasswordForm";
 import { LoginForm } from "@/features/workspace/auth/components/LoginForm";
@@ -116,7 +117,7 @@ export function ClientAuthPage() {
     !showResetPassword && formType !== AUTH_FORM_TYPES.forgotPassword;
 
   return (
-    <AuthShellLayout>
+    <AuthShellLayout portal="client">
       <AuthFormCard
         title={title}
         description={description}
@@ -128,7 +129,7 @@ export function ClientAuthPage() {
                 : "Don't have an account?"}{" "}
               <Link
                 to={switchFormPath}
-                className="font-semibold text-primary-text hover:underline"
+                className={authFormStyles.switchLink}
               >
                 {formType === AUTH_FORM_TYPES.signup ? "Sign in" : "Sign up"}
               </Link>

@@ -26,6 +26,7 @@ import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { FLUID_ITEM, FLUID_LIST } from "@/shared/constants/pageMotion";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+import { Progress } from "@/shared/ui/progress";
 
 export function TasksDayPanel({
   date,
@@ -67,25 +68,36 @@ export function TasksDayPanel({
         raisedStaticPanelClassName,
       )}
     >
-      <div className="flex items-start justify-between gap-2 border-b border-border px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
+      <div className="flex items-start justify-between gap-2 px-3 pt-4 pb-3 sm:gap-3 sm:px-5 sm:pt-5">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={dateKey} {...FLUID_LIST} className="min-w-0">
-            <p className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase sm:text-xs">
+            <span className="tabular inline-flex h-7 items-center gap-1.5 rounded-full border border-primary/40 bg-[linear-gradient(165deg,color-mix(in_srgb,var(--primary)_55%,white),color-mix(in_srgb,var(--primary)_38%,var(--card)))] px-3 text-xs font-semibold tracking-wide text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_3px_color-mix(in_srgb,var(--primary)_28%,transparent)] dark:bg-[color-mix(in_srgb,var(--primary)_25%,var(--card))] dark:shadow-none">
+              <span
+                aria-hidden
+                className="size-1.5 rounded-full bg-[color-mix(in_srgb,var(--chart-5)_75%,var(--warning-foreground))]"
+              />
               {format(date, "EEEE")}
-            </p>
-            <h3 className="mt-0.5 truncate text-base font-semibold tracking-tight text-foreground sm:text-lg">
+            </span>
+            <h3 className="mt-2.5 truncate text-[1.75rem] leading-tight font-bold">
               {format(date, "MMM d, yyyy")}
             </h3>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {tasks.length === 0
-                ? "No tasks scheduled"
-                : `${doneCount} of ${tasks.length} completed`}
-            </p>
+            <div className="mt-3 flex items-center gap-3">
+              <Progress
+                value={tasks.length ? (doneCount / tasks.length) * 100 : 0}
+                className="h-2 max-w-40 flex-1 bg-foreground/10"
+                aria-label="Tasks completed for this day"
+              />
+              <span className="tabular shrink-0 text-xs text-muted-foreground">
+                {tasks.length === 0
+                  ? "No tasks scheduled"
+                  : `${doneCount} of ${tasks.length} done`}
+              </span>
+            </div>
           </motion.div>
         </AnimatePresence>
         <Button
           size="sm"
-          className="shrink-0 gap-1.5 rounded-full px-2.5 sm:px-3"
+          className="shrink-0 gap-1.5 px-2.5 sm:px-3"
           onClick={onAddTask}
         >
           <Plus className="size-3.5" />
@@ -94,13 +106,13 @@ export function TasksDayPanel({
         </Button>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-1 sm:px-4">
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 pt-1 pb-4 sm:px-5">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={dateKey} {...FLUID_LIST}>
             {sorted.length === 0 ? (
               <motion.div
                 variants={FLUID_ITEM}
-                className="mt-2 flex flex-col items-center gap-3 rounded-xl border border-dashed border-border px-4 py-10 text-center"
+                className="surface-chip mt-2 flex flex-col items-center gap-3 rounded-[0.8rem] px-4 py-10 text-center"
               >
                 <DayflowImage
                   src={DAYFLOW_IMAGES.emptyTasks}
@@ -112,13 +124,12 @@ export function TasksDayPanel({
                     />
                   }
                 />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground/75">
                   Nothing planned for this day.
                 </p>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full"
                   onClick={onAddTask}
                 >
                   Plan a task
@@ -134,7 +145,7 @@ export function TasksDayPanel({
                   items={taskIds}
                   strategy={verticalListSortingStrategy}
                 >
-                  <div className="[&>[data-slot=day-task-row]+[data-slot=day-task-row]]:border-t [&>[data-slot=day-task-row]+[data-slot=day-task-row]]:border-border">
+                  <div className="space-y-2.5 pt-1">
                     {sorted.map((task) => (
                       <SortableTasksDayTaskItem
                         key={task.id}

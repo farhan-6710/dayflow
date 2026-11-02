@@ -32,9 +32,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { showToast } from "@/shared/utils/showToast";
-
 type DialogKind = "task" | "meeting" | "call" | null;
-
 type ActivitiesPanelProps = ClientActivitiesSectionProps & {
   title: string;
   description: string;
@@ -99,12 +97,12 @@ export function ActivitiesPanel({
 
   return (
     <div className={cn(raisedStaticPanelClassName)}>
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
+      <div className="flex flex-wrap items-start justify-between gap-3 px-5 pt-5 pb-4">
         <div>
-          <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+          <h2 className="pl-1 text-2xl leading-none font-bold">
             {title}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+          </h2>
+          <p className="mt-2 pl-1 text-sm text-foreground/75">{description}</p>
         </div>
         {canEdit && showAddNew ? (
           <DropdownMenu>
@@ -113,10 +111,9 @@ export function ActivitiesPanel({
                 type="button"
                 variant="outline"
                 size="sm"
-                className="rounded-full"
                 disabled={isSaving}
               >
-                <Plus className="mr-1.5 size-3.5" />
+                <Plus className="size-3.5" />
                 Add New
                 <ChevronDown className="ml-1.5 size-3.5 opacity-70" />
               </Button>

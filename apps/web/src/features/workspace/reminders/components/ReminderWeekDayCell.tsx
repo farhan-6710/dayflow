@@ -29,8 +29,8 @@ export function ReminderWeekDayCell({
       role="button"
       tabIndex={0}
       className={cn(
-        "group flex min-h-[140px] cursor-pointer flex-col border-r bg-card p-4 text-left transition-colors hover:bg-muted/30",
-        isSelected ? "border-2 border-primary" : "border-border/70",
+        "group flex min-h-[140px] cursor-pointer flex-col border-r border-foreground/10 p-4 text-left transition-colors outline-none hover:bg-[color-mix(in_srgb,var(--primary)_6%,var(--card))] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset",
+        isSelected && "bg-[color-mix(in_srgb,var(--primary)_14%,var(--card))] shadow-[inset_0_0_0_2px_color-mix(in_srgb,var(--primary)_70%,transparent)]",
       )}
       aria-label={`View reminders for ${dayName} ${formatMonthDayLabel(year, month, dateNumber)}`}
       aria-current={isSelected ? "date" : undefined}
@@ -58,7 +58,7 @@ export function ReminderWeekDayCell({
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between gap-2 rounded-xl border border-border bg-background/70 px-3 py-1.5 text-left transition hover:border-foreground/20"
+                    className="surface-chip flex w-full items-center justify-between gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] px-3 py-1.5 text-left transition-colors hover:border-primary/40"
                     onClick={(event) => {
                       event.stopPropagation();
                       onEdit(reminder.id);
@@ -71,7 +71,7 @@ export function ReminderWeekDayCell({
                         {reminder.title}
                       </span>
                     </div>
-                    <span className="font-mono text-[11px] text-muted-foreground">
+                    <span className="font-mono text-xs text-muted-foreground">
                       {reminder.reminderTime}
                     </span>
                   </button>
@@ -82,7 +82,7 @@ export function ReminderWeekDayCell({
               </Tooltip>
             ))
         ) : (
-          <div className="flex flex-1 items-center justify-center rounded-xl border border-dashed border-border px-3 py-6 text-center text-xs text-muted-foreground">
+          <div className="flex flex-1 items-center justify-center rounded-[0.65rem] border border-dashed border-foreground/15 px-3 py-6 text-center text-xs text-muted-foreground">
             Click to view day
           </div>
         )}

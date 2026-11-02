@@ -51,7 +51,7 @@ export function ProjectReferenceLinkDialog({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{isEditing ? "Edit link" : "Attach link"}</DialogTitle>
+            <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit link" : "Attach link"}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
 

@@ -48,7 +48,7 @@ export function DemoAccountLoginPrompt({
       transition={{ duration: 0.48, ease: MOTION_EASE }}
       className={cn(
         "pointer-events-auto fixed top-4 right-4 z-50 w-[min(100vw-2rem,22rem)]",
-        "rounded-xl border border-border/80 bg-card/95 p-4 shadow-lg backdrop-blur-sm",
+        "surface-elevated rounded-[1.25rem] p-4",
         "sm:top-6 sm:right-6",
       )}
     >
@@ -64,12 +64,12 @@ export function DemoAccountLoginPrompt({
 
       <div className="space-y-3">
         <div className="flex items-start gap-3 pr-6">
-          <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary-text">
+          <div className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] text-primary-text">
             <Sparkles className="size-4" aria-hidden="true" />
           </div>
 
           <div className="min-w-0 space-y-1">
-            <h2 className="text-base font-semibold tracking-tight text-foreground">
+            <h2 className="text-xl leading-tight font-bold text-foreground">
               Login with demo account
             </h2>
             <p className="text-xs leading-relaxed text-muted-foreground">
@@ -78,16 +78,16 @@ export function DemoAccountLoginPrompt({
           </div>
         </div>
 
-        <dl className="w-full space-y-1.5 rounded-lg border border-border/60 bg-muted/30 px-3 py-2.5 text-xs">
+        <dl className="surface-chip w-full space-y-1.5 rounded-[0.8rem] px-3 py-2.5 text-xs">
           <div className="flex items-center justify-between gap-3">
             <dt className="font-medium text-muted-foreground">Email</dt>
-            <dd className="truncate font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+            <dd className="truncate font-semibold text-foreground">
               {DEMO_ACCOUNT.email}
             </dd>
           </div>
           <div className="flex items-center justify-between gap-3">
             <dt className="font-medium text-muted-foreground">Password</dt>
-            <dd className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+            <dd className="font-semibold text-foreground">
               {DEMO_ACCOUNT.password}
             </dd>
           </div>
@@ -95,7 +95,7 @@ export function DemoAccountLoginPrompt({
 
         <Button
           type="button"
-          className="h-9 w-full rounded-full text-sm font-medium"
+          className="h-9 w-full"
           disabled={disabled}
           onClick={() => void onDemoLogin()}
         >

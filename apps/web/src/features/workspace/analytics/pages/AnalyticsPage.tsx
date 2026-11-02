@@ -76,7 +76,12 @@ export function AnalyticsPage() {
     {
       id: "completed-tasks",
       label: "Completed Tasks",
-      value: `${completedTasks}/${totalTasks}`,
+      value: (
+        <>
+          {completedTasks}
+          <span className="text-2xl text-muted-foreground">/{totalTasks}</span>
+        </>
+      ),
       icon: CheckSquare,
       description: "Tasks marked done",
     },
@@ -103,10 +108,10 @@ export function AnalyticsPage() {
     const missed = tasks.filter((t) => t.status === "missed").length;
 
     return [
-      { name: "To Do", value: todo, color: "#94a3b8" },
-      { name: "In Progress", value: inProgress, color: "#028595" },
-      { name: "Completed", value: done, color: "#ff7e21" },
-      { name: "Missed", value: missed, color: "#c94141" },
+      { name: "To Do", value: todo, color: "var(--status-not-posted)" },
+      { name: "In Progress", value: inProgress, color: "var(--chart-1)" },
+      { name: "Completed", value: done, color: "var(--status-done)" },
+      { name: "Missed", value: missed, color: "var(--status-missed)" },
     ];
   }, [tasks, completedTasks]);
 
@@ -127,8 +132,9 @@ export function AnalyticsPage() {
   }, [projects, notes]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Insights"
         heading="Workspace Analytics"
         description="Track task completion and see how notes are distributed across projects."
       />
@@ -138,15 +144,15 @@ export function AnalyticsPage() {
         {error ? <ErrorBanner message={error} /> : null}
         <StatsCards cards={cards} />
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-2">
           <FluidWaveItem
             index={1}
-            className={cn("flex h-[380px] flex-col p-6", raisedStaticPanelClassName)}
+            className={cn("flex h-[380px] flex-col px-5 pt-5 pb-5", raisedStaticPanelClassName)}
           >
-            <h3 className="text-sm font-bold tracking-tight text-foreground">
+            <h3 className="pl-1 text-2xl leading-none font-bold">
               Task Status Breakdown
             </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="mt-2 pl-1 text-sm text-foreground/75">
               Ratio of to-do, in-progress, and completed tasks.
             </p>
 
@@ -158,10 +164,10 @@ export function AnalyticsPage() {
               ) : (
                 <div className="relative size-full max-w-[280px] max-h-[220px]">
                   <div className="pointer-events-none absolute inset-0 z-0 flex flex-col items-center justify-center">
-                    <span className="text-2xl font-bold tracking-tight">
+                    <span className="tabular font-heading text-3xl leading-none font-bold">
                       {taskCompletionRate}%
                     </span>
-                    <span className="text-3xs text-muted-foreground uppercase font-bold tracking-wider">
+                    <span className="mt-1 text-[0.65rem] font-medium tracking-[0.08em] text-muted-foreground uppercase">
                       Completed
                     </span>
                   </div>
@@ -187,7 +193,7 @@ export function AnalyticsPage() {
                             if (!active || !payload?.length) return null;
                             const item = payload[0];
                             return (
-                              <div className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground shadow-xl">
+                              <div className="rounded-lg bg-popover px-2.5 py-1.5 text-xs text-popover-foreground shadow-md ring-1 ring-foreground/10">
                                 <p className="font-medium">{item.name}</p>
                                 <p className="mt-0.5 text-muted-foreground">
                                   Tasks :{" "}
@@ -225,12 +231,12 @@ export function AnalyticsPage() {
 
           <FluidWaveItem
             index={2}
-            className={cn("flex h-[380px] flex-col p-6", raisedStaticPanelClassName)}
+            className={cn("flex h-[380px] flex-col px-5 pt-5 pb-5", raisedStaticPanelClassName)}
           >
-            <h3 className="text-sm font-bold tracking-tight text-foreground">
+            <h3 className="pl-1 text-2xl leading-none font-bold">
               Notes by Project
             </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="mt-2 pl-1 text-sm text-foreground/75">
               How your notes are organized across project folders.
             </p>
 
@@ -248,7 +254,7 @@ export function AnalyticsPage() {
                     <CartesianGrid
                       strokeDasharray="3 3"
                       vertical={false}
-                      stroke="var(--border)"
+                      stroke="color-mix(in srgb, var(--foreground) 10%, transparent)"
                     />
                     <XAxis
                       dataKey="name"
@@ -264,7 +270,7 @@ export function AnalyticsPage() {
                       content={({ active, payload, label }) => {
                         if (!active || !payload?.length) return null;
                         return (
-                          <div className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground shadow-xl">
+                          <div className="rounded-lg bg-popover px-2.5 py-1.5 text-xs text-popover-foreground shadow-md ring-1 ring-foreground/10">
                             <p className="font-medium">{label}</p>
                             {payload.map((item) => (
                               <p
@@ -284,7 +290,7 @@ export function AnalyticsPage() {
                     <Bar
                       dataKey="count"
                       name="Notes"
-                      fill="#ff7e21"
+                      fill="var(--chart-1)"
                       radius={[4, 4, 0, 0]}
                     />
                   </BarChart>

@@ -27,14 +27,13 @@ export function DateRangePicker({
       {isActive ? (
         <div
           className={cn(
-            "inline-flex h-7 items-center overflow-hidden rounded-full border text-[11px] font-medium",
-            "border-primary bg-primary text-primary-foreground",
+            "btn-elevated btn-primary inline-flex h-8 items-center overflow-hidden rounded-full text-xs font-medium",
           )}
         >
           <PopoverTrigger asChild>
             <button
               type="button"
-              className="inline-flex h-full cursor-pointer items-center gap-1.5 px-2.5 transition hover:bg-primary/90"
+              className="inline-flex h-full cursor-pointer items-center gap-1.5 px-3"
             >
               <CalendarRange className="size-3 shrink-0" aria-hidden="true" />
               <span>{rangeLabel}</span>
@@ -47,7 +46,7 @@ export function DateRangePicker({
               event.stopPropagation();
               onClear();
             }}
-            className="inline-flex h-full cursor-pointer items-center border-l border-primary-foreground/25 px-2 transition hover:bg-primary/90"
+            className="inline-flex h-full cursor-pointer items-center border-l border-primary-foreground/20 px-2"
             aria-label="Clear date range"
           >
             <X className="size-3" />
@@ -58,8 +57,7 @@ export function DateRangePicker({
           <button
             type="button"
             className={cn(
-              "inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border px-2.5 text-[11px] font-medium transition-colors",
-              "border-border bg-card text-muted-foreground hover:text-foreground",
+              "surface-chip inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full px-3 text-xs font-medium text-foreground/75 transition-[filter,transform] hover:-translate-y-px hover:text-foreground hover:brightness-[1.02]",
             )}
           >
             <CalendarRange className="size-3 shrink-0" aria-hidden="true" />
@@ -68,7 +66,7 @@ export function DateRangePicker({
         </PopoverTrigger>
       )}
       <PopoverContent
-        className="z-[80] w-auto border-muted-foreground/10 p-0 shadow-2xl"
+        className="z-[80] w-auto overflow-hidden rounded-xl p-0 shadow-md"
         align="end"
         onKeyDown={onKeyDown}
       >
@@ -80,7 +78,7 @@ export function DateRangePicker({
           onSelect={onRangeChange}
           className="rounded-md border-none"
         />
-        <div className="space-y-2 border-t border-border px-4 py-3">
+        <div className="space-y-2 border-t border-foreground/10 px-4 py-3">
           {error ? (
             <p className="text-xs text-destructive">{error}</p>
           ) : (
@@ -93,7 +91,6 @@ export function DateRangePicker({
               type="button"
               size="sm"
               variant="ghost"
-              className="rounded-full"
               onClick={() => onOpenChange(false)}
             >
               Cancel
@@ -101,7 +98,6 @@ export function DateRangePicker({
             <Button
               type="button"
               size="sm"
-              className="rounded-full"
               onClick={onApply}
               disabled={!range?.from}
             >

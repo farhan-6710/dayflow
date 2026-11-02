@@ -31,7 +31,7 @@ export function TaskDateTimePicker({
             type="button"
             variant="ghost"
             size="xs"
-            className="h-auto px-2 py-1 text-[11px] text-muted-foreground"
+            className="h-auto px-2 py-1 text-xs text-muted-foreground"
             onClick={onClear}
             disabled={disabled}
           >

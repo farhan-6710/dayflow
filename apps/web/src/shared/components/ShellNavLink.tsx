@@ -8,21 +8,23 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { resolveActiveNavPath } from "@/shared/utils/shellNavActive";
 import { routePath } from "@/shared/utils/routePath";
 
+/** Mirrors the Trail sidebar menu button: accent wash for hover and the active page. */
 const navLinkClass = (isActive: boolean, collapsed: boolean) =>
   cn(
-    "flex items-center rounded-2xl text-sm font-medium transition gap-3",
-    collapsed ? "justify-center px-4 py-4" : "px-4 py-2.5",
+    "flex h-9 w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden transition-colors",
+    "focus-visible:ring-2 focus-visible:ring-sidebar-ring [&>span:last-child]:truncate",
+    collapsed && "mx-auto size-9 justify-center",
     isActive
-      ? "bg-primary text-primary-foreground"
-      : "text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground",
+      ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+      : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
   );
 
 const subLinkClass = (isActive: boolean) =>
   cn(
-    "flex items-center rounded-xl px-3 py-2 text-sm transition",
+    "flex h-7 items-center rounded-md px-2 text-sm transition-colors",
     isActive
-      ? "bg-primary font-medium text-primary-foreground"
-      : "text-sidebar-foreground/65 hover:bg-secondary/70 hover:text-secondary-foreground",
+      ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+      : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
   );
 
 type NavLinkProps = {
@@ -83,10 +85,8 @@ export function ShellNavGroup({ item, collapsed, activePath, onNavigate }: NavGr
         onClick={() => setManualOpen(!open)}
         aria-expanded={open}
         className={cn(
-          "flex w-full items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition",
-          open || groupActive
-            ? "text-sidebar-foreground"
-            : "text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground",
+          "flex h-9 w-full items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+          groupActive && "font-medium",
         )}
       >
         <Icon className="size-4 shrink-0" aria-hidden="true" />
@@ -98,7 +98,7 @@ export function ShellNavGroup({ item, collapsed, activePath, onNavigate }: NavGr
       </button>
 
       {open ? (
-        <div className="relative ml-4 space-y-0.5 border-l border-sidebar-border/70 py-0.5 pl-3">
+        <div className="mx-3.5 flex min-w-0 flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5">
           {children.map((child) => (
             <TransitionLink
               key={child.to}

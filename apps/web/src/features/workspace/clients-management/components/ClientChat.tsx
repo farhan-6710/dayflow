@@ -11,7 +11,7 @@ import { ConfirmationModal } from "@/shared/ConfirmationModal";
 import { formFieldClassName } from "@/shared/constants/formStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
-import { raisedPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 
 export function ClientChat({
   clientContactLabel,
@@ -71,11 +71,11 @@ export function ClientChat({
   };
 
   return (
-    <div className={cn("flex h-full max-h-[min(40rem,calc(100dvh-12rem))] min-h-[24rem] flex-col overflow-hidden lg:min-h-[28rem]", raisedPanelClassName)}>
-      <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border px-4 py-4 sm:px-5">
+    <div className={cn("flex h-full max-h-[min(40rem,calc(100dvh-12rem))] min-h-[24rem] flex-col overflow-hidden lg:min-h-[28rem]", raisedStaticPanelClassName)}>
+      <div className="flex shrink-0 items-start justify-between gap-3 border-b border-foreground/10 px-4 py-4 sm:px-5">
         <div className="min-w-0">
-          <h3 className="text-sm font-semibold text-foreground">Client chat</h3>
-          <p className="mt-0.5 text-xs text-muted-foreground">
+          <h3 className="pl-1 text-2xl leading-none font-bold">Client chat</h3>
+          <p className="mt-2 pl-1 text-sm text-foreground/75">
             One-to-one thread with {clientContactLabel}. Admin messages send
             from here; client replies come from the client portal.
           </p>
@@ -131,7 +131,7 @@ export function ClientChat({
         )}
       </div>
 
-      <div className="relative shrink-0 border-t border-border px-4 py-4 sm:px-5">
+      <div className="relative shrink-0 border-t border-foreground/10 px-4 py-4 sm:px-5">
         {isEditing ? (
           <p className="mb-2 text-xs font-medium text-muted-foreground">
             Editing message — Esc to cancel

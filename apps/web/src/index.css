@@ -1,292 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 @import "@fontsource/ovo";
-@import "@fontsource-variable/geist";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Design tokens mirror Trail (the shared design system for this product family).
+ * DayFlow-only tokens (status, contrib, primary-text, autofill) are derived from the same palette.
+ */
 :root {
-  /*
-   * Light — 60 cream / 30 honey-gold / 10 dark chocolate.
-   * Surfaces carry cream; primary actions are gold; charts use chocolate + gold.
-   */
-  --primary: #e9bf55;
-  --primary-foreground: #17140d;
-  /* Links / status text on cream — darker than brand gold for contrast */
-  --primary-text: #8a6a1e;
+  /* Base */
+  --background: #fbf5ea;
+  --foreground: #542817;
 
-  /* Raised / 3D elevation (DayFlow honey bevel — not Trail clay cream) */
-  --elev-out: color-mix(in srgb, var(--primary) 28%, transparent);
-  --elev-out-soft: color-mix(in srgb, var(--foreground) 10%, transparent);
-  --elev-in-hi: rgba(255, 255, 255, 0.55);
-  --elev-in-lo: rgba(0, 0, 0, 0.08);
-  --elev-press: rgba(0, 0, 0, 0.18);
+  /* Card */
+  --card: #fff9f0;
+  --card-foreground: #542817;
 
-  --background: #f6f3ea;
-  --foreground: #1c1a17;
+  /* Popover */
+  --popover: #fffaf2;
+  --popover-foreground: #542817;
 
-  --accent: #d9a93a;
-  --accent-foreground: #17140d;
+  /* Primary — Warm Golden Yellow */
+  --primary: #ffbb45;
+  --primary-foreground: #542817;
+  /* Eyebrow / accent amber — readable on cream */
+  --primary-text: color-mix(in srgb, var(--chart-5) 65%, var(--warning-foreground));
 
-  /* 10% ink — graphs, secondary data lines (not buttons) */
-  --ink: #1c1a17;
+  /* Secondary */
+  --secondary: #f6e9d6;
+  --secondary-foreground: #63351f;
 
-  --card: #fffdf8;
-  --card-foreground: #1c1a17;
+  /* Muted */
+  --muted: #f3ebdd;
+  --muted-foreground: #9a7055;
 
-  --popover: #fffdf8;
-  --popover-foreground: #1c1a17;
+  /* Accent */
+  --accent: #ffe5ad;
+  --accent-foreground: #63351f;
 
-  --secondary: #f1ece0;
-  --secondary-foreground: #1c1a17;
-
-  --muted: #f3efe4;
-  --muted-foreground: #7d7668;
-
-  --destructive: #c4553d;
-  --destructive-outline: #8f3a28;
+  /* Destructive */
+  --destructive: #e66b63;
+  --destructive-outline: #c9483f;
   --destructive-foreground: #ffffff;
 
-  --border: #d2d2d2;
-  --input: #e9e3d4;
-  --ring: #e9bf55;
+  /* Borders & Inputs */
+  --border: #eadcc8;
+  --input: #e8d8c3;
+  --ring: #f5b83f;
 
-  --glow-bg-primary: #e9bf551a;
-  --glow-bg-accent: #e0b44a24;
+  /* Success */
+  --success: #70c88b;
+  --success-foreground: #245d38;
 
-  --chart-1: var(--ink);
-  --chart-2: #e9bf55;
-  --chart-3: #d9a93a;
-  --chart-4: #b5ab96;
-  --chart-5: #8a6a1e;
+  /* Warning */
+  --warning: #f5b942;
+  --warning-foreground: #70400f;
 
-  --status-not-posted: #a8a08f;
-  --status-scheduled: #d9a93a;
-  --status-posted: #4f8a4b;
-  --status-missed: #c4553d;
-  --status-done: #4f8a4b;
-  --status-muted: #f1ece0;
+  /* Charts */
+  --chart-1: #ffbd4a;
+  --chart-2: #70c88b;
+  --chart-3: #65c5d9;
+  --chart-4: #f28baa;
+  --chart-5: #f28b55;
 
-  --contrib-1: #f1ece0;
-  --contrib-2: #f3dfa6;
-  --contrib-3: #e2b54c;
-  --contrib-4: #a8781a;
+  /* Data ink — secondary chart lines */
+  --ink: var(--foreground);
 
-  --sidebar: #fbf8f0;
-  --sidebar-foreground: #1c1a17;
-  --sidebar-primary: #e9bf55;
-  --sidebar-primary-foreground: #17140d;
-  --sidebar-accent: #f1ece0;
-  --sidebar-accent-foreground: #1c1a17;
-  --sidebar-border: #e9e3d4;
-  --sidebar-ring: #e9bf55;
+  /* Task / activity status */
+  --status-not-posted: #b8987f;
+  --status-scheduled: #f5a524;
+  --status-posted: #4fae6c;
+  --status-missed: #e66b63;
+  --status-done: #4fae6c;
+  --status-muted: #f6e9d6;
 
-  --font-sans: "Ovo", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Ovo", ui-serif, Georgia, serif;
-  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, monospace;
+  /* Contribution heat scale */
+  --contrib-1: #f6e9d6;
+  --contrib-2: #ffe5ad;
+  --contrib-3: #ffc764;
+  --contrib-4: #f28b55;
 
-  --radius: 0.5rem;
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+  /* Sidebar */
+  --sidebar: #fff9f0;
+  --sidebar-foreground: #542817;
+  --sidebar-primary: #ffbb45;
+  --sidebar-primary-foreground: #542817;
+  --sidebar-accent: #ffe5ad;
+  --sidebar-accent-foreground: #63351f;
+  --sidebar-border: #eadcc8;
+  --sidebar-ring: #f5b83f;
 
-  --shadow-color-coords: 0.25 0.02 80;
+  /* Fonts */
+  --font-sans: Geist Mono, monospace;
+  --font-serif: Geist Mono, monospace;
+  --font-mono: Geist Mono, monospace;
 
-  /* Perfect Syntax-Safe Shadows */
-  --shadow-2xs: 0 1px 3px 0px oklch(var(--shadow-color-coords) / 0.04);
-  --shadow-xs: 0 1px 3px 0px oklch(var(--shadow-color-coords) / 0.06);
-  --shadow-sm:
-    0 1px 3px 0px oklch(var(--shadow-color-coords) / 0.08),
-    0 1px 2px -1px oklch(var(--shadow-color-coords) / 0.06);
-  --shadow:
-    0 1px 3px 0px oklch(var(--shadow-color-coords) / 0.1),
-    0 1px 2px -1px oklch(var(--shadow-color-coords) / 0.08);
-  --shadow-md:
-    0 1px 3px 0px oklch(var(--shadow-color-coords) / 0.1),
-    0 2px 4px -1px oklch(var(--shadow-color-coords) / 0.1);
-  --shadow-lg:
-    0 2px 6px 0px oklch(var(--shadow-color-coords) / 0.12),
-    0 4px 8px -1px oklch(var(--shadow-color-coords) / 0.1);
-  --shadow-xl:
-    0 2px 8px 0px oklch(var(--shadow-color-coords) / 0.12),
-    0 8px 16px -2px oklch(var(--shadow-color-coords) / 0.12);
-  --shadow-2xl: 0 4px 16px 0px oklch(var(--shadow-color-coords) / 0.18);
+  /* Radius */
+  --radius: 1rem;
 
-  /* Override browser autofill — solid colors only (no color-mix in box-shadow) */
-  --input-surface: var(--background);
-  --input-autofill-bg: var(--input-surface);
-  --input-focus-ring-shadow: 0 0 0 2px #e9bf55;
-
-  /* Dashboard creative surfaces (light + dark kept intentional) */
-  --dashboard-panel: #fffdf8;
-  --dashboard-panel-border: #e9e3d4;
-  --dashboard-panel-tint: #fbf3dc;
-  --dashboard-hero-from: #fffaf0;
-  --dashboard-hero-via: #fbf1d6;
-  --dashboard-hero-to: #f6e7bd;
-  --dashboard-hero-glow: #e0b44a40;
-  --dashboard-hero-fg: #1c1a17;
-  --dashboard-hero-muted: #6b6457;
-  --dashboard-hero-border: #ecdcae;
-  --dashboard-pattern: #c8962c14;
+  /* Browser autofill — solid colors only */
+  --input-autofill-bg: var(--card);
+  --input-focus-ring-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 }
 
 .dark {
-  /* Dark — 60 obsidian / 30 honey-gold / 10 cream ink for graph contrast */
-  --primary: #e9bf55;
-  --primary-foreground: #17140d;
-  --primary-text: #e9bf55;
+  /* Base — warm espresso inverse of cream */
+  --background: #1a120e;
+  --foreground: #fbf5ea;
 
-  --elev-out: color-mix(in srgb, var(--primary) 22%, transparent);
-  --elev-out-soft: color-mix(in srgb, #000 55%, transparent);
-  --elev-in-hi: rgba(255, 255, 255, 0.12);
-  --elev-in-lo: rgba(0, 0, 0, 0.45);
-  --elev-press: rgba(0, 0, 0, 0.55);
+  /* Card */
+  --card: #241912;
+  --card-foreground: #fbf5ea;
 
-  --background: #0b0b0b;
-  --foreground: #f3f4f6;
+  /* Popover */
+  --popover: #2a1e16;
+  --popover-foreground: #fbf5ea;
 
-  --accent: #f0cf7a;
-  --accent-foreground: #17140d;
+  /* Primary — same warm golden yellow */
+  --primary: #ffbb45;
+  --primary-foreground: #542817;
+  --primary-text: #ffbb45;
 
-  --ink: #f3efe4;
+  /* Secondary */
+  --secondary: #3a2a20;
+  --secondary-foreground: #f6e9d6;
 
-  --card: #101010;
-  --card-foreground: #f3f4f6;
+  /* Muted */
+  --muted: #2e221a;
+  --muted-foreground: #c4a08a;
 
-  --popover: #101010;
-  --popover-foreground: #f3f4f6;
+  /* Accent */
+  --accent: #4a3520;
+  --accent-foreground: #ffe5ad;
 
-  --secondary: #1c1a14;
-  --secondary-foreground: #ece4cf;
-
-  --muted: #292929;
-  --muted-foreground: #a39a85;
-
-  --destructive: #a8412f;
-  --destructive-outline: #e2735c;
+  /* Destructive */
+  --destructive: #e66b63;
+  --destructive-outline: #f08a83;
   --destructive-foreground: #ffffff;
 
-  --border: #2c2920;
-  --input: #2c2920;
-  --ring: #e9bf55;
+  /* Borders & Inputs */
+  --border: #3d2e24;
+  --input: #3d2e24;
+  --ring: #f5b83f;
 
-  --glow-bg-primary: #e9bf5514;
-  --glow-bg-accent: #f0cf7a18;
+  /* Success */
+  --success: #70c88b;
+  --success-foreground: #d4f0dc;
 
-  --chart-1: var(--ink);
-  --chart-2: #e9bf55;
-  --chart-3: #f0cf7a;
-  --chart-4: #6b6249;
-  --chart-5: #a8822c;
+  /* Warning */
+  --warning: #f5b942;
+  --warning-foreground: #2a1e0a;
 
-  --contrib-1: #1a1813;
-  --contrib-2: #3a3220;
-  --contrib-3: #8a6a22;
-  --contrib-4: #e9bf55;
+  /* Charts */
+  --chart-1: #ffbd4a;
+  --chart-2: #70c88b;
+  --chart-3: #65c5d9;
+  --chart-4: #f28baa;
+  --chart-5: #f28b55;
 
-  --sidebar: #111419;
-  --sidebar-foreground: #ece4cf;
-  --sidebar-primary: #e9bf55;
-  --sidebar-primary-foreground: #17140d;
-  --sidebar-accent: #1c1a14;
-  --sidebar-accent-foreground: #ece4cf;
-  --sidebar-border: #2c2920;
-  --sidebar-ring: #e9bf55;
+  --ink: var(--foreground);
 
-  --status-muted: #1a1813;
-  --status-done: #86c07e;
-  --status-scheduled: #e9bf55;
-  --status-missed: #e2735c;
-  --status-posted: #86c07e;
-  --status-not-posted: #7d7563;
+  --status-not-posted: #8a7262;
+  --status-scheduled: #f5b942;
+  --status-posted: #70c88b;
+  --status-missed: #e66b63;
+  --status-done: #70c88b;
+  --status-muted: #2e221a;
 
-  --shadow-color-coords: 0 0 0;
+  --contrib-1: #2e221a;
+  --contrib-2: #4a3520;
+  --contrib-3: #a8742a;
+  --contrib-4: #ffbb45;
 
-  --input-surface: #111419;
-  --input-autofill-bg: var(--input-surface);
-  --input-focus-ring-shadow: 0 0 0 2px #e9bf55;
+  /* Sidebar */
+  --sidebar: #241912;
+  --sidebar-foreground: #fbf5ea;
+  --sidebar-primary: #ffbb45;
+  --sidebar-primary-foreground: #542817;
+  --sidebar-accent: #4a3520;
+  --sidebar-accent-foreground: #ffe5ad;
+  --sidebar-border: #3d2e24;
+  --sidebar-ring: #f5b83f;
 
-  --dashboard-panel: #111419;
-  --dashboard-panel-border: #2c2920;
-  --dashboard-panel-tint: #1d1a12;
-  --dashboard-hero-from: #14120c;
-  --dashboard-hero-via: #111419;
-  --dashboard-hero-to: #090a0d;
-  --dashboard-hero-glow: #e9bf5514;
-  --dashboard-hero-fg: #f8f3e4;
-  --dashboard-hero-muted: #a39a85;
-  --dashboard-hero-border: #2c2920;
-  --dashboard-pattern: #e9bf550a;
+  /* Fonts */
+  --font-sans: Geist Mono, monospace;
+  --font-serif: Geist Mono, monospace;
+  --font-mono: Geist Mono, monospace;
+
+  /* Radius */
+  --radius: 1rem;
+
+  --input-autofill-bg: var(--card);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary-text: var(--primary-text);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Ovo", ui-serif, Georgia, serif;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
   --color-destructive: var(--destructive);
   --color-destructive-outline: var(--destructive-outline);
   --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-text: var(--primary-text);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
   --color-ink: var(--ink);
-  --color-glow-bg-primary: var(--glow-bg-primary);
-  --color-glow-bg-accent: var(--glow-bg-accent);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --color-status-not-posted: var(--status-not-posted);
   --color-status-scheduled: var(--status-scheduled);
   --color-status-posted: var(--status-posted);
   --color-status-missed: var(--status-missed);
-  --color-status-upcoming: var(--status-upcoming);
   --color-status-done: var(--status-done);
   --color-status-muted: var(--status-muted);
   --color-contrib-1: var(--contrib-1);
   --color-contrib-2: var(--contrib-2);
   --color-contrib-3: var(--contrib-3);
   --color-contrib-4: var(--contrib-4);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
-  --shadow-2xs: var(--shadow-2xs);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-sm: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Body copy at full readable size under the 90% density root; heading scale stays compact */
+  --text-xs: 0.8333rem;
+  --text-sm: 0.9722rem;
+  --text-base: 1.1111rem;
+  --text-lg: 1.25rem;
 }
 
 @layer base {
@@ -297,16 +274,34 @@
     min-width: 0;
   }
   html {
-    @apply font-sans;
+    @apply font-sans antialiased overscroll-none;
     overflow-x: hidden;
+    /* Compact density: every rem-based size (text, spacing, radii, images) runs at 90% */
+    font-size: 90%;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
   }
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
     min-width: 0;
     overflow-x: hidden;
   }
   #root {
     min-width: 0;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading tracking-tight text-balance;
+    font-weight: 400;
+  }
+  ::selection {
+    @apply bg-primary/20;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
@@ -352,11 +347,6 @@
   box-shadow: 0 0 0 1000px var(--input-autofill-bg) inset !important;
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-}
-
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
@@ -376,65 +366,48 @@ body {
   background: var(--muted-foreground);
 }
 
-@keyframes border-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-border-spin {
-  animation: border-spin 8s linear infinite;
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/*
+ * Entrance animations. All start paused; src/shared/lib/entranceMotion.ts sets each element's delay and
+ * adds data-revealed so groups cascade in order. The shell is quickest, content travels furthest.
+ */
+@utility animate-enter {
+  animation: reveal-up 750ms var(--ease-out-soft) both paused;
+  &[data-revealed] {
+    animation-play-state: running;
   }
 }
 
-@keyframes check-pop {
-  0% {
-    transform: scale(0.4);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.18);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
+@utility animate-hero {
+  animation: hero-enter 700ms var(--ease-out-soft) both paused;
+  &[data-revealed] {
+    animation-play-state: running;
   }
 }
 
-@utility animate-rise {
-  animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
+@utility animate-shell-left {
+  animation: shell-left 450ms var(--ease-out-soft) both paused;
+  &[data-revealed] {
+    animation-play-state: running;
   }
 }
 
-@utility animate-check-pop {
-  animation: check-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
+@utility animate-shell-down {
+  animation: shell-down 450ms var(--ease-out-soft) both paused;
+  &[data-revealed] {
+    animation-play-state: running;
   }
 }
 
-/* ─── DayFlow raised elevation (Trail-inspired craft, DayFlow tokens) ─── */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
 
-@utility btn-raised {
+/* Shared 3D elevated button shell — color comes from each variant utility */
+@utility btn-elevated {
+  border-radius: var(--radius);
   border: 1px solid transparent;
   background-origin: border-box;
+  /* beats base `bg-clip-padding` from the Button cva */
   background-clip: padding-box, border-box !important;
   transition:
     transform 0.15s ease,
@@ -443,7 +416,7 @@ body {
 
   &:hover {
     transform: translateY(-1px);
-    filter: brightness(1.04);
+    filter: brightness(1.05);
   }
 
   &:active {
@@ -451,163 +424,334 @@ body {
     filter: none;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: box-shadow 0.15s ease, filter 0.15s ease;
-
-    &:hover,
-    &:active {
-      transform: none;
-    }
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
   }
 }
 
-@utility btn-raised-primary {
+@utility btn-primary {
   color: var(--primary-foreground);
   background-image:
+    /* face: subtle curve instead of flat fill */
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--primary) 92%, white),
-      color-mix(in srgb, var(--primary) 88%, black)
+      color-mix(in srgb, var(--primary) 94%, white),
+      color-mix(in srgb, var(--primary) 94%, black)
     ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--primary) 55%, white),
-      color-mix(in srgb, var(--primary) 60%, black)
-    );
+    /* border: unchanged */
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--primary) 55%, white),
+        color-mix(in srgb, var(--primary) 65%, black)
+      );
   box-shadow:
-    inset 0 1px 0 var(--elev-in-hi),
-    inset 0 -1px 0 var(--elev-in-lo),
-    0 1px 2px var(--elev-out),
-    0 6px 14px var(--elev-out);
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 2px color-mix(in srgb, var(--primary) 35%, transparent),
+    0 6px 14px color-mix(in srgb, var(--primary) 30%, transparent);
 
   &:active {
     box-shadow:
-      inset 0 2px 5px var(--elev-press),
-      0 1px 2px var(--elev-out);
+      inset 0 2px 4px rgba(0, 0, 0, 0.25),
+      0 1px 2px color-mix(in srgb, var(--primary) 30%, transparent);
   }
 }
 
-@utility btn-raised-secondary {
+@utility btn-secondary {
   color: var(--secondary-foreground);
   background-image:
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--secondary) 70%, white),
-      color-mix(in srgb, var(--secondary) 92%, black)
+      color-mix(in srgb, var(--secondary) 55%, white),
+      color-mix(in srgb, var(--secondary) 94%, black)
     ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--border) 60%, white),
-      color-mix(in srgb, var(--border) 70%, var(--foreground) 12%)
+      color-mix(in srgb, var(--secondary) 70%, white),
+      color-mix(in srgb, var(--secondary) 75%, black)
     );
   box-shadow:
-    inset 0 1px 0 var(--elev-in-hi),
-    inset 0 -1px 0 var(--elev-in-lo),
-    0 1px 2px var(--elev-out-soft),
-    0 6px 14px var(--elev-out-soft);
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 2px color-mix(in srgb, var(--secondary-foreground) 14%, transparent),
+    0 6px 14px color-mix(in srgb, var(--secondary-foreground) 12%, transparent);
 
   &:active {
     box-shadow:
-      inset 0 2px 4px var(--elev-press),
-      0 1px 2px var(--elev-out-soft);
+      inset 0 2px 4px rgba(0, 0, 0, 0.12),
+      0 1px 2px color-mix(in srgb, var(--secondary-foreground) 12%, transparent);
+  }
+
+  @variant dark {
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--secondary) 88%, white 8%),
+        color-mix(in srgb, var(--secondary) 96%, black)
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border) 70%, white 18%),
+        color-mix(in srgb, var(--border) 88%, black)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      0 8px 18px rgba(0, 0, 0, 0.28);
   }
 }
 
-@utility btn-raised-outline {
+@utility btn-outline {
   color: var(--foreground);
   background-image:
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--card) 70%, white),
-      color-mix(in srgb, var(--card) 94%, var(--border))
+      color-mix(in srgb, var(--card) 55%, white),
+      color-mix(in srgb, var(--card) 92%, var(--border))
     ),
     linear-gradient(
       to bottom,
       color-mix(in srgb, var(--border) 55%, white),
-      color-mix(in srgb, var(--border) 75%, var(--foreground) 14%)
+      color-mix(in srgb, var(--border) 70%, var(--foreground) 18%)
     );
   box-shadow:
-    inset 0 1px 0 var(--elev-in-hi),
-    inset 0 -1px 0 var(--elev-in-lo),
-    0 1px 2px var(--elev-out-soft),
-    0 6px 14px var(--elev-out-soft);
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 1px 2px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 6px 14px color-mix(in srgb, var(--foreground) 8%, transparent);
 
   &:active {
     box-shadow:
-      inset 0 2px 4px var(--elev-press),
-      0 1px 2px var(--elev-out-soft);
+      inset 0 2px 4px rgba(0, 0, 0, 0.1),
+      0 1px 2px color-mix(in srgb, var(--foreground) 8%, transparent);
   }
-}
 
-@utility btn-raised-destructive {
-  color: var(--destructive-foreground);
-  background-image:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--destructive) 88%, white),
-      color-mix(in srgb, var(--destructive) 90%, black)
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--destructive) 50%, white),
-      color-mix(in srgb, var(--destructive) 65%, black)
-    );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.16),
-    0 1px 2px color-mix(in srgb, var(--destructive) 35%, transparent),
-    0 6px 14px color-mix(in srgb, var(--destructive) 28%, transparent);
-
-  &:active {
+  @variant dark {
+    color: var(--foreground);
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--card) 88%, white 8%),
+        color-mix(in srgb, var(--card) 96%, black)
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border) 70%, white 18%),
+        color-mix(in srgb, var(--border) 88%, black)
+      );
     box-shadow:
-      inset 0 2px 5px rgba(0, 0, 0, 0.3),
-      0 1px 2px color-mix(in srgb, var(--destructive) 30%, transparent);
-  }
-}
-
-/* Elevation on glass — shadows + lift only (keeps DayFlow frost) */
-@utility surface-raised {
-  box-shadow:
-    inset 0 1px 0 var(--elev-in-hi),
-    inset 0 -1px 0 var(--elev-in-lo),
-    0 1px 2px var(--elev-out-soft),
-    0 10px 24px var(--elev-out-soft);
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 var(--elev-in-hi),
-      inset 0 -1px 0 var(--elev-in-lo),
-      0 2px 4px var(--elev-out),
-      0 14px 32px var(--elev-out);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: box-shadow 0.18s ease, border-color 0.18s ease;
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      0 8px 18px rgba(0, 0, 0, 0.28);
 
     &:hover {
-      transform: none;
+      filter: brightness(1.08);
+    }
+
+    &:active {
+      box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.45),
+        0 1px 2px rgba(0, 0, 0, 0.3);
     }
   }
 }
 
-/* Same depth as surface-raised, no hover lift — tables, editors, calendars */
-@utility surface-raised-static {
+@utility btn-destructive {
+  color: white;
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--destructive) 94%, white),
+      color-mix(in srgb, var(--destructive) 94%, black)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--destructive) 55%, white),
+      color-mix(in srgb, var(--destructive) 65%, black)
+    );
   box-shadow:
-    inset 0 1px 0 var(--elev-in-hi),
-    inset 0 -1px 0 var(--elev-in-lo),
-    0 1px 2px var(--elev-out-soft),
-    0 10px 24px var(--elev-out-soft);
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 2px color-mix(in srgb, var(--destructive) 35%, transparent),
+    0 6px 14px color-mix(in srgb, var(--destructive) 30%, transparent);
+
+  &:active {
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.25),
+      0 1px 2px color-mix(in srgb, var(--destructive) 30%, transparent);
+  }
 }
 
-@utility surface-inset {
-  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
-  background: color-mix(in srgb, var(--muted) 55%, var(--card));
+/* Not named `enter`: tw-animate-css ships its own `enter` keyframes, which would silently win */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shell-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shell-down {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes check-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@utility animate-check-pop {
+  animation: check-pop 260ms var(--ease-out-soft);
+}
+
+/* Raised panel surface, same layered build as btn-elevated; --tone tints face, border, and glow */
+@utility surface-elevated {
+  --tone: var(--border);
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  /* Light: soft pastel wash + clearer tinted bevel */
+  background-image:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--tone) 14%, white),
+      color-mix(in srgb, var(--tone) 22%, white) 55%,
+      color-mix(in srgb, var(--tone) 18%, white)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--tone) 22%, white),
+      color-mix(in srgb, var(--tone) 34%, white)
+    );
+  /* One crisp bottom edge + soft neutral lift; no colored smear under the card */
   box-shadow:
-    inset 0 1px 2px var(--elev-press),
-    inset 0 -1px 0 var(--elev-in-hi);
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 1px color-mix(in srgb, var(--foreground) 5%, transparent),
+    0 3px 8px -2px color-mix(in srgb, var(--tone) 18%, transparent),
+    0 12px 24px -14px color-mix(in srgb, var(--foreground) 14%, transparent);
+
+  @variant dark {
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--tone) 8%, var(--card)),
+        color-mix(in srgb, var(--tone) 14%, var(--card))
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border) 70%, white 12%),
+        color-mix(in srgb, var(--border) 90%, black)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      0 12px 28px -12px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Inset row inside a surface: list rows, filters, nested items */
+@utility surface-chip {
+  border: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+  background-color: color-mix(in srgb, var(--card) 80%, white);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 2px color-mix(in srgb, var(--foreground) 6%, transparent);
+
+  @variant dark {
+    background-color: color-mix(in srgb, var(--card) 85%, var(--muted));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@utility tone-success {
+  --tone: var(--success);
+
+  /* Dark: same neutral surface as other panels — no pastel tint */
+  @variant dark {
+    --tone: var(--border);
+  }
+}
+
+@utility tone-primary {
+  --tone: var(--primary);
+
+  @variant dark {
+    --tone: var(--border);
+  }
+}
+
+@utility tone-rose {
+  --tone: var(--chart-4);
+
+  @variant dark {
+    --tone: var(--border);
+  }
+}
+
+@utility tone-lavender {
+  --tone: #b48cff;
+
+  @variant dark {
+    --tone: var(--border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-play-state: running !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

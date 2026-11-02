@@ -4,13 +4,13 @@ import type { ReactNode } from "react";
 import type { ClientDetailSummaryProps } from "@/features/workspace/clients-management/types/components";
 import { ActiveStatusLabel } from "@/shared/components/ActiveStatusSwitchField";
 import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
-import { raisedPanelClassName } from "@/shared/constants/layoutStyles";
+import { raisedStaticPanelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
 function DetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className="flex items-start justify-between gap-4 px-5 py-3 sm:px-6">
-      <span className="shrink-0 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+    <div className="surface-chip flex items-start justify-between gap-4 rounded-[0.8rem] px-4 py-3">
+      <span className="shrink-0 text-xs font-medium tracking-wide text-muted-foreground uppercase">
         {label}
       </span>
       <span className="min-w-0 text-right text-sm font-medium break-words text-foreground">
@@ -92,12 +92,10 @@ export function ClientDetailSummary({ client }: ClientDetailSummaryProps) {
   ];
 
   return (
-    <div className={cn("flex h-full flex-col", raisedPanelClassName)}>
-      <div className="border-b border-border px-5 py-4 sm:px-6 sm:py-5">
-        <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          Client details
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-foreground">
+    <div className={cn("flex h-full flex-col", raisedStaticPanelClassName)}>
+      <div className="px-5 pt-5 pb-4">
+        <h2 className="pl-1 text-2xl leading-none font-bold">Client details</h2>
+        <p className="mt-2 pl-1 text-sm text-foreground/75">
           Primary contact for{" "}
           <span className="font-medium">{clientContactLabel}</span>
           {client.company_name !== clientContactLabel
@@ -106,7 +104,7 @@ export function ClientDetailSummary({ client }: ClientDetailSummaryProps) {
         </p>
       </div>
 
-      <div className="divide-y divide-border">{details.map((detail) => (
+      <div className="space-y-2.5 px-5 pb-5">{details.map((detail) => (
           <DetailRow key={detail.label} label={detail.label} value={detail.value} />
         ))}</div>
     </div>

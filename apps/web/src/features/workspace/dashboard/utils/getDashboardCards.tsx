@@ -5,12 +5,6 @@ import {
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
 import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
-import {
-  clientsSparklineData,
-  employeesSparklineData,
-  missedPostsSparklineData,
-  totalPostsSparklineData,
-} from "@/shared/fixtures/sparklines";
 import type { StatCardItem } from "@/shared/types/statsCards";
 
 type DashboardStats = {
@@ -39,8 +33,6 @@ export function getDashboardCards(
         ? "Tasks left to complete across all time"
         : `Tasks left to complete in ${periodDesc}`,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparklineData: employeesSparklineData,
-      sparklineColor: "var(--chart-1)",
     },
     {
       id: "overdue-tasks",
@@ -52,8 +44,6 @@ export function getDashboardCards(
         ? "Tasks past their due date across all time"
         : `Tasks past their due date in ${periodDesc}`,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparklineData: missedPostsSparklineData,
-      sparklineColor: "var(--chart-2)",
     },
     {
       id: "projects",
@@ -65,21 +55,22 @@ export function getDashboardCards(
         ? "Note folders in your workspace"
         : `Note folders created in ${periodDesc}`,
       href: WORKSPACE_PROJECTS_MANAGEMENT_PATH,
-      sparklineData: clientsSparklineData,
-      sparklineColor: "var(--chart-1)",
     },
     {
       id: "completed-tasks",
       label: "Completed Tasks",
-      value: `${stats.completed}/${stats.total}`,
+      value: (
+        <>
+          {stats.completed}
+          <span className="text-2xl text-muted-foreground">/{stats.total}</span>
+        </>
+      ),
       icon: CheckSquare,
       imageSrc: DAYFLOW_IMAGES.statCompleted,
       description: isAll
         ? "Tasks finished successfully across all time"
         : `Tasks finished successfully in ${periodDesc}`,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparklineData: totalPostsSparklineData,
-      sparklineColor: "var(--chart-2)",
     },
   ];
 }

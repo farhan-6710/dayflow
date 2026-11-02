@@ -75,23 +75,22 @@ export function ProjectReferenceLinksSection({
         className,
       )}
     >
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-5">
+      <div className="flex flex-wrap items-start justify-between gap-3 px-5 pt-5 pb-4">
         <div>
-          <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+          <h2 className="pl-1 text-2xl leading-none font-bold">
             Reference Links
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+          </h2>
+          <p className="mt-2 pl-1 text-sm text-foreground/75">{description}</p>
         </div>
         {canEdit ? (
           <Button
             type="button"
             variant="outline"
             size="sm"
-            className="rounded-full"
             disabled={isSaving}
             onClick={openAttach}
           >
-            <Plus className="mr-1.5 size-3.5" />
+            <Plus className="size-3.5" />
             Attach
           </Button>
         ) : null}
@@ -107,7 +106,7 @@ export function ProjectReferenceLinksSection({
             No reference links
           </p>
         ) : (
-          <ul className="divide-y divide-border">
+          <ul className="divide-y divide-foreground/10">
             {referenceLinks.map((link) => (
               <li
                 key={link.id}

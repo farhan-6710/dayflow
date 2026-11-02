@@ -58,7 +58,7 @@ export function ForgotPasswordForm({
         Remembered your password?{" "}
         <Link
           to={loginPath}
-          className="font-semibold text-primary-text hover:underline"
+          className={authFormStyles.switchLink}
         >
           Sign in
         </Link>

@@ -38,15 +38,16 @@ export function TasksCalendarPage() {
   };
 
   return (
-    <div className="space-y-4">
+    <div>
       <PageHeader
+        eyebrow="Plan your days"
         heading="Tasks Calendar"
         description="Pick a day to review its tasks. Add a new one from the side panel."
       />
 
       {!tasks.loading ? (
         <PageContent motionKey="ready" stagger={false}>
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-3 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(240px,3fr)]">
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 lg:grid-cols-[minmax(0,1fr)_21rem]">
             <FluidWaveItem index={0} className="flex h-full min-w-0 flex-col">
               <TasksWeeksTable
                 year={year}

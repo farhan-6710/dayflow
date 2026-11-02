@@ -52,7 +52,7 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="z-100 w-auto border-muted-foreground/10 p-0 shadow-2xl"
+        className="z-100 w-auto overflow-hidden rounded-xl p-0 shadow-md"
         align="start"
       >
         <Calendar
@@ -86,7 +86,7 @@ export function DatePicker({
             type="button"
             variant="ghost"
             size="xs"
-            className="h-auto px-2 py-1 text-[11px] text-muted-foreground"
+            className="h-auto px-2 py-1 text-xs text-muted-foreground"
             onClick={onClear}
             disabled={disabled}
           >

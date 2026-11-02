@@ -39,7 +39,7 @@ export function ProjectNotePage() {
 
   if (loading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <PageHeader heading="Note" description="Loading note…" />
         <ProjectsDirectoryPageSkeleton rows={4} />
       </div>
@@ -88,7 +88,7 @@ export function ProjectNotePage() {
           !isDraft && project.is_active ? (
             <Button asChild size="sm">
               <Link to={buildProjectNotePath(project.id, "new")}>
-                <Plus className="mr-1 size-4" />
+                <Plus className="size-4" />
                 New Note
               </Link>
             </Button>

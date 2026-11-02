@@ -73,9 +73,9 @@ export function ProjectFormDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{isEditing ? "Edit Project" : "New Project"}</DialogTitle>
+            <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit Project" : "New Project"}</DialogTitle>
             <DialogDescription>
               {isEditing
                 ? "Update the project name, owner, and highlight color."

@@ -97,8 +97,9 @@ export function ClientDashboardPage() {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Client portal"
         heading={`Welcome, ${welcomeName}`}
         description={`${client.company_name} · Your projects and activities at a glance.`}
       />

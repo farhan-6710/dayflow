@@ -6,15 +6,14 @@ import {
 export const authFormStyles = {
   label: formLabelClassName,
   input: formInputClassName,
-  googleButton:
-    "h-10 w-full rounded-full border border-border bg-card text-sm font-medium text-foreground hover:bg-muted/50",
-  oauthButton:
-    "h-10 w-full rounded-full border border-border bg-card text-sm font-medium text-foreground hover:bg-muted/50",
-  submitButton: "h-10 w-full rounded-full font-medium",
+  googleButton: "h-10 w-full",
+  oauthButton: "h-10 w-full",
+  submitButton: "h-10 w-full",
   divider:
-    "bg-card px-2 text-[11px] font-medium tracking-wider text-muted-foreground uppercase",
+    "bg-background px-2 text-xs font-medium tracking-wide text-muted-foreground uppercase",
+  switchLink: "font-medium text-foreground underline-offset-4 hover:underline",
   errorAlert:
-    "rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-sm text-destructive",
+    "rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive",
   successAlert:
-    "rounded-lg border border-primary/20 bg-primary/5 px-3 py-2.5 text-sm text-foreground",
+    "rounded-lg border border-success/40 bg-success/10 px-3 py-2 text-sm text-foreground",
 } as const;

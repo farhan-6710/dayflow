@@ -29,7 +29,7 @@ export function ReminderTimeSelect({
           disabled={disabled}
           aria-expanded={open}
           aria-haspopup="listbox"
-          className="h-auto w-full justify-between gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-muted/50 dark:border-input dark:bg-muted/40"
+          className="h-10 w-full justify-between gap-2 px-3 text-sm font-medium"
         >
           <span className="flex items-center gap-2">
             <Clock3 className="size-3.5 opacity-70" aria-hidden="true" />
@@ -44,9 +44,9 @@ export function ReminderTimeSelect({
       <PopoverContent
         side="top"
         align="start"
-        className="z-[100] flex max-h-80 w-[var(--radix-popover-trigger-width)] flex-col overflow-hidden p-0 shadow-2xl"
+        className="z-[100] flex max-h-80 w-[var(--radix-popover-trigger-width)] flex-col overflow-hidden rounded-xl p-0 shadow-md"
       >
-        <div className="shrink-0 border-b border-border px-4 py-3">
+        <div className="shrink-0 border-b border-foreground/10 px-4 py-3">
           <p className="text-center text-sm font-medium">{listLabel}</p>
           <p className="mt-1 text-center text-xs text-muted-foreground">{summaryLabel}</p>
         </div>

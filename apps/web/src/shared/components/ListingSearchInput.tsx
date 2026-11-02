@@ -27,7 +27,7 @@ export function ListingSearchInput({
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
         disabled={disabled}
-        className="h-9 pl-8"
+        className="surface-chip h-9 rounded-[0.8rem] bg-card pl-8"
         aria-label={placeholder}
       />
     </div>

@@ -87,15 +87,16 @@ export function TasksPage() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="All tasks"
         heading="Tasks"
         description="Standalone personal tasks — workouts, errands, goals, and anything else."
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Button asChild variant="outline">
               <Link to={WORKSPACE_TASKS_CALENDAR_PATH}>
-                <Calendar className="mr-1 size-4" />
+                <Calendar className="size-4" />
                 Calendar View
               </Link>
             </Button>

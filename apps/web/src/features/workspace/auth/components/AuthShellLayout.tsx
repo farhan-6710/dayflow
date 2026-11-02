@@ -1,91 +1,65 @@
-import type { CSSProperties, ReactNode } from "react";
-import { useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
-import { BRAND_DESCRIPTION, BRAND_NAME } from "@/shared/brand/brandManifest";
 import {
-  BRAND_PROMOTION_BANNER,
-  BRAND_PROMOTION_BANNER_ASPECT,
-  BRAND_PROMOTION_BANNER_BACKDROP,
-  resolveBrandPromotionBannerSrc,
-} from "@/shared/constants/brandAssets";
-import { Blob } from "@/shared/components/Blob";
-import { FLUID_REVEAL } from "@/shared/constants/pageMotion";
-import { useTheme } from "@/shared/providers/ThemeProvider";
+  BRAND_DESCRIPTION,
+  BRAND_TAGLINE,
+  brandManifest,
+  type BrandPortalKey,
+} from "@/shared/brand/brandManifest";
+import { SidebarBrand } from "@/shared/components/SidebarBrand";
 import { cn } from "@/shared/lib/utils";
 
 type AuthShellLayoutProps = {
   children: ReactNode;
+  /** Which portal's feature highlights the brand panel lists. */
+  portal?: BrandPortalKey;
   className?: string;
 };
 
-export function AuthShellLayout({
-  children,
-  className,
-}: AuthShellLayoutProps) {
-  const { isDarkMode } = useTheme();
-  const bannerSrc = resolveBrandPromotionBannerSrc(isDarkMode);
-
-  const bannerColumnStyle = useMemo(
-    (): CSSProperties => ({
-      width: `min(50vw, calc(100dvh * ${BRAND_PROMOTION_BANNER_ASPECT}))`,
-      backgroundColor: isDarkMode
-        ? BRAND_PROMOTION_BANNER_BACKDROP.dark
-        : BRAND_PROMOTION_BANNER_BACKDROP.light,
-    }),
-    [isDarkMode],
-  );
-
-  useEffect(() => {
-    const { documentElement, body } = document;
-    const previousHtmlOverflow = documentElement.style.overflow;
-    const previousBodyOverflow = body.style.overflow;
-
-    documentElement.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-
-    return () => {
-      documentElement.style.overflow = previousHtmlOverflow;
-      body.style.overflow = previousBodyOverflow;
-    };
-  }, []);
+function AuthBrandPanel({ portal }: { portal: BrandPortalKey }) {
+  const { features, subtitle } = brandManifest.portals[portal];
 
   return (
-    <div className="relative flex h-dvh max-h-dvh flex-col overflow-hidden text-foreground lg:flex-row">
-      <Blob />
-
+    <aside className="relative hidden overflow-hidden border-r bg-sidebar lg:flex lg:flex-col lg:justify-between lg:p-12">
       <div
-        className="relative z-10 hidden h-full shrink-0 overflow-hidden lg:flex lg:items-center lg:justify-center"
-        style={bannerColumnStyle}
-        aria-hidden="true"
-      >
-        <img
-          src={bannerSrc}
-          alt=""
-          width={BRAND_PROMOTION_BANNER.width}
-          height={BRAND_PROMOTION_BANNER.height}
-          decoding="async"
-          fetchPriority="high"
-          draggable={false}
-          className="h-full w-full object-contain object-center"
-        />
-        <span className="sr-only">
-          {BRAND_NAME}. {BRAND_DESCRIPTION}
-        </span>
+        aria-hidden
+        className="pointer-events-none absolute -top-40 -right-40 size-[28rem] rounded-full bg-primary/10 blur-3xl"
+      />
+      <SidebarBrand subtitle={subtitle} className="animate-hero" />
+
+      <div className="animate-hero relative max-w-md space-y-6">
+        <p className="font-heading text-4xl leading-tight text-balance">{BRAND_TAGLINE}</p>
+        <p className="text-sm text-muted-foreground">{BRAND_DESCRIPTION}</p>
       </div>
 
-      <div
-        className={cn(
-          "relative z-10 flex min-h-0 min-w-0 flex-1 flex-col lg:h-full",
-          className,
-        )}
-      >
-        <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto overscroll-contain px-6 py-5 sm:px-10 sm:py-6 lg:px-12 xl:px-16">
-          <motion.div className="w-full max-w-md" {...FLUID_REVEAL}>
-            {children}
-          </motion.div>
+      <ol className="animate-hero relative grid gap-3 text-sm">
+        {features.map((feature) => (
+          <li key={feature.name} className="flex items-baseline gap-3">
+            <span className="w-32 shrink-0 text-xs text-muted-foreground">{feature.name}</span>
+            <span className="truncate">{feature.description}</span>
+          </li>
+        ))}
+      </ol>
+    </aside>
+  );
+}
+
+export function AuthShellLayout({
+  children,
+  portal = "workspace",
+  className,
+}: AuthShellLayoutProps) {
+  return (
+    <div className="grid h-svh overflow-y-auto overscroll-y-contain bg-background text-foreground lg:grid-cols-[1.1fr_1fr]">
+      <AuthBrandPanel portal={portal} />
+      <main className={cn("relative flex flex-col p-6 sm:p-10", className)}>
+        <div className="flex items-center lg:invisible">
+          <SidebarBrand subtitle={brandManifest.portals[portal].subtitle} />
         </div>
-      </div>
+        <div className="flex flex-1 items-center justify-center py-10">
+          <div className="w-full max-w-sm">{children}</div>
+        </div>
+      </main>
     </div>
   );
 }

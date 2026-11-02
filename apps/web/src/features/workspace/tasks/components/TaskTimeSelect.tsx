@@ -49,7 +49,7 @@ export function TaskTimeSelect({
         align="start"
         className="z-[100] flex max-h-80 w-[var(--radix-popover-trigger-width)] flex-col overflow-hidden p-0 shadow-2xl"
       >
-        <div className="shrink-0 border-b border-border px-4 py-3">
+        <div className="shrink-0 border-b border-foreground/10 px-4 py-3">
           <p className="text-center text-sm font-medium">{listLabel}</p>
           <p className="mt-1 text-center text-xs text-muted-foreground">
             {summaryLabel}

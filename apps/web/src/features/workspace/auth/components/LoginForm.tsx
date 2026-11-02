@@ -67,7 +67,7 @@ export function LoginForm({
             <div className="flex justify-end">
               <Link
                 to={buildAuthUrl(AUTH_FORM_TYPES.forgotPassword)}
-                className="text-xs font-semibold text-primary-text hover:underline"
+                className="text-sm text-primary underline-offset-4 hover:underline"
               >
                 Forgot password?
               </Link>

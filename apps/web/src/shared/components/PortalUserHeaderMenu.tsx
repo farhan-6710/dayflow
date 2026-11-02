@@ -1,12 +1,10 @@
-import { LogOut, Settings, User } from "lucide-react";
+import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { AUTH_HOME } from "@/features/workspace/auth/constants/routes";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
-import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +17,12 @@ import { UserAvatar } from "@/shared/components/UserAvatar";
 import {
   getInitialsFromName,
   getUserAvatarUrl,
+  getUserEmail,
   getWorkspaceDisplayName,
 } from "@/shared/utils/authUserDisplay";
+
+const avatarInitialsClassName =
+  "rounded-full bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] text-[0.65rem] font-semibold text-foreground";
 import type { PortalUserHeaderMenuProps } from "@/shared/types/components";
 
 export function PortalUserHeaderMenu({
@@ -36,6 +38,8 @@ export function PortalUserHeaderMenu({
   const displayName = getWorkspaceDisplayName(user, profile?.display_name);
   const initials = getInitialsFromName(displayName);
   const avatarUrl = profile?.avatar_url || getUserAvatarUrl(user);
+  const email = getUserEmail(user);
+  const firstName = displayName.split(/\s+/)[0] || displayName;
 
   async function handleConfirmSignOut() {
     setSigningOut(true);
@@ -52,28 +56,43 @@ export function PortalUserHeaderMenu({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
+          <button
             type="button"
-            variant="secondary"
             aria-label={`Account menu for ${displayName}`}
-            className={cn(
-              "size-9 overflow-hidden rounded-full border border-border p-0",
-              avatarUrl && "bg-transparent",
-            )}
+            className="surface-chip inline-flex h-9 max-w-[14rem] items-center gap-2 rounded-full py-1 pr-2.5 pl-1 text-left transition-[filter,transform] hover:brightness-[1.02] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
           >
-            <UserAvatar
-              src={avatarUrl}
-              name={displayName}
-              initials={initials}
-              initialsClassName="rounded-full bg-transparent text-xs font-semibold text-foreground"
-            />
-          </Button>
+            <span className="size-7 shrink-0 overflow-hidden rounded-full">
+              <UserAvatar
+                src={avatarUrl}
+                name={displayName}
+                initials={initials}
+                alt=""
+                initialsClassName={avatarInitialsClassName}
+              />
+            </span>
+            <span className="hidden min-w-0 truncate text-sm font-medium sm:inline">
+              {firstName}
+            </span>
+            <ChevronDown className="hidden size-3.5 shrink-0 text-muted-foreground sm:block" aria-hidden="true" />
+          </button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel className="truncate font-normal">
-            <span className="block truncate font-medium text-foreground">
-              {displayName}
+        <DropdownMenuContent align="end" sideOffset={8} className="w-60 rounded-xl">
+          <DropdownMenuLabel className="flex items-center gap-2.5 font-normal">
+            <span className="size-8 shrink-0 overflow-hidden rounded-full">
+              <UserAvatar
+                src={avatarUrl}
+                name={displayName}
+                initials={initials}
+                alt=""
+                initialsClassName={avatarInitialsClassName}
+              />
+            </span>
+            <span className="grid min-w-0 flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-medium text-foreground">{displayName}</span>
+              {email ? (
+                <span className="truncate text-xs text-muted-foreground">{email}</span>
+              ) : null}
             </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -100,7 +119,6 @@ export function PortalUserHeaderMenu({
               event.preventDefault();
               setSignOutOpen(true);
             }}
-            className="flex items-center gap-2 text-destructive focus:text-destructive"
           >
             <LogOut className="size-4" />
             Sign out

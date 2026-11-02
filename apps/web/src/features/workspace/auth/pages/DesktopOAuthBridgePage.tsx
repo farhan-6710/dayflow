@@ -26,7 +26,7 @@ export function DesktopOAuthBridgePage() {
   if (oauthError) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-background px-6 text-center">
-        <h1 className="text-xl font-semibold text-foreground">Sign-in failed</h1>
+        <h1 className="text-3xl">Sign-in failed</h1>
         <p className="max-w-md text-sm text-muted-foreground">{oauthError}</p>
         <p className="text-sm text-muted-foreground">Close this tab and try again in DayFlow.</p>
       </div>
@@ -35,7 +35,7 @@ export function DesktopOAuthBridgePage() {
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-background px-6 text-center">
-      <h1 className="text-xl font-semibold text-foreground">Return to DayFlow</h1>
+      <h1 className="text-3xl">Return to DayFlow</h1>
       <p className="max-w-md text-sm text-muted-foreground">
         Complete sign-in by opening the DayFlow desktop app. If macOS asks for permission, choose
         Open.

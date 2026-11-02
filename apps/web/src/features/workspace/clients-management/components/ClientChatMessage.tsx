@@ -18,17 +18,17 @@ export function ClientChatMessage({
   return (
     <div
       className={cn(
-        "max-w-[90%] rounded-2xl px-3.5 py-2.5 text-sm sm:max-w-[85%]",
+        "max-w-[90%] rounded-[0.9rem] px-3.5 py-2.5 text-sm sm:max-w-[85%]",
         isMine
-          ? "ml-auto bg-primary text-primary-foreground"
-          : "bg-muted text-foreground",
-        isEditing && "ring-2 ring-primary-foreground/40",
+          ? "ml-auto border border-primary/40 bg-[color-mix(in_srgb,var(--primary)_45%,var(--card))] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
+          : "surface-chip text-foreground",
+        isEditing && "ring-3 ring-ring/50",
       )}
     >
       <div
         className={cn(
-          "mb-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-[11px]",
-          isMine ? "text-primary-foreground/80" : "text-muted-foreground",
+          "mb-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-xs",
+          isMine ? "text-foreground/70" : "text-muted-foreground",
         )}
       >
         <span className="font-semibold">
@@ -44,7 +44,7 @@ export function ClientChatMessage({
                 variant="ghost"
                 size="icon-xs"
                 disabled={disabled}
-                className="size-6 text-primary-foreground/80 hover:bg-primary-foreground/15 hover:text-primary-foreground"
+                className="size-6 text-foreground/70 hover:bg-foreground/10 hover:text-foreground"
                 onClick={onEdit}
                 aria-label="Edit message"
               >
@@ -55,7 +55,7 @@ export function ClientChatMessage({
                 variant="ghost"
                 size="icon-xs"
                 disabled={disabled}
-                className="size-6 text-primary-foreground/80 hover:bg-primary-foreground/15 hover:text-primary-foreground"
+                className="size-6 text-foreground/70 hover:bg-foreground/10 hover:text-foreground"
                 onClick={onDelete}
                 aria-label="Delete message"
               >

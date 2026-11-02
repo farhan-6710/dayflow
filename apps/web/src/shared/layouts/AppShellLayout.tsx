@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { Blob } from "@/shared/components/Blob";
 import { ShellHeader } from "@/shared/components/ShellHeader";
 import {
   ShellMobileNavSheet,
@@ -11,6 +10,7 @@ import {
 } from "@/shared/providers/PageTransitionProvider";
 import type { AppShellLayoutProps } from "@/shared/types/components";
 import { UnsavedChangesProvider } from "@/shared/unsaved-changes/UnsavedChangesProvider";
+import { TooltipProvider } from "@/shared/ui/tooltip";
 
 export function AppShellLayout({
   sidebarConfig,
@@ -28,13 +28,12 @@ export function AppShellLayout({
   return (
     <UnsavedChangesProvider>
       <PageTransitionProvider>
-        <div className="fixed inset-0 flex w-full min-w-0 overflow-hidde text-foreground p-3 md:gap-3.5 md:p-3.5">
-          <Blob />
-
-          <div className="relative z-10 flex min-h-0 min-w-0 w-full flex-1 md:gap-3.5">
+        <TooltipProvider>
+        <div className="fixed inset-0 flex w-full min-w-0 overflow-hidden bg-sidebar text-foreground">
+          <div className="flex min-h-0 min-w-0 w-full flex-1">
             <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
 
-            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden">
+            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden bg-background md:m-2 md:ml-0 md:rounded-xl md:shadow-sm">
               <ShellHeader
                 sidebarConfig={sidebarConfig}
                 isSidebarCollapsed={isSidebarCollapsed}
@@ -49,7 +48,7 @@ export function AppShellLayout({
 
               <PageTransitionMain
                 mainRef={mainRef}
-                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto scrollbar-gutter-stable pt-5"
+                className="min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain"
               />
             </div>
           </div>
@@ -61,6 +60,7 @@ export function AppShellLayout({
           onOpenChange={setIsMobileNavOpen}
           sheetDescription={mobileNavDescription}
         />
+        </TooltipProvider>
       </PageTransitionProvider>
     </UnsavedChangesProvider>
   );

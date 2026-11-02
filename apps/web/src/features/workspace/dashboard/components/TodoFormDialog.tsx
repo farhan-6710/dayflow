@@ -64,9 +64,9 @@ export function TodoFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Todo" : "Add Todo"}</DialogTitle>
+          <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit Todo" : "Add Todo"}</DialogTitle>
           <DialogDescription>
             {isEditing
               ? "Update the todo details or change its status."

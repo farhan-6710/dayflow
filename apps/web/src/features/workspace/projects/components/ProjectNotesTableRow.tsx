@@ -70,21 +70,21 @@ export function ProjectNotesTableRow({
       </div>
 
       <div className="min-w-0 text-sm font-medium text-foreground">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           NOTE TITLE
         </span>
         <span className="block truncate">{title}</span>
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           CATEGORY
         </span>
         <span className="truncate">{getNoteCategoryLabel(note.category)}</span>
       </div>
 
       <div className="min-w-0 text-sm text-muted-foreground">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           DESCRIPTION
         </span>
         {description ? (
@@ -97,7 +97,7 @@ export function ProjectNotesTableRow({
       </div>
 
       <div className="text-sm text-muted-foreground">
-        <span className="mb-1 block text-xs font-semibold tracking-wider text-muted-foreground sm:hidden">
+        <span className="mb-1 block text-xs font-medium tracking-wide text-muted-foreground uppercase sm:hidden">
           UPDATED
         </span>
         {note.updated_at

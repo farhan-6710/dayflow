@@ -1,116 +1,86 @@
 import { Link } from "react-router";
 
 import { DayflowImage } from "@/shared/components/DayflowImage";
-import { Sparkline } from "@/shared/components/Sparkline";
 import { StatCardTrend } from "@/shared/components/StatCardTrend";
-import { raisedPanelClassName } from "@/shared/constants/layoutStyles";
 import type { StatCardItem } from "@/shared/types/statsCards";
 import { cn } from "@/shared/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
 type StatCardProps = {
   card: StatCardItem;
+  /** Fallback tint when the card doesn't set its own `tone`. */
+  tone: string;
 };
 
-export function StatCard({ card }: StatCardProps) {
+export function StatCard({ card, tone }: StatCardProps) {
   const Icon = card.icon;
   const tooltipText =
     card.descriptionTooltip ??
     (card.description ? `${card.label}\n${card.description}` : null);
 
   const lucideFallback = (
-    <Icon className="size-5 text-primary-text transition-transform duration-200 group-hover/icon:scale-110" />
+    <span className="grid size-14 shrink-0 place-items-center rounded-full border border-primary/30 bg-[color-mix(in_srgb,var(--primary)_42%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+      <Icon className="size-6 text-primary-text" aria-hidden />
+    </span>
   );
 
-  const iconVisual = card.imageSrc ? (
+  const visual = card.imageSrc ? (
     <DayflowImage
       src={card.imageSrc}
       alt=""
-      className="size-11 drop-shadow-sm transition-transform duration-200 group-hover/icon:scale-110"
+      className="size-14 shrink-0 object-contain"
       fallback={lucideFallback}
     />
   ) : (
-    <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl border border-primary/40 bg-primary/10">
-      {lucideFallback}
-    </span>
+    lucideFallback
   );
 
-  const iconButton = (
-    <span className="group/icon inline-flex shrink-0 items-center justify-center">
-      {iconVisual}
-    </span>
-  );
+  const description = card.description ? (
+    <p className="mt-3 line-clamp-2 text-sm leading-snug text-foreground/70">
+      {card.description}
+    </p>
+  ) : null;
 
   return (
     <div
       className={cn(
-        "relative px-4 py-3.5",
-        raisedPanelClassName,
-        "hover:border-primary/45",
+        "surface-elevated animate-enter relative flex items-center justify-between gap-2 rounded-[1.25rem] px-6 pt-6 pb-5",
+        card.href && "transition-transform hover:-translate-y-0.5",
+        card.tone ?? tone,
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <span className="truncate text-[11px] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
-            {card.label}
-          </span>
-
-          <div className="mt-1.5 flex items-center gap-3">
-            <span className="text-2xl font-semibold tracking-tight text-foreground">
-              {card.value}
-            </span>
-            {card.sparklineData ? (
-              <Sparkline
-                data={card.sparklineData}
-                color={card.sparklineColor ?? "var(--chart-1)"}
-                className="h-6 w-16"
-              />
-            ) : null}
-          </div>
-
-          {card.description ? (
-            tooltipText ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <p className="mt-1 truncate text-xs text-muted-foreground">
-                    {card.description}
-                  </p>
-                </TooltipTrigger>
-                <TooltipContent
-                  side="bottom"
-                  className="max-w-xs whitespace-pre-line"
-                >
-                  {tooltipText}
-                </TooltipContent>
-              </Tooltip>
-            ) : (
-              <p className="mt-1 truncate text-xs text-muted-foreground">
-                {card.description}
-              </p>
-            )
-          ) : null}
-
-          {card.delta && card.deltaLabel ? (
-            <StatCardTrend
-              delta={card.delta}
-              deltaLabel={card.deltaLabel}
-              trend={card.trend}
-            />
-          ) : null}
-        </div>
-
-        {card.href ? (
-          <Link
-            to={card.href}
-            aria-label={`Open ${card.label}`}
-            className="shrink-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {iconButton}
-          </Link>
+      <div className="min-w-0">
+        <p className="text-xs leading-snug font-medium text-foreground">
+          {card.href ? (
+            <Link
+              to={card.href}
+              aria-label={`Open ${card.label}`}
+              className="after:absolute after:inset-0 after:rounded-[1.25rem] focus-visible:outline-none focus-visible:after:ring-3 focus-visible:after:ring-ring/50"
+            >
+              {card.label}
+            </Link>
+          ) : (
+            card.label
+          )}
+        </p>
+        <p className="tabular mt-3 font-heading text-[2.875rem] leading-none font-bold">
+          {card.value}
+        </p>
+        {description && tooltipText ? (
+          <Tooltip>
+            <TooltipTrigger asChild>{description}</TooltipTrigger>
+            <TooltipContent side="bottom" className="max-w-xs whitespace-pre-line">
+              {tooltipText}
+            </TooltipContent>
+          </Tooltip>
         ) : (
-          iconButton
+          description
         )}
+        {card.delta && card.deltaLabel ? (
+          <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} />
+        ) : null}
       </div>
+      {visual}
     </div>
   );
 }

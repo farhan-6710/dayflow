@@ -1,3 +1,4 @@
+import { StatusPill } from "@/shared/components/StatusPill";
 import { Folder } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -49,8 +50,9 @@ export function ClientProjectsPage() {
   }, [client.id, client.company_name, user?.id]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Shared with you"
         heading="Projects"
         description="Projects your provider has shared with you."
       />
@@ -83,9 +85,9 @@ export function ClientProjectsPage() {
                   </span>
                   <span className="truncate font-medium">{project.name}</span>
                 </div>
-                <span className="text-sm text-muted-foreground">
+                <StatusPill active={project.is_active}>
                   {project.is_active ? "Active" : "Inactive"}
-                </span>
+                </StatusPill>
               </DirectoryTableRow>
             ))}
           </DirectoryTable>

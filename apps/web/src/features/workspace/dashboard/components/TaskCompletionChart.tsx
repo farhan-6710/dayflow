@@ -31,7 +31,7 @@ export function TaskCompletionChart({ tasks, isLoading }: { tasks: Task[]; isLoa
   } satisfies ChartConfig;
 
   return (
-    <DashboardPanel className="p-6">
+    <DashboardPanel className="px-5 pt-5 pb-5">
       <TaskCompletionChartHeader
         primaryYear={primary.year}
         primaryMonth={primary.month}

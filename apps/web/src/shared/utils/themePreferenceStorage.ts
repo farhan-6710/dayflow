@@ -3,7 +3,7 @@ export const THEME_STORAGE_KEY = "DF-theme";
 export type ThemePreference = "light" | "dark";
 
 /** App default when the user has not stored a choice. */
-export const DEFAULT_THEME_PREFERENCE: ThemePreference = "dark";
+export const DEFAULT_THEME_PREFERENCE: ThemePreference = "light";
 
 export function getStoredThemePreference(): ThemePreference | null {
   const stored = localStorage.getItem(THEME_STORAGE_KEY);
@@ -21,7 +21,7 @@ export function isDarkTheme(theme: ThemePreference) {
   return theme === "dark";
 }
 
-/** Stored choice wins; otherwise dark. */
+/** Stored choice wins; otherwise light (matches the shared cream design system). */
 export function resolveInitialThemePreference(): ThemePreference {
   return getStoredThemePreference() ?? DEFAULT_THEME_PREFERENCE;
 }

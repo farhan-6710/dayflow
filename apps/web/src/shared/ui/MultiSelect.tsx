@@ -56,7 +56,7 @@ export function MultiSelect({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "h-9 w-max min-w-40 max-w-none justify-between gap-2 rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground hover:bg-muted/50 dark:border-input dark:bg-muted/40",
+            "h-9 w-max min-w-40 max-w-none justify-between gap-2 px-3 text-sm font-medium",
             className,
           )}
         >
@@ -72,7 +72,7 @@ export function MultiSelect({
                   title={
                     labelByValue.get(selectedValue) ?? fallbackSelectedLabel
                   }
-                  className="shrink-0 whitespace-nowrap rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-medium text-foreground"
+                  className="shrink-0 whitespace-nowrap rounded-full border border-primary/25 bg-[color-mix(in_srgb,var(--primary)_28%,var(--card))] px-2 py-0.5 text-xs font-medium text-foreground"
                 >
                   {labelByValue.get(selectedValue) ?? fallbackSelectedLabel}
                 </span>
@@ -91,7 +91,7 @@ export function MultiSelect({
       <PopoverContent
         align="start"
         side="bottom"
-        className="z-100 flex max-h-80 w-56 min-w-(--radix-popover-trigger-width) flex-col gap-0 overflow-hidden p-0 shadow-2xl"
+        className="z-100 flex max-h-80 w-56 min-w-(--radix-popover-trigger-width) flex-col gap-0 overflow-hidden rounded-xl p-0 shadow-md"
         onOpenAutoFocus={(event) => event.preventDefault()}
         onWheel={(event) => event.stopPropagation()}
       >
@@ -114,10 +114,8 @@ export function MultiSelect({
                     type="button"
                     onClick={() => toggleValue(option.value)}
                     className={cn(
-                      "flex w-full min-w-0 items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors hover:bg-muted/60",
-                      isSelected
-                        ? "bg-primary/10 text-primary-text"
-                        : "text-foreground hover:bg-muted",
+                      "flex w-full min-w-0 items-center justify-between rounded-md px-2.5 py-1.5 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+                      isSelected ? "bg-accent/70 font-medium text-accent-foreground" : "text-foreground",
                     )}
                   >
                     <span className="flex min-w-0 items-center gap-3">
@@ -126,7 +124,7 @@ export function MultiSelect({
                           "flex size-4 shrink-0 items-center justify-center rounded border transition-colors",
                           isSelected
                             ? "border-primary bg-primary text-primary-foreground"
-                            : "border-muted-foreground/40 bg-background",
+                            : "border-foreground/25 bg-transparent",
                         )}
                       >
                         {isSelected ? (
@@ -153,7 +151,7 @@ export function MultiSelect({
 
   return (
     <div className="space-y-2">
-      <span className="block text-xs font-semibold text-muted-foreground">{label}</span>
+      <span className="block text-sm font-medium">{label}</span>
       {trigger}
     </div>
   );

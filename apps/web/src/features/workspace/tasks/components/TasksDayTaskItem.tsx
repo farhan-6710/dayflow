@@ -50,8 +50,8 @@ export function TasksDayTaskItem({
     >
       <div
         className={cn(
-          "flex min-w-0 items-start gap-2 py-3",
-          isDragging && "rounded-md bg-card/90 opacity-70",
+          "surface-chip flex min-w-0 items-start gap-2 rounded-[0.65rem] bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] py-2.5 pr-1.5 pl-2 transition-colors hover:border-primary/40",
+          isDragging && "opacity-70 shadow-md",
         )}
       >
         <button
@@ -85,7 +85,7 @@ export function TasksDayTaskItem({
               >
                 {task.title}
               </span>
-              <span className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
+              <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 {task.due_time ? (
                   <span className="inline-flex items-center gap-1">
                     <Clock3 className="size-3" aria-hidden="true" />
@@ -94,7 +94,7 @@ export function TasksDayTaskItem({
                 ) : null}
                 <span
                   className={cn(
-                    "rounded-full px-1.5 py-0.5 font-medium",
+                    "rounded-full px-2 py-0.5 font-medium",
                     TASK_STATUS_BADGE_CLASS[task.status],
                   )}
                 >
@@ -120,14 +120,14 @@ export function TasksDayTaskItem({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={onEdit}>
-              <Edit className="mr-2 size-4" />
+              <Edit className="size-4" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={onDelete}
-              className="text-destructive focus:text-destructive"
+              variant="destructive"
             >
-              <Trash2 className="mr-2 size-4" />
+              <Trash2 className="size-4" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

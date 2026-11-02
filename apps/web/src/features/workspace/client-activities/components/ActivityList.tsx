@@ -93,7 +93,7 @@ export function ActivityList(props: ActivityListProps) {
   }
 
   return (
-    <ul className="divide-y divide-border">
+    <ul className="divide-y divide-foreground/10">
       {items.map((item) => {
         const meta =
           props.kind === "task"
@@ -111,7 +111,7 @@ export function ActivityList(props: ActivityListProps) {
               <p className="truncate text-sm font-medium text-foreground">
                 {item.title}
               </p>
-              <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
+              <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
                 {meta}
               </p>
             </div>

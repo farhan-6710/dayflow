@@ -26,8 +26,8 @@ export function TaskCompletionChartHeader({
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
-        <h2 className="text-lg font-semibold tracking-tight">Task Completion</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <h2 className="pl-1 text-2xl leading-none font-bold">Task Completion</h2>
+        <p className="mt-2 pl-1 text-sm text-foreground/75">
           Completed tasks by day — pick any two months to compare.
         </p>
       </div>
@@ -49,8 +49,8 @@ export function TaskCompletionChartHeader({
           <div
             className={
               isUp
-                ? "flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400"
-                : "flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-600 dark:bg-rose-950/40 dark:text-rose-400"
+                ? "flex h-8 items-center gap-1.5 rounded-full border border-success/40 bg-success/15 px-3 text-xs font-medium text-success-foreground"
+                : "flex h-8 items-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 px-3 text-xs font-medium text-destructive"
             }
           >
             {isUp ? (

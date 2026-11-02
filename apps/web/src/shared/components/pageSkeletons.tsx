@@ -62,7 +62,7 @@ export function DirectoryPageSkeleton({
       </div>
 
       <div
-        className={cn(TABLE_HORIZONTAL_SCROLL_CLASS, "border-t border-border")}
+        className={cn(TABLE_HORIZONTAL_SCROLL_CLASS, "border-t border-foreground/10")}
       >
         <div className={DIRECTORY_TABLE_MIN_WIDTH_CLASS}>
           <div
@@ -262,7 +262,7 @@ export function TasksCalendarPageSkeleton() {
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col px-1.5 pb-2 pt-2 sm:px-3">
-          <div className="grid grid-cols-7 border-b border-border">
+          <div className="grid grid-cols-7 border-b border-foreground/10">
             {Array.from({ length: 7 }).map((_, index) => (
               <div key={index} className="flex justify-center py-1.5 sm:py-2">
                 <Skeleton className="h-2.5 w-5 sm:w-7" />
@@ -284,7 +284,7 @@ export function TasksCalendarPageSkeleton() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-border px-2 py-2.5 sm:gap-x-4 sm:px-5 sm:py-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-foreground/10 px-2 py-2.5 sm:gap-x-4 sm:px-5 sm:py-3">
           {Array.from({ length: 4 }).map((_, index) => (
             <span key={index} className="flex items-center gap-1.5">
               <Skeleton className="size-2 rounded-full sm:size-2.5" />
@@ -301,7 +301,7 @@ export function TasksCalendarPageSkeleton() {
           raisedStaticPanelClassName,
         )}
       >
-        <div className="flex items-start justify-between gap-2 border-b border-border px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
+        <div className="flex items-start justify-between gap-2 border-b border-foreground/10 px-3 py-3 sm:gap-3 sm:px-5 sm:py-4">
           <div className="min-w-0 space-y-1">
             <Skeleton className="h-2.5 w-14 sm:h-3 sm:w-16" />
             <Skeleton className="mt-0.5 h-5 w-36 sm:h-6 sm:w-44" />
@@ -314,7 +314,7 @@ export function TasksCalendarPageSkeleton() {
           {Array.from({ length: 5 }).map((_, index) => (
             <div
               key={index}
-              className="flex min-w-0 items-start gap-2 border-b border-border py-3 last:border-b-0"
+              className="flex min-w-0 items-start gap-2 border-b border-foreground/10 py-3 last:border-b-0"
             >
               <Skeleton className="mt-0.5 size-5 shrink-0 rounded" />
               <Skeleton className="mt-0.5 size-5 shrink-0 rounded" />
@@ -349,7 +349,7 @@ export function RemindersCalendarPageSkeleton() {
           raisedStaticPanelClassName,
         )}
       >
-        <div className="grid grid-cols-7 border-b border-border px-3 pt-4">
+        <div className="grid grid-cols-7 border-b border-foreground/10 px-3 pt-4">
           {Array.from({ length: 7 }).map((_, index) => (
             <div key={index} className="flex justify-center py-2">
               <Skeleton className="h-2.5 w-8" />
@@ -413,7 +413,7 @@ export function RemindersManagementPageSkeleton() {
       aria-label="Loading reminders"
     >
       {Array.from({ length: 6 }).map((_, index) => (
-        <div key={index} className={cn("rounded-3xl p-5", raisedStaticPanelClassName)}>
+        <div key={index} className={cn("p-5", raisedStaticPanelClassName)}>
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-2">
               <Skeleton className="h-5 w-36" />

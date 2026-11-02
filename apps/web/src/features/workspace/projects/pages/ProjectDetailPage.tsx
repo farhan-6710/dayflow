@@ -66,7 +66,7 @@ export function ProjectDetailPage() {
 
   if (loading && !project) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <PageHeader
           heading="Project"
           description="Loading project details…"
@@ -101,7 +101,7 @@ export function ProjectDetailPage() {
   const isClientProject = project.project_for !== null;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
         heading={
           <div className="flex min-w-0 items-center gap-3">
@@ -136,7 +136,7 @@ export function ProjectDetailPage() {
             {isClientProject ? (
               <Button variant="outline" asChild>
                 <Link to={buildClientDetailPath(project.project_for!)}>
-                  <UserRound className="mr-1 size-4" />
+                  <UserRound className="size-4" />
                   View client
                 </Link>
               </Button>
@@ -147,9 +147,9 @@ export function ProjectDetailPage() {
               disabled={updatingStatus}
             >
               {project.is_active ? (
-                <CircleOff className="mr-1 size-4" />
+                <CircleOff className="size-4" />
               ) : (
-                <RotateCcw className="mr-1 size-4" />
+                <RotateCcw className="size-4" />
               )}
               {project.is_active ? "Mark inactive" : "Mark active"}
             </Button>
@@ -158,14 +158,14 @@ export function ProjectDetailPage() {
               onClick={handleOpenEditDialog}
               disabled={!project.is_active}
             >
-              <Pencil className="mr-1 size-4" />
+              <Pencil className="size-4" />
               Edit Project
             </Button>
             <Button
               variant="destructive-outline"
               onClick={() => setDeleteConfirmOpen(true)}
             >
-              <Trash2 className="mr-1 size-4" />
+              <Trash2 className="size-4" />
               Delete
             </Button>
           </>

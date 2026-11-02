@@ -37,18 +37,18 @@ export function TasksWeekDayCell({
       aria-current={isToday ? "date" : undefined}
       aria-label={`${formatMonthDayLabel(year, month, dateNumber)}, ${taskLabel}`}
       className={cn(
-        "group flex min-h-14 flex-col justify-between gap-1 p-1 text-left outline-none transition-colors sm:min-h-[4.75rem] sm:p-2",
+        "group flex min-h-14 flex-col justify-between gap-1 rounded-[0.65rem] p-1 text-left outline-none transition-[filter,transform,background-color] focus-visible:ring-3 focus-visible:ring-ring/50 sm:min-h-[4.75rem] sm:p-2",
         "focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
         isSelected
-          ? "z-[1] bg-primary/15 ring-1 ring-inset ring-primary"
-          : "bg-card hover:bg-muted/70",
-        isOutsideMonth && !isSelected && "bg-muted/30 opacity-50",
+          ? "z-[1] border border-primary/50 bg-[color-mix(in_srgb,var(--primary)_22%,var(--card))] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-none"
+          : "surface-chip bg-[color-mix(in_srgb,var(--primary)_5%,var(--card))] hover:-translate-y-px hover:brightness-[1.02]",
+        isOutsideMonth && !isSelected && "opacity-45",
       )}
     >
       <span
         className={cn(
-          "inline-flex size-6 items-center justify-center rounded-full text-[11px] font-semibold tabular-nums sm:size-7 sm:text-[13px]",
-          isToday && "bg-primary text-primary-foreground",
+          "tabular inline-flex size-6 items-center justify-center rounded-full text-xs font-semibold sm:size-7 sm:text-sm",
+          isToday && "btn-elevated btn-primary",
           !isToday && isSelected && "text-foreground",
           !isToday && !isSelected && "text-foreground/80",
         )}
@@ -68,7 +68,7 @@ export function TasksWeekDayCell({
             />
           ))}
           {extra > 0 ? (
-            <span className="text-[9px] font-semibold text-muted-foreground sm:text-[10px]">
+            <span className="text-[0.65rem] font-semibold text-muted-foreground sm:text-[0.7rem]">
               +{extra}
             </span>
           ) : null}

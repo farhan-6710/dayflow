@@ -67,16 +67,16 @@ export function ProjectsManagementPage() {
   };
 
   return (
-    <div className="space-y-4">
+    <div>
       <PageHeader
+        eyebrow={loading ? "Projects" : `${projects.length} ${projects.length === 1 ? "project" : "projects"}`}
         heading="Projects Management"
         description="Organize notes into project folders — tasks stay standalone."
         actions={
           <Button
             onClick={handleOpenCreateDialog}
-            className="rounded-full"
           >
-            <Plus className="mr-2 size-4" />
+            <Plus className="size-4" />
             New Project
           </Button>
         }

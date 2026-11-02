@@ -74,7 +74,7 @@ export function ShellNavSearch({
               }
             }}
             placeholder={placeholder}
-            className="h-9 rounded-full border-border bg-muted/40 pl-9 shadow-none"
+            className="surface-chip h-9 rounded-[0.8rem] bg-card pl-9"
             aria-label={placeholder}
             aria-expanded={showResults}
             aria-controls="shell-nav-search-results"
@@ -86,7 +86,7 @@ export function ShellNavSearch({
       <PopoverContent
         id="shell-nav-search-results"
         align="start"
-        className="w-(--radix-popover-trigger-width) gap-0 overflow-hidden p-0 shadow-lg"
+        className="w-(--radix-popover-trigger-width) gap-0 overflow-hidden rounded-xl p-0 shadow-md"
         onOpenAutoFocus={(event) => event.preventDefault()}
       >
         <ScrollArea className="max-h-64">
@@ -95,7 +95,7 @@ export function ShellNavSearch({
               No matching pages found.
             </p>
           ) : (
-            <ul className="p-1.5">
+            <ul className="p-1">
               {filteredNav.map((item) => {
                 const Icon = shellNavIcons[item.icon];
 
@@ -104,7 +104,7 @@ export function ShellNavSearch({
                     <TransitionLink
                       to={item.to}
                       onClick={close}
-                      className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted/60"
+                      className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                     >
                       <Icon
                         className="size-4 shrink-0 text-muted-foreground"

@@ -18,8 +18,9 @@ export function NotificationsPage() {
   } = useNotificationsInbox();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
+        eyebrow="Inbox"
         heading="Notifications"
         description="In-app alerts for reminders and task updates in your personal workspace."
       />

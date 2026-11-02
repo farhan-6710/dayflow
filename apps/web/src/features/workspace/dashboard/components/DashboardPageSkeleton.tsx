@@ -87,7 +87,7 @@ export function DashboardPageSkeleton() {
               </div>
               <Skeleton className="h-8 w-24 rounded-lg" />
             </div>
-            <div className="mt-4 divide-y divide-border">
+            <div className="mt-4 divide-y divide-foreground/10">
               <TodoRowSkeleton />
               <TodoRowSkeleton />
               <TodoRowSkeleton />

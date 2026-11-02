@@ -34,7 +34,7 @@ export function CenteredLoading({ className }: CenteredLoadingProps) {
   return (
     <div
       className={cn(
-        "flex min-h-dvh items-center justify-center bg-background text-foreground",
+        "grid min-h-dvh place-items-center bg-background text-foreground",
         className,
       )}
     >
@@ -47,7 +47,7 @@ export function CenteredLoading({ className }: CenteredLoadingProps) {
 export function TableLoadingState({ minHeight = 240 }: TableLoadingStateProps) {
   return (
     <div
-      className="divide-y divide-border px-6"
+      className="divide-y divide-foreground/10 px-6"
       style={{ minHeight }}
       aria-busy="true"
       aria-label="Loading"

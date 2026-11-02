@@ -15,7 +15,7 @@ export function ActiveStatusSwitchField({
   disabled = false,
 }: ActiveStatusSwitchFieldProps) {
   return (
-    <div className="rounded-lg border border-border/60 bg-muted/20 px-4 py-3">
+    <div className="surface-chip rounded-[0.8rem] px-4 py-3">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1">
           <p className="text-sm font-medium text-foreground">Status</p>

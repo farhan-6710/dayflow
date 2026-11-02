@@ -14,6 +14,8 @@ export type ConfirmationModalProps = {
 };
 
 export type PageHeaderProps = {
+  /** Small uppercase pill above the heading (counts, context). */
+  eyebrow?: ReactNode;
   heading?: ReactNode;
   description?: ReactNode;
   backButton?: ReactNode;
@@ -23,11 +25,6 @@ export type PageHeaderProps = {
 export type StatsCardsProps = {
   cards: import("@/shared/types/statsCards").StatCardItem[];
   isLoading?: boolean;
-  /**
-   * Per-card entrance delay in seconds. When set, cards animate individually
-   * (no nested FLUID_LIST) so a page can sequence sections after the wave.
-   */
-  getItemDelay?: (index: number) => number;
 };
 
 export type LoadingSpinnerProps = {

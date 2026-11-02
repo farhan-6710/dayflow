@@ -1,6 +1,5 @@
 import { ChevronDown } from "lucide-react";
 
-import { Button } from "@/shared/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,24 +35,23 @@ export function OptionDropdown({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
+        <button
           type="button"
-          variant="outline"
           disabled={disabled}
           className={cn(
-            "h-9 min-w-0 w-full justify-between gap-2 rounded-lg border border-border bg-background px-3 text-sm font-medium dark:border-input dark:bg-muted/40",
+            "surface-chip flex h-9 w-full min-w-0 items-center justify-between gap-2 rounded-[0.8rem] bg-card px-3 text-sm whitespace-nowrap transition-[filter] outline-none hover:brightness-[1.02] focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50",
             className,
           )}
         >
           <span className="truncate">{selected?.label ?? placeholder}</span>
-          <ChevronDown className="size-3.5 shrink-0 opacity-50" aria-hidden="true" />
-        </Button>
+          <ChevronDown className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[var(--radix-dropdown-menu-trigger-width)]">
         {options.map((option) => (
           <DropdownMenuItem
             key={option.value}
-            className={cn(value === option.value && "bg-primary/10 text-primary-text")}
+            className={cn(value === option.value && "bg-accent font-medium text-accent-foreground")}
             onClick={() => onChange(option.value)}
           >
             {option.label}

@@ -61,7 +61,7 @@ export function ClientDialog({
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent className="flex max-h-[85vh] max-w-lg! flex-col overflow-hidden">
           <DialogHeader className="shrink-0">
-            <DialogTitle>{isEditing ? "Edit Client" : "Add Client"}</DialogTitle>
+            <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit Client" : "Add Client"}</DialogTitle>
             <DialogDescription>
               Register a client company. Keep contact people, phone numbers, and website
               together so freelance and office follow-ups stay easy to find.
@@ -84,7 +84,7 @@ export function ClientDialog({
             ) : null}
           </div>
 
-          <DialogFooter className="shrink-0 border-t border-border/60 pt-4">
+          <DialogFooter className="shrink-0 border-t border-foreground/10/60 pt-4">
             {isEditing && onDelete ? (
               <Button
                 variant="destructive-outline"

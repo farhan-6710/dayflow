@@ -38,7 +38,7 @@ export function TaskCompletionAreaChart({
             <stop offset="95%" stopColor="var(--color-previousMonth)" stopOpacity={0.02} />
           </linearGradient>
         </defs>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border/50" />
+        <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-foreground/10" />
         <XAxis
           dataKey="day"
           tickLine={false}

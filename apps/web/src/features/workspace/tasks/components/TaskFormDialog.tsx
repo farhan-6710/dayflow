@@ -86,9 +86,9 @@ export function TaskFormDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{isEditing ? "Edit Task" : "Create Task"}</DialogTitle>
+            <DialogTitle className="text-2xl font-normal">{isEditing ? "Edit Task" : "Create Task"}</DialogTitle>
             <DialogDescription>
               Personal tasks are standalone — no project required. Change status
               from here when you need to.

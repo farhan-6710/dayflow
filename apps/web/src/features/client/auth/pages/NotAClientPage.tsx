@@ -52,7 +52,7 @@ export function NotAClientPage() {
         <div className="flex justify-center">
           <DayFlowLogo variant="full" imageClassName="h-9 max-w-[10rem]" />
         </div>
-        <h1 className="text-xl font-semibold tracking-tight">
+        <h1 className="text-3xl">
           You are not registered as a client
         </h1>
         <p className="text-sm text-muted-foreground">

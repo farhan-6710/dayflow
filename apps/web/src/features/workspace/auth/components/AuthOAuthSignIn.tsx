@@ -88,7 +88,7 @@ export function AuthOAuthSignIn({
     <>
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border/80" />
+          <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center">
           <span className={authFormStyles.divider}>Or continue with</span>
