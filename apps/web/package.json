@@ -14,6 +14,7 @@
     "seed:task-months": "bun scripts/seed-task-months.ts",
     "seed:september-tasks": "bun scripts/seed-september-tasks.ts",
     "seed:oct-tasks": "bun scripts/seed-october-tasks.ts",
+    "seed:nov-tasks": "bun scripts/seed-november-tasks.ts",
     "seed:august-end-tasks": "bun scripts/seed-august-end-tasks.ts",
     "generate:favicon": "bun scripts/generate-favicon.ts",
     "generate:logos": "python3 scripts/process-logos.py && python3 scripts/generate-logo-light-from-dark.py && bun scripts/generate-favicon.ts && python3 scripts/rebrand-public-assets.py",
