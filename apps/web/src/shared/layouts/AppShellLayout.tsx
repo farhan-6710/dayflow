@@ -29,11 +29,11 @@ export function AppShellLayout({
     <UnsavedChangesProvider>
       <PageTransitionProvider>
         <TooltipProvider>
-        <div className="fixed inset-0 flex w-full min-w-0 overflow-hidden bg-sidebar p-3 text-foreground md:gap-3.5 md:p-3.5">
-          <div className="flex min-h-0 min-w-0 w-full flex-1 md:gap-3.5">
+        <div className="fixed inset-0 flex w-full min-w-0 overflow-hidden bg-background text-foreground">
+          <div className="flex min-h-0 min-w-0 w-full flex-1">
             <ShellSidebar config={sidebarConfig} collapsed={isSidebarCollapsed} />
 
-            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden rounded-xl bg-background shadow-sm">
+            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden">
               <ShellHeader
                 sidebarConfig={sidebarConfig}
                 isSidebarCollapsed={isSidebarCollapsed}

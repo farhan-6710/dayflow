@@ -21,6 +21,7 @@ export function ShellSidebar({ config, collapsed }: ShellSidebarProps) {
         <div
           className={cn(
             "hidden h-full w-full overflow-hidden! md:flex md:flex-col",
+            "border-r border-sidebar-border bg-sidebar",
           )}
         >
           <ShellSidebarContent config={config} collapsed={collapsed} />

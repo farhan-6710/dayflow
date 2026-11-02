@@ -31,12 +31,12 @@ export function ShellSidebarContent({
     <motion.div className="flex h-full flex-col" {...SHELL_STAGGER}>
       <motion.div
         variants={SHELL_NAV_ITEM}
-        className="shrink-0 border-b border-sidebar-border/70"
+        className="flex h-16 shrink-0 items-center justify-center border-b border-sidebar-border"
       >
         <TransitionLink
           to={config.homeLink}
           onClick={onNavigate}
-          className="flex items-center justify-center px-4 py-3"
+          className="flex items-center justify-center px-4"
         >
           <SidebarBrand collapsed={collapsed} subtitle={config.brandSubtitle} />
         </TransitionLink>
