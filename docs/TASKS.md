@@ -41,14 +41,14 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 
 Each item: service → hook → page → states → verify.
 
-- [ ] Projects and notes: list, detail, reference links, note editor with categories
-- [ ] Clients: list, detail, create/edit/delete, chat
-- [ ] Client activities (tasks, meetings, calls): shared block, both portals
-- [ ] Tasks Calendar: month view, day panel, task CRUD, reorder, status legend
-- [ ] Daily Reminders: weekly table, CRUD, disable-until
-- [ ] Notifications: inbox (reminders, tasks), mark read, header bell badge
-- [ ] Dashboard: date filters, stat cards, completion chart, todo list, time tracker, insight cards
-- [ ] Analytics: stat cards, status pie, notes-per-project bar
+- [x] Projects and notes: list, detail, reference links, note editor with categories
+- [x] Clients: list, detail, create/edit/delete, chat
+- [x] Client activities (tasks, meetings, calls): shared block, both portals
+- [x] Tasks Calendar: month view, day panel, task CRUD, reorder, status legend
+- [x] Daily Reminders: weekly table, CRUD, disable-until
+- [x] Notifications: inbox (reminders, tasks), mark read, header bell badge
+- [x] Dashboard: date filters, stat cards, completion chart, todo list, time tracker, insight cards
+- [x] Analytics: stat cards, status pie, notes-per-project bar
 
 ## Phase 5: Client portal
 

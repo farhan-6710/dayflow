@@ -38,6 +38,46 @@ const AuthPage = lazyRoutePage(
   () => import("@/features/workspace/auth/pages/AuthPage"),
   "AuthPage",
 );
+const ProjectsManagementPage = lazyRoutePage(
+  () => import("@/features/workspace/projects/pages/ProjectsManagementPage"),
+  "ProjectsManagementPage",
+);
+const ProjectDetailPage = lazyRoutePage(
+  () => import("@/features/workspace/projects/pages/ProjectDetailPage"),
+  "ProjectDetailPage",
+);
+const ProjectNotePage = lazyRoutePage(
+  () => import("@/features/workspace/projects/pages/ProjectNotePage"),
+  "ProjectNotePage",
+);
+const ClientsManagementPage = lazyRoutePage(
+  () => import("@/features/workspace/clients-management/pages/ClientsManagementPage"),
+  "ClientsManagementPage",
+);
+const ClientDetailPage = lazyRoutePage(
+  () => import("@/features/workspace/clients-management/pages/ClientDetailPage"),
+  "ClientDetailPage",
+);
+const TasksCalendarPage = lazyRoutePage(
+  () => import("@/features/workspace/tasks/pages/TasksCalendarPage"),
+  "TasksCalendarPage",
+);
+const RemindersManagementPage = lazyRoutePage(
+  () => import("@/features/workspace/reminders/pages/RemindersManagementPage"),
+  "RemindersManagementPage",
+);
+const NotificationsPage = lazyRoutePage(
+  () => import("@/features/workspace/notifications/pages/NotificationsPage"),
+  "NotificationsPage",
+);
+const DashboardPage = lazyRoutePage(
+  () => import("@/features/workspace/dashboard/pages/DashboardPage"),
+  "DashboardPage",
+);
+const AnalyticsPage = lazyRoutePage(
+  () => import("@/features/workspace/analytics/pages/AnalyticsPage"),
+  "AnalyticsPage",
+);
 const SettingsPage = lazyRoutePage(
   () => import("@/features/workspace/settings/pages/SettingsPage"),
   "SettingsPage",
@@ -92,16 +132,16 @@ export const router = createBrowserRouter([
             element: <AppLayout />,
             children: [
               { index: true, element: <Navigate to="dashboard" replace /> },
-              page("dashboard", "Dashboard"),
-              page("tasks-calendar", "Tasks Calendar"),
-              page("projects-management", "Projects Management"),
-              page("projects-management/:id", "Project"),
-              page("projects-management/:id/notes/:noteId", "Note"),
-              page("clients-management", "Clients Management"),
-              page("clients-management/:id", "Client"),
-              page("daily-reminders", "Daily Reminders"),
-              page("notifications", "Notifications"),
-              page("analytics", "Analytics"),
+              { path: "dashboard", element: <DashboardPage /> },
+              { path: "tasks-calendar", element: <TasksCalendarPage /> },
+              { path: "projects-management", element: <ProjectsManagementPage /> },
+              { path: "projects-management/:id", element: <ProjectDetailPage /> },
+              { path: "projects-management/:id/notes/:noteId", element: <ProjectNotePage /> },
+              { path: "clients-management", element: <ClientsManagementPage /> },
+              { path: "clients-management/:id", element: <ClientDetailPage /> },
+              { path: "daily-reminders", element: <RemindersManagementPage /> },
+              { path: "notifications", element: <NotificationsPage /> },
+              { path: "analytics", element: <AnalyticsPage /> },
               { path: "settings", element: <SettingsPage /> },
               redirect("projects", WORKSPACE_PROJECTS_MANAGEMENT_PATH),
               { path: "projects/:id", element: <LegacyProjectRedirect /> },

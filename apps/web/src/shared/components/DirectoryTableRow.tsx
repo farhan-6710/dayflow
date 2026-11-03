@@ -8,7 +8,7 @@ import type { DirectoryTableRowProps } from "@/shared/types/components";
  * The whole row opens `to` (or runs `onActivate`). Use `stopDirectoryRowNav`
  * on action buttons and links inside it.
  */
-export function DirectoryTableRow({ to, onActivate, label, className, children }: DirectoryTableRowProps) {
+export function DirectoryTableRow({ to, onActivate, label, className, ref, style, children }: DirectoryTableRowProps) {
   const navigate = useNavigate();
 
   function activate() {
@@ -29,13 +29,15 @@ export function DirectoryTableRow({ to, onActivate, label, className, children }
 
   return (
     <div
+      ref={ref}
+      style={style}
       role={to ? "link" : "button"}
       tabIndex={0}
       aria-label={label}
       onClick={activate}
       onKeyDown={onKeyDown}
       className={cn(
-        "cursor-pointer px-5 py-3.5 transition-colors outline-none hover:bg-accent focus-visible:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset",
+        "relative cursor-pointer bg-card px-5 py-3.5 transition-colors outline-none hover:bg-accent focus-visible:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset",
         className,
       )}
     >

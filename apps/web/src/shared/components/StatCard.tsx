@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 
 import { DayflowImage } from "@/shared/components/DayflowImage";
+import { StatCardSparkline } from "@/shared/components/StatCardSparkline";
 import { StatCardTrend } from "@/shared/components/StatCardTrend";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -11,10 +12,11 @@ export function StatCard({ card }: StatCardProps) {
     <article
       className={cn(
         panelClassName,
-        "relative flex items-start justify-between gap-3 p-5",
+        "relative p-5",
         card.href && "transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
       )}
     >
+      <div className="flex items-start justify-between gap-3">
       <div className="min-w-0">
         <h3 className="text-sm text-muted-foreground">
           {card.href ? (
@@ -37,6 +39,8 @@ export function StatCard({ card }: StatCardProps) {
         ) : null}
       </div>
       <DayflowImage name={card.image} className="size-14 shrink-0" />
+      </div>
+      {card.sparkline ? <StatCardSparkline values={card.sparkline} /> : null}
     </article>
   );
 }

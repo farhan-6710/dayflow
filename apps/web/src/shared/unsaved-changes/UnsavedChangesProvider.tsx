@@ -130,8 +130,8 @@ export function UnsavedChangesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ isDirty, register, unregister, confirmIfDirty }),
-    [isDirty, register, unregister, confirmIfDirty],
+    () => ({ isDirty, register, unregister, confirmIfDirty, leaveWithoutPrompt: proceedWithLeave }),
+    [isDirty, register, unregister, confirmIfDirty, proceedWithLeave],
   );
 
   return (

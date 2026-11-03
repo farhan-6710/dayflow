@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
 import type { ConfirmationModalProps } from "@/shared/types/components";
@@ -23,12 +24,18 @@ export function ConfirmationModal({
   loading = false,
   onConfirm,
 }: ConfirmationModalProps) {
+  // Keep the last text during the close animation, when callers have already cleared their target.
+  const [shown, setShown] = useState({ title, description });
+  if (open && (shown.title !== title || shown.description !== description)) {
+    setShown({ title, description });
+  }
+
   return (
     <Dialog open={open} onOpenChange={(next) => !loading && onOpenChange(next)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-xl font-normal">{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <DialogTitle className="text-xl font-normal">{shown.title}</DialogTitle>
+          <DialogDescription>{shown.description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>

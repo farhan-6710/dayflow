@@ -19,6 +19,8 @@ export type UnsavedChangesContextValue = {
   unregister: (id: string) => void;
   /** If dirty, shows the modal; otherwise runs `proceed` immediately. */
   confirmIfDirty: (options: UnsavedChangesConfirmOptions) => void;
+  /** Runs a navigation that must not prompt, e.g. right after saving or deleting. */
+  leaveWithoutPrompt: (proceed: () => void | Promise<void>) => Promise<void>;
 };
 
 export type UnsavedChangesModalProps = {

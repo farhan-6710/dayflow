@@ -38,8 +38,8 @@ export function DirectoryTable({
             gridClass,
           )}
         >
-          {columns.map((column) => (
-            <div key={column.label} className={cn(column.align === "right" && "text-right")}>
+          {columns.map((column, index) => (
+            <div key={index} className={cn(column.align === "right" && "text-right")}>
               {column.label}
             </div>
           ))}

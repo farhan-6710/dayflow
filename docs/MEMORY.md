@@ -23,6 +23,12 @@ Durable context for future sessions. Short facts, not narrative.
 - Client portal: empty notifications, analytics and settings reused owner pages, no chat.
 - Dashboard "Weekly insights" and "Activity snapshot" were placeholders.
 
+## Rebuild notes
+
+- Reminder alerts are created in the browser by `useReminderAlerts` across the whole workspace, while a tab is open. There is still no server job.
+- The completion chart counts done tasks by `updated_at` because `tasks` has no completed-at column, so editing or reordering an old done task moves it in the chart.
+- Stored times are display text such as "10:00 AM" (see `shared/constants/times.ts`). Keep that format for mobile compatibility.
+
 ## Ops
 
 - Hosting: Hostinger. Desktop (Tauri) is out of scope until the web rebuild ships.

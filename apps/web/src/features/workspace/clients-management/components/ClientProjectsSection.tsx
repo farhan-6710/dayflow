@@ -1,0 +1,51 @@
+import { Plus } from "lucide-react";
+import { Link } from "react-router";
+
+import { buildProjectPath } from "@/app/constants/workspaceRoutes";
+import type { ClientProjectsSectionProps } from "@/features/workspace/clients-management/types/components";
+import { EmptyState } from "@/shared/components/EmptyState";
+import { ProjectChip } from "@/shared/components/ProjectChip";
+import { StatusPill } from "@/shared/components/StatusPill";
+import { panelClassName } from "@/shared/constants/layoutStyles";
+import { cn } from "@/shared/lib/utils";
+import { Button } from "@/shared/ui/button";
+
+export function ClientProjectsSection({ projects, canAdd, onAdd }: ClientProjectsSectionProps) {
+  return (
+    <section className={cn(panelClassName, "min-w-0 p-5")}>
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="text-xl">Projects</h2>
+        {canAdd ? (
+          <Button variant="outline" className="h-10" onClick={onAdd}>
+            <Plus aria-hidden="true" />
+            New project
+          </Button>
+        ) : null}
+      </div>
+      {projects.length === 0 ? (
+        <EmptyState
+          bare
+          className="py-6"
+          image="icon-empty-projects"
+          title="No projects yet"
+          description="Projects you create for this client appear in their portal."
+        />
+      ) : (
+        <ul className="mt-2 divide-y divide-border">
+          {projects.map((project) => (
+            <li key={project.id}>
+              <Link
+                to={buildProjectPath(project.id)}
+                className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2.5 outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              >
+                <ProjectChip color={project.color_hex} />
+                <span className="min-w-0 flex-1 truncate">{project.name}</span>
+                <StatusPill active={project.is_active}>{project.is_active ? "Active" : "Inactive"}</StatusPill>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}

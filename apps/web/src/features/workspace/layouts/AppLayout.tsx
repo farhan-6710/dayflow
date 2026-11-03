@@ -9,6 +9,7 @@ import {
   WORKSPACE_SETTINGS_PATH,
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
+import { useReminderAlerts } from "@/features/workspace/layouts/useReminderAlerts";
 import { NotificationsHeaderButton } from "@/features/workspace/notifications/components/NotificationsHeaderButton";
 import { BRAND_NAME, brandManifest } from "@/shared/brand/brandManifest";
 import { AppShellLayout } from "@/shared/layouts/AppShellLayout";
@@ -39,6 +40,8 @@ const sidebarConfig: ShellSidebarConfig = {
 };
 
 export function AppLayout() {
+  useReminderAlerts();
+
   return (
     <AppShellLayout
       sidebarConfig={sidebarConfig}

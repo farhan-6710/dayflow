@@ -1,9 +1,11 @@
-import type { ComponentProps, KeyboardEvent, ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import type { ComponentProps, CSSProperties, FormEvent, KeyboardEvent, ReactNode, Ref } from "react";
 import type { DateRange } from "react-day-picker";
 
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 import type { DayflowImageName } from "@/shared/constants/dayflowImages";
 import type { DateFilterPeriodId } from "@/shared/constants/dateFilters";
+import type { AppNotification, Client, Project } from "@/shared/types/types";
 import type { ShellNavIconKey } from "@/shared/constants/shellNavIcons";
 
 /* Shell */
@@ -160,6 +162,11 @@ export type StatCardItem = {
   trend?: "positive" | "negative";
   href?: string;
   image: DayflowImageName;
+  sparkline?: number[];
+};
+
+export type StatCardSparklineProps = {
+  values: number[];
 };
 
 export type StatCardProps = {
@@ -191,7 +198,7 @@ export type DirectoryTableColumn = {
 export type DirectoryTableProps = {
   title?: string;
   description?: string;
-  /** Tailwind grid-template-columns class, shared by the header and the rows. Applied from `md` up. */
+  /** `md:grid-cols-[...]` class, shared by the header and the rows. */
   gridClass: string;
   columns: DirectoryTableColumn[];
   isLoading?: boolean;
@@ -209,7 +216,42 @@ export type DirectoryTableRowProps = {
   onActivate?: () => void;
   label: string;
   className?: string;
+  ref?: Ref<HTMLDivElement>;
+  style?: CSSProperties;
   children: ReactNode;
+};
+
+export type SortableListProps = {
+  ids: string[];
+  onReorder: (orderedIds: string[]) => void;
+  children: ReactNode;
+};
+
+export type DragHandleProps = {
+  label: string;
+  handleProps: ComponentProps<"button">;
+};
+
+export type RowAction = {
+  label: string;
+  icon: LucideIcon;
+  destructive?: boolean;
+  onSelect: () => void;
+};
+
+export type RowActionsMenuProps = {
+  label: string;
+  actions: RowAction[];
+};
+
+export type BackLinkProps = {
+  to: string;
+  children: ReactNode;
+};
+
+export type ProjectChipProps = {
+  color: string;
+  className?: string;
 };
 
 export type ListingSearchInputProps = {
@@ -313,4 +355,51 @@ export type SubmitButtonProps = {
   variant?: "default" | "outline";
   className?: string;
   children: ReactNode;
+};
+
+/* Projects */
+
+export type ProjectFormDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  /** Null creates a new project. */
+  project: Project | null;
+  clients: Client[];
+  /** Client id to prefill when creating. */
+  defaultProjectFor?: string | null;
+  lockProjectFor?: boolean;
+  onSaved: (project: Project) => void;
+};
+
+export type TimeSelectProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+};
+
+export type TextAreaFieldProps = Omit<ComponentProps<"textarea">, "onChange" | "id"> & {
+  id: string;
+  label: string;
+  onChange: (value: string) => void;
+};
+
+export type FormDialogProps = {
+  open: boolean;
+  title: string;
+  description: string;
+  submitLabel: string;
+  saving: boolean;
+  canSave: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  children: ReactNode;
+};
+
+export type NotificationListProps = {
+  title?: string;
+  notifications: AppNotification[];
+  emptyLabel: string;
+  markingId: string | null;
+  onMarkRead: (id: string) => void;
 };

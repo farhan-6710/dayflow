@@ -35,7 +35,7 @@ export function OptionDropdown({
           <ChevronDown className="text-muted-foreground" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-(--radix-dropdown-menu-trigger-width)">
+      <DropdownMenuContent align="start" className="max-h-72 w-(--radix-dropdown-menu-trigger-width) overflow-y-auto">
         <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
           {options.map((option) => (
             <DropdownMenuRadioItem key={option.value} value={option.value}>

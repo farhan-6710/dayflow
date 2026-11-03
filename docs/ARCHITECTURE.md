@@ -35,7 +35,7 @@ apps/web/src/
   services/                       supabaseClient.ts, db.ts, one <domain>Service.ts each
   shared/                         ui/ (shadcn), components/, layouts/, providers/, hooks/,
                                   lib/, utils/, constants/, types/, unsaved-changes/,
-                                  auth/ and settings/ (used by both portals)
+                                  auth/, settings/, projects/, notifications/ (used by both portals)
 shared/brand/brandManifest.json   repo root, brand copy for web + mobile
 ```
 
@@ -82,7 +82,7 @@ Clients read activities of accessible projects and write only with `raised_by = 
 
 ## Shared module
 
-`features/workspace/client-activities/` serves both portals through the `forClientPortal` and `activityRaisedBy` props.
+`features/workspace/client-activities/` serves both portals. `activityRaisedBy="client"` saves new items as client-raised and limits editing to those.
 
 ## Services
 

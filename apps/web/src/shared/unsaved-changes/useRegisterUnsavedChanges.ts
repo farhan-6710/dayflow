@@ -19,7 +19,7 @@ export function useRegisterUnsavedChanges({
   onSave,
   enabled = true,
 }: UseRegisterUnsavedChangesOptions) {
-  const { register, unregister, confirmIfDirty } = useUnsavedChangesContext();
+  const { register, unregister, confirmIfDirty, leaveWithoutPrompt } = useUnsavedChangesContext();
 
   const onSaveRef = useRef(onSave);
   useLayoutEffect(() => {
@@ -35,5 +35,5 @@ export function useRegisterUnsavedChanges({
     return () => unregister(id);
   }, [enabled, id, isDirty, isCreate, register, unregister]);
 
-  return { confirmIfDirty };
+  return { confirmIfDirty, leaveWithoutPrompt };
 }
