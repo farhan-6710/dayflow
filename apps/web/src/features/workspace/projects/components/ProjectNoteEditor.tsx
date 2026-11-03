@@ -50,7 +50,7 @@ export function ProjectNoteEditor({
               <Button
                 type="button"
                 variant="ghost"
-                className="h-10 text-destructive hover:text-destructive"
+                className="h-10 [&_svg]:text-destructive"
                 disabled={editor.saving}
                 onClick={onDelete}
               >

@@ -71,9 +71,10 @@ UI icons (nav, buttons, inputs) come from lucide-react. The custom assets below 
 | What | Folder |
 |------|--------|
 | Generated sheets (source, not shipped) | `apps/web/design/sheets/` as `icons-sheet-{light,dark}.png` and `illustrations-sheet-{light,dark}.png` |
-| Final icons, sliced from the sheet | `apps/web/public/images/dayflow/icons/` |
-| Final illustrations, sliced from the sheet | `apps/web/public/images/dayflow/illustrations/` |
-| Paths in code | `shared/constants/dayflowImages.ts` only (e.g. `/images/dayflow/icons/icon-stat-pending-light.png`) |
+| PNG masters, sliced from the sheets (not shipped) | `apps/web/design/images/{icons,illustrations}/` |
+| Shipped icons: 256px WebP made from the masters | `apps/web/public/images/dayflow/icons/` |
+| Shipped illustrations: 800px WebP made from the masters | `apps/web/public/images/dayflow/illustrations/` |
+| Paths in code | `shared/constants/dayflowImages.ts` only (e.g. `/images/dayflow/icons/icon-stat-pending-light.webp`) |
 
 The sheets are sliced into the named files in the order of the tables above: left to right, top to bottom. Done for both themes. The sheets also produced one extra icon, `icon-extra-sparkles-{light,dark}.png`, not assigned to a screen yet.
 

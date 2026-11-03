@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Outlet, useLocation } from "react-router";
 
 /** Scrollable main area: quick fade between routes, and each route starts at the top. */
@@ -18,7 +18,8 @@ export function PageOutlet() {
       tabIndex={-1}
       className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain outline-none"
     >
-      <motion.div
+      <LazyMotion features={domAnimation} strict>
+      <m.div
         key={pathname}
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,7 +27,8 @@ export function PageOutlet() {
         className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 lg:px-8 lg:py-8"
       >
         <Outlet />
-      </motion.div>
+      </m.div>
+      </LazyMotion>
     </main>
   );
 }

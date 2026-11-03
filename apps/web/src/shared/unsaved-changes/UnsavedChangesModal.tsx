@@ -36,7 +36,6 @@ export function UnsavedChangesModal({
             variant="ghost"
             size="lg"
             disabled={loading}
-            className="text-destructive hover:text-destructive"
             onClick={onDiscard}
           >
             Close without saving

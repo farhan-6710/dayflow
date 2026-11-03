@@ -48,7 +48,7 @@ export function DateRangePicker({
           onSelect={onRangeChange}
         />
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border p-3">
-          <p className={cn("text-xs", error ? "text-destructive" : "text-muted-foreground")}>
+          <p role={error ? "alert" : undefined} className={cn("text-xs", !error && "text-muted-foreground")}>
             {error ?? "Pick a start and end date."}
           </p>
           <div className="flex items-center gap-2">

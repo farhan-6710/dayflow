@@ -34,7 +34,7 @@ export function TasksCalendarGrid({ month, selectedDate, tasksByDate, onSelectDa
               onClick={() => onSelectDate(day)}
               className={cn(
                 "flex min-h-14 flex-col items-center gap-1.5 rounded-lg border border-transparent p-1.5 transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:min-h-20 sm:items-start sm:p-2",
-                !isSameMonth(day, month) && "text-muted-foreground/70",
+                !isSameMonth(day, month) && "text-muted-foreground",
                 selected && "border-primary bg-accent",
               )}
             >

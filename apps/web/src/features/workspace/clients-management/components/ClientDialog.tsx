@@ -92,6 +92,7 @@ export function ClientDialog(props: ClientDialogProps) {
               </label>
               <Switch
                 id="client-active"
+            className="relative after:absolute after:-inset-3"
                 checked={values.isActive}
                 disabled={saving}
                 onCheckedChange={(checked) => setField("isActive", checked)}

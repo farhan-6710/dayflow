@@ -1,12 +1,24 @@
 import { WORKSPACE_PROJECTS_MANAGEMENT_PATH, WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
+import { seriesDelta } from "@/features/workspace/dashboard/utils/dashboardData";
 import type { StatCardItem } from "@/shared/types/components";
 
 type DashboardCardsInput = {
   stats: { total: number; completed: number; pending: number; overdue: number };
   projectsCount: number;
-  sparklines: { completed: number[]; pending: number[] };
+  sparklines: { pending: number[]; overdue: number[]; projects: number[]; completed: number[] };
   periodLabel: string;
 };
+
+/** Trend for a card: last 7 days against the 7 before, where going up is good or bad per card. */
+function trendFor(series: number[], upIsGood: boolean) {
+  const delta = seriesDelta(series);
+  return {
+    sparkline: series,
+    delta: `${delta > 0 ? "+" : ""}${delta}`,
+    deltaLabel: "vs last week",
+    trend: (delta === 0 || delta > 0 === upIsGood ? "positive" : "negative") as StatCardItem["trend"],
+  };
+}
 
 export function getDashboardCards({ stats, projectsCount, sparklines, periodLabel }: DashboardCardsInput): StatCardItem[] {
   const period = periodLabel === "All" ? "all time" : periodLabel.toLowerCase();
@@ -19,7 +31,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       description: `Still to do, ${period}`,
       image: "icon-stat-pending",
       href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparkline: sparklines.pending,
+      ...trendFor(sparklines.pending, false),
     },
     {
       id: "overdue",
@@ -28,6 +40,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       description: `Past their due date, ${period}`,
       image: "icon-stat-overdue",
       href: WORKSPACE_TASKS_CALENDAR_PATH,
+      ...trendFor(sparklines.overdue, false),
     },
     {
       id: "projects",
@@ -36,6 +49,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       description: `Created ${period === "all time" ? "so far" : `in ${period}`}`,
       image: "icon-stat-projects",
       href: WORKSPACE_PROJECTS_MANAGEMENT_PATH,
+      ...trendFor(sparklines.projects, true),
     },
     {
       id: "completed",
@@ -44,7 +58,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       description: `Finished, ${period}`,
       image: "icon-stat-completed",
       href: WORKSPACE_TASKS_CALENDAR_PATH,
-      sparkline: sparklines.completed,
+      ...trendFor(sparklines.completed, true),
     },
   ];
 }

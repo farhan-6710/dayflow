@@ -35,5 +35,5 @@ export type DayflowImageName =
 
 export function dayflowImageSrc(name: DayflowImageName, isDark: boolean): string {
   const folder = name.startsWith("icon-") ? "icons" : "illustrations";
-  return `/images/dayflow/${folder}/${name}-${isDark ? "dark" : "light"}.png`;
+  return `/images/dayflow/${folder}/${name}-${isDark ? "dark" : "light"}.webp`;
 }

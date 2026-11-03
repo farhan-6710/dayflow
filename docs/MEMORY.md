@@ -31,6 +31,8 @@ Durable context for future sessions. Short facts, not narrative.
 
 ## Ops
 
+- Shipped images are WebP; PNG masters and logos live in `apps/web/design/` and are not deployed. Regenerate WebP from them with `cwebp` if art changes.
+
 - Hosting: Hostinger. Desktop (Tauri) is out of scope until the web rebuild ships.
 - Migrations stay append-only in `scripts/migrations/`; none are planned.
 - Do not commit `.env` or credentials.

@@ -1,7 +1,7 @@
 /** DayFlow brand images in /public: use these paths only. */
 export const BRAND_LOGO_ICON = {
-  light: "/logo-light-icon.png",
-  dark: "/logo-dark-icon.png",
+  light: "/logo-light-icon.webp",
+  dark: "/logo-dark-icon.webp",
 } as const;
 
 export const BRAND_FAVICON = {

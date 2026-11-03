@@ -100,7 +100,7 @@ export function ActivityMeetingDialog({
           disabled={form.saving}
         />
       </div>
-      {endsBeforeStart ? <p className="text-sm text-destructive">The end date can't be before the start date.</p> : null}
+      {endsBeforeStart ? <p role="alert" className="text-sm">The end date can't be before the start date.</p> : null}
     </FormDialog>
   );
 }

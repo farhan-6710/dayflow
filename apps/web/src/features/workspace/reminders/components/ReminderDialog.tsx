@@ -98,6 +98,7 @@ export function ReminderDialog({ open, onOpenChange, reminder, defaultDay, onSav
         </label>
         <Switch
           id="reminder-disabled"
+            className="relative after:absolute after:-inset-3"
           checked={values.isDisabled}
           disabled={saving}
           onCheckedChange={(checked) => setField("isDisabled", checked)}
@@ -118,7 +119,7 @@ export function ReminderDialog({ open, onOpenChange, reminder, defaultDay, onSav
         <Button
           type="button"
           variant="ghost"
-          className="h-10 px-0 text-destructive hover:bg-transparent hover:text-destructive"
+          className="h-10 justify-start px-0 underline underline-offset-4 hover:bg-transparent"
           disabled={saving}
           onClick={() => onDelete(reminder)}
         >

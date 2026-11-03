@@ -1,4 +1,4 @@
-![DayFlow Banner](./apps/web/public/brand-promotion-banner-img-dark.png)
+![DayFlow Banner](./apps/web/design/brand/brand-promotion-banner-img-dark.png)
 
 # DayFlow
 
@@ -47,7 +47,7 @@ Open the Android link on a phone, install, and sign in with the same account as 
 
 | Layer | Stack |
 |-------|--------|
-| Web & desktop UI | React 19 · TypeScript · Vite · Tailwind v4 · shadcn/ui |
+| Web UI | React 19 · TypeScript · Vite · Tailwind v4 · shadcn/ui |
 | Desktop shell | Tauri 2 (macOS & Windows) |
 | Mobile | React Native · Expo |
 | Backend | Supabase (Auth, Postgres, RLS) — shared |
@@ -57,9 +57,8 @@ Open the Android link on a phone, install, and sign in with the same account as 
 shared/brand/                      Brand manifest (shared by web + mobile)
 apps/web/src/features/workspace/   Owner app (/workspace)
 apps/web/src/features/client/      Client portal (/client-portal)
-apps/web/src/services/             Web/desktop Supabase access
-apps/web/src/shared/               Shared UI and brand re-exports
-apps/web/src-tauri/                Tauri desktop shell
+apps/web/src/services/             Web Supabase access
+apps/web/src/shared/               Shared UI, auth, settings and brand re-exports
 apps/mobile/                       Expo app (same Auth + DB)
 scripts/migrations/                Shared Postgres SQL
 docs/                              PRD, architecture, design, rules, tasks, memory
@@ -80,4 +79,4 @@ docs/                              PRD, architecture, design, rules, tasks, memo
 
 Brand copy (shared by web + mobile): [`shared/brand/brandManifest.json`](./shared/brand/brandManifest.json)
 
-App-specific setup: [apps/web/README.md](./apps/web/README.md) · [apps/mobile/README.md](./apps/mobile/README.md)
+Mobile setup: [apps/mobile/README.md](./apps/mobile/README.md)

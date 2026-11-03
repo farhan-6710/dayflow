@@ -45,7 +45,7 @@ eas build --profile preview --platform android --clear-cache
 
 ## Icons & splash
 
-Source logos: `apps/web/public/logo-light-icon.png` and `logo-dark-icon.png`.
+Source logos: `apps/web/design/brand/logo-light-icon.png` and `logo-dark-icon.png`.
 
 ```bash
 cd /Users/farhan/my-work/my-projects/dayflow/apps/mobile

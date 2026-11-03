@@ -27,7 +27,7 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 - Shadows: `shadow-sm` cards, `shadow-md` popovers, `shadow-lg` dialogs.
 - Spacing on the 4px grid. Page gutter 16px on phones, 24px or more on desktop.
 
-## Status colours (proposed, tokens only)
+## Status colours (tokens only)
 
 | State | Token |
 |-------|-------|
@@ -48,9 +48,13 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 
 Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Mutations show a toast; deletes use `ConfirmationModal`.
 
+## Destructive text
+
+`destructive` is under 4.5:1 as small text on the paper surfaces. Use it for icons, fills and borders; keep small destructive labels in the foreground colour with a red icon.
+
 ## Motion
 
-Subtle: short page fade, list entrance stagger, hover and press states, via framer-motion. Honour `prefers-reduced-motion`. No decorative backgrounds.
+Subtle: short page fade (framer-motion) plus hover and press states. Honour `prefers-reduced-motion`. No decorative backgrounds.
 
 ## Accessibility
 
@@ -58,4 +62,4 @@ Visible focus ring (`ring` token), labelled icon buttons, keyboard-operable drag
 
 ## Brand
 
-Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`. 3D icons and illustrations are in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md).
+Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`. 3D icons and illustrations ship as WebP in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md).

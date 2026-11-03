@@ -58,12 +58,12 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-xl">{isPortal ? "Activities" : "Client activities"}</h2>
           <div className="flex flex-wrap items-center gap-2">
-            <TabsList>
+            <TabsList className="h-10 p-1">
               {TABS.map((tab) => (
-                <TabsTrigger key={tab.kind} value={tab.kind}>
+                <TabsTrigger key={tab.kind} value={tab.kind} className="h-8 min-h-8 px-3 text-foreground dark:text-foreground">
                   {tab.label}
                   {activities.loading ? null : (
-                    <span className="text-muted-foreground tabular-nums">{activities.rows[tab.kind].length}</span>
+                    <span className="tabular-nums">{activities.rows[tab.kind].length}</span>
                   )}
                 </TabsTrigger>
               ))}

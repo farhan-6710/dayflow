@@ -60,12 +60,14 @@ Each item: service → hook → page → states → verify.
 
 ## Phase 6: Polish and release
 
-- [ ] Responsive pass: phone, tablet, desktop, both portals
-- [ ] Dark mode pass on every screen
-- [ ] Accessibility pass: focus, labels, keyboard drag and drop, contrast
-- [ ] Loading, empty and error states audited on every page
-- [ ] Parity check against the spec, page by page
-- [ ] Production build; deploy to Hostinger; confirm Supabase redirect URLs
+- [x] Responsive pass: phone, tablet, desktop, both portals
+- [x] Dark mode pass on every screen
+- [x] Accessibility pass: focus, labels, keyboard drag and drop, contrast
+- [x] Loading, empty and error states audited on every page
+- [x] Parity check against the spec, page by page
+- [x] Production build verified locally
+- [ ] Deploy to Hostinger; confirm Supabase redirect URLs (needs the owner)
+- [ ] Verify the client portal with a real client login (needs the owner)
 
 ## Phase 7: Mobile rebuild
 

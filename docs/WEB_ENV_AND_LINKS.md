@@ -107,9 +107,9 @@ git checkout b1335f3 -- <path>
 
 ---
 
-## 7. Known references to the old web path
+## 7. Deploy notes
 
-These still point at `apps/web/...` and need updating once the new app exists:
-
-- **`apps/mobile/scripts/generate-brand-assets.py`** reads `apps/web/public/logo-*-icon.png`. This affects the script only; the mobile app still runs.
-- **Root `README.md`** links to the banner image and the old folder layout.
+- `bun run build` in `apps/web` writes `dist/`. Upload its contents, including `.htaccess`, to the Hostinger site root.
+- `.htaccess` sends every route to `index.html`, so deep links and refreshes work on Apache.
+- Env vars are baked in at build time, so build with `apps/web/.env` present.
+- The desktop bridge page stays live because released desktop builds use it.

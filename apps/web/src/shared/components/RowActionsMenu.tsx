@@ -26,6 +26,7 @@ export function RowActionsMenu({ label, actions }: RowActionsMenuProps) {
               key={actionLabel}
               variant={destructive ? "destructive" : "default"}
               onSelect={onSelect}
+              className="data-[variant=destructive]:text-foreground data-[variant=destructive]:focus:text-foreground"
             >
               <Icon aria-hidden="true" />
               {actionLabel}

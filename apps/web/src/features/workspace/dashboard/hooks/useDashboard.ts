@@ -15,6 +15,8 @@ import { fetchTasks } from "@/services/tasksService";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { useDateFilters } from "@/shared/hooks/useDateFilters";
 import { useLoadData } from "@/shared/hooks/useLoadData";
+import type { Task } from "@/shared/types/types";
+import { parseDateValue, serializeDateValue } from "@/shared/utils/dateValue";
 
 const SPARKLINE_DAYS = 14;
 
@@ -48,13 +50,18 @@ export function useDashboard() {
   const stats = useMemo(() => computeTaskStats(filteredTasks), [filteredTasks]);
   const chart = useMemo(() => buildCompletionChart(tasks, primaryMonth, compareMonth), [tasks, primaryMonth, compareMonth]);
   const insights = useMemo(() => computeWeeklyInsights(tasks), [tasks]);
-  const sparklines = useMemo(
-    () => ({
-      completed: lastDaysSeries(tasks, SPARKLINE_DAYS, (task) => task.status === "done"),
-      pending: lastDaysSeries(tasks, SPARKLINE_DAYS, (task) => task.status === "todo" || task.status === "in_progress"),
-    }),
-    [tasks],
-  );
+  const sparklines = useMemo(() => {
+    const todayKey = serializeDateValue(new Date());
+    const isOpen = (task: Task) => task.status === "todo" || task.status === "in_progress";
+    return {
+      pending: lastDaysSeries(tasks, SPARKLINE_DAYS, (task) => (isOpen(task) ? new Date(task.created_at) : null)),
+      overdue: lastDaysSeries(tasks, SPARKLINE_DAYS, (task) =>
+        isOpen(task) && task.due_date && task.due_date < todayKey ? (parseDateValue(task.due_date) ?? null) : null,
+      ),
+      projects: lastDaysSeries(data?.projects ?? [], SPARKLINE_DAYS, (project) => new Date(project.created_at)),
+      completed: lastDaysSeries(tasks, SPARKLINE_DAYS, (task) => (task.status === "done" ? new Date(task.updated_at) : null)),
+    };
+  }, [tasks, data]);
 
   return {
     userEmail: user?.email,

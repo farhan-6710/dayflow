@@ -63,7 +63,7 @@ export function ClientDetailPage() {
             <Button
               variant="ghost"
               size="lg"
-              className="text-destructive hover:text-destructive"
+              className="[&_svg]:text-destructive"
               onClick={() => page.setDeleteOpen(true)}
             >
               <Trash2 aria-hidden="true" />

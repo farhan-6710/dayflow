@@ -24,6 +24,7 @@ export function ThemeCard() {
           <Sun className="size-4" aria-hidden="true" />
           <Switch
             id="settings-dark-mode"
+            className="relative after:absolute after:-inset-3"
             checked={isDark}
             onCheckedChange={(checked) => void handleChange(checked)}
           />

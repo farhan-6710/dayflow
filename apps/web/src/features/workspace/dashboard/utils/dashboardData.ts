@@ -23,19 +23,27 @@ export function computeTaskStats(tasks: Task[]) {
   };
 }
 
-/** Daily counts for the last `days` days, oldest first, by when the task was last updated. */
-export function lastDaysSeries(tasks: Task[], days: number, predicate: (task: Task) => boolean): number[] {
+/** Daily counts over the last `days` days, oldest first. `dateOf` returns the day an item counts on, or null to skip it. */
+export function lastDaysSeries<T>(items: T[], days: number, dateOf: (item: T) => Date | null): number[] {
   const today = startOfDay(new Date());
   const counts = new Map(
     eachDayOfInterval({ start: subDays(today, days - 1), end: today }).map((day) => [serializeDateValue(day), 0]),
   );
-  for (const task of tasks) {
-    const key = serializeDateValue(new Date(task.updated_at));
-    if (predicate(task) && counts.has(key)) {
+  for (const item of items) {
+    const date = dateOf(item);
+    const key = date ? serializeDateValue(date) : null;
+    if (key && counts.has(key)) {
       counts.set(key, (counts.get(key) ?? 0) + 1);
     }
   }
   return [...counts.values()];
+}
+
+/** Second half of a series against the first, e.g. this week vs last. */
+export function seriesDelta(series: number[]): number {
+  const middle = Math.floor(series.length / 2);
+  const sum = (values: number[]) => values.reduce((total, value) => total + value, 0);
+  return sum(series.slice(middle)) - sum(series.slice(0, middle));
 }
 
 function completedByDay(tasks: Task[], { year, month }: MonthSelection): Map<number, number> {
