@@ -29,12 +29,13 @@ apps/web/src/
   main.tsx · index.css            entry, theme tokens (see DESIGN.md)
   app/                            App.tsx, router.tsx, lazyRoute.tsx, constants/ (route paths)
   features/
-    workspace/<feature>/          auth, dashboard, tasks, projects, clients-management,
+    workspace/<feature>/          auth, layouts, dashboard, tasks, projects, clients-management,
                                   client-activities, reminders, notifications, analytics, settings
     client/                       auth, layouts, pages, hooks, providers
   services/                       supabaseClient.ts, db.ts, one <domain>Service.ts each
   shared/                         ui/ (shadcn), components/, layouts/, providers/, hooks/,
-                                  lib/, utils/, constants/, types/, unsaved-changes/
+                                  lib/, utils/, constants/, types/, unsaved-changes/,
+                                  auth/ and settings/ (used by both portals)
 shared/brand/brandManifest.json   repo root, brand copy for web + mobile
 ```
 
@@ -85,7 +86,7 @@ Clients read activities of accessible projects and write only with `raised_by = 
 
 ## Services
 
-`authService` · `profilesService` · `projectsService` · `notesService` · `projectReferenceLinksService` · `noteReferenceLinksService` · `clientsService` · `clientPortalService` · `clientActivitiesService` · `clientChatMessagesService` · `tasksService` · `todosService` · `remindersService` · `notificationsService`
+`authService` · `oauthService` · `profilesService` · `projectsService` · `notesService` · `projectReferenceLinksService` · `noteReferenceLinksService` · `clientsService` · `clientPortalService` · `clientActivitiesService` · `clientChatMessagesService` · `tasksService` · `todosService` · `remindersService` · `notificationsService`
 
 ## Config
 

@@ -10,16 +10,13 @@ import {
 import { fetchProfile } from "@/services/profilesService";
 import { AuthContext, type AuthContextValue } from "@/shared/providers/authContext";
 import type { Profile } from "@/shared/types/types";
-import {
-  clearPasswordRecoveryPending,
-  isPasswordRecoveryContext,
-} from "@/shared/utils/passwordRecovery";
+import { isPasswordRecoveryUrl } from "@/shared/utils/passwordRecovery";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isPasswordRecovery, setIsPasswordRecovery] = useState(isPasswordRecoveryContext);
+  const [isPasswordRecovery, setIsPasswordRecovery] = useState(isPasswordRecoveryUrl);
 
   const loadProfile = useCallback(async (currentUser: User) => {
     try {
@@ -49,7 +46,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const clearPasswordRecovery = useCallback(() => {
     setIsPasswordRecovery(false);
-    clearPasswordRecoveryPending();
   }, []);
 
   useEffect(() => {

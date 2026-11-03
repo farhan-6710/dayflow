@@ -34,6 +34,35 @@ const PlaceholderPage = lazyRoutePage(
   "PlaceholderPage",
 );
 
+const AuthPage = lazyRoutePage(
+  () => import("@/features/workspace/auth/pages/AuthPage"),
+  "AuthPage",
+);
+const SettingsPage = lazyRoutePage(
+  () => import("@/features/workspace/settings/pages/SettingsPage"),
+  "SettingsPage",
+);
+const ClientAuthPage = lazyRoutePage(
+  () => import("@/features/client/auth/pages/ClientAuthPage"),
+  "ClientAuthPage",
+);
+const NotAClientPage = lazyRoutePage(
+  () => import("@/features/client/auth/pages/NotAClientPage"),
+  "NotAClientPage",
+);
+const ClientSettingsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientSettingsPage"),
+  "ClientSettingsPage",
+);
+const OAuthCallbackPage = lazyRoutePage(
+  () => import("@/shared/auth/pages/OAuthCallbackPage"),
+  "OAuthCallbackPage",
+);
+const DesktopOAuthBridgePage = lazyRoutePage(
+  () => import("@/shared/auth/pages/DesktopOAuthBridgePage"),
+  "DesktopOAuthBridgePage",
+);
+
 function page(path: string, title: string) {
   return { path, handle: { title }, element: <PlaceholderPage /> };
 }
@@ -45,13 +74,17 @@ function redirect(path: string, to: string) {
 export const router = createBrowserRouter([
   { path: "/", element: <LegacyPathRedirect /> },
   { path: `${LEGACY_ADMIN_PORTAL_PREFIX}/*`, element: <LegacyPathRedirect /> },
-  { ...page(OAUTH_CALLBACK_PATH, "Signing you in"), errorElement: <RouteErrorPage /> },
-  { ...page(DESKTOP_OAUTH_BRIDGE_PATH, "Signing you in"), errorElement: <RouteErrorPage /> },
+  { path: OAUTH_CALLBACK_PATH, element: <OAuthCallbackPage />, errorElement: <RouteErrorPage /> },
+  {
+    path: DESKTOP_OAUTH_BRIDGE_PATH,
+    element: <DesktopOAuthBridgePage />,
+    errorElement: <RouteErrorPage />,
+  },
   {
     path: WORKSPACE_PREFIX,
     errorElement: <RouteErrorPage />,
     children: [
-      { element: <PublicRoute />, children: [page("auth", "Sign in")] },
+      { element: <PublicRoute />, children: [{ path: "auth", element: <AuthPage /> }] },
       {
         element: <ProtectedRoute />,
         children: [
@@ -69,7 +102,7 @@ export const router = createBrowserRouter([
               page("daily-reminders", "Daily Reminders"),
               page("notifications", "Notifications"),
               page("analytics", "Analytics"),
-              page("settings", "Settings"),
+              { path: "settings", element: <SettingsPage /> },
               redirect("projects", WORKSPACE_PROJECTS_MANAGEMENT_PATH),
               { path: "projects/:id", element: <LegacyProjectRedirect /> },
               redirect("clients", WORKSPACE_CLIENTS_MANAGEMENT_PATH),
@@ -87,8 +120,8 @@ export const router = createBrowserRouter([
     path: CLIENT_PORTAL_PREFIX,
     errorElement: <RouteErrorPage />,
     children: [
-      { element: <ClientPublicRoute />, children: [page("auth", "Sign in")] },
-      page("not-a-client", "Not a client"),
+      { element: <ClientPublicRoute />, children: [{ path: "auth", element: <ClientAuthPage /> }] },
+      { path: "not-a-client", element: <NotAClientPage /> },
       {
         element: <ClientProtectedRoute />,
         children: [
@@ -101,7 +134,7 @@ export const router = createBrowserRouter([
               page("projects/:id", "Project"),
               page("notifications", "Notifications"),
               page("analytics", "Analytics"),
-              page("settings", "Settings"),
+              { path: "settings", element: <ClientSettingsPage /> },
               redirect("*", CLIENT_PORTAL_DASHBOARD_PATH),
             ],
           },

@@ -1,4 +1,4 @@
-import type { AuthChangeEvent, User } from "@supabase/supabase-js";
+import type { AuthChangeEvent, AuthError, Session, User } from "@supabase/supabase-js";
 
 import { supabase } from "@/services/supabaseClient";
 
@@ -59,4 +59,79 @@ export async function signOut(): Promise<void> {
   if (error) {
     throw error;
   }
+}
+
+export async function signInWithEmail(email: string, password: string): Promise<AuthError | null> {
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  return error;
+}
+
+export type SignUpWithEmailResult =
+  | { ok: true; requiresEmailConfirmation: boolean }
+  | { ok: false; error: AuthError };
+
+export async function signUpWithEmail(
+  email: string,
+  password: string,
+  fullName: string,
+  emailRedirectPath: string,
+): Promise<SignUpWithEmailResult> {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: fullName },
+      emailRedirectTo: `${window.location.origin}${emailRedirectPath}`,
+    },
+  });
+
+  if (error) {
+    return { ok: false, error };
+  }
+  return { ok: true, requiresEmailConfirmation: Boolean(data.user && !data.session) };
+}
+
+export async function requestPasswordReset(
+  email: string,
+  redirectPath: string,
+): Promise<AuthError | null> {
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    redirectTo: `${window.location.origin}${redirectPath}`,
+  });
+  return error;
+}
+
+export async function updatePassword(password: string): Promise<AuthError | null> {
+  const { error } = await supabase.auth.updateUser({
+    password,
+    data: { password_set: true },
+  });
+  return error;
+}
+
+/**
+ * Requests an email change; Supabase emails confirmation links. With secure email
+ * change, both inboxes must confirm before `user.email` updates.
+ */
+export async function updateEmail(email: string, redirectPath: string): Promise<AuthError | null> {
+  const { error } = await supabase.auth.updateUser(
+    { email: email.trim().toLowerCase() },
+    { emailRedirectTo: `${window.location.origin}${redirectPath}` },
+  );
+  return error;
+}
+
+/** Keeps auth `user_metadata.full_name` in sync with the profile display name. */
+export async function updateAuthDisplayName(fullName: string): Promise<AuthError | null> {
+  const { error } = await supabase.auth.updateUser({ data: { full_name: fullName.trim() } });
+  return error;
+}
+
+/** Resolves after the client has finished any code exchange from the current URL. */
+export async function getCurrentSession(): Promise<Session | null> {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    throw error;
+  }
+  return data.session;
 }

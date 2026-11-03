@@ -5,7 +5,7 @@ import { updateProfile } from "@/services/profilesService";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { showToast } from "@/shared/utils/showToast";
 
-/** Current theme plus a setter that also saves the choice to the signed-in user's profile. */
+/** Current theme plus a setter that also saves to the signed-in user's profile; resolves false if saving failed. */
 export function useThemeMode() {
   const { resolvedTheme, setTheme } = useTheme();
   const { user } = useAuth();
@@ -17,13 +17,15 @@ export function useThemeMode() {
       const theme = enabled ? "dark" : "light";
       setTheme(theme);
       if (!userId) {
-        return;
+        return true;
       }
       try {
         await updateProfile(userId, { theme_preference: theme });
+        return true;
       } catch (error) {
         console.error("Failed to save theme preference:", error);
         showToast("error", "Theme changed here, but it couldn't be saved to your profile.");
+        return false;
       }
     },
     [setTheme, userId],

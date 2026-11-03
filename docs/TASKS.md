@@ -32,10 +32,10 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 
 ## Phase 3: Auth
 
-- [ ] Workspace: login, sign up, forgot and reset password, demo login
-- [ ] Google OAuth: popup callback and `/auth/oauth-callback` page
-- [ ] Client portal: auth page, `/not-a-client`, link via `link_client_portal_user()`
-- [ ] Settings (profile, email, password, theme), needed early for the user menu
+- [x] Workspace: login, sign up, forgot and reset password, demo login
+- [x] Google OAuth: popup callback and `/auth/oauth-callback` page
+- [x] Client portal: auth page, `/not-a-client`, link via `link_client_portal_user()`
+- [x] Settings (profile, email, password, theme), needed early for the user menu
 
 ## Phase 4: Workspace features
 

@@ -34,3 +34,14 @@ export function getAvatarUrl(user: User | null, profileAvatar?: string | null): 
   }
   return user ? (metadataString(user, "avatar_url") ?? metadataString(user, "picture") ?? null) : null;
 }
+
+/** True when the user can sign in with email + password (signed up that way, or set one later). */
+export function userHasPasswordLogin(user: User | null): boolean {
+  if (!user) {
+    return false;
+  }
+  return (
+    user.user_metadata?.password_set === true ||
+    (user.identities ?? []).some((identity) => identity.provider === "email")
+  );
+}

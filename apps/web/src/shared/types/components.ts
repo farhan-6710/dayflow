@@ -1,4 +1,4 @@
-import type { KeyboardEvent, ReactNode } from "react";
+import type { ComponentProps, KeyboardEvent, ReactNode } from "react";
 import type { DateRange } from "react-day-picker";
 
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
@@ -288,4 +288,29 @@ export type DatePickerProps = {
   placeholder?: string;
   onClear?: () => void;
   className?: string;
+};
+
+/* Form fields */
+
+export type TextFieldProps = Omit<ComponentProps<"input">, "onChange" | "id"> & {
+  id: string;
+  label: string;
+  hint?: string;
+  onChange?: (value: string) => void;
+};
+
+export type PasswordFieldProps = Omit<ComponentProps<"input">, "onChange" | "id" | "type" | "value"> & {
+  id: string;
+  label: string;
+  hint?: string;
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export type SubmitButtonProps = {
+  loading?: boolean;
+  disabled?: boolean;
+  variant?: "default" | "outline";
+  className?: string;
+  children: ReactNode;
 };
