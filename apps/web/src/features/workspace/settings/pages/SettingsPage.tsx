@@ -1,4 +1,5 @@
 import { useSettings } from "@/features/workspace/settings/hooks/useSettings";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { PageContent } from "@/shared/components/PageContent";
@@ -289,7 +290,7 @@ export function SettingsPage() {
 
             <FluidWaveItem index={3} className={cn("px-5 pt-5 pb-5", raisedStaticPanelClassName)}>
               <h3 className="text-2xl leading-none font-bold">
-                DayFlow Environment
+                {`${BRAND_NAME} Environment`}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-foreground/75">
                 This is a private personal command center. Your data is

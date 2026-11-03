@@ -1,4 +1,5 @@
 import type { ProfileSection } from "@types";
+import { BRAND_NAME } from "@/constants/brandManifest";
 
 export const PROFILE_MENU_SECTIONS: ProfileSection[] = [
   {
@@ -98,7 +99,7 @@ export const PROFILE_MENU_SECTIONS: ProfileSection[] = [
       },
       {
         id: "rate",
-        title: "Rate DayFlow",
+        title: `Rate ${BRAND_NAME}`,
         icon: "star",
         action: "action",
         iconColor: "#eab308",

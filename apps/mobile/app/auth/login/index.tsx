@@ -4,6 +4,7 @@ import { View, ScrollView } from "react-native";
 import AuthHeader from "@/components/auth/AuthHeader";
 import LoginFormSection from "@/components/auth/LoginFormSection";
 import AuthFooter from "@/components/auth/AuthFooter";
+import { BRAND_TAGLINE } from "@/constants/brandManifest";
 
 export default function LoginRoute() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function LoginRoute() {
       <View className="flex-1 bg-background dark:bg-background-dark">
         <AuthHeader
           title="Log in"
-          subtitle="Organize your day. Elevate your flow."
+          subtitle={BRAND_TAGLINE}
           showNavigationHeader={true}
           onBackPress={handleBackPress}
         />

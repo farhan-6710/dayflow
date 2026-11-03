@@ -16,6 +16,7 @@ import {
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { buildAuthUrl } from "@/features/workspace/auth/utils/authUrlParams";
 import { DASHBOARD_HOME } from "@/features/workspace/auth/constants/routes";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { CenteredLoading } from "@/shared/components/LoadingSpinner";
 
 function isAuthFormType(value: string | null): value is AuthFormType {
@@ -105,7 +106,7 @@ export function AuthPage() {
         : "Sign in";
 
   const description = showResetPassword
-    ? "Enter a new password for your DayFlow account."
+    ? `Enter a new password for your ${BRAND_NAME} account.`
     : formType === AUTH_FORM_TYPES.forgotPassword
       ? "We'll email you a link to choose a new password."
       : formType === AUTH_FORM_TYPES.signup

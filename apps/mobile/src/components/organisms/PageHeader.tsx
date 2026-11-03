@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import BrandMark from "@components/molecules/BrandMark";
+import { BRAND_NAME } from "@/constants/brandManifest";
 
 interface PageHeaderProps {
   /** Kept for call-site compatibility; brand mark is used instead. */
@@ -16,7 +17,7 @@ interface PageHeaderProps {
 
 const PageHeader = React.memo<PageHeaderProps>(
   ({ title, subtitle, actionButton, animationDelay = 100 }) => {
-    const brandSubtitle = title === "DayFlow" ? subtitle : title;
+    const brandSubtitle = title === BRAND_NAME ? subtitle : title;
 
     return (
       <Animated.View
@@ -24,7 +25,7 @@ const PageHeader = React.memo<PageHeaderProps>(
         className="flex-row items-center justify-between border-b border-border py-5 dark:border-border-dark"
         style={{ paddingHorizontal: 24 }}
       >
-        <BrandMark title="DayFlow" subtitle={brandSubtitle} grow />
+        <BrandMark title={BRAND_NAME} subtitle={brandSubtitle} grow />
         {actionButton ? actionButton : null}
       </Animated.View>
     );

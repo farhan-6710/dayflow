@@ -6,6 +6,7 @@ import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes
 import { CLIENT_AUTH_HOME } from "@/features/client/constants/routes";
 import { useAuth } from "@/features/workspace/auth/hooks/useAuth";
 import { resolveClientPortalProfile } from "@/services/clientPortalService";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { Button } from "@/shared/ui/button";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
@@ -58,7 +59,8 @@ export function NotAClientPage() {
         <p className="text-sm text-muted-foreground">
           No active client profile matches this account&apos;s email. Ask your
           provider to add you in Clients Management with the same email you use
-          to sign in, or use the workspace if you manage your own DayFlow account.
+          to sign in, or use the workspace if you manage your own {BRAND_NAME}{" "}
+          account.
         </p>
         {linkError ? (
           <p className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-xs text-destructive">

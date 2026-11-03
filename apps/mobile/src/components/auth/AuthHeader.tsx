@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Text from "@components/atoms/Text";
 import BrandMark from "@components/molecules/BrandMark";
 import { useThemeColors } from "@constants/theme";
+import { BRAND_NAME } from "@/constants/brandManifest";
 
 interface AuthHeaderProps {
   title: string;
@@ -50,7 +51,7 @@ export default function AuthHeader({
 
       <View className="border-y border-border bg-card px-6 py-8 dark:border-border-dark dark:bg-card-dark">
         <Pressable onPress={() => router.push("/(tabs)")}>
-          <BrandMark title="DayFlow" size={40} />
+          <BrandMark title={BRAND_NAME} size={40} />
         </Pressable>
         <View className="mt-5">
           <Text className="text-2xl font-semibold text-foreground dark:text-foreground-dark">

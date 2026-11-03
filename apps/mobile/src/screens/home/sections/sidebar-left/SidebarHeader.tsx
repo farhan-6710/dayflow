@@ -3,13 +3,14 @@ import { View } from "react-native";
 import Text from "@components/atoms/Text";
 import BrandMark from "@components/molecules/BrandMark";
 import { useUserDisplayData } from "@hooks";
+import { BRAND_NAME } from "@/constants/brandManifest";
 
 export function SidebarHeader() {
   const { displayName, email, initials } = useUserDisplayData();
 
   return (
     <View className="flex-col gap-4 px-6 pb-6 pt-10 border-b border-border dark:border-border-dark">
-      <BrandMark title="DayFlow" size={39} />
+      <BrandMark title={BRAND_NAME} size={39} />
       <View className="items-center gap-2">
         <View className="w-16 h-16 rounded-full bg-primary/10 dark:bg-primary/20 justify-center items-center overflow-hidden">
           <Text className="text-xl font-semibold text-primary dark:text-primary-dark">

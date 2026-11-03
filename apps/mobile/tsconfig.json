@@ -101,12 +101,16 @@
       ],
       "@app/*": [
         "./app/*"
+      ],
+      "@dayflow/brand/*": [
+        "../../shared/brand/*"
       ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    "../../shared/brand/**/*.json"
   ]
 }

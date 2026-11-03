@@ -4,7 +4,7 @@ Rules for developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [A
 
 ## Product context
 
-- Freelancer workspace (see `brandManifest.json`); clients use a separate portal linked by email
+- Freelancer workspace (see `shared/brand/brandManifest.json`); clients use a separate portal linked by email
 - Two portals, one web codebase: `features/workspace/` + `features/client/`
 - Live Supabase — end users do not run migrations
 - Platforms: `apps/web` (Vite + Tauri), `apps/mobile` (Expo)
@@ -12,10 +12,11 @@ Rules for developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [A
 ## Directory rules
 
 ```text
+shared/brand/                     Brand manifest (name, tagline, descriptions) — web + mobile
 apps/web/src/services/            ALL web/desktop Supabase calls
 apps/web/src/features/workspace/  Owner app (/workspace)
 apps/web/src/features/client/     Client portal (/client-portal)
-apps/web/src/shared/              Cross-portal UI, brand, utils
+apps/web/src/shared/              Cross-portal UI, brand re-exports, utils
 apps/web/src-tauri/               Tauri shell (not watched by Vite)
 apps/mobile/                      Expo — same Supabase project
 scripts/migrations/               Shared SQL (append-only)
@@ -35,7 +36,7 @@ Feature folders: `components/`, `hooks/`, `pages/`, `constants/`, `types/`, `uti
 - `showToast` after mutations; `ConfirmationModal` before deletes
 - Do not commit `.env` or credentials
 - Do not create markdown unless asked
-- Brand copy changes go through `brandManifest.json` first, then docs/banners
+- Brand copy changes go through `shared/brand/brandManifest.json` first, then docs/banners — never hard-code product name/tagline/description in either app
 
 ### Client portal checklist
 

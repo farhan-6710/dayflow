@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, View, useColorScheme } from "react-native";
 import Text from "@components/atoms/Text";
+import { BRAND_NAME } from "@/constants/brandManifest";
 
 type BrandMarkProps = {
   title?: string;
@@ -10,7 +11,7 @@ type BrandMarkProps = {
 };
 
 export default function BrandMark({
-  title = "DayFlow",
+  title = BRAND_NAME,
   subtitle,
   size = 40,
   grow = false,
@@ -28,7 +29,7 @@ export default function BrandMark({
         source={logo}
         style={{ width: size, height: size }}
         resizeMode="contain"
-        accessibilityLabel="DayFlow"
+        accessibilityLabel={BRAND_NAME}
       />
       <View
         className="mx-2.5 h-6 w-px shrink-0 self-center bg-border dark:bg-border-dark"

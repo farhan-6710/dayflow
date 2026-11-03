@@ -23,8 +23,9 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@dayflow/brand/*": ["../../shared/brand/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../../shared/brand/**/*.json"]
 }

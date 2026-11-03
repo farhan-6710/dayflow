@@ -23,6 +23,7 @@ import Toast from "react-native-toast-message";
 import PageHeader from "@components/organisms/PageHeader";
 import { Menu } from "lucide-react-native";
 import { useThemeColors } from "@constants";
+import { BRAND_NAME } from "@/constants/brandManifest";
 import { useDrawer } from "@/providers/DrawerProvider";
 import { HomeScreenSkeleton } from "@components/skeletons";
 
@@ -97,7 +98,7 @@ export default function HomeScreen() {
       <View className="bg-background dark:bg-background-dark">
         <PageHeader
           icon="notifications"
-          title="DayFlow"
+          title={BRAND_NAME}
           subtitle="Daily reminders for your tasks"
           actionButton={
             <TouchableOpacity

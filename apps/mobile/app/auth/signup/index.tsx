@@ -4,6 +4,7 @@ import { View, ScrollView } from "react-native";
 import AuthHeader from "@/components/auth/AuthHeader";
 import SignupFormSection from "@/components/auth/SignupFormSection";
 import AuthFooter from "@/components/auth/AuthFooter";
+import { BRAND_TAGLINE } from "@/constants/brandManifest";
 
 export default function SignupScreen() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function SignupScreen() {
       <View className="flex-1 bg-background dark:bg-background-dark">
         <AuthHeader
           title="Create account"
-          subtitle="Organize your day. Elevate your flow."
+          subtitle={BRAND_TAGLINE}
           showNavigationHeader={true}
           onBackPress={handleBackPress}
         />

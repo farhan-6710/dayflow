@@ -54,10 +54,11 @@ Open the Android link on a phone, install, and sign in with the same account as 
 | Tooling | Bun (web) · EAS Build (mobile) |
 
 ```text
+shared/brand/                      Brand manifest (shared by web + mobile)
 apps/web/src/features/workspace/   Owner app (/workspace)
 apps/web/src/features/client/      Client portal (/client-portal)
 apps/web/src/services/             Web/desktop Supabase access
-apps/web/src/shared/               Shared UI and brand
+apps/web/src/shared/               Shared UI and brand re-exports
 apps/web/src-tauri/                Tauri desktop shell
 apps/mobile/                       Expo app (same Auth + DB)
 scripts/migrations/                Shared Postgres SQL
@@ -77,6 +78,6 @@ docs/                              PRD, architecture, design, rules, tasks, memo
 | [docs/TASKS.md](./docs/TASKS.md) | Roadmap and status |
 | [docs/MEMORY.md](./docs/MEMORY.md) | Durable project decisions |
 
-Brand copy: [`brandManifest.json`](./apps/web/src/shared/brand/brandManifest.json)
+Brand copy (shared by web + mobile): [`shared/brand/brandManifest.json`](./shared/brand/brandManifest.json)
 
 App-specific setup: [apps/web/README.md](./apps/web/README.md) · [apps/mobile/README.md](./apps/mobile/README.md)

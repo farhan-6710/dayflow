@@ -6,7 +6,7 @@
 
 A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.
 
-Brand copy source of truth: `apps/web/src/shared/brand/brandManifest.json`.
+Brand copy source of truth: `shared/brand/brandManifest.json` (consumed by web and mobile).
 
 ## Goals
 

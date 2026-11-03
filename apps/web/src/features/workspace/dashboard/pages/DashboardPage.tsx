@@ -15,6 +15,7 @@ import { FluidWaveItem } from "@/shared/components/FluidWaveItem";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { ConfirmationModal } from "@/shared/ConfirmationModal";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { DAYFLOW_IMAGES } from "@/shared/constants/dayflowImages";
 import {
   containMinWidthClassName,
@@ -52,7 +53,8 @@ export function DashboardPage() {
   );
   const heading = isDemoAccount ? (
     <>
-      Welcome to the <span className={eyebrowTextClassName}>DayFlow Demo</span>
+      Welcome to the{" "}
+      <span className={eyebrowTextClassName}>{`${BRAND_NAME} Demo`}</span>
     </>
   ) : (
     <>

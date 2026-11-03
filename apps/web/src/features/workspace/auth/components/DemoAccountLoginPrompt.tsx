@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { DEMO_ACCOUNT } from "@/features/workspace/auth/constants/demoAccount";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { MOTION_EASE } from "@/shared/constants/pageMotion";
 import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { Button } from "@/shared/ui/button";
@@ -73,7 +74,7 @@ export function DemoAccountLoginPrompt({
               Login with demo account
             </h2>
             <p className="text-xs leading-relaxed text-muted-foreground">
-              Try DayFlow demo instantly with the shared workspace credentials below.
+              {`Try ${BRAND_NAME} demo instantly with the shared workspace credentials below.`}
             </p>
           </div>
         </div>
@@ -105,7 +106,7 @@ export function DemoAccountLoginPrompt({
               Signing in...
             </>
           ) : (
-            "Login with DayFlow demo account"
+            `Login with ${BRAND_NAME} demo account`
           )}
         </Button>
       </div>

@@ -8,6 +8,7 @@ import {
 } from "react";
 import { useBlocker } from "react-router";
 
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { isDesktopApp } from "@/shared/utils/platform";
 import { UnsavedChangesModal } from "@/shared/unsaved-changes/UnsavedChangesModal";
 import { UnsavedChangesContext } from "@/shared/unsaved-changes/unsavedChangesContext";
@@ -184,7 +185,7 @@ export function UnsavedChangesProvider({ children }: { children: ReactNode }) {
           setPending({
             title: "Unsaved changes",
             description:
-              "You have changes that haven’t been saved. Save before closing DayFlow, or close without saving.",
+              `You have changes that haven’t been saved. Save before closing ${BRAND_NAME}, or close without saving.`,
             proceed: async () => {
               await currentWindow.destroy();
             },

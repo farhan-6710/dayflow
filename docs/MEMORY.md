@@ -4,9 +4,8 @@ Durable context for future sessions. Prefer short facts over narrative.
 
 ## Positioning
 
-- Positioning key: `freelancer-workspace` (see `brandManifest.json`).
-- Canonical description: *A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.*
-- Tagline: *Organize your day. Elevate your flow.*
+- Positioning key: `freelancer-workspace` (see `shared/brand/brandManifest.json` — single source for web + mobile).
+- Canonical description / tagline / SEO title live only in that manifest; apps re-export, they do not duplicate.
 - Docs banner: `apps/web/public/brand-promotion-banner-img-dark.png`
 - Promo banners: `brand-promotion-banner-light.png` / `brand-promotion-banner-dark.png` (manifest `promotionBanners`) — no longer shown in the auth UI, which renders manifest copy in a Trail-style brand panel.
 - Design system: DayFlow follows Trail (`../trail`) as the single source of truth for tokens, surfaces, and motion (see `docs/DESIGN.md`).

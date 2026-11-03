@@ -13,7 +13,7 @@ DayFlow shares **Trail's design system** (same product family): warm cream surfa
 **Tagline:** Organize your day. Elevate your flow.  
 **Description:** A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.
 
-**Source of truth:** `apps/web/src/shared/brand/brandManifest.json`  
+**Source of truth:** `shared/brand/brandManifest.json` (web + mobile)  
 **Assets:** `apps/web/public/` (logos, favicons, promotion banners)
 
 The auth brand panel renders tagline, description, and portal features straight from the manifest. Promo banner images (docs/marketing) must mirror the same copy — change the manifest first, then update banner images.

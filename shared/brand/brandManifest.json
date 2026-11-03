@@ -4,6 +4,10 @@
   "description": "A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.",
   "shortDescription": "A freelancer workspace for clients, projects, tasks, and day-to-day work.",
   "positioning": "freelancer-workspace",
+  "seo": {
+    "title": "DayFlow — Freelancer Workspace",
+    "description": "A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place."
+  },
   "promotionBanners": {
     "light": "/brand-promotion-banner-light.png",
     "dark": "/brand-promotion-banner-dark.png",
