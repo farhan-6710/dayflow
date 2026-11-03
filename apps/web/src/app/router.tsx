@@ -28,12 +28,6 @@ import { PublicRoute } from "@/features/workspace/auth/components/PublicRoute";
 import { AppLayout } from "@/features/workspace/layouts/AppLayout";
 import { RouteErrorPage } from "@/shared/pages/RouteErrorPage";
 
-// Stands in for every page until its phase replaces it; the title comes from the route `handle`.
-const PlaceholderPage = lazyRoutePage(
-  () => import("@/shared/pages/PlaceholderPage"),
-  "PlaceholderPage",
-);
-
 const AuthPage = lazyRoutePage(
   () => import("@/features/workspace/auth/pages/AuthPage"),
   "AuthPage",
@@ -90,6 +84,26 @@ const NotAClientPage = lazyRoutePage(
   () => import("@/features/client/auth/pages/NotAClientPage"),
   "NotAClientPage",
 );
+const ClientDashboardPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientDashboardPage"),
+  "ClientDashboardPage",
+);
+const ClientProjectsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientProjectsPage"),
+  "ClientProjectsPage",
+);
+const ClientProjectDetailPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientProjectDetailPage"),
+  "ClientProjectDetailPage",
+);
+const ClientNotificationsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientNotificationsPage"),
+  "ClientNotificationsPage",
+);
+const ClientAnalyticsPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientAnalyticsPage"),
+  "ClientAnalyticsPage",
+);
 const ClientSettingsPage = lazyRoutePage(
   () => import("@/features/client/pages/ClientSettingsPage"),
   "ClientSettingsPage",
@@ -102,10 +116,6 @@ const DesktopOAuthBridgePage = lazyRoutePage(
   () => import("@/shared/auth/pages/DesktopOAuthBridgePage"),
   "DesktopOAuthBridgePage",
 );
-
-function page(path: string, title: string) {
-  return { path, handle: { title }, element: <PlaceholderPage /> };
-}
 
 function redirect(path: string, to: string) {
   return { path, element: <Navigate to={to} replace /> };
@@ -169,11 +179,11 @@ export const router = createBrowserRouter([
             element: <ClientAppLayout />,
             children: [
               { index: true, element: <Navigate to="dashboard" replace /> },
-              page("dashboard", "Dashboard"),
-              page("projects", "Projects"),
-              page("projects/:id", "Project"),
-              page("notifications", "Notifications"),
-              page("analytics", "Analytics"),
+              { path: "dashboard", element: <ClientDashboardPage /> },
+              { path: "projects", element: <ClientProjectsPage /> },
+              { path: "projects/:id", element: <ClientProjectDetailPage /> },
+              { path: "notifications", element: <ClientNotificationsPage /> },
+              { path: "analytics", element: <ClientAnalyticsPage /> },
               { path: "settings", element: <ClientSettingsPage /> },
               redirect("*", CLIENT_PORTAL_DASHBOARD_PATH),
             ],

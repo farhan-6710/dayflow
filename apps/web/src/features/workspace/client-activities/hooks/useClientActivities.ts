@@ -38,7 +38,7 @@ import { showToast } from "@/shared/utils/showToast";
 const KIND_LABELS: Record<ActivityKind, string> = { task: "Task", meeting: "Meeting", call: "Call" };
 
 export function useClientActivities(props: ClientActivitiesBlockProps) {
-  const { activityRaisedBy = "workspace" } = props;
+  const { activityRaisedBy = "workspace", onChange } = props;
   const projectId = props.scope === "project" ? props.projectId : undefined;
   const clientId = props.scope === "client" ? props.clientId : undefined;
   const [deleting, setDeleting] = useState(false);
@@ -107,6 +107,7 @@ export function useClientActivities(props: ClientActivitiesBlockProps) {
       await action();
       showToast("success", `${KIND_LABELS[kind]} ${isUpdate ? "updated" : "created"}.`);
       reload();
+      onChange?.();
     } catch (saveError) {
       console.error(`Failed to save ${kind}:`, saveError);
       showToast("error", saveError instanceof Error ? saveError.message : `Couldn't save the ${kind}.`);
@@ -150,6 +151,7 @@ export function useClientActivities(props: ClientActivitiesBlockProps) {
       setRowToDelete(null);
       showToast("success", `${KIND_LABELS[kind]} deleted.`);
       reload();
+      onChange?.();
     } catch (deleteError) {
       console.error(`Failed to delete ${kind}:`, deleteError);
       showToast("error", `Couldn't delete the ${kind}. Please try again.`);

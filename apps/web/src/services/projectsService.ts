@@ -123,3 +123,13 @@ export async function deleteProject(id: string): Promise<void> {
   const { error } = await supabase.from(DB.PROJECTS.TABLE).delete().eq("id", id);
   if (error) throw error;
 }
+
+/** Projects shared with the signed-in client, through the portal RPC (clients never own projects). */
+export async function fetchProjectsForClientPortal(clientCompanyName: string): Promise<Project[]> {
+  const { data, error } = await supabase.rpc("fetch_client_portal_projects");
+  if (error) throw error;
+
+  return ((data ?? []) as Omit<ProjectRow, "project_for_client">[])
+    .map((row) => ({ ...mapProject(row), project_for_label: clientCompanyName }))
+    .sort(bySortOrder);
+}

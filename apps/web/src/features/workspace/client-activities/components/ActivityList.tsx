@@ -4,7 +4,7 @@ import { ActivityStatusBadge } from "@/features/workspace/client-activities/comp
 import type { ActivityListProps } from "@/features/workspace/client-activities/types/components";
 import { Button } from "@/shared/ui/button";
 
-export function ActivityList({ rows, emptyLabel, canEditRow, onEdit, onDelete }: ActivityListProps) {
+export function ActivityList({ clientLabel, rows, emptyLabel, canEditRow, onEdit, onDelete }: ActivityListProps) {
   if (rows.length === 0) {
     return <p className="py-3 text-sm text-muted-foreground">{emptyLabel}</p>;
   }
@@ -19,7 +19,7 @@ export function ActivityList({ rows, emptyLabel, canEditRow, onEdit, onDelete }:
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {row.raisedBy === "client" ? (
-              <span className="text-xs text-muted-foreground">Raised by client</span>
+              <span className="text-xs text-muted-foreground">Raised by {clientLabel}</span>
             ) : null}
             <ActivityStatusBadge status={row.status} />
             {canEditRow(row) ? (

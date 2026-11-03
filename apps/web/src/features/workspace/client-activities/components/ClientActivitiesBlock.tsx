@@ -36,6 +36,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
   const [activeKind, setActiveKind] = useState<ActivityKind>("task");
   const [dialog, setDialog] = useState<DialogState>(null);
 
+  const isPortal = activityRaisedBy === "client";
   const fixedProjectId = props.scope === "project" ? props.projectId : undefined;
   const projectOptions = props.scope === "client" ? props.projects : undefined;
 
@@ -55,7 +56,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
     <section className={cn(panelClassName, "min-w-0 p-5")}>
       <Tabs value={activeKind} onValueChange={(kind) => setActiveKind(kind as ActivityKind)}>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl">Client activities</h2>
+          <h2 className="text-xl">{isPortal ? "Activities" : "Client activities"}</h2>
           <div className="flex flex-wrap items-center gap-2">
             <TabsList>
               {TABS.map((tab) => (
@@ -112,6 +113,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
                           {group.title} <span className="tabular-nums">({group.list.length})</span>
                         </h3>
                         <ActivityList
+                          clientLabel={isPortal ? "you" : "client"}
                           rows={group.list}
                           emptyLabel={group.empty}
                           canEditRow={canEditRow}
@@ -150,7 +152,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
         open={activities.rowToDelete !== null}
         onOpenChange={(open) => !open && activities.setRowToDelete(null)}
         title={`Delete "${activities.rowToDelete?.title ?? ""}"?`}
-        description="This removes it for you and your client, and can't be undone."
+        description={`This removes it for you and your ${isPortal ? "provider" : "client"}, and can't be undone.`}
         confirmLabel="Delete"
         confirmVariant="destructive"
         loading={activities.deleting}

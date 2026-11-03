@@ -18,6 +18,8 @@ export type ClientActivitiesBlockProps = ClientActivitiesScope & {
   canEdit?: boolean;
   /** "client" in the portal: new items are saved as client-raised, and only those stay editable. */
   activityRaisedBy?: ClientActivityRaisedBy;
+  /** Called after any create, edit or delete, so a page's own totals can refresh. */
+  onChange?: () => void;
 };
 
 export type ActivityKind = "task" | "meeting" | "call";
@@ -37,6 +39,7 @@ export type ActivityListRow = {
 };
 
 export type ActivityListProps = {
+  clientLabel: string;
   rows: ActivityListRow[];
   emptyLabel: string;
   canEditRow: (row: ActivityListRow) => boolean;

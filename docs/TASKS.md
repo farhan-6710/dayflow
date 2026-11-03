@@ -52,11 +52,11 @@ Each item: service → hook → page → states → verify.
 
 ## Phase 5: Client portal
 
-- [ ] Dashboard (stat cards, activities)
-- [ ] Projects list and project detail with raise-activity flow
-- [ ] Notifications (real inbox, replacing the empty placeholder)
-- [ ] Analytics (client-specific, not the owner page)
-- [ ] Settings
+- [x] Dashboard (stat cards, activities)
+- [x] Projects list and project detail with raise-activity flow
+- [x] Notifications (real inbox, replacing the empty placeholder)
+- [x] Analytics (client-specific, not the owner page)
+- [x] Settings
 
 ## Phase 6: Polish and release
 
