@@ -1,50 +1,42 @@
 # PRD — DayFlow
 
-## Product
-
-**DayFlow** — Organize your day. Elevate your flow.
-
+**Organize your day. Elevate your flow.**
 A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.
 
-Brand copy source of truth: `shared/brand/brandManifest.json` (consumed by web and mobile).
+## Goal
 
-## Goals
-
-- One freelancer workspace for clients, projects, tasks, meetings, notes, and reminders
-- Separate client portal so clients can follow shared work and raise activities
-- Same account and data across web, desktop (macOS/Windows), and mobile
+Rebuild the DayFlow web app from scratch (mobile after) with better UI/UX, keeping every existing feature and the **existing Supabase database untouched**, so current data keeps working.
 
 ## Users
 
-| User | Access | Needs |
-|------|--------|--------|
-| Workspace owner | `/workspace` · desktop · mobile | Run client work, personal tasks, and daily operations |
-| Client | `/client-portal` | View shared projects; raise tasks, meetings, and calls |
+| User | Entry | Needs |
+|------|-------|-------|
+| Workspace owner (freelancer) | `/workspace` | Run client work, personal tasks and daily operations |
+| Client | `/client-portal` | Follow shared projects; raise tasks, meetings and calls |
 
-## Surfaces
+## Scope
 
-| Surface | Scope today |
-|---------|-------------|
-| Web + desktop | Full workspace + client portal |
-| Mobile | Owner reminders + push (same Supabase user) |
+| In | Out (for now) |
+|----|---------------|
+| All routes and features in [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md) | Desktop (Tauri) |
+| Light + dark theme, responsive layouts | Any database, schema or RLS change |
+| Existing Google OAuth + email/password auth | Server-side notifications and email (needs a backend decision, see [TASKS.md](./TASKS.md)) |
 
 ## Requirements
 
-- Auth: email/password; Google OAuth on web/desktop
-- Workspace: dashboard, tasks/calendar, projects, clients, notes, reminders, notifications, analytics
-- Projects: personal (`project_for` null) or client-linked; active/inactive
-- Client portal: email linked to a client record; shared projects; raise activities (`raised_by = 'client'`)
-- Activities: tasks, meetings, calls with date/time, priority, status
-- Notes: categories + optional reference links
-- Reminders: occurrences + Expo push on mobile
-- RLS: owners by `user_id` / `owner_user_id`; clients via portal RPCs only
+- Two portals in one codebase, sharing one shell layout (header, left sidebar, main content).
+- Owner features: dashboard, tasks calendar, projects and notes, clients, client activities and chat, daily reminders, notifications, analytics, settings.
+- Client features: dashboard, shared projects, raise activities, notifications, analytics, settings.
+- Every list and detail screen has loading, empty and error states.
+- Deletes are always confirmed; mutations always give feedback.
 
-## Expected outcomes
+## Success criteria
 
-- Owner plans the day and manages client work in one place
-- Client stays aligned on shared work without owning projects
-- Web, desktop, and mobile share one backend and one source of truth
+- Feature parity with the old web app, verified page by page against the spec.
+- Existing accounts and data load with no migration.
+- Both portals work on phone, tablet and desktop widths.
+- The same Supabase project keeps serving web and mobile.
 
-## Portal feature groups
+## References
 
-See `brandManifest.json` → `portals.workspace.features` and `portals.client.features`.
+[WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md) routes and features · [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md) env, links, DB contract

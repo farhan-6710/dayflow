@@ -1,63 +1,64 @@
 # Rules — DayFlow
 
-Rules for developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
+For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md) · Look: [DESIGN.md](./DESIGN.md).
 
-## Product context
+## Non-negotiable
 
-- Freelancer workspace (see `shared/brand/brandManifest.json`); clients use a separate portal linked by email
-- Two portals, one web codebase: `features/workspace/` + `features/client/`
-- Live Supabase — end users do not run migrations
-- Platforms: `apps/web` (Vite + Tauri), `apps/mobile` (Expo)
+- **Never change the database**: no migrations, schema, RLS or data edits. The rebuild reads and writes existing tables only.
+- **Supabase only through `services/`.** Features never import `supabaseClient`.
+- **Table and column names live only in `services/db.ts`.**
+- **RLS is the access contract.** Owners by `user_id` / `owner_user_id`; clients only through the portal RPCs.
+- **Never commit** `.env`, credentials or keys. Use the existing `VITE_SUPABASE_*` variables.
+- **Auth redirect paths stay exactly as listed** in [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md).
 
-## Directory rules
+## UX behaviour
 
-```text
-shared/brand/                     Brand manifest (name, tagline, descriptions) — web + mobile
-apps/web/src/services/            ALL web/desktop Supabase calls
-apps/web/src/features/workspace/  Owner app (/workspace)
-apps/web/src/features/client/     Client portal (/client-portal)
-apps/web/src/shared/              Cross-portal UI, brand re-exports, utils
-apps/web/src-tauri/               Tauri shell (not watched by Vite)
-apps/mobile/                      Expo — same Supabase project
-scripts/migrations/               Shared SQL (append-only)
-docs/                             PRD, ARCHITECTURE, DESIGN, RULES, TASKS, MEMORY
-```
+- **Confirm every delete** with `ConfirmationModal`, naming what is deleted and what goes with it.
+- **Toast after every mutation** (`showToast` success or error). Never fail silently.
+- **Unsaved-changes guard** on every form that can be dirty.
+- **Every list and detail screen has loading, empty and error states.** No blank screens.
+- **Disable controls while saving** to prevent double submits.
 
-Feature folders: `components/`, `hooks/`, `pages/`, `constants/`, `types/`, `utils/`.
+## Naming
 
-## Code rules
+| Thing | Convention | Example |
+|-------|------------|---------|
+| Component file and export | `PascalCase.tsx`, named export, one per file | `ProjectsTable.tsx` |
+| Hook | `useCamelCase.ts` | `useProjectDetail.ts` |
+| Service | `<domain>Service.ts` | `tasksService.ts` |
+| Route constants | `UPPER_SNAKE` in `app/constants/` | `WORKSPACE_DASHBOARD_PATH` |
+| Other constants and utils | `camelCase.ts` | `noteCategories.ts` |
+| Folders | `kebab-case` | `clients-management/` |
+| Props type | `ComponentNameProps` in `types/components.ts` | `ClientDialogProps` |
+| Domain types | `types/types.ts` | `Task`, `Client` |
+| Database columns in code | `snake_case` as stored | `project_for` |
 
-- Smallest change that solves the problem
-- No Supabase imports in features — only via `services/`
-- Table/column names only in each app’s `db.ts`
-- RLS is law (`user_id` / `owner_user_id`; client portal RPCs)
-- Presentational components ~120 lines; logic in hooks
-- Prop types in `types/components.ts` as `ComponentNameProps`
-- `showToast` after mutations; `ConfirmationModal` before deletes
-- Do not commit `.env` or credentials
-- Do not create markdown unless asked
-- Brand copy changes go through `shared/brand/brandManifest.json` first, then docs/banners — never hard-code product name/tagline/description in either app
+## Files and folders
 
-### Client portal checklist
+- Group by feature: `features/<portal>/<feature>/{components,hooks,pages,constants,types,utils}`. Create a subfolder only when it has files.
+- A page composes components and hooks. It holds no query logic.
+- Anything used by both portals or more than one feature goes in `shared/`. Features never import from another feature, except the shared `client-activities` module.
+- shadcn components live in `shared/ui/` and are not edited casually. Wrap them in `shared/components/` instead.
+- Import with the `@/` alias, never long relative paths.
+- Lazy-load every route page through `lazyRoutePage`.
 
-1. `project_for` points at the client
-2. Client `email` matches portal login
-3. Use `fetch_client_portal_projects()` from the client session
-4. Activities: respect `raised_by` and `forClientPortal`
+## Code
 
-OK to reuse presentational workspace blocks with portal props. Do not import owner-only hooks that assume `user.id` owns projects.
+- Smallest change that solves the problem. No speculative abstractions.
+- Presentational components stay around 120 lines; move logic into hooks.
+- TypeScript strict. No `any`. Type everything that crosses a service boundary.
+- Use semantic design tokens only (see [DESIGN.md](./DESIGN.md)).
+- Icons from lucide-react. Dates with date-fns.
+- Brand copy only from `shared/brand/brandManifest.json`.
 
-## Migrations & seeds
+## Client portal
 
-- New SQL only as the next numbered file under `scripts/migrations/`
-- Never edit applied migrations
-- Seeds (local): `bun run seed:clients` / `seed:client-projects` with `SEED_EMAIL` / `SEED_PASSWORD` in `apps/web/.env`
+1. Use `fetch_client_portal_projects()` from the client session.
+2. Activities respect `raised_by` and `forClientPortal`; clients write only `raised_by = 'client'`.
+3. Reuse presentational workspace blocks through props. Never import owner-only hooks that assume `user.id` owns the data.
 
-## Desktop (Tauri)
+## Working
 
-| Command | Purpose |
-|---------|---------|
-| `bun run tauri:dev` | Dev desktop (Vite :5173) |
-| `bun run tauri:build` | macOS `.app` + `.dmg` |
-
-Detect desktop: `isDesktopApp()` from `@/shared/utils/platform`. Eject mounted DayFlow DMG before build (`hdiutil detach "/Volumes/DayFlow"`). Do not commit `src-tauri/target/`.
+- Build in the order of [TASKS.md](./TASKS.md); finish and verify one feature before the next.
+- Verify in the browser at phone and desktop widths, in light and dark.
+- Update [TASKS.md](./TASKS.md) when work lands. Create other markdown only when asked.

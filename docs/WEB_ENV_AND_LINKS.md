@@ -113,4 +113,3 @@ These still point at `apps/web/...` and need updating once the new app exists:
 
 - **`apps/mobile/scripts/generate-brand-assets.py`** reads `apps/web/public/logo-*-icon.png`. This affects the script only; the mobile app still runs.
 - **Root `README.md`** links to the banner image and the old folder layout.
-- **`docs/ARCHITECTURE.md`, `docs/RULES.md`, `docs/DESIGN.md`, `docs/MEMORY.md`** mention old `apps/web` paths.
