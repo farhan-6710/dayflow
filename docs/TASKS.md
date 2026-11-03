@@ -22,6 +22,7 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 
 ## Phase 2: App shell
 
+- [x] Generate icon and illustration sheets, slice into `public/images/dayflow/{icons,illustrations}` (see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md))
 - [ ] `AuthProvider`, `ThemeProvider`, Toaster, tooltip provider
 - [ ] Router, `lazyRoutePage`, route constants, legacy redirects, `RouteErrorPage`
 - [ ] Guards: `PublicRoute`, `ProtectedRoute`, `ClientPublicRoute`, `ClientProtectedRoute`

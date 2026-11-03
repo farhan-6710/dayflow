@@ -26,6 +26,95 @@ This plan lists every route, the data it shows and the components it needs, in b
   - At the end: capture the design system.
 - Build one page at a time, in this order for each page: service → hook → page → loading / empty / error states → check in the browser → tick it off in `docs/TASKS.md`.
 
+## Asset requirements: icons and illustrations
+
+UI icons (nav, buttons, inputs) come from lucide-react. The custom assets below are only for stat cards, empty states and hero spots. All of them are transparent-background PNGs with one version per theme: each file name below takes a `-light` or `-dark` suffix (e.g. `icon-stat-pending-light.png`). Pick the version from the active theme.
+
+### 3D icons (19 assets, each 512×512)
+
+| # | File | Used in |
+|---|------|---------|
+| 1 | `icon-stat-pending.png` | Dashboard: pending tasks |
+| 2 | `icon-stat-overdue.png` | Dashboard: overdue tasks |
+| 3 | `icon-stat-projects.png` | Dashboard and client dashboard: projects |
+| 4 | `icon-stat-completed.png` | Dashboard, analytics and client dashboard: completed |
+| 5 | `icon-stat-tasks.png` | Analytics: total tasks |
+| 6 | `icon-stat-rate.png` | Analytics: completion rate |
+| 7 | `icon-stat-notes.png` | Analytics: total notes |
+| 8 | `icon-stat-meetings.png` | Client dashboard: meetings |
+| 9 | `icon-stat-calls.png` | Client dashboard: calls |
+| 10 | `icon-empty-tasks.png` | Empty: tasks calendar day |
+| 11 | `icon-empty-projects.png` | Empty: projects |
+| 12 | `icon-empty-notes.png` | Empty: notes |
+| 13 | `icon-empty-clients.png` | Empty: clients |
+| 14 | `icon-empty-reminders.png` | Empty: reminders |
+| 15 | `icon-empty-notifications.png` | Empty: notifications (both portals) |
+| 16 | `icon-empty-activities.png` | Empty: client activities |
+| 17 | `icon-empty-todos.png` | Empty: dashboard todo list |
+| 18 | `icon-empty-links.png` | Empty: reference links |
+| 19 | `icon-empty-search.png` | Empty: no search results |
+
+### Illustrations (7 assets, about 1200px wide)
+
+| # | File | Used in |
+|---|------|---------|
+| 1 | `illo-auth-workspace.png` | Workspace auth brand panel |
+| 2 | `illo-auth-client.png` | Client portal auth brand panel |
+| 3 | `illo-sidebar-workspace.png` | Workspace sidebar quick-action card |
+| 4 | `illo-sidebar-client.png` | Client sidebar quick-action card |
+| 5 | `illo-dashboard-hero.png` | Dashboard greeting / hero corner |
+| 6 | `illo-not-a-client.png` | `/client-portal/not-a-client` |
+| 7 | `illo-error.png` | Route error and not-found page |
+
+### Where files go
+
+| What | Folder |
+|------|--------|
+| Generated sheets (source, not shipped) | `apps/web/design/sheets/` as `icons-sheet-{light,dark}.png` and `illustrations-sheet-{light,dark}.png` |
+| Final icons, sliced from the sheet | `apps/web/public/images/dayflow/icons/` |
+| Final illustrations, sliced from the sheet | `apps/web/public/images/dayflow/illustrations/` |
+| Paths in code | `shared/constants/dayflowImages.ts` only (e.g. `/images/dayflow/icons/icon-stat-pending-light.png`) |
+
+The sheets are sliced into the named files in the order of the tables above: left to right, top to bottom. Done for both themes. The sheets also produced one extra icon, `icon-extra-sparkles-{light,dark}.png`, not assigned to a screen yet.
+
+### Prompt: icon sheet
+
+```text
+Create one PNG sheet with a fully transparent background (no backdrop, no shadow plate).
+Show 19 playful glossy 3D icons in a grid of 5 columns and 4 rows, left to right, top to bottom,
+evenly spaced, each centred in its own square cell, nothing overlapping, no text or labels.
+Style: soft rounded clay-like 3D, gentle top-left light, subtle soft shadow under each object only.
+Palette: warm cream and paper beige, charcoal grey, with coral orange (#E2704A) as the single accent.
+Must read well on both a light cream and a near-black background.
+Icons in order:
+1 hourglass (pending), 2 alarm clock with alert badge (overdue), 3 folder stack (projects),
+4 check-mark badge (completed), 5 checklist clipboard (tasks), 6 rising progress ring (completion rate),
+7 notebook with pen (notes), 8 calendar with two people (meetings), 9 phone handset (calls),
+10 empty calendar page (no tasks), 11 empty open folder (no projects), 12 blank sticky note (no notes),
+13 empty business card holder (no clients), 14 bell with clock (no reminders), 15 quiet sleeping bell (no notifications),
+16 empty activity tray (no activities), 17 blank to-do card (no todos), 18 broken chain link (no links),
+19 magnifying glass with nothing found (no search results). Leave the 20th cell empty.
+```
+
+### Prompt: illustration sheet
+
+```text
+Create one PNG sheet with a fully transparent background (no backdrop, no ground plane).
+Show 7 playful 3D illustrations side by side in a grid of 4 columns and 2 rows, left to right, top to bottom,
+evenly spaced, each in its own wide landscape cell, nothing overlapping, no text or labels.
+Style: same soft rounded clay-like 3D as a matching icon set, gentle top-left light, subtle soft shadows.
+Palette: warm cream and paper beige, charcoal grey, coral orange (#E2704A) as the single accent.
+Must read well on both a light cream and a near-black background.
+Illustrations in order:
+1 a freelancer's desk with laptop, calendar and coffee (workspace sign-in),
+2 two people exchanging a project folder across a desk (client portal sign-in),
+3 a small plant growing from a calendar (workspace sidebar card),
+4 a folder with a progress bar and a speech bubble (client sidebar card),
+5 a sunrise over a neat stack of task cards (dashboard hero),
+6 a locked door with a friendly key tag (not a client),
+7 a tangled path with a signpost (error / page not found). Leave the 8th cell empty.
+```
+
 ## 1. Foundation
 - Vite + React 19 + TS in `apps/web` (keep `.env`).
 - Tailwind 4, `shadcn init` (alias `@/`, ui in `shared/ui`), then apply `docs/theme.css`. Fonts: Ovo + Merriweather.

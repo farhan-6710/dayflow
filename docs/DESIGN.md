@@ -58,4 +58,4 @@ Visible focus ring (`ring` token), labelled icon buttons, keyboard-operable drag
 
 ## Brand
 
-Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos, favicons and 3D illustrations were removed with the old app; restore from git per [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md).
+Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`. 3D icons and illustrations are in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md).
