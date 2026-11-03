@@ -1,0 +1,42 @@
+import {
+  CLIENT_PORTAL_ANALYTICS_PATH,
+  CLIENT_PORTAL_AUTH_PATH,
+  CLIENT_PORTAL_DASHBOARD_PATH,
+  CLIENT_PORTAL_NOTIFICATIONS_PATH,
+  CLIENT_PORTAL_PROJECTS_PATH,
+  CLIENT_PORTAL_SETTINGS_PATH,
+} from "@/app/constants/clientPortalRoutes";
+import { BRAND_NAME, brandManifest } from "@/shared/brand/brandManifest";
+import { AppShellLayout } from "@/shared/layouts/AppShellLayout";
+import type { ShellSidebarConfig } from "@/shared/types/components";
+
+const sidebarConfig: ShellSidebarConfig = {
+  homeLink: CLIENT_PORTAL_DASHBOARD_PATH,
+  brandSubtitle: brandManifest.portals.client.subtitle,
+  nav: [
+    { label: "Dashboard", to: CLIENT_PORTAL_DASHBOARD_PATH, icon: "dashboard" },
+    { label: "Projects", to: CLIENT_PORTAL_PROJECTS_PATH, icon: "projects" },
+    { label: "Notifications", to: CLIENT_PORTAL_NOTIFICATIONS_PATH, icon: "notifications" },
+    { label: "Analytics", to: CLIENT_PORTAL_ANALYTICS_PATH, icon: "analytics" },
+    { label: "Settings", to: CLIENT_PORTAL_SETTINGS_PATH, icon: "settings" },
+  ],
+  searchPlaceholder: "Search pages...",
+  profilePath: CLIENT_PORTAL_SETTINGS_PATH,
+  quickAction: {
+    title: "Your projects",
+    description: "View project updates and activities from your provider.",
+    buttonLabel: "View Projects",
+    buttonTo: CLIENT_PORTAL_PROJECTS_PATH,
+    image: "illo-sidebar-client",
+  },
+};
+
+export function ClientAppLayout() {
+  return (
+    <AppShellLayout
+      sidebarConfig={sidebarConfig}
+      signOutRedirect={CLIENT_PORTAL_AUTH_PATH}
+      mobileNavDescription={`${BRAND_NAME} client portal navigation`}
+    />
+  );
+}

@@ -1,17 +1,20 @@
-import { BRAND_NAME, BRAND_TAGLINE } from "@/shared/brand/brandManifest";
-import { Button } from "@/shared/ui/button";
+import { MotionConfig } from "framer-motion";
+import { RouterProvider } from "react-router";
 
-// Phase 1 placeholder: proves theme, fonts and shadcn wiring. Phase 2 replaces it with the router.
+import { router } from "@/app/router";
+import { AuthProvider } from "@/shared/providers/AuthProvider";
+import { ThemeProvider } from "@/shared/providers/ThemeProvider";
+import { Toaster } from "@/shared/ui/sonner";
+
 export function App() {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center gap-4 p-6 text-center">
-      <h1 className="text-4xl">{BRAND_NAME}</h1>
-      <p className="font-serif text-muted-foreground">{BRAND_TAGLINE}</p>
-      <Button
-        onClick={() => document.documentElement.classList.toggle("dark")}
-      >
-        Toggle theme
-      </Button>
-    </main>
+    <MotionConfig reducedMotion="user">
+      <AuthProvider>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+          <Toaster position="top-center" />
+        </ThemeProvider>
+      </AuthProvider>
+    </MotionConfig>
   );
 }

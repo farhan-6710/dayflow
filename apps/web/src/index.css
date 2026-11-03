@@ -184,3 +184,15 @@
     letter-spacing: var(--tracking-normal);
   }
 }
+
+@layer base {
+  html,
+  body {
+    font-synthesis-weight: none; /* Ovo has one weight: never fake a bold. */
+    scrollbar-color: var(--border) transparent;
+  }
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+}

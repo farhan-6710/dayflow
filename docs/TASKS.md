@@ -23,12 +23,12 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 ## Phase 2: App shell
 
 - [x] Generate icon and illustration sheets, slice into `public/images/dayflow/{icons,illustrations}` (see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md))
-- [ ] `AuthProvider`, `ThemeProvider`, Toaster, tooltip provider
-- [ ] Router, `lazyRoutePage`, route constants, legacy redirects, `RouteErrorPage`
-- [ ] Guards: `PublicRoute`, `ProtectedRoute`, `ClientPublicRoute`, `ClientProtectedRoute`
-- [ ] `AppShellLayout`: header, collapsible sidebar, mobile nav sheet, main outlet, page transition
-- [ ] `AppLayout` (8 nav items) and `ClientAppLayout` (5 nav items) configs
-- [ ] Shared pieces: `PageHeader`, `EmptyState`, `ErrorBanner`, skeletons, `StatCard`, `DirectoryTable`, `ConfirmationModal`, `showToast`, unsaved-changes guard
+- [x] `AuthProvider`, `ThemeProvider`, Toaster, tooltip provider
+- [x] Router, `lazyRoutePage`, route constants, legacy redirects, `RouteErrorPage`
+- [x] Guards: `PublicRoute`, `ProtectedRoute`, `ClientPublicRoute`, `ClientProtectedRoute`
+- [x] `AppShellLayout`: header, collapsible sidebar, mobile nav sheet, main outlet, page transition
+- [x] `AppLayout` (8 nav items) and `ClientAppLayout` (5 nav items) configs
+- [x] Shared pieces: `PageHeader`, `EmptyState`, `ErrorBanner`, skeletons, `StatCard`, `DirectoryTable`, `ConfirmationModal`, `showToast`, unsaved-changes guard
 
 ## Phase 3: Auth
 
