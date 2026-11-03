@@ -11,14 +11,14 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 
 ## Phase 1: Foundation
 
-- [ ] Scaffold Vite + React 19 + TypeScript in `apps/web` (keep `.env`)
-- [ ] Install dependencies listed in [ARCHITECTURE.md](./ARCHITECTURE.md)
-- [ ] Tailwind 4 + `shadcn init` (alias `@/`, components in `shared/ui`)
-- [ ] Apply [theme.css](./theme.css) to `src/index.css`; add Ovo + Merriweather fonts
-- [ ] `@dayflow/brand` alias to `shared/brand`; SEO title and description from manifest
-- [ ] `services/supabaseClient.ts` and `services/db.ts` (columns from old `db.ts` in git)
-- [ ] Restore logos, favicons, 3D assets into `public/`
-- [ ] ESLint, strict tsconfig, `bun run build` passing
+- [x] Scaffold Vite + React 19 + TypeScript in `apps/web` (keep `.env`)
+- [x] Install dependencies listed in [ARCHITECTURE.md](./ARCHITECTURE.md)
+- [x] Tailwind 4 + `shadcn init` (alias `@/`, components in `shared/ui`)
+- [x] Apply [theme.css](./theme.css) to `src/index.css`; add Ovo + Merriweather fonts
+- [x] `@dayflow/brand` alias to `shared/brand`; SEO title and description from manifest
+- [x] `services/supabaseClient.ts` and `services/db.ts` (columns from old `db.ts` in git)
+- [x] Restore logos, favicons, 3D assets into `public/`
+- [x] ESLint, strict tsconfig, `bun run build` passing
 
 ## Phase 2: App shell
 

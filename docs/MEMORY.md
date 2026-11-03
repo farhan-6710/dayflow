@@ -39,7 +39,8 @@ Durable context for future sessions. Short facts, not narrative.
 | `ARCHITECTURE.md` | Stack, folders, data flow, data model |
 | `DESIGN.md` + `theme.css` | UI direction and theme tokens |
 | `RULES.md` | Conventions for developers and agents |
+| `IMPLEMENTATION_PLAN.md` | Per-route data and components, build order |
 | `TASKS.md` | Phased rebuild checklist |
 | `MEMORY.md` | This file |
 
-Read order for a new agent: PRD → WEB_REBUILD_SPEC → ARCHITECTURE → RULES → DESIGN → TASKS.
+Read order for a new agent: PRD → WEB_REBUILD_SPEC → ARCHITECTURE → RULES → DESIGN → IMPLEMENTATION_PLAN → TASKS.
