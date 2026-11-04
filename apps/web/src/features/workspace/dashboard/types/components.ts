@@ -23,7 +23,6 @@ export type TaskCompletionData = {
 };
 
 export type DashboardHeroProps = {
-  greeting: string;
   name: string;
   today: string;
   filters: ReactNode;

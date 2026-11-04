@@ -1,11 +1,18 @@
+import { DateFiltersCompact } from "@/shared/components/DateFiltersCompact";
 import { DateRangePicker } from "@/shared/components/DateRangePicker";
 import { Reveal } from "@/shared/components/Reveal";
 import { DATE_FILTER_PERIODS } from "@/shared/constants/dateFilters";
+import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
 import { cn } from "@/shared/lib/utils";
 import type { DateFiltersProps } from "@/shared/types/components";
 import { Button } from "@/shared/ui/button";
 
-export function DateFilters({
+export function DateFilters(props: DateFiltersProps) {
+  const isPhone = useMediaQuery("not all and (min-width: 641px)");
+  return isPhone ? <DateFiltersCompact {...props} /> : <DateFiltersBar {...props} />;
+}
+
+function DateFiltersBar({
   activeQuickPeriod,
   isDateRangeActive,
   periodLabel,

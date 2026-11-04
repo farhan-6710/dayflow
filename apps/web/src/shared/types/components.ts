@@ -300,6 +300,7 @@ export type OptionDropdownProps = {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  menuClassName?: string;
   icon?: LucideIcon;
 };
 
@@ -318,7 +319,13 @@ export type DateFiltersFilterState =
   | { mode: "period"; period: DateFilterPeriodId }
   | { mode: "range"; from: Date; to: Date };
 
+export type ResponsiveGreetingProps = {
+  name: ReactNode;
+};
+
 export type DateRangePickerProps = {
+  /** Fills its cell as an outlined button, for the phone layout. */
+  fullWidth?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   range: DateRange | undefined;

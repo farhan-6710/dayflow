@@ -2,6 +2,7 @@ import { CalendarClock, CircleCheck, Hourglass, Layers } from "lucide-react";
 
 import { WORKSPACE_PROJECTS_MANAGEMENT_PATH, WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
 import { seriesDelta } from "@/features/workspace/dashboard/utils/dashboardData";
+import { DATE_FILTER_PERIODS } from "@/shared/constants/dateFilters";
 import type { StatCardItem } from "@/shared/types/components";
 
 type DashboardCardsInput = {
@@ -29,7 +30,9 @@ export function getDashboardCards({
   sparklines,
   periodLabel,
 }: DashboardCardsInput): StatCardItem[] {
-  const period = periodLabel === "All" ? "all time" : periodLabel.toLowerCase();
+  // Named periods read as words ("this month"); a custom range keeps its capitalised dates.
+  const isNamedPeriod = DATE_FILTER_PERIODS.some((item) => item.label === periodLabel);
+  const period = periodLabel === "All" ? "all time" : isNamedPeriod ? periodLabel.toLowerCase() : periodLabel;
 
   return [
     {

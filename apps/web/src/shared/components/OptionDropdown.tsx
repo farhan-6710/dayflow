@@ -19,6 +19,7 @@ export function OptionDropdown({
   placeholder = "Select option",
   disabled = false,
   className,
+  menuClassName,
   icon: Icon,
 }: OptionDropdownProps) {
   const selected = options.find((option) => option.value === value);
@@ -37,7 +38,7 @@ export function OptionDropdown({
           <ChevronDown className="text-muted-foreground" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="max-h-72 w-(--radix-dropdown-menu-trigger-width) overflow-y-auto">
+      <DropdownMenuContent align="start" className={cn("max-h-72 w-(--radix-dropdown-menu-trigger-width) overflow-y-auto", menuClassName)}>
         <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
           {options.map((option) => (
             <DropdownMenuRadioItem key={option.value} value={option.value}>

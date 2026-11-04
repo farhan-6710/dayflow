@@ -13,7 +13,6 @@ import { DateFilters } from "@/shared/components/DateFilters";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { useUserDisplay } from "@/shared/hooks/useUserDisplay";
-import { getGreeting } from "@/shared/utils/greeting";
 
 export function DashboardPage() {
   const page = useDashboard();
@@ -23,7 +22,6 @@ export function DashboardPage() {
   return (
     <>
       <DashboardHero
-        greeting={getGreeting()}
         name={name}
         today={format(new Date(), "EEEE, MMMM d")}
         filters={<DateFilters {...page.dateFilterProps} />}

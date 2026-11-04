@@ -2,7 +2,7 @@ import { Phantom } from "@/shared/components/Phantom";
 import { StatCard } from "@/shared/components/StatCard";
 import type { StatsCardsProps } from "@/shared/types/components";
 
-const gridClassName = "grid min-w-0 grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4";
+const gridClassName = "grid min-w-0 grid-cols-1 gap-3 min-[641px]:grid-cols-2 sm:gap-4 xl:grid-cols-4";
 
 export function StatsCards({ cards, isLoading = false }: StatsCardsProps) {
   const grid = (

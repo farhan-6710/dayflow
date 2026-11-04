@@ -45,9 +45,9 @@ Load via `@fontsource/ovo`, `@fontsource/young-serif` (400 only), and `@fontsour
 - **Page:** `PageHeader` (heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
 - **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (search on the left; `PillTabs` status tabs with counts and one filter on the right), the inset `DirectoryTable` and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
 - **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, under a column named "Actions", never inline icon buttons. A row that opens something does so on click.
-- **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards`: label on the left and icon tile on the right on top, then the value and its caption on one row (`12/45 Still to do, all time`), then the trend chip if present. No divider under the value. List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
+- **Stat cards:** one column up to 640px, two above that, four from `xl`. Dashboard and analytics use `StatsCards`: label on the left and icon tile on the right on top, then the value and its caption on one row (`12/45 Still to do, all time`), then the trend chip if present. No divider under the value. List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
 - **3D art:** on auth screens, empty states, the sidebar quick-action card, and the not-a-client and error pages. Never in stat cards or page headers.
-- **Date filters:** one bordered bar with a dark active pill and the date range after a divider. On the dashboard it sits right of the heading from `xl`.
+- **Date filters:** one bordered bar with a dark active pill and the date range after a divider. On the dashboard it sits right of the heading from `xl`. Up to 640px it becomes two buttons side by side, a period dropdown and the date range, and the greeting shortens to "Hi". An applied range shows a cross and a divider on the left of its button, which clear it.
 - **Calendar:** Month, Week and Day tabs beside a selected-day panel, filling the window from `xl`. Week and day are hour timelines: `TIMELINE_START_HOUR` to `TIMELINE_END_HOUR`, opening at 8 AM. Tasks assume 60 minutes, overlapping tasks share the width, and tasks with no time sit in a "No time" row. Week headers scroll with their columns, so they stay aligned on phones.
 - **Detail pages:** a chip beside the heading (`leading`) and a meta line, one main action (edit) with less common actions in a menu. Below: `PillTabs` sections, `SummaryStats`, then a work column beside a 22rem rail (`DetailsPanel`, reference links). Panels start with `PanelHeading`. Tabs hide sections rather than unmount them, so nothing refetches. The note editor reads as a page: a sheet behind, a bookmark and a folded corner.
 - **Forms:** in dialogs; dirty forms use the unsaved-changes guard.
@@ -64,7 +64,7 @@ Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `
 
 ## Motion
 
-Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Entrance easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout. The sidebar's collapse and expand is the one other curve: width over 500ms with `cubic-bezier(0.32, 0.72, 0, 1)`.
+Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Entrance easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout. The sidebar's collapse and expand is the one other curve: width over 600ms with `cubic-bezier(0.32, 0.72, 0, 1)`.
 
 | `kind` | Use | From | Duration | Stagger |
 |--------|-----|------|----------|---------|
