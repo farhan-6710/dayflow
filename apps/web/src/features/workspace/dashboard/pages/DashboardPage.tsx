@@ -23,9 +23,12 @@ export function DashboardPage() {
 
   return (
     <>
-      <DashboardHero heading={heading} today={format(new Date(), "EEEE, MMMM d")} />
-      <div className="grid min-w-0 gap-4">
-        <DateFilters {...page.dateFilterProps} />
+      <DashboardHero
+        heading={heading}
+        today={format(new Date(), "EEEE, MMMM d")}
+        filters={<DateFilters {...page.dateFilterProps} />}
+      />
+      <div className="grid min-w-0 grid-cols-1 gap-4">
         {page.error ? <ErrorBanner message={page.error} onRetry={page.reload} /> : null}
         <StatsCards
           isLoading={page.loading}
@@ -36,25 +39,21 @@ export function DashboardPage() {
             periodLabel: page.periodLabel,
           })}
         />
-        <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
-          <div className="grid min-w-0 gap-4">
-            <TaskCompletionChart
-              isLoading={page.loading}
-              chart={page.chart}
-              primary={page.primaryMonth}
-              compare={page.compareMonth}
-              onPrimaryChange={page.setPrimaryMonth}
-              onCompareChange={page.setCompareMonth}
-            />
-            <div className="grid min-w-0 gap-4 md:grid-cols-2">
-              <WeeklyInsightsCard isLoading={page.loading} {...page.insights} />
-              <ActivitySnapshotCard counts={page.activityCounts} error={page.activityError} />
-            </div>
-          </div>
-          <div className="grid min-w-0 gap-4">
-            <DashboardTodoList />
-            <TimeTracker />
-          </div>
+        <div className="grid min-w-0 grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
+          <TaskCompletionChart
+            isLoading={page.loading}
+            chart={page.chart}
+            primary={page.primaryMonth}
+            compare={page.compareMonth}
+            onPrimaryChange={page.setPrimaryMonth}
+            onCompareChange={page.setCompareMonth}
+          />
+          <DashboardTodoList />
+        </div>
+        <div className="grid min-w-0 grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <WeeklyInsightsCard isLoading={page.loading} {...page.insights} />
+          <ActivitySnapshotCard counts={page.activityCounts} error={page.activityError} />
+          <TimeTracker />
         </div>
       </div>
     </>

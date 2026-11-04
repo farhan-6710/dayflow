@@ -33,7 +33,7 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 |-------|-------|
 | To do / pending | `muted` |
 | In progress | `chart-1` (coral) |
-| Done / completed | `primary` |
+| Done / completed | `success` |
 | Active (`StatusPill`) | `success` |
 | Missed / overdue / destructive | `destructive` |
 
@@ -43,13 +43,16 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 - **Page:** `PageHeader` (`Breadcrumbs`, heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
 - **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (`PillTabs` status tabs with counts, one filter opposite, search beneath), the inset `DirectoryTable` and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
 - **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, under a column named "Actions", never inline icon buttons. A row that opens something does so on click.
-- **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards` (3D icon, sparkline). List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
+- **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards` (lucide icon in a tile, value, trend chip). List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
+- **3D art:** only on auth screens, empty states, the not-a-client page and the error page. Never in stat cards, page headers or the sidebar.
+- **Date filters:** one bordered bar with a dark active pill and the date range after a divider. On the dashboard it sits right of the heading from `xl`.
+- **Calendar:** Month, Week and Day tabs beside a selected-day panel, filling the window from `xl`. Week and day are hour timelines: `TIMELINE_START_HOUR` to `TIMELINE_END_HOUR`, opening at 8 AM. Tasks assume 60 minutes, overlapping tasks share the width, and tasks with no time sit in a "No time" row. Week headers scroll with their columns, so they stay aligned on phones.
 - **Detail pages:** breadcrumb with a back arrow, a chip beside the heading (`leading`) and a meta line, one main action (edit) with less common actions in a menu. Below: `PillTabs` sections, `SummaryStats`, then a work column beside a 22rem rail (`DetailsPanel`, reference links). Panels start with `PanelHeading`. Tabs hide sections rather than unmount them, so nothing refetches. The note editor reads as a page: a sheet behind, a bookmark and a folded corner.
 - **Forms:** in dialogs; dirty forms use the unsaved-changes guard.
 
 ## Feedback states
 
-Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Mutations show a toast; deletes use `ConfirmationModal`.
+Every screen works down to 310px wide. Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Mutations show a toast; deletes use `ConfirmationModal`.
 
 Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `shared/components/Phantom.tsx`, which measures the real layout and shimmers over it using the `muted` and `card` tokens. Prefer wrapping the real component (`StatsCards`, the calendar) over drawing a second layout. `TableSkeleton` covers rows and `ChartSkeleton` covers chart panels; a detail screen composes these with its real `PageHeader` so the skeleton matches the page. Never add a generic screen skeleton: a screen shows exactly one skeleton, its own. While a route's code loads, `PageOutlet` keeps the previous page on screen. Render `Phantom` only while loading, because its host clips overflow. Auth guards and auth pages keep the centred spinner, as there is no page layout to mirror yet.
 

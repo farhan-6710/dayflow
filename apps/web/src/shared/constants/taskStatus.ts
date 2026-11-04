@@ -7,11 +7,11 @@ export const TASK_STATUS_LABELS: Record<TaskStatus, string> = {
   missed: "Missed",
 };
 
-/** Tokens per DESIGN.md: to do muted, in progress coral, done primary, missed destructive. */
+/** Tokens per DESIGN.md: to do muted, in progress coral, done green, missed destructive. */
 export const TASK_STATUS_DOT_CLASS: Record<TaskStatus, string> = {
   todo: "bg-muted-foreground/60",
   in_progress: "bg-chart-1",
-  done: "bg-primary",
+  done: "bg-success",
   missed: "bg-destructive",
 };
 

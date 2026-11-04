@@ -26,15 +26,15 @@ export function DateRangePicker({
       <div className="flex items-center gap-1">
         <PopoverTrigger asChild>
           <Button
-            variant={isActive ? "default" : "outline"}
-            className={cn("h-10 rounded-lg font-normal", !isActive && "bg-card")}
+            variant={isActive ? "default" : "ghost"}
+            className="h-8 rounded-md px-3 font-normal"
           >
             <CalendarRange aria-hidden="true" />
             {rangeLabel}
           </Button>
         </PopoverTrigger>
         {isActive ? (
-          <Button variant="ghost" size="icon-lg" aria-label="Clear date range" onClick={onClear}>
+          <Button variant="ghost" size="icon" className="size-8" aria-label="Clear date range" onClick={onClear}>
             <X aria-hidden="true" />
           </Button>
         ) : null}

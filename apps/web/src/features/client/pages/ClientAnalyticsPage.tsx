@@ -1,3 +1,5 @@
+import { ChartPie, CircleCheck, Hourglass, Layers } from "lucide-react";
+
 import { ActivitiesByStatusChart } from "@/features/client/components/ActivitiesByStatusChart";
 import { ProjectActivityTable } from "@/features/client/components/ProjectActivityTable";
 import { useClientAnalytics } from "@/features/client/hooks/useClientAnalytics";
@@ -11,10 +13,10 @@ import type { StatCardItem } from "@/shared/types/components";
 export function ClientAnalyticsPage() {
   const page = useClientAnalytics();
   const cards: StatCardItem[] = [
-    { id: "total", label: "All activities", value: page.total, image: "icon-stat-tasks", description: "Tasks, meetings and calls" },
-    { id: "open", label: "Open", value: page.open, image: "icon-stat-pending", description: "Pending or in progress" },
-    { id: "completed", label: "Completed", value: page.completed, image: "icon-stat-completed", description: "Finished so far" },
-    { id: "rate", label: "Completion rate", value: `${page.completionRate}%`, image: "icon-stat-rate", description: "Share of activities done" },
+    { id: "total", label: "All activities", value: page.total, icon: Layers, description: "Tasks, meetings and calls" },
+    { id: "open", label: "Open", value: page.open, icon: Hourglass, description: "Pending or in progress" },
+    { id: "completed", label: "Completed", value: page.completed, icon: CircleCheck, description: "Finished so far" },
+    { id: "rate", label: "Completion rate", value: `${page.completionRate}%`, icon: ChartPie, description: "Share of activities done" },
   ];
 
   return (

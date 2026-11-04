@@ -1,3 +1,5 @@
+import { CalendarClock, CircleCheck, Hourglass, Layers } from "lucide-react";
+
 import { WORKSPACE_PROJECTS_MANAGEMENT_PATH, WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
 import { seriesDelta } from "@/features/workspace/dashboard/utils/dashboardData";
 import type { StatCardItem } from "@/shared/types/components";
@@ -13,7 +15,6 @@ type DashboardCardsInput = {
 function trendFor(series: number[], upIsGood: boolean) {
   const delta = seriesDelta(series);
   return {
-    sparkline: series,
     delta: `${delta > 0 ? "+" : ""}${delta}`,
     deltaLabel: "vs last week",
     trend: (delta === 0 || delta > 0 === upIsGood ? "positive" : "negative") as StatCardItem["trend"],
@@ -29,7 +30,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       label: "Pending tasks",
       value: stats.pending,
       description: `Still to do, ${period}`,
-      image: "icon-stat-pending",
+      icon: Hourglass,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       ...trendFor(sparklines.pending, false),
     },
@@ -38,7 +39,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       label: "Overdue tasks",
       value: stats.overdue,
       description: `Past due, ${period}`,
-      image: "icon-stat-overdue",
+      icon: CalendarClock,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       ...trendFor(sparklines.overdue, false),
     },
@@ -47,7 +48,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       label: "Projects",
       value: projectsCount,
       description: `Created ${period === "all time" ? "so far" : `in ${period}`}`,
-      image: "icon-stat-projects",
+      icon: Layers,
       href: WORKSPACE_PROJECTS_MANAGEMENT_PATH,
       ...trendFor(sparklines.projects, true),
     },
@@ -56,7 +57,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       label: "Completed tasks",
       value: `${stats.completed}/${stats.total}`,
       description: `Finished, ${period}`,
-      image: "icon-stat-completed",
+      icon: CircleCheck,
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       ...trendFor(sparklines.completed, true),
     },

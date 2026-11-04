@@ -188,8 +188,8 @@ Legacy redirects (keep or drop):
 ### Workspace
 
 **Dashboard**
-- Greeting, plus date filters: All, This Month, Last Month, Last 3 Months, custom range.
-- Four stat cards, each linking to its page, with a sparkline and trend:
+- Greeting, plus date filters beside it on desktop: All, This Month, Last Month, Last 3 Months, custom range.
+- Four stat cards, each linking to its page, with a trend chip:
   - Pending tasks
   - Overdue tasks
   - Projects
@@ -202,7 +202,8 @@ Legacy redirects (keep or drop):
 - "Weekly insights" and "Activity snapshot" cards, derived from tasks and activities.
 
 **Tasks Calendar**
-- Month calendar laid out as weeks with day cells. A month bar handles navigation.
+- Month, Week and Day views with arrows, a Today button and the view kept in the URL. Paging doesn't change the selected day.
+- Week and day are hour timelines. Clicking an empty hour adds a task at that time; clicking a task opens its details sheet with edit and delete.
 - Day panel: tasks for the selected day, with drag to reorder.
 - Task create / edit / delete:
   - Fields: title, description, priority, due date + time.

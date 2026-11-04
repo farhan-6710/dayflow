@@ -162,12 +162,7 @@ export type StatCardItem = {
   deltaLabel?: string;
   trend?: "positive" | "negative";
   href?: string;
-  image: DayflowImageName;
-  sparkline?: number[];
-};
-
-export type StatCardSparklineProps = {
-  values: number[];
+  icon: LucideIcon;
 };
 
 export type StatCardProps = {
@@ -176,7 +171,7 @@ export type StatCardProps = {
 
 export type StatCardTrendProps = {
   delta: string;
-  deltaLabel: string;
+  deltaLabel?: string;
   trend?: StatCardItem["trend"];
 };
 

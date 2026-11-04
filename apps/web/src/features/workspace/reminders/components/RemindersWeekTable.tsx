@@ -50,14 +50,14 @@ export function RemindersWeekTable({ reminders, isLoading, onEdit, onDelete }: R
                 <p className="text-xs text-muted-foreground">Off{until ? ` until ${format(until, "MMM d")}` : ""}</p>
               )}
             </div>
-            <div className="col-start-1 flex gap-1 md:contents" aria-hidden="true">
+            <div className="col-span-2 col-start-1 flex gap-1 md:contents" aria-hidden="true">
               {REMINDER_DAYS.map((day) => {
                 const on = reminder.days_of_week.includes(day.key);
                 return (
                   <span
                     key={day.key}
                     className={cn(
-                      "flex size-7 items-center justify-center rounded-full text-xs",
+                      "flex size-7 shrink-0 items-center justify-center rounded-full text-xs",
                       on && active && "bg-primary text-primary-foreground",
                       on && !active && "bg-muted text-muted-foreground",
                       !on && "text-muted-foreground",
@@ -69,7 +69,7 @@ export function RemindersWeekTable({ reminders, isLoading, onEdit, onDelete }: R
                 );
               })}
             </div>
-            <div className="col-start-2 row-span-3 row-start-1 flex justify-end md:col-start-auto md:row-auto">
+            <div className="col-start-2 row-span-2 row-start-1 flex justify-end md:col-start-auto md:row-auto">
               <RowActionsMenu
                 label={`Actions for ${reminder.title}`}
                 actions={[

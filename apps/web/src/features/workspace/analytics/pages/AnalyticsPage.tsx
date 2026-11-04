@@ -1,3 +1,5 @@
+import { ChartPie, CircleCheck, ListChecks, NotebookPen } from "lucide-react";
+
 import { NotesByProjectChart } from "@/features/workspace/analytics/components/NotesByProjectChart";
 import { TaskStatusChart } from "@/features/workspace/analytics/components/TaskStatusChart";
 import { useAnalytics } from "@/features/workspace/analytics/hooks/useAnalytics";
@@ -10,16 +12,16 @@ import type { StatCardItem } from "@/shared/types/components";
 export function AnalyticsPage() {
   const page = useAnalytics();
   const cards: StatCardItem[] = [
-    { id: "total", label: "Total tasks", value: page.totalTasks, image: "icon-stat-tasks", description: "Personal tasks" },
+    { id: "total", label: "Total tasks", value: page.totalTasks, icon: ListChecks, description: "Personal tasks" },
     {
       id: "completed",
       label: "Completed",
       value: `${page.completedTasks}/${page.totalTasks}`,
-      image: "icon-stat-completed",
+      icon: CircleCheck,
       description: "Tasks marked done",
     },
-    { id: "rate", label: "Completion rate", value: `${page.completionRate}%`, image: "icon-stat-rate", description: "Share of tasks done" },
-    { id: "notes", label: "Total notes", value: page.totalNotes, image: "icon-stat-notes", description: "Across all projects" },
+    { id: "rate", label: "Completion rate", value: `${page.completionRate}%`, icon: ChartPie, description: "Share of tasks done" },
+    { id: "notes", label: "Total notes", value: page.totalNotes, icon: NotebookPen, description: "Across all projects" },
   ];
 
   return (

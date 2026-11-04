@@ -31,7 +31,7 @@ export function DateFilters({
         onClick={onClick}
         className={cn(
           "h-8 shrink-0 rounded-md px-3 text-sm whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          active ? "bg-card shadow-sm" : "hover:bg-card/60",
+          active ? "bg-primary text-primary-foreground shadow-sm" : "hover:bg-accent",
         )}
       >
         {label}
@@ -40,13 +40,16 @@ export function DateFilters({
   }
 
   return (
-    <Reveal role="group" aria-label={`Date filter: ${periodLabel}`} className="flex min-w-0 flex-wrap items-center gap-2">
-      <div className="flex h-10 max-w-full items-center gap-0.5 overflow-x-auto rounded-lg bg-muted p-1">
-        {segment("All", isAll, onClearFilters)}
-        {DATE_FILTER_PERIODS.map((period) =>
-          segment(period.label, activeQuickPeriod === period.id, () => onToggleQuickPeriod(period.id)),
-        )}
-      </div>
+    <Reveal
+      role="group"
+      aria-label={`Date filter: ${periodLabel}`}
+      className="flex w-fit max-w-full flex-wrap items-center gap-0.5 rounded-lg border border-border bg-card p-1 shadow-xs"
+    >
+      {segment("All", isAll, onClearFilters)}
+      {DATE_FILTER_PERIODS.map((period) =>
+        segment(period.label, activeQuickPeriod === period.id, () => onToggleQuickPeriod(period.id)),
+      )}
+      <span aria-hidden="true" className="mx-1 hidden h-5 w-px bg-border sm:block" />
       <DateRangePicker
         open={isPickerOpen}
         onOpenChange={onPickerOpenChange}

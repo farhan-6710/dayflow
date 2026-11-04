@@ -1,5 +1,8 @@
+import { Activity } from "lucide-react";
+
 import type { ActivitySnapshotCardProps } from "@/features/workspace/dashboard/types/components";
 import { Phantom } from "@/shared/components/Phantom";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -13,7 +16,7 @@ export function ActivitySnapshotCard({ counts, error }: ActivitySnapshotCardProp
 
   const panel = (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
-      <h2 className="text-xl">Activity snapshot</h2>
+      <PanelHeading icon={Activity} title="Activity snapshot" />
       {error ? (
         <p className="mt-3 text-sm text-muted-foreground">Couldn't load client activity right now.</p>
       ) : (

@@ -15,14 +15,14 @@ function toOptions<T extends string>(labels: Record<T, string>) {
   return (Object.keys(labels) as T[]).map((value) => ({ value, label: labels[value] }));
 }
 
-export function TaskFormDialog({ open, onOpenChange, task, defaultDate, onSave }: TaskFormDialogProps) {
+export function TaskFormDialog({ open, onOpenChange, task, defaultDate, defaultTime, onSave }: TaskFormDialogProps) {
   const initialValues: TaskFormValues = {
     title: task?.title ?? "",
     description: task?.description ?? "",
     priority: task?.priority ?? "medium",
     status: task?.status ?? "todo",
     dueDate: task ? (task.due_date ?? "") : defaultDate,
-    dueTime: task ? (task.due_time ?? "") : DEFAULT_TIME,
+    dueTime: task ? (task.due_time ?? "") : (defaultTime ?? DEFAULT_TIME),
   };
   const form = useDialogForm({
     id: "task-form-dialog",

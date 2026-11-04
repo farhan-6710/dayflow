@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { Todo } from "@/shared/types/types";
 
 export type MonthSelection = {
@@ -23,6 +25,7 @@ export type TaskCompletionData = {
 export type DashboardHeroProps = {
   heading: string;
   today: string;
+  filters: ReactNode;
 };
 
 export type TaskCompletionChartProps = {

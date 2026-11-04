@@ -1,10 +1,9 @@
 import type { DashboardHeroProps } from "@/features/workspace/dashboard/types/components";
-import { DayflowImage } from "@/shared/components/DayflowImage";
 import { Reveal } from "@/shared/components/Reveal";
 
-export function DashboardHero({ heading, today }: DashboardHeroProps) {
+export function DashboardHero({ heading, today, filters }: DashboardHeroProps) {
   return (
-    <div className="mb-6 flex min-w-0 items-center justify-between gap-4">
+    <div className="mb-6 flex min-w-0 flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
       <div className="min-w-0">
         <Reveal kind="hero">
           <h1 className="text-3xl leading-tight text-balance sm:text-4xl">{heading}</h1>
@@ -13,9 +12,7 @@ export function DashboardHero({ heading, today }: DashboardHeroProps) {
           {today}
         </Reveal>
       </div>
-      <Reveal kind="hero" className="hidden shrink-0 sm:block">
-        <DayflowImage name="illo-dashboard-hero" className="h-20 w-auto" />
-      </Reveal>
+      <div className="min-w-0 shrink-0">{filters}</div>
     </div>
   );
 }

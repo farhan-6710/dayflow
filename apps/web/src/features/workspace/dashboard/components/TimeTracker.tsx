@@ -1,6 +1,7 @@
-import { Pause, Play, RotateCcw } from "lucide-react";
+import { Pause, Play, RotateCcw, Timer } from "lucide-react";
 
 import { useTimeTracker } from "@/features/workspace/dashboard/hooks/useTimeTracker";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -17,7 +18,7 @@ export function TimeTracker() {
 
   return (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
-      <h2 className="text-xl">Time tracker</h2>
+      <PanelHeading icon={Timer} title="Time tracker" />
       <p className="mt-3 font-mono text-4xl tabular-nums" role="timer" aria-label={`Elapsed time ${display}`}>
         {display}
       </p>

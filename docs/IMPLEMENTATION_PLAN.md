@@ -28,7 +28,7 @@ This plan lists every route, the data it shows and the components it needs, in b
 
 ## Asset requirements: icons and illustrations
 
-UI icons (nav, buttons, inputs) come from lucide-react. The custom assets below are only for stat cards, empty states and hero spots. All of them are transparent-background PNGs with one version per theme: each file name below takes a `-light` or `-dark` suffix (e.g. `icon-stat-pending-light.png`). Pick the version from the active theme.
+UI icons (nav, buttons, inputs) come from lucide-react. The custom assets below are only for stat cards, empty states and hero spots. Stat icons and the dashboard hero illustration are no longer used: stat cards use lucide. All of them are transparent-background PNGs with one version per theme: each file name below takes a `-light` or `-dark` suffix (e.g. `icon-stat-pending-light.png`). Pick the version from the active theme.
 
 ### 3D icons (19 assets, each 512×512)
 
@@ -163,7 +163,7 @@ Illustrations in order:
 
 **`/tasks-calendar`**
 - **Data:** tasks.
-- **Components:** `MonthBar`, `WeeksGrid` with day cells, `DayPanel` with sortable task items, `TaskFormDialog` (title, description, priority, due date and time, status), `StatusLegend`.
+- **Components:** `TasksCalendarToolbar`, `TasksMonthView`, `TasksWeekView`, `TasksDayView`, `TasksDayPanel` with sortable `TaskRow`s, `TaskDetailsSheet`, `TaskFormDialog` (title, description, priority, due date and time, status), status legend.
 
 **`/projects-management`**
 - **Data:** projects (+ client name), clients for the "Project for" select.

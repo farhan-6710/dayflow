@@ -85,6 +85,13 @@ Each item: service → hook → page → states → verify.
 - [x] Reminders: Actions column
 - [ ] Client portal screens checked with a real client login (needs the owner)
 
+## Phase 6d: Calendar and dashboard redesign
+
+- [x] Tasks Calendar: month, week and day views, details sheet, add from an hour slot
+- [x] Dashboard: lucide stat cards, filters beside the heading, redesigned chart panel
+- [x] 3D art removed from stat cards and page headers everywhere
+- [x] Every workspace screen and the auth screens checked down to 310px
+
 ## Phase 7: Mobile rebuild
 
 - [ ] Plan mobile scope from the web spec; reuse [theme.css](./theme.css) tokens

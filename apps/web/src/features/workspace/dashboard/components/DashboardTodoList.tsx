@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, CircleCheck, Plus } from "lucide-react";
 
 import { TodoFormDialog } from "@/features/workspace/dashboard/components/TodoFormDialog";
 import { TodoRow } from "@/features/workspace/dashboard/components/TodoRow";
@@ -9,6 +9,7 @@ import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { SortableList } from "@/shared/components/SortableList";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -20,14 +21,17 @@ export function DashboardTodoList() {
   const rowHandlers = { onToggle: (todo: Parameters<typeof list.toggle>[0]) => void list.toggle(todo), onEdit: list.openEdit, onDelete: list.setTodoToDelete };
 
   return (
-    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-xl">Todo list</h2>
-        <Button variant="outline" className="h-10" onClick={list.openCreate}>
-          <Plus aria-hidden="true" />
-          Add
-        </Button>
-      </div>
+    <Reveal as="section" className={cn(panelClassName, "h-full min-w-0 p-4 sm:p-5")}>
+      <PanelHeading
+        icon={CircleCheck}
+        title="Todo list"
+        action={
+          <Button className="h-10" onClick={list.openCreate}>
+            <Plus aria-hidden="true" />
+            Add
+          </Button>
+        }
+      />
       {list.error ? (
         <div className="mt-3">
           <ErrorBanner message={list.error} onRetry={list.reload} />

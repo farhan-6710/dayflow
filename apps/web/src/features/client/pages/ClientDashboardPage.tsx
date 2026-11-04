@@ -1,3 +1,5 @@
+import { CalendarDays, CircleCheck, Folder, Phone } from "lucide-react";
+
 import { CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes";
 import { useClientOverview } from "@/features/client/hooks/useClientOverview";
 import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
@@ -29,12 +31,12 @@ export function ClientDashboardPage() {
       label: "Active projects",
       value: page.projects.filter((project) => project.is_active).length,
       description: "Shared with you",
-      image: "icon-stat-projects",
+      icon: Folder,
       href: CLIENT_PORTAL_PROJECTS_PATH,
     },
-    { id: "tasks", label: "Tasks completed", image: "icon-stat-completed", ...progress(page.tasks, "tasks") },
-    { id: "meetings", label: "Meetings completed", image: "icon-stat-meetings", ...progress(page.meetings, "meetings") },
-    { id: "calls", label: "Calls attended", image: "icon-stat-calls", ...progress(page.calls, "calls") },
+    { id: "tasks", label: "Tasks completed", icon: CircleCheck, ...progress(page.tasks, "tasks") },
+    { id: "meetings", label: "Meetings completed", icon: CalendarDays, ...progress(page.meetings, "meetings") },
+    { id: "calls", label: "Calls attended", icon: Phone, ...progress(page.calls, "calls") },
   ];
 
   return (

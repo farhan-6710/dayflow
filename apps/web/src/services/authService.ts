@@ -54,8 +54,9 @@ export function onAuthChange(
   return () => data.subscription.unsubscribe();
 }
 
+/** This browser only. A global sign-out would end every visitor's session on the shared demo account. */
 export async function signOut(): Promise<void> {
-  const { error } = await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut({ scope: "local" });
   if (error) {
     throw error;
   }
