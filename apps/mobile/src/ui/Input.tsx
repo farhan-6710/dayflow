@@ -1,6 +1,6 @@
 import { Eye, EyeOff, type LucideIcon } from "lucide-react-native";
 import { forwardRef, useState } from "react";
-import { Pressable, TextInput, View, type TextInputProps } from "react-native";
+import { Pressable, TextInput, View, type TextInputInstance, type TextInputProps } from "react-native";
 
 import { cn } from "@/lib/cn";
 import { useTheme } from "@/theme/ThemeProvider";
@@ -15,7 +15,7 @@ export type InputProps = TextInputProps & {
   password?: boolean;
 };
 
-export const Input = forwardRef<TextInput, InputProps>(function Input(
+export const Input = forwardRef<TextInputInstance, InputProps>(function Input(
   { label, error, hint, icon: Icon, password, multiline, className, ...props },
   ref,
 ) {

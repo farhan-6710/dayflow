@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View, type ScrollViewInstance } from "react-native";
 
 import { TASK_STATUS } from "@/features/tasks/taskMeta";
 import { HOUR_HEIGHT, TIMELINE_END_HOUR, TIMELINE_SCROLL_HOUR, TIMELINE_START_HOUR, positionTasks, untimedTasks } from "@/features/tasks/timeline";
@@ -20,7 +20,7 @@ type DayTimelineProps = {
 export function DayTimeline({ tasks, onOpen, onAddAt }: DayTimelineProps) {
   const { colors } = useTheme();
   const untimed = untimedTasks(tasks);
-  const scroller = useRef<ScrollView>(null);
+  const scroller = useRef<ScrollViewInstance>(null);
 
   return (
     <View className="flex-1">
