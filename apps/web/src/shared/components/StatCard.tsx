@@ -12,13 +12,12 @@ export function StatCard({ card }: StatCardProps) {
     <article
       className={cn(
         panelClassName,
-        "relative p-5",
+        "relative flex h-full min-w-0 flex-col p-4 sm:p-5",
         card.href && "transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-      <div className="min-w-0">
-        <h3 className="text-sm text-muted-foreground">
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="min-w-0 text-sm text-muted-foreground">
           {card.href ? (
             <Link
               to={card.href}
@@ -30,17 +29,18 @@ export function StatCard({ card }: StatCardProps) {
             card.label
           )}
         </h3>
-        <p className="mt-2 text-4xl leading-none tabular-nums">{card.value}</p>
-        {card.description ? (
-          <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{card.description}</p>
-        ) : null}
-        {card.delta && card.deltaLabel ? (
-          <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} />
-        ) : null}
+        <DayflowImage name={card.image} className="size-9 shrink-0 sm:size-10" />
       </div>
-      <DayflowImage name={card.image} className="size-14 shrink-0" />
-      </div>
-      {card.sparkline ? <StatCardSparkline values={card.sparkline} /> : null}
+      <p className="mt-1 text-3xl leading-none tabular-nums sm:text-4xl">{card.value}</p>
+      {card.description ? <p className="mt-2 text-sm text-muted-foreground text-pretty">{card.description}</p> : null}
+      {card.delta && card.deltaLabel ? (
+        <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} />
+      ) : null}
+      {card.sparkline ? (
+        <div className="mt-auto">
+          <StatCardSparkline values={card.sparkline} />
+        </div>
+      ) : null}
     </article>
   );
 }

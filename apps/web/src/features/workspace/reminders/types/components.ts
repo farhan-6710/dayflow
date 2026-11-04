@@ -9,9 +9,8 @@ export type ReminderFormValues = {
   disabledUntil: string;
 };
 
-export type RemindersWeekBoardProps = {
+export type RemindersWeekTableProps = {
   reminders: Reminder[];
-  onAdd: (day: ReminderDayKey) => void;
   onEdit: (reminder: Reminder) => void;
 };
 

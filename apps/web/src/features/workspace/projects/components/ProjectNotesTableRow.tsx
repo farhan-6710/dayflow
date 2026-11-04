@@ -6,30 +6,21 @@ import { NOTES_GRID_CLASS } from "@/features/workspace/projects/constants/direct
 import type { ProjectNotesTableRowProps } from "@/features/workspace/projects/types/components";
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { DragHandle } from "@/shared/components/DragHandle";
+import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
 import { useSortableRow } from "@/shared/hooks/useSortableRow";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/ui/button";
-import { stopDirectoryRowNav } from "@/shared/utils/directoryTableRow";
 
 export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotesTableRowProps) {
   const { setNodeRef, style, handleProps, isDragging } = useSortableRow(note.id);
   const title = note.title.trim() || "Untitled note";
   const preview = note.body?.replace(/\s+/g, " ").trim();
 
-  const deleteButton = (
-    <Button
-      variant="ghost"
-      size="icon-lg"
-      className="text-muted-foreground hover:text-destructive"
-      aria-label={`Delete ${title}`}
-      onClick={(event) => {
-        stopDirectoryRowNav(event);
-        onDelete(note);
-      }}
-    >
-      <Trash2 aria-hidden="true" />
-    </Button>
+  const menu = (
+    <RowActionsMenu
+      label={`Actions for ${title}`}
+      actions={[{ label: "Delete", icon: Trash2, destructive: true, onSelect: () => onDelete(note) }]}
+    />
   );
 
   return (
@@ -46,7 +37,7 @@ export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotes
     >
       <DragHandle label={`Reorder ${title}`} handleProps={handleProps} />
       <p className="min-w-0 truncate">{title}</p>
-      <div className="col-start-3 row-start-1 md:hidden">{deleteButton}</div>
+      <div className="col-start-3 row-start-1 md:hidden">{menu}</div>
       <p className="col-start-2 truncate text-sm text-muted-foreground md:col-start-auto">
         {NOTE_CATEGORY_LABELS[note.category]}
       </p>
@@ -54,7 +45,7 @@ export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotes
       <p className="col-start-2 text-sm text-muted-foreground tabular-nums md:col-start-auto">
         {format(new Date(note.updated_at), "MMM d, yyyy")}
       </p>
-      <div className="hidden md:block">{deleteButton}</div>
+      <div className="hidden md:block">{menu}</div>
     </DirectoryTableRow>
   );
 }

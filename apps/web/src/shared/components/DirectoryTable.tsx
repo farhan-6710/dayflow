@@ -16,20 +16,22 @@ export function DirectoryTable({
   emptyDescription,
   emptyImage,
   emptyAction,
+  action,
   headerAside,
   children,
 }: DirectoryTableProps) {
   return (
     <section className={cn(panelClassName, "min-w-0 overflow-hidden")}>
-      {title || headerAside ? (
-        <div className="flex flex-col gap-3 p-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+      {title || action ? (
+        <div className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-5 sm:pt-5">
           <div className="min-w-0">
             {title ? <h2 className="text-xl">{title}</h2> : null}
             {description ? <p className="mt-0.5 text-sm text-muted-foreground">{description}</p> : null}
           </div>
-          {headerAside ? <div className="flex min-w-0 flex-wrap items-center gap-2">{headerAside}</div> : null}
+          {action ? <div className="shrink-0">{action}</div> : null}
         </div>
       ) : null}
+      {headerAside ? <div className="px-4 py-4 sm:px-5">{headerAside}</div> : title || action ? <div className="h-4" /> : null}
 
       {isEmpty && !isLoading ? null : (
         <div
@@ -39,7 +41,7 @@ export function DirectoryTable({
           )}
         >
           {columns.map((column, index) => (
-            <div key={index} className={cn(column.align === "right" && "text-right")}>
+            <div key={index} className={cn(column.align === "right" && "text-right", column.align === "center" && "text-center", column.className)}>
               {column.label}
             </div>
           ))}

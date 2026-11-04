@@ -2,7 +2,7 @@ import { StatCard } from "@/shared/components/StatCard";
 import { StatCardSkeleton } from "@/shared/components/StatCardSkeleton";
 import type { StatsCardsProps } from "@/shared/types/components";
 
-const gridClassName = "grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4";
+const gridClassName = "grid min-w-0 grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4";
 
 export function StatsCards({ cards, isLoading = false }: StatsCardsProps) {
   if (isLoading) {

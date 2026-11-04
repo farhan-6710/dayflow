@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 
 import { ReminderDialog } from "@/features/workspace/reminders/components/ReminderDialog";
-import { RemindersWeekBoard } from "@/features/workspace/reminders/components/RemindersWeekBoard";
+import { RemindersWeekTable } from "@/features/workspace/reminders/components/RemindersWeekTable";
 import { useRemindersManagement } from "@/features/workspace/reminders/hooks/useRemindersManagement";
 import { dayKeyForDate } from "@/features/workspace/reminders/utils/reminderSchedule";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
@@ -42,7 +42,7 @@ export function RemindersManagementPage() {
           action={addButton}
         />
       ) : (
-        <RemindersWeekBoard reminders={page.reminders} onAdd={page.openAdd} onEdit={page.openEdit} />
+        <RemindersWeekTable reminders={page.reminders} onEdit={page.openEdit} />
       )}
       <ReminderDialog
         open={page.dialogOpen}

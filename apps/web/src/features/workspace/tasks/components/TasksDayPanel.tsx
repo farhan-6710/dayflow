@@ -11,17 +11,9 @@ import { Button } from "@/shared/ui/button";
 
 export function TasksDayPanel({ date, tasks, onAdd, onEdit, onDelete, onReorder }: TasksDayPanelProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
-      <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <h2 className="truncate text-xl">{isToday(date) ? "Today" : format(date, "EEEE")}</h2>
-          <p className="text-sm text-muted-foreground">{format(date, "MMMM d, yyyy")}</p>
-        </div>
-        <Button className="h-10" onClick={onAdd}>
-          <Plus aria-hidden="true" />
-          Add task
-        </Button>
-      </div>
+    <section className={cn(panelClassName, "min-w-0 p-5 xl:sticky xl:top-4")}>
+      <h2 className="truncate text-xl">{isToday(date) ? "Today" : format(date, "EEEE")}</h2>
+      <p className="text-sm text-muted-foreground">{format(date, "MMMM d, yyyy")}</p>
       {tasks.length === 0 ? (
         <EmptyState
           bare
@@ -29,6 +21,12 @@ export function TasksDayPanel({ date, tasks, onAdd, onEdit, onDelete, onReorder 
           image="icon-empty-tasks"
           title="Nothing planned"
           description="Add a task for this day, or pick another date."
+          action={
+            <Button variant="outline" className="h-10" onClick={onAdd}>
+              <Plus aria-hidden="true" />
+              Add task
+            </Button>
+          }
         />
       ) : (
         <ul className="mt-2 divide-y divide-border">

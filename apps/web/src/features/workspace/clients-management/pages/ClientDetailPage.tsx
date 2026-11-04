@@ -74,26 +74,28 @@ export function ClientDetailPage() {
       />
       <div className="grid min-w-0 gap-4">
         {page.error ? <ErrorBanner message={page.error} onRetry={page.reload} /> : null}
-        <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[20rem_minmax(0,1fr)]">
+        <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[18rem_minmax(0,1fr)]">
           <ClientSummary client={client} />
-          <ClientProjectsSection
-            projects={page.projects}
-            canAdd={client.is_active}
-            onAdd={() => page.setProjectDialogOpen(true)}
-          />
+          <div className="grid min-w-0 gap-4">
+            <ClientProjectsSection
+              projects={page.projects}
+              canAdd={client.is_active}
+              onAdd={() => page.setProjectDialogOpen(true)}
+            />
+            <ClientActivitiesBlock
+              scope="client"
+              clientId={client.id}
+              projects={page.projects.filter((project) => project.is_active)}
+              canEdit={client.is_active}
+            />
+            <ClientChat
+              clientId={client.id}
+              clientLabel={client.company_name}
+              messages={page.messages}
+              onMessagesChange={page.setMessages}
+            />
+          </div>
         </div>
-        <ClientActivitiesBlock
-          scope="client"
-          clientId={client.id}
-          projects={page.projects.filter((project) => project.is_active)}
-          canEdit={client.is_active}
-        />
-        <ClientChat
-          clientId={client.id}
-          clientLabel={client.company_name}
-          messages={page.messages}
-          onMessagesChange={page.setMessages}
-        />
       </div>
       <ClientDialog open={page.editOpen} onOpenChange={page.setEditOpen} client={client} onSaved={page.handleClientSaved} />
       <ProjectFormDialog

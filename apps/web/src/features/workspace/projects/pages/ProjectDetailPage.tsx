@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { CircleOff, Pencil, RotateCcw, Trash2, UserRound } from "lucide-react";
+import { CircleOff, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { Link } from "react-router";
 
 import { buildClientPath, WORKSPACE_PROJECTS_MANAGEMENT_PATH } from "@/app/constants/workspaceRoutes";
@@ -13,6 +13,7 @@ import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ProjectChip } from "@/shared/components/ProjectChip";
+import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { StatusPill } from "@/shared/components/StatusPill";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { ProjectFormDialog } from "@/shared/projects/components/ProjectFormDialog";
@@ -61,49 +62,45 @@ export function ProjectDetailPage() {
         description={
           <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
             <StatusPill active={project.is_active}>{project.is_active ? "Active" : "Inactive"}</StatusPill>
-            <span>For {project.project_for_label}</span>
+            {project.project_for ? (
+              <Link to={buildClientPath(project.project_for)} className="underline underline-offset-4 hover:text-foreground">
+                For {project.project_for_label}
+              </Link>
+            ) : (
+              <span>For {project.project_for_label}</span>
+            )}
             <span>Updated {format(new Date(project.updated_at), "MMM d, yyyy")}</span>
           </span>
         }
         actions={
           <>
-            {project.project_for ? (
-              <Button asChild variant="outline" size="lg">
-                <Link to={buildClientPath(project.project_for)}>
-                  <UserRound aria-hidden="true" />
-                  View client
-                </Link>
+            {project.is_active ? (
+              <Button variant="outline" size="lg" onClick={() => page.setEditOpen(true)}>
+                <Pencil aria-hidden="true" />
+                Edit
               </Button>
-            ) : null}
-            <Button
-              variant="outline"
-              size="lg"
-              disabled={page.updatingStatus}
-              onClick={() => void page.toggleActive()}
-            >
-              {project.is_active ? <CircleOff aria-hidden="true" /> : <RotateCcw aria-hidden="true" />}
-              {project.is_active ? "Mark inactive" : "Mark active"}
-            </Button>
-            <Button variant="outline" size="lg" disabled={!project.is_active} onClick={() => page.setEditOpen(true)}>
-              <Pencil aria-hidden="true" />
-              Edit
-            </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              className="[&_svg]:text-destructive"
-              onClick={() => page.setDeleteOpen(true)}
-            >
-              <Trash2 aria-hidden="true" />
-              Delete
-            </Button>
+            ) : (
+              <Button variant="outline" size="lg" disabled={page.updatingStatus} onClick={() => void page.toggleActive()}>
+                <RotateCcw aria-hidden="true" />
+                Mark active
+              </Button>
+            )}
+            <RowActionsMenu
+              label={`More actions for ${project.name}`}
+              actions={[
+                ...(project.is_active
+                  ? [{ label: "Mark inactive", icon: CircleOff, onSelect: () => void page.toggleActive() }]
+                  : []),
+                { label: "Delete", icon: Trash2, destructive: true, onSelect: () => page.setDeleteOpen(true) },
+              ]}
+            />
           </>
         }
       />
 
       <div className="grid min-w-0 gap-4">
         {page.error ? <ErrorBanner message={page.error} onRetry={page.reload} /> : null}
-        <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid min-w-0 items-start gap-4 2xl:grid-cols-[minmax(0,1fr)_22rem]">
           <ProjectNotesTable
             projectId={project.id}
             projectName={project.name}

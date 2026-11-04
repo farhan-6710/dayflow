@@ -40,7 +40,7 @@ export function ClientSummary({ client }: ClientSummaryProps) {
   ];
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <section className={cn(panelClassName, "min-w-0 p-5 lg:sticky lg:top-4")}>
       <h2 className="text-xl">Details</h2>
       <dl className="mt-3 grid gap-3">
         {fields.map((field) => (

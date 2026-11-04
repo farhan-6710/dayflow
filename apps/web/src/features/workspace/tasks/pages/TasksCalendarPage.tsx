@@ -1,3 +1,5 @@
+import { Plus } from "lucide-react";
+
 import { TaskFormDialog } from "@/features/workspace/tasks/components/TaskFormDialog";
 import { TasksCalendarGrid } from "@/features/workspace/tasks/components/TasksCalendarGrid";
 import { TasksDayPanel } from "@/features/workspace/tasks/components/TasksDayPanel";
@@ -9,13 +11,23 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
+import { Button } from "@/shared/ui/button";
 
 export function TasksCalendarPage() {
   const page = useTasksCalendar();
 
   return (
     <>
-      <PageHeader heading="Tasks Calendar" description="Pick a day to see its tasks, and plan from there." />
+      <PageHeader
+        heading="Tasks Calendar"
+        description="Pick a day to see its tasks, and plan from there."
+        actions={
+          <Button size="lg" onClick={page.openCreate}>
+            <Plus aria-hidden="true" />
+            New task
+          </Button>
+        }
+      />
       {page.error ? (
         <div className="mb-4">
           <ErrorBanner message={page.error} onRetry={page.reload} />

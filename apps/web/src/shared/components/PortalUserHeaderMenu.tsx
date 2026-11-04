@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, LogOut, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
@@ -20,7 +20,7 @@ import { showToast } from "@/shared/utils/showToast";
 
 export function PortalUserHeaderMenu({ settingsPath, signOutRedirect }: PortalUserHeaderMenuProps) {
   const { signOut } = useAuth();
-  const { displayName, firstName, initials, avatarUrl, email } = useUserDisplay();
+  const { displayName, initials, avatarUrl, email } = useUserDisplay();
   const navigate = useNavigate();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
@@ -46,12 +46,11 @@ export function PortalUserHeaderMenu({ settingsPath, signOutRedirect }: PortalUs
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 rounded-full px-1 sm:pr-2.5"
+            size="icon-lg"
+            className="rounded-full"
             aria-label={`Account menu for ${displayName}`}
           >
             <UserAvatar src={avatarUrl} initials={initials} alt="" className="size-8" />
-            <span className="hidden max-w-28 truncate font-normal sm:inline">{firstName}</span>
-            <ChevronDown className="hidden size-3.5 text-muted-foreground sm:block" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" sideOffset={8} className="w-60">

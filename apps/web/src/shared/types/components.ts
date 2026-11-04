@@ -93,7 +93,6 @@ export type PortalUserHeaderMenuProps = {
 /* Page chrome and feedback */
 
 export type PageHeaderProps = {
-  eyebrow?: string;
   heading: ReactNode;
   description?: ReactNode;
   backButton?: ReactNode;
@@ -192,7 +191,8 @@ export type TableSkeletonProps = {
 
 export type DirectoryTableColumn = {
   label: string;
-  align?: "left" | "right";
+  align?: "left" | "center" | "right";
+  className?: string;
 };
 
 export type DirectoryTableProps = {
@@ -207,6 +207,9 @@ export type DirectoryTableProps = {
   emptyDescription: ReactNode;
   emptyImage?: DayflowImageName;
   emptyAction?: ReactNode;
+  /** Sits opposite the title, for the list's main action. */
+  action?: ReactNode;
+  /** Search and filters, on their own row under the title. */
   headerAside?: ReactNode;
   children: ReactNode;
 };

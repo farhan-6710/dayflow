@@ -2,9 +2,9 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import type { TodoRowProps } from "@/features/workspace/dashboard/types/components";
 import { DragHandle } from "@/shared/components/DragHandle";
+import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { useSortableRow } from "@/shared/hooks/useSortableRow";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/ui/button";
 import { Checkbox } from "@/shared/ui/checkbox";
 
 export function TodoRow({ todo, sortable, onToggle, onEdit, onDelete }: TodoRowProps) {
@@ -23,27 +23,16 @@ export function TodoRow({ todo, sortable, onToggle, onEdit, onDelete }: TodoRowP
         <Checkbox id={checkboxId} checked={done} onCheckedChange={() => onToggle(todo)} />
         <span className="min-w-0">
           <span className={cn("block break-words", done && "text-muted-foreground line-through")}>{todo.title}</span>
-          {todo.description ? <span className="block text-sm break-words text-muted-foreground">{todo.description}</span> : null}
+          {todo.description ? <span className="line-clamp-2 text-sm break-words text-muted-foreground">{todo.description}</span> : null}
         </span>
       </label>
-      <Button
-        variant="ghost"
-        size="icon-lg"
-        className="text-muted-foreground"
-        aria-label={`Edit ${todo.title}`}
-        onClick={() => onEdit(todo)}
-      >
-        <Pencil aria-hidden="true" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon-lg"
-        className="text-muted-foreground hover:text-destructive"
-        aria-label={`Delete ${todo.title}`}
-        onClick={() => onDelete(todo)}
-      >
-        <Trash2 aria-hidden="true" />
-      </Button>
+      <RowActionsMenu
+        label={`Actions for ${todo.title}`}
+        actions={[
+          { label: "Edit", icon: Pencil, onSelect: () => onEdit(todo) },
+          { label: "Delete", icon: Trash2, destructive: true, onSelect: () => onDelete(todo) },
+        ]}
+      />
     </li>
   );
 }

@@ -37,7 +37,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
       id: "overdue",
       label: "Overdue tasks",
       value: stats.overdue,
-      description: `Past their due date, ${period}`,
+      description: `Past due, ${period}`,
       image: "icon-stat-overdue",
       href: WORKSPACE_TASKS_CALENDAR_PATH,
       ...trendFor(sparklines.overdue, false),

@@ -53,7 +53,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
   const activeLabel = TABS.find((tab) => tab.kind === activeKind)?.label.slice(0, -1) ?? "";
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <section className={cn(panelClassName, "@container min-w-0 p-4 sm:p-5")}>
       <Tabs value={activeKind} onValueChange={(kind) => setActiveKind(kind as ActivityKind)}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-xl">{isPortal ? "Activities" : "Client activities"}</h2>
@@ -103,7 +103,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
                     description={canEdit ? `Add one to keep ${tab.plural} in view for both of you.` : `${tab.label} will show up here.`}
                   />
                 ) : (
-                  <div className="grid gap-4 lg:grid-cols-2 lg:gap-8">
+                  <div className="grid gap-4 @3xl:grid-cols-2 @3xl:gap-8">
                     {[
                       { title: "Open", list: open, empty: `Nothing open.` },
                       { title: "Closed", list: closed, empty: `Nothing closed yet.` },

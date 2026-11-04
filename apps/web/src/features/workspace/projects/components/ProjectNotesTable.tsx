@@ -68,6 +68,7 @@ export function ProjectNotesTable({
           isFiltered ? "Try a different search or category." : `Capture specs, meetings and research for ${projectName}.`
         }
         emptyAction={!isFiltered && canAddNote ? addButton : undefined}
+        action={canAddNote ? addButton : undefined}
         headerAside={
           <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
             <ListingSearchInput value={searchQuery} onChange={setSearchQuery} placeholder="Search notes" />
@@ -78,7 +79,6 @@ export function ProjectNotesTable({
               options={categoryOptions}
               className="sm:w-44"
             />
-            {canAddNote ? addButton : null}
           </div>
         }
       >

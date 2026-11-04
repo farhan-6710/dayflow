@@ -5,6 +5,7 @@ import { useReferenceLinksSection } from "@/features/workspace/projects/hooks/us
 import type { ReferenceLinksSectionProps } from "@/features/workspace/projects/types/components";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
+import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import type { ReferenceLink } from "@/shared/types/types";
@@ -59,26 +60,13 @@ export function ReferenceLinksSection<T extends ReferenceLink>(props: ReferenceL
                   {link.label?.trim() ? <p className="truncate text-xs text-muted-foreground">{link.url}</p> : null}
                 </div>
                 {canEdit ? (
-                  <>
-                    <Button
-                      variant="ghost"
-                      size="icon-lg"
-                      className="text-muted-foreground"
-                      aria-label={`Edit ${name}`}
-                      onClick={() => section.openEdit(link)}
-                    >
-                      <Pencil aria-hidden="true" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon-lg"
-                      className="text-muted-foreground hover:text-destructive"
-                      aria-label={`Delete ${name}`}
-                      onClick={() => section.setLinkToDelete(link)}
-                    >
-                      <Trash2 aria-hidden="true" />
-                    </Button>
-                  </>
+                  <RowActionsMenu
+                    label={`Actions for ${name}`}
+                    actions={[
+                      { label: "Edit", icon: Pencil, onSelect: () => section.openEdit(link) },
+                      { label: "Delete", icon: Trash2, destructive: true, onSelect: () => section.setLinkToDelete(link) },
+                    ]}
+                  />
                 ) : null}
               </li>
             );
