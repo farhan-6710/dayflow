@@ -29,6 +29,10 @@ Durable context for future sessions. Short facts, not narrative.
 - The completion chart counts done tasks by `updated_at` because `tasks` has no completed-at column, so editing or reordering an old done task moves it in the chart.
 - Stored times are display text such as "10:00 AM" (see `shared/constants/times.ts`). Keep that format for mobile compatibility.
 
+- Trail itself has no framer-motion: it uses CSS keyframes and `src/lib/entrance-motion.ts`. `Reveal` and `entranceMotion.ts` port its timings and scheduling to framer-motion, with blur added to `enter` (Trail blurs only `hero`) at the owner's request. Content triggers at 10% from the viewport bottom rather than Trail's 20%, so short items at the end of a page can't get stuck hidden.
+- Testing motion: a hidden Browser pane stops `requestAnimationFrame`, so `Reveal` elements read as `opacity: 0`. Show the pane first.
+- Reminders moved from seven day cards to one row per reminder, so the per-day add buttons are gone. New reminders default to today, and the dialog sets the days.
+
 ## Ops
 
 - Shipped images are WebP; PNG masters and logos live in `apps/web/design/` and are not deployed. Regenerate WebP from them with `cwebp` if art changes.

@@ -12,10 +12,10 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { StatusPill } from "@/shared/components/StatusPill";
-import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { ProjectFormDialog } from "@/shared/projects/components/ProjectFormDialog";
 import { Button } from "@/shared/ui/button";
 
@@ -26,7 +26,7 @@ export function ProjectDetailPage() {
   const { project } = page;
 
   if (page.loading) {
-    return <TableSkeleton rows={6} />;
+    return <PageSkeleton />;
   }
   if (page.error && !project) {
     return (

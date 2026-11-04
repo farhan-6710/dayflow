@@ -6,13 +6,14 @@ import type { ClientProjectsSectionProps } from "@/features/workspace/clients-ma
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
 export function ClientProjectsSection({ projects, canAdd, onAdd }: ClientProjectsSectionProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-xl">Projects</h2>
         {canAdd ? (
@@ -46,6 +47,6 @@ export function ClientProjectsSection({ projects, canAdd, onAdd }: ClientProject
           ))}
         </ul>
       )}
-    </section>
+    </Reveal>
   );
 }

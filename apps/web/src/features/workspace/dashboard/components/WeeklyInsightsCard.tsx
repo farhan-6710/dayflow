@@ -1,4 +1,5 @@
 import type { WeeklyInsightsCardProps } from "@/features/workspace/dashboard/types/components";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -11,7 +12,7 @@ export function WeeklyInsightsCard({ completedThisWeek, completedLastWeek, dueTh
   ];
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Weekly insights</h2>
       <dl className="mt-3 divide-y divide-border text-sm">
         {rows.map((row) => (
@@ -21,6 +22,6 @@ export function WeeklyInsightsCard({ completedThisWeek, completedLastWeek, dueTh
           </div>
         ))}
       </dl>
-    </section>
+    </Reveal>
   );
 }

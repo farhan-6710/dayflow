@@ -1,6 +1,7 @@
 import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { PortalUserHeaderMenu } from "@/shared/components/PortalUserHeaderMenu";
+import { Reveal } from "@/shared/components/Reveal";
 import { ShellNavSearch } from "@/shared/components/ShellNavSearch";
 import { ThemeToggle } from "@/shared/components/ThemeToggle";
 import type { ShellHeaderProps } from "@/shared/types/components";
@@ -17,7 +18,7 @@ export function ShellHeader({
   const CollapseIcon = isSidebarCollapsed ? PanelLeftOpen : PanelLeftClose;
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-1 border-b border-border bg-background px-3 sm:gap-2 md:px-6 lg:px-8">
+    <Reveal as="header" kind="shell-down" className="flex h-16 shrink-0 items-center gap-1 border-b border-border bg-background px-3 sm:gap-2 md:px-6 lg:px-8">
       <Button
         variant="ghost"
         size="icon-lg"
@@ -48,6 +49,6 @@ export function ShellHeader({
           signOutRedirect={signOutRedirect}
         />
       </div>
-    </header>
+    </Reveal>
   );
 }

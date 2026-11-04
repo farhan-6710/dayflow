@@ -11,7 +11,7 @@ No sync service. **RLS is the access contract.** The database is read as-is; the
 
 ## Stack
 
-React 19 · TypeScript · Vite · React Router 7 · Tailwind 4 · shadcn/ui · lucide-react · framer-motion · recharts · @dnd-kit · date-fns · sonner · next-themes · bun.
+React 19 · TypeScript · Vite · React Router 7 · Tailwind 4 · shadcn/ui · lucide-react · framer-motion · phantom-ui · recharts · @dnd-kit · date-fns · sonner · next-themes · bun.
 
 ## Portals and routes
 

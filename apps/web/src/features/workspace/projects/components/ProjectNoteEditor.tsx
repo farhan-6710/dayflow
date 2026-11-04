@@ -4,6 +4,7 @@ import { useNoteEditor } from "@/features/workspace/projects/hooks/useNoteEditor
 import type { ProjectNoteEditorProps } from "@/features/workspace/projects/types/components";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { SubmitButton } from "@/shared/components/SubmitButton";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { NOTE_CATEGORIES, NOTE_CATEGORY_LABELS, type NoteCategory } from "@/shared/constants/noteCategories";
 import { cn } from "@/shared/lib/utils";
@@ -24,6 +25,7 @@ export function ProjectNoteEditor({
   const editor = useNoteEditor({ note, onSave, onCreated });
 
   return (
+    <Reveal>
     <form onSubmit={editor.handleSubmit} className={cn(panelClassName, "flex min-h-[28rem] min-w-0 flex-col")}>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-3">
         <OptionDropdown
@@ -99,5 +101,6 @@ export function ProjectNoteEditor({
         />
       </div>
     </form>
+    </Reveal>
   );
 }

@@ -1,6 +1,7 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { EmptyState } from "@/shared/components/EmptyState";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -17,7 +18,7 @@ const tooltipStyle = {
 
 export function TaskStatusChart({ data }: TaskStatusChartProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Tasks by status</h2>
       {data.length === 0 ? (
         <EmptyState bare className="py-6" image="icon-empty-tasks" title="No tasks yet" description="Add tasks in the Tasks Calendar to see this." />
@@ -50,6 +51,6 @@ export function TaskStatusChart({ data }: TaskStatusChartProps) {
           </ul>
         </>
       )}
-    </section>
+    </Reveal>
   );
 }

@@ -39,14 +39,18 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 ## Layout
 
 - **Shell:** left sidebar, header, scrollable main area. Sidebar collapses to icons on desktop and becomes a slide-in sheet on small screens.
-- **Page:** `PageHeader` (eyebrow, heading, description, actions) then content.
-- **Lists:** table on desktop, stacked cards on phones. Search and filters sit above the list.
-- **Detail pages:** back link and primary actions (edit, delete, related links) in the header.
+- **Page:** `PageHeader` (heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
+- **Lists:** table on desktop, stacked cards on phones. The list's main action sits opposite its title; search and filters sit on their own row below, aligned left.
+- **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, never inline icon buttons. A row that opens something does so on click.
+- **Stat cards:** two columns on phones, four from `xl`. The label and a small icon share the top line so the value has the full width.
+- **Detail pages:** back link and one main action (edit) in the header, with less common actions in a menu. Related records link from the header's meta line. Client detail keeps its details in a sticky rail beside one work column.
 - **Forms:** in dialogs; dirty forms use the unsaved-changes guard.
 
 ## Feedback states
 
 Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Mutations show a toast; deletes use `ConfirmationModal`.
+
+Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `shared/components/Phantom.tsx`, which measures the real layout and shimmers over it using the `muted` and `card` tokens. Prefer wrapping the real component (`StatsCards`, the calendar) over drawing a second layout. `TableSkeleton` covers lists and `PageSkeleton` covers whole screens. Render `Phantom` only while loading, because its host clips overflow. Auth guards and auth pages keep the centred spinner, as there is no page layout to mirror yet.
 
 ## Destructive text
 
@@ -54,7 +58,16 @@ Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Muta
 
 ## Motion
 
-Subtle: short page fade (framer-motion) plus hover and press states. Honour `prefers-reduced-motion`. No decorative backgrounds.
+Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout.
+
+| `kind` | Use | From | Duration | Stagger |
+|--------|-----|------|----------|---------|
+| `shell-left` | Sidebar items | x -20, fade | 450ms | 35ms |
+| `shell-down` | Header | y -14, fade | 450ms | 35ms |
+| `hero` | Page heading lines | y 12, blur 6px, fade | 700ms | 70ms |
+| `enter` | Panels and cards, once scrolled into view | y 24, blur 6px, fade | 750ms | 70ms |
+
+Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
 
 ## Accessibility
 

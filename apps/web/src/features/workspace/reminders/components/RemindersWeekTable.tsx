@@ -15,7 +15,7 @@ import { parseDateValue } from "@/shared/utils/dateValue";
 const GRID_CLASS = "md:grid-cols-[5rem_minmax(0,1fr)_repeat(7,1.75rem)]";
 
 /** One row per reminder, one column per weekday. Rows open the edit dialog, which also holds delete. */
-export function RemindersWeekTable({ reminders, onEdit }: RemindersWeekTableProps) {
+export function RemindersWeekTable({ reminders, isLoading, onEdit }: RemindersWeekTableProps) {
   const todayKey = dayKeyForDate(new Date());
   const columns = [
     { label: "Time" },
@@ -28,7 +28,7 @@ export function RemindersWeekTable({ reminders, onEdit }: RemindersWeekTableProp
   ];
 
   return (
-    <DirectoryTable gridClass={GRID_CLASS} columns={columns} isEmpty={false} emptyTitle="" emptyDescription="">
+    <DirectoryTable gridClass={GRID_CLASS} columns={columns} isLoading={isLoading} isEmpty={false} emptyTitle="" emptyDescription="">
       {[...reminders].sort(byTime).map((reminder) => {
         const active = isReminderActive(reminder);
         const until = parseDateValue(reminder.disabled_until);

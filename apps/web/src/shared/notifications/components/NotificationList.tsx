@@ -2,6 +2,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Check } from "lucide-react";
 
 import { EmptyState } from "@/shared/components/EmptyState";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import type { NotificationListProps } from "@/shared/types/components";
@@ -9,7 +10,7 @@ import { Button } from "@/shared/ui/button";
 
 export function NotificationList({ title, notifications, emptyLabel, markingId, onMarkRead }: NotificationListProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       {title ? <h2 className="text-xl">{title}</h2> : null}
       {notifications.length === 0 ? (
         <EmptyState bare className="py-6" image="icon-empty-notifications" title="All caught up" description={emptyLabel} />
@@ -37,6 +38,6 @@ export function NotificationList({ title, notifications, emptyLabel, markingId, 
           ))}
         </ul>
       )}
-    </section>
+    </Reveal>
   );
 }

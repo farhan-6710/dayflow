@@ -17,7 +17,10 @@ export function NotificationsPage() {
         </div>
       ) : null}
       {inbox.loading ? (
-        <TableSkeleton rows={4} />
+        <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
+          <TableSkeleton rows={4} panel />
+          <TableSkeleton rows={4} panel />
+        </div>
       ) : (
         <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
           <NotificationList

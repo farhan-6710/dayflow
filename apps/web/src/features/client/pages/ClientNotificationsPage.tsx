@@ -16,7 +16,7 @@ export function ClientNotificationsPage() {
         </div>
       ) : null}
       {inbox.loading ? (
-        <TableSkeleton rows={4} />
+        <TableSkeleton rows={4} panel />
       ) : inbox.error ? null : (
         <NotificationList
           notifications={inbox.notifications}

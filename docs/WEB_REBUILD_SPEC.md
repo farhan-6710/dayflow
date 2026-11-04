@@ -17,6 +17,7 @@ The same app also ships as a desktop app through Tauri. Web, desktop and mobile 
 | Routing | React Router 7 (`createBrowserRouter`, lazy-loaded pages) |
 | Styling / UI | Tailwind CSS 4, shadcn/ui (Radix), lucide-react icons |
 | Motion | framer-motion |
+| Skeletons | phantom-ui |
 | Charts | recharts |
 | Drag & drop | @dnd-kit (core, sortable) |
 | Dates | date-fns, react-day-picker |
@@ -89,7 +90,7 @@ Both portals use the same shell (`AppShellLayout`). Only the config passed to it
   - User menu: account / settings / sign out
 - **Main content**
   - Scrollable area with page transitions
-  - Each page starts with a page header (eyebrow, heading, description)
+  - Each page starts with a page header (heading, description, actions)
 - **Global wrappers**
   - Auth provider, theme provider, toaster
   - Unsaved-changes guard: when a form is dirty, a modal confirms before navigating away
@@ -178,8 +179,8 @@ Legacy redirects (keep or drop):
 ### Auth (both portals)
 
 - Email + password: login, sign up, forgot password, reset password.
-- Google OAuth. Web uses a popup; desktop opens the system browser and returns through the `dayflow://` deep link. A Facebook button exists but is disabled.
-- One-click demo account login.
+- Google OAuth. Web uses a popup; desktop opens the system browser and returns through the `dayflow://` deep link.
+- One-click demo account login (workspace only).
 - Client portal entry flow:
   1. The login email is matched to a `clients.email` record by the `link_client_portal_user()` RPC.
   2. If there is no match, the user is sent to `/not-a-client`.
@@ -198,7 +199,7 @@ Legacy redirects (keep or drop):
   - Add, edit, delete and complete todos
   - Drag to reorder
 - Time Tracker: a stopwatch with start, pause and reset.
-- Placeholder cards: "Weekly insights" and "Activity snapshot".
+- "Weekly insights" and "Activity snapshot" cards, derived from tasks and activities.
 
 **Tasks Calendar**
 - Month calendar laid out as weeks with day cells. A month bar handles navigation.
@@ -257,7 +258,7 @@ Legacy redirects (keep or drop):
   - Time
   - Days of the week
   - Disable, either indefinitely or "until a date"
-- Weekly table view: reminders per weekday cell.
+- Weekly table view: one row per reminder, one column per weekday, today marked. A row opens its edit dialog.
 - Create / edit / delete.
 
 **Notifications**
@@ -283,9 +284,9 @@ Legacy redirects (keep or drop):
   - Activities block across all shared projects.
 - **Projects:** the projects shared with this client, i.e. projects where `project_for` is this client.
 - **Project detail:** project info, plus that project's activities. Clients can raise tasks, meetings and calls; these are saved with `raised_by = client`.
-- **Notifications:** empty state only ("No notifications yet"); there is no data behind it yet.
-- **Analytics:** currently reuses the workspace analytics page. It needs a client-specific version.
-- **Settings:** reuses the workspace settings page.
+- **Notifications:** the client's own notification rows, with mark as read.
+- **Analytics:** client-specific stats: activities by status and type, per project.
+- **Settings:** the same settings cards as the workspace, from `shared/settings`.
 
 ---
 
@@ -302,7 +303,7 @@ Legacy redirects (keep or drop):
   - For each due reminder, it inserts one notification per reminder per day and shows a toast.
 - **Task notifications:** the type exists, but nothing creates them yet.
 - **Badge refresh:** the header badge updates through a `notifications-updated` window event.
-- **Client portal:** has no notifications yet.
+- **Client portal:** an inbox over the client's own rows. Nothing creates client notifications yet.
 
 ### Email (current)
 

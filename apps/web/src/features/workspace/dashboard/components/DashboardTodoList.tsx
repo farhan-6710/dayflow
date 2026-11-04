@@ -9,6 +9,7 @@ import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { SortableList } from "@/shared/components/SortableList";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -19,7 +20,7 @@ export function DashboardTodoList() {
   const rowHandlers = { onToggle: (todo: Parameters<typeof list.toggle>[0]) => void list.toggle(todo), onEdit: list.openEdit, onDelete: list.setTodoToDelete };
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-xl">Todo list</h2>
         <Button variant="outline" className="h-10" onClick={list.openCreate}>
@@ -86,6 +87,6 @@ export function DashboardTodoList() {
         loading={list.deleting}
         onConfirm={list.confirmDelete}
       />
-    </section>
+    </Reveal>
   );
 }

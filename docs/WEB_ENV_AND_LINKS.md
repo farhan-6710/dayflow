@@ -48,7 +48,7 @@ The Supabase Auth dashboard has these URLs on its allow list. The new app must s
 | `<origin>/workspace/dashboard` | Default redirect after email confirmation or sign-in |
 
 - `<origin>` is the hosting URL above, or `http://localhost:5173` in development.
-- OAuth providers: Google is enabled. Facebook is present in the UI but disabled.
+- OAuth providers: Google is enabled. The rebuild has no Facebook button.
 
 ---
 

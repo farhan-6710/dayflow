@@ -1,4 +1,5 @@
 import type { ClientSummaryProps } from "@/features/workspace/clients-management/types/components";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { safeExternalHref } from "@/shared/utils/safeExternalHref";
@@ -40,7 +41,7 @@ export function ClientSummary({ client }: ClientSummaryProps) {
   ];
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5 lg:sticky lg:top-4")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5 lg:sticky lg:top-4")}>
       <h2 className="text-xl">Details</h2>
       <dl className="mt-3 grid gap-3">
         {fields.map((field) => (
@@ -50,6 +51,6 @@ export function ClientSummary({ client }: ClientSummaryProps) {
           </div>
         ))}
       </dl>
-    </section>
+    </Reveal>
   );
 }

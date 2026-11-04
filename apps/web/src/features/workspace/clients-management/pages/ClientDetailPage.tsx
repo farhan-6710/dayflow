@@ -13,8 +13,8 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { StatusPill } from "@/shared/components/StatusPill";
-import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { ProjectFormDialog } from "@/shared/projects/components/ProjectFormDialog";
 import { Button } from "@/shared/ui/button";
 
@@ -25,7 +25,7 @@ export function ClientDetailPage() {
   const { client } = page;
 
   if (page.loading) {
-    return <TableSkeleton rows={6} />;
+    return <PageSkeleton />;
   }
   if (page.error && !client) {
     return (

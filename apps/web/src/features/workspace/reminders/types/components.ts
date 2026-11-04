@@ -11,6 +11,7 @@ export type ReminderFormValues = {
 
 export type RemindersWeekTableProps = {
   reminders: Reminder[];
+  isLoading: boolean;
   onEdit: (reminder: Reminder) => void;
 };
 

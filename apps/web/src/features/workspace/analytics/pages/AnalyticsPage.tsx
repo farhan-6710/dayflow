@@ -29,7 +29,10 @@ export function AnalyticsPage() {
         {page.error ? <ErrorBanner message={page.error} onRetry={page.reload} /> : null}
         <StatsCards cards={cards} isLoading={page.loading} />
         {page.loading ? (
-          <TableSkeleton rows={6} />
+          <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+            <TableSkeleton rows={6} panel />
+            <TableSkeleton rows={6} panel />
+          </div>
         ) : page.error ? null : (
           <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
             <TaskStatusChart data={page.statusData} />

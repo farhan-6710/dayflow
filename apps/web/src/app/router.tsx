@@ -26,11 +26,13 @@ import { ClientAppLayout } from "@/features/client/layouts/ClientAppLayout";
 import { ProtectedRoute } from "@/features/workspace/auth/components/ProtectedRoute";
 import { PublicRoute } from "@/features/workspace/auth/components/PublicRoute";
 import { AppLayout } from "@/features/workspace/layouts/AppLayout";
+import { CenteredLoading } from "@/shared/components/CenteredLoading";
 import { RouteErrorPage } from "@/shared/pages/RouteErrorPage";
 
 const AuthPage = lazyRoutePage(
   () => import("@/features/workspace/auth/pages/AuthPage"),
   "AuthPage",
+  <CenteredLoading />,
 );
 const ProjectsManagementPage = lazyRoutePage(
   () => import("@/features/workspace/projects/pages/ProjectsManagementPage"),
@@ -79,10 +81,12 @@ const SettingsPage = lazyRoutePage(
 const ClientAuthPage = lazyRoutePage(
   () => import("@/features/client/auth/pages/ClientAuthPage"),
   "ClientAuthPage",
+  <CenteredLoading />,
 );
 const NotAClientPage = lazyRoutePage(
   () => import("@/features/client/auth/pages/NotAClientPage"),
   "NotAClientPage",
+  <CenteredLoading />,
 );
 const ClientDashboardPage = lazyRoutePage(
   () => import("@/features/client/pages/ClientDashboardPage"),
@@ -111,10 +115,12 @@ const ClientSettingsPage = lazyRoutePage(
 const OAuthCallbackPage = lazyRoutePage(
   () => import("@/shared/auth/pages/OAuthCallbackPage"),
   "OAuthCallbackPage",
+  <CenteredLoading />,
 );
 const DesktopOAuthBridgePage = lazyRoutePage(
   () => import("@/shared/auth/pages/DesktopOAuthBridgePage"),
   "DesktopOAuthBridgePage",
+  <CenteredLoading />,
 );
 
 function redirect(path: string, to: string) {

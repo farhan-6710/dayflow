@@ -16,7 +16,8 @@ For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITE
 - **Confirm every delete** with `ConfirmationModal`, naming what is deleted and what goes with it.
 - **Toast after every mutation** (`showToast` success or error). Never fail silently.
 - **Unsaved-changes guard** on every form that can be dirty.
-- **Every list and detail screen has loading, empty and error states.** No blank screens.
+- **Every list and detail screen has loading, empty and error states.** No blank screens. Loading uses `Phantom`, `TableSkeleton` or `PageSkeleton`, never hand-drawn placeholder bars.
+- **One primary action per page.** Row actions go in `RowActionsMenu`.
 - **Disable controls while saving** to prevent double submits.
 
 ## Naming
@@ -48,6 +49,7 @@ For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITE
 - Presentational components stay around 120 lines; move logic into hooks.
 - TypeScript strict. No `any`. Type everything that crosses a service boundary.
 - Use semantic design tokens only (see [DESIGN.md](./DESIGN.md)).
+- Entrance motion only through `Reveal`; no one-off page animations.
 - Icons from lucide-react. Dates with date-fns.
 - Brand copy only from `shared/brand/brandManifest.json`.
 

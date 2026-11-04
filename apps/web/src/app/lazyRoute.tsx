@@ -1,10 +1,11 @@
-import { lazy, Suspense, type ComponentType } from "react";
+import { lazy, Suspense, type ComponentType, type ReactNode } from "react";
 
-import { CenteredLoading } from "@/shared/components/CenteredLoading";
+import { PageSkeleton } from "@/shared/components/PageSkeleton";
 
 export function lazyRoutePage(
   loader: () => Promise<Record<string, ComponentType>>,
   exportName: string,
+  fallback: ReactNode = <PageSkeleton />,
 ) {
   const LazyPage = lazy(() =>
     loader().then((module) => {
@@ -18,7 +19,7 @@ export function lazyRoutePage(
 
   return function LazyRoutePage() {
     return (
-      <Suspense fallback={<CenteredLoading />}>
+      <Suspense fallback={fallback}>
         <LazyPage />
       </Suspense>
     );

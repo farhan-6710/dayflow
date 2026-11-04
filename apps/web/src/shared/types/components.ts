@@ -185,6 +185,10 @@ export type StatsCardsProps = {
 
 export type TableSkeletonProps = {
   rows?: number;
+  gridClass?: string;
+  columns?: DirectoryTableColumn[];
+  /** Give the rows their own panel when nothing around them provides one. */
+  panel?: boolean;
 };
 
 /* Lists */

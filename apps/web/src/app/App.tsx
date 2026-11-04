@@ -1,4 +1,4 @@
-import { MotionConfig } from "framer-motion";
+import { domAnimation, LazyMotion, MotionConfig } from "framer-motion";
 import { RouterProvider } from "react-router";
 
 import { router } from "@/app/router";
@@ -9,12 +9,14 @@ import { Toaster } from "@/shared/ui/sonner";
 export function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <AuthProvider>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-          <Toaster position="top-center" />
-        </ThemeProvider>
-      </AuthProvider>
+      <LazyMotion features={domAnimation} strict>
+        <AuthProvider>
+          <ThemeProvider>
+            <RouterProvider router={router} />
+            <Toaster position="top-center" />
+          </ThemeProvider>
+        </AuthProvider>
+      </LazyMotion>
     </MotionConfig>
   );
 }

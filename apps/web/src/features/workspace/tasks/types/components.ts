@@ -15,6 +15,7 @@ export type TasksCalendarGridProps = {
 export type TasksDayPanelProps = {
   date: Date;
   tasks: Task[];
+  isLoading: boolean;
   onAdd: () => void;
   onEdit: (task: Task) => void;
   onDelete: (task: Task) => void;

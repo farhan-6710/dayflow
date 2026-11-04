@@ -69,6 +69,13 @@ Each item: service → hook → page → states → verify.
 - [ ] Deploy to Hostinger; confirm Supabase redirect URLs (needs the owner)
 - [ ] Verify the client portal with a real client login (needs the owner)
 
+## Phase 6b: Layout and motion pass
+
+- [x] Impeccable audit of every screen; layout, hierarchy and action placement reworked (theme and type unchanged)
+- [x] Skeletons moved to phantom-ui
+- [x] Entrance motion: blur, slide and fade with Trail's timings, through framer-motion
+- [ ] Verify the client portal screens with a real client login (needs the owner)
+
 ## Phase 7: Mobile rebuild
 
 - [ ] Plan mobile scope from the web spec; reuse [theme.css](./theme.css) tokens

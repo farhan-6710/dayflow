@@ -9,9 +9,9 @@ import { BackLink } from "@/shared/components/BackLink";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
-import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { useLoadData } from "@/shared/hooks/useLoadData";
 
 const backLink = <BackLink to={CLIENT_PORTAL_PROJECTS_PATH}>Projects</BackLink>;
@@ -28,7 +28,7 @@ export function ClientProjectDetailPage() {
   const { data: project, loading, error, reload } = useLoadData(loader, "Couldn't load this project.");
 
   if (loading) {
-    return <TableSkeleton rows={6} />;
+    return <PageSkeleton />;
   }
   if (error) {
     return (

@@ -1,6 +1,7 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import type { ActivitiesByStatusChartProps } from "@/features/client/types/components";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -16,7 +17,7 @@ export function ActivitiesByStatusChart({ rows }: ActivitiesByStatusChartProps) 
     .join("; ");
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Activities by status</h2>
       <div className="mt-3 h-56" role="img" aria-label={summary}>
         <ResponsiveContainer width="100%" height="100%">
@@ -47,6 +48,6 @@ export function ActivitiesByStatusChart({ rows }: ActivitiesByStatusChartProps) 
           </li>
         ))}
       </ul>
-    </section>
+    </Reveal>
   );
 }

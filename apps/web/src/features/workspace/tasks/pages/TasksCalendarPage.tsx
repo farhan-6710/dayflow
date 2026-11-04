@@ -8,13 +8,25 @@ import { useTasksCalendar } from "@/features/workspace/tasks/hooks/useTasksCalen
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { Phantom } from "@/shared/components/Phantom";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
 export function TasksCalendarPage() {
   const page = useTasksCalendar();
+  const calendar = (
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-3 sm:p-5")}>
+      <TasksMonthBar month={page.selectedDate} onSelectDate={page.selectDate} />
+      <TasksCalendarGrid
+        month={page.selectedDate}
+        selectedDate={page.selectedDate}
+        tasksByDate={page.tasksByDate}
+        onSelectDate={page.selectDate}
+      />
+    </Reveal>
+  );
 
   return (
     <>
@@ -33,29 +45,18 @@ export function TasksCalendarPage() {
           <ErrorBanner message={page.error} onRetry={page.reload} />
         </div>
       ) : null}
-      {page.loading ? (
-        <TableSkeleton rows={8} />
-      ) : (
-        <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
-          <section className={cn(panelClassName, "min-w-0 p-3 sm:p-5")}>
-            <TasksMonthBar month={page.selectedDate} onSelectDate={page.selectDate} />
-            <TasksCalendarGrid
-              month={page.selectedDate}
-              selectedDate={page.selectedDate}
-              tasksByDate={page.tasksByDate}
-              onSelectDate={page.selectDate}
-            />
-          </section>
-          <TasksDayPanel
-            date={page.selectedDate}
-            tasks={page.selectedTasks}
-            onAdd={page.openCreate}
-            onEdit={page.openEdit}
-            onDelete={page.setTaskToDelete}
-            onReorder={(ids) => void page.reorderDay(ids)}
-          />
-        </div>
-      )}
+      <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        {page.loading ? <Phantom>{calendar}</Phantom> : calendar}
+        <TasksDayPanel
+          date={page.selectedDate}
+          tasks={page.selectedTasks}
+          isLoading={page.loading}
+          onAdd={page.openCreate}
+          onEdit={page.openEdit}
+          onDelete={page.setTaskToDelete}
+          onReorder={(ids) => void page.reorderDay(ids)}
+        />
+      </div>
       <TaskFormDialog
         open={page.dialogOpen}
         onOpenChange={page.setDialogOpen}

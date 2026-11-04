@@ -17,6 +17,7 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -53,7 +54,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
   const activeLabel = TABS.find((tab) => tab.kind === activeKind)?.label.slice(0, -1) ?? "";
 
   return (
-    <section className={cn(panelClassName, "@container min-w-0 p-4 sm:p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "@container min-w-0 p-4 sm:p-5")}>
       <Tabs value={activeKind} onValueChange={(kind) => setActiveKind(kind as ActivityKind)}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-xl">{isPortal ? "Activities" : "Client activities"}</h2>
@@ -158,6 +159,6 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
         loading={activities.deleting}
         onConfirm={activities.confirmDelete}
       />
-    </section>
+    </Reveal>
   );
 }

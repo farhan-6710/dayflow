@@ -1,6 +1,7 @@
 import { Pause, Play, RotateCcw } from "lucide-react";
 
 import { useTimeTracker } from "@/features/workspace/dashboard/hooks/useTimeTracker";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -15,7 +16,7 @@ export function TimeTracker() {
   const display = `${pad(Math.floor(totalSeconds / 3600))}:${pad(Math.floor(totalSeconds / 60) % 60)}:${pad(totalSeconds % 60)}`;
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Time tracker</h2>
       <p className="mt-3 font-mono text-4xl tabular-nums" role="timer" aria-label={`Elapsed time ${display}`}>
         {display}
@@ -30,6 +31,6 @@ export function TimeTracker() {
           Reset
         </Button>
       </div>
-    </section>
+    </Reveal>
   );
 }

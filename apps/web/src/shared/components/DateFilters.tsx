@@ -1,4 +1,5 @@
 import { DateRangePicker } from "@/shared/components/DateRangePicker";
+import { Reveal } from "@/shared/components/Reveal";
 import { DATE_FILTER_PERIODS } from "@/shared/constants/dateFilters";
 import { cn } from "@/shared/lib/utils";
 import type { DateFiltersProps } from "@/shared/types/components";
@@ -39,7 +40,7 @@ export function DateFilters({
   }
 
   return (
-    <div role="group" aria-label={`Date filter: ${periodLabel}`} className="flex min-w-0 flex-wrap items-center gap-2">
+    <Reveal role="group" aria-label={`Date filter: ${periodLabel}`} className="flex min-w-0 flex-wrap items-center gap-2">
       <div className="flex h-10 max-w-full items-center gap-0.5 overflow-x-auto rounded-lg bg-muted p-1">
         {segment("All", isAll, onClearFilters)}
         {DATE_FILTER_PERIODS.map((period) =>
@@ -58,6 +59,6 @@ export function DateFilters({
         onKeyDown={onPickerKeyDown}
         error={pickerError}
       />
-    </div>
+    </Reveal>
   );
 }

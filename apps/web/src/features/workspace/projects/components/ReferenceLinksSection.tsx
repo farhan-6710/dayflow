@@ -6,6 +6,7 @@ import type { ReferenceLinksSectionProps } from "@/features/workspace/projects/t
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import type { ReferenceLink } from "@/shared/types/types";
@@ -17,7 +18,7 @@ export function ReferenceLinksSection<T extends ReferenceLink>(props: ReferenceL
   const section = useReferenceLinksSection(props);
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-xl">Reference links</h2>
         {canEdit ? (
@@ -91,6 +92,6 @@ export function ReferenceLinksSection<T extends ReferenceLink>(props: ReferenceL
         loading={section.deleting}
         onConfirm={section.confirmDelete}
       />
-    </section>
+    </Reveal>
   );
 }

@@ -23,7 +23,10 @@ export function ClientAnalyticsPage() {
         {page.error ? <ErrorBanner message={page.error} onRetry={page.reload} /> : null}
         <StatsCards cards={cards} isLoading={page.loading} />
         {page.loading ? (
-          <TableSkeleton rows={6} />
+          <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
+            <TableSkeleton rows={6} panel />
+            <TableSkeleton rows={6} panel />
+          </div>
         ) : page.error ? null : (
           <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
             <ActivitiesByStatusChart rows={page.statusRows} />

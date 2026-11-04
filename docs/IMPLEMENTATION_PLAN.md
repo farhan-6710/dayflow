@@ -119,7 +119,7 @@ Illustrations in order:
 ## 1. Foundation
 - Vite + React 19 + TS in `apps/web` (keep `.env`).
 - Tailwind 4, `shadcn init` (alias `@/`, ui in `shared/ui`), then apply `docs/theme.css`. Fonts: Ovo + Merriweather.
-- Deps: react-router 7, @supabase/supabase-js, framer-motion, recharts, @dnd-kit, date-fns, sonner, next-themes, lucide-react.
+- Deps: react-router 7, @supabase/supabase-js, framer-motion, @aejkatappaja/phantom-ui, recharts, @dnd-kit, date-fns, sonner, next-themes, lucide-react.
 - `services/supabaseClient.ts` + `services/db.ts`. Columns come from the old `db.ts` in git at `b1335f3`.
 - `@dayflow/brand` alias pointing at `shared/brand`. Restore logos and favicons from git.
 
@@ -133,7 +133,7 @@ Illustrations in order:
 - **Shared components:**
   - `PageHeader`, `StatCard` / `StatsCards`, `DirectoryTable`
   - `ListingSearchInput`, `ActiveStatusFilter`, `DateFilters` / `DateRangePicker`, `DatePicker`
-  - `EmptyState`, `ErrorBanner`, skeletons
+  - `EmptyState`, `ErrorBanner`, `Phantom` + `TableSkeleton` + `PageSkeleton`, `Reveal`
   - `ConfirmationModal`, `showToast`, `StatusPill`, `UserAvatar`
 
 ## 3. Routes: data and components
@@ -192,7 +192,7 @@ Illustrations in order:
 
 **`/daily-reminders`**
 - **Data:** reminders.
-- **Components:** `RemindersWeeksTable`, `ReminderDialog` (time, day toggles, disable / disable-until).
+- **Components:** `RemindersWeekTable`, `ReminderDialog` (time, day toggles, disable / disable-until).
 - **Behaviour:** reminder alerts are created client-side, as before. This needs no database change.
 
 **`/notifications`**

@@ -5,16 +5,20 @@ import { TaskRow } from "@/features/workspace/tasks/components/TaskRow";
 import type { TasksDayPanelProps } from "@/features/workspace/tasks/types/components";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { SortableList } from "@/shared/components/SortableList";
+import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
-export function TasksDayPanel({ date, tasks, onAdd, onEdit, onDelete, onReorder }: TasksDayPanelProps) {
+export function TasksDayPanel({ date, tasks, isLoading, onAdd, onEdit, onDelete, onReorder }: TasksDayPanelProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5 xl:sticky xl:top-4")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5 xl:sticky xl:top-4")}>
       <h2 className="truncate text-xl">{isToday(date) ? "Today" : format(date, "EEEE")}</h2>
       <p className="text-sm text-muted-foreground">{format(date, "MMMM d, yyyy")}</p>
-      {tasks.length === 0 ? (
+      {isLoading ? (
+        <TableSkeleton rows={3} />
+      ) : tasks.length === 0 ? (
         <EmptyState
           bare
           className="px-2 py-8"
@@ -37,6 +41,6 @@ export function TasksDayPanel({ date, tasks, onAdd, onEdit, onDelete, onReorder 
           </SortableList>
         </ul>
       )}
-    </section>
+    </Reveal>
   );
 }

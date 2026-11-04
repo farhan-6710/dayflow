@@ -6,6 +6,7 @@ import { useClientChat } from "@/features/workspace/clients-management/hooks/use
 import type { ClientChatProps } from "@/features/workspace/clients-management/types/components";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { SubmitButton } from "@/shared/components/SubmitButton";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -22,7 +23,7 @@ export function ClientChat(props: ClientChatProps) {
   }, [messages.length]);
 
   return (
-    <section className={cn(panelClassName, "flex min-w-0 flex-col p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "flex min-w-0 flex-col p-5")}>
       <h2 className="text-xl">Conversation</h2>
       {messages.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">
@@ -75,6 +76,6 @@ export function ClientChat(props: ClientChatProps) {
         loading={chat.deleting}
         onConfirm={chat.confirmDelete}
       />
-    </section>
+    </Reveal>
   );
 }

@@ -10,7 +10,7 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
@@ -19,7 +19,7 @@ export function ProjectNotePage() {
   const { project, note, isDraft } = page;
 
   if (page.loading) {
-    return <TableSkeleton rows={6} />;
+    return <PageSkeleton />;
   }
   if (page.error && !project) {
     return (

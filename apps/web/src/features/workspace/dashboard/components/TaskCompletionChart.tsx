@@ -3,6 +3,7 @@ import { Area, AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, XAx
 
 import type { MonthSelection, TaskCompletionChartProps } from "@/features/workspace/dashboard/types/components";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -25,7 +26,7 @@ export function TaskCompletionChart({ chart, primary, compare, onPrimaryChange, 
   const growth = chart.growthPercent;
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="text-xl">Task completion</h2>
@@ -87,6 +88,6 @@ export function TaskCompletionChart({ chart, primary, compare, onPrimaryChange, 
           {chart.compareLabel}
         </li>
       </ul>
-    </section>
+    </Reveal>
   );
 }

@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 
 import { DayflowImage } from "@/shared/components/DayflowImage";
+import { Reveal } from "@/shared/components/Reveal";
 import { StatCardSparkline } from "@/shared/components/StatCardSparkline";
 import { StatCardTrend } from "@/shared/components/StatCardTrend";
 import { panelClassName } from "@/shared/constants/layoutStyles";
@@ -9,6 +10,7 @@ import type { StatCardProps } from "@/shared/types/components";
 
 export function StatCard({ card }: StatCardProps) {
   return (
+    <Reveal className="h-full min-w-0">
     <article
       className={cn(
         panelClassName,
@@ -42,5 +44,6 @@ export function StatCard({ card }: StatCardProps) {
         </div>
       ) : null}
     </article>
+    </Reveal>
   );
 }

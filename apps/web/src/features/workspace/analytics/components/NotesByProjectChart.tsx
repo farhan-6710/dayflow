@@ -1,6 +1,7 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { EmptyState } from "@/shared/components/EmptyState";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -12,7 +13,7 @@ const ROW_HEIGHT = 36;
 
 export function NotesByProjectChart({ data }: NotesByProjectChartProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Notes per project</h2>
       {data.length === 0 ? (
         <EmptyState bare className="py-6" image="icon-empty-notes" title="No notes yet" description="Notes you add to projects are counted here." />
@@ -42,6 +43,6 @@ export function NotesByProjectChart({ data }: NotesByProjectChartProps) {
           </ResponsiveContainer>
         </div>
       )}
-    </section>
+    </Reveal>
   );
 }

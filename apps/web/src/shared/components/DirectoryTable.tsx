@@ -1,5 +1,6 @@
 import { EmptyState } from "@/shared/components/EmptyState";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import type { DirectoryTableProps } from "@/shared/types/components";
@@ -21,7 +22,7 @@ export function DirectoryTable({
   children,
 }: DirectoryTableProps) {
   return (
-    <section className={cn(panelClassName, "min-w-0 overflow-hidden")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 overflow-hidden")}>
       {title || action ? (
         <div className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-5 sm:pt-5">
           <div className="min-w-0">
@@ -49,7 +50,7 @@ export function DirectoryTable({
       )}
 
       {isLoading ? (
-        <TableSkeleton />
+        <TableSkeleton gridClass={gridClass} columns={columns} />
       ) : isEmpty ? (
         <EmptyState
           bare
@@ -61,6 +62,6 @@ export function DirectoryTable({
       ) : (
         <div className="divide-y divide-border">{children}</div>
       )}
-    </section>
+    </Reveal>
   );
 }

@@ -1,5 +1,6 @@
 import type { ActivitySnapshotCardProps } from "@/features/workspace/dashboard/types/components";
-import { Skeleton } from "@/shared/ui/skeleton";
+import { Phantom } from "@/shared/components/Phantom";
+import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
@@ -11,7 +12,7 @@ export function ActivitySnapshotCard({ counts, error }: ActivitySnapshotCardProp
   ];
 
   return (
-    <section className={cn(panelClassName, "min-w-0 p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Activity snapshot</h2>
       {error ? (
         <p className="mt-3 text-sm text-muted-foreground">Couldn't load client activity right now.</p>
@@ -20,11 +21,11 @@ export function ActivitySnapshotCard({ counts, error }: ActivitySnapshotCardProp
           {rows.map((row) => (
             <div key={row.label} className="flex items-center justify-between gap-3 py-2">
               <dt className="text-muted-foreground">{row.label}</dt>
-              <dd className="tabular-nums">{row.value ?? <Skeleton className="h-4 w-6" />}</dd>
+              <dd className="tabular-nums">{row.value ?? <Phantom className="inline-block">00</Phantom>}</dd>
             </div>
           ))}
         </dl>
       )}
-    </section>
+    </Reveal>
   );
 }

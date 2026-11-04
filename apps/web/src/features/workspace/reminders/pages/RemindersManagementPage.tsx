@@ -8,7 +8,6 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { Button } from "@/shared/ui/button";
 
 export function RemindersManagementPage() {
@@ -32,9 +31,7 @@ export function RemindersManagementPage() {
           <ErrorBanner message={page.error} onRetry={page.reload} />
         </div>
       ) : null}
-      {page.loading ? (
-        <TableSkeleton rows={6} />
-      ) : page.reminders.length === 0 && !page.error ? (
+      {!page.loading && page.reminders.length === 0 && !page.error ? (
         <EmptyState
           image="icon-empty-reminders"
           title="No reminders yet"
@@ -42,7 +39,7 @@ export function RemindersManagementPage() {
           action={addButton}
         />
       ) : (
-        <RemindersWeekTable reminders={page.reminders} onEdit={page.openEdit} />
+        <RemindersWeekTable reminders={page.reminders} isLoading={page.loading} onEdit={page.openEdit} />
       )}
       <ReminderDialog
         open={page.dialogOpen}
