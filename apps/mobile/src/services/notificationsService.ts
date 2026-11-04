@@ -52,3 +52,18 @@ export async function markNotificationRead(notificationId: string): Promise<void
     .eq("id", notificationId);
   if (error) throw error;
 }
+
+/** Adds a reminder alert to the inbox once per reminder per day. */
+export async function recordReminderAlert(userId: string, reminderId: string, title: string, message: string): Promise<void> {
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  const { count, error } = await supabase
+    .from(DB.NOTIFICATIONS.TABLE)
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .eq("notification_type", "reminder")
+    .eq("related_id", reminderId)
+    .gte("created_at", start.toISOString());
+  if (error) throw error;
+  if (!count) await createNotification({ userId, notificationType: "reminder", title, message, relatedId: reminderId });
+}

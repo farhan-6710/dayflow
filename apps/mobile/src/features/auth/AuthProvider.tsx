@@ -3,6 +3,7 @@ import type { User } from "@supabase/supabase-js";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
+import { clearReminderSchedule } from "@/features/reminders/notificationPort";
 import { getCurrentSession, onAuthChange, signOut as signOutService } from "@/services/authService";
 import { resolveClientPortalProfile } from "@/services/clientPortalService";
 import { fetchProfile } from "@/services/profilesService";
@@ -77,6 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(async () => {
     await signOutService();
     queryClient.clear();
+    await clearReminderSchedule();
   }, [queryClient]);
 
   const recheckClient = useCallback(() => void clientQuery.refetch(), [clientQuery]);

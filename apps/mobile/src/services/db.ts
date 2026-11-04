@@ -74,4 +74,8 @@ export const DB = {
     SELECT:
       "id, project_id, title, description, status, start_date, start_time, duration_minutes, raised_by, created_at, updated_at",
   },
+  EXPO_PUSH_TOKENS: {
+    TABLE: "expo_push_tokens",
+    SELECT: "id, user_id, token, last_used_at, created_at",
+  },
 } as const;
