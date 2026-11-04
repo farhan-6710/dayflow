@@ -3,6 +3,7 @@ import { Reveal } from "@/shared/components/Reveal";
 import { DATE_FILTER_PERIODS } from "@/shared/constants/dateFilters";
 import { cn } from "@/shared/lib/utils";
 import type { DateFiltersProps } from "@/shared/types/components";
+import { Button } from "@/shared/ui/button";
 
 export function DateFilters({
   activeQuickPeriod,
@@ -24,18 +25,23 @@ export function DateFilters({
 
   function segment(label: string, active: boolean, onClick: () => void) {
     return (
-      <button
+      <Button
         key={label}
         type="button"
+        variant="ghost"
+        size="sm"
         aria-pressed={active}
         onClick={onClick}
         className={cn(
           "h-8 shrink-0 rounded-md px-3 text-sm whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          active ?"bg-primary text-primary-foreground" :"hover:bg-accent",
+          "hover:text-inherit dark:hover:bg-accent",
+          active
+            ? "bg-primary text-primary-foreground hover:bg-primary! hover:text-primary-foreground"
+            : "hover:bg-accent",
         )}
       >
         {label}
-      </button>
+      </Button>
     );
   }
 
