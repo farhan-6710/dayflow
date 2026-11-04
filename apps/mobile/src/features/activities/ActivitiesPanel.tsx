@@ -6,6 +6,7 @@ import { ACTIVITY_KINDS, ACTIVITY_STATUS_TONE, statusLabel, type ActivityItem, t
 import { ActivityFormSheet } from "@/features/activities/ActivityFormSheet";
 import { useActivities, type ActivityScope } from "@/features/activities/useActivities";
 import { useActivityActions } from "@/features/activities/useActivityActions";
+import { useLastSeen } from "@/lib/useLastSeen";
 import type { ClientActivityRaisedBy } from "@/shared/types/activities";
 import { Button } from "@/ui/Button";
 import { EmptyState } from "@/ui/EmptyState";
@@ -29,6 +30,7 @@ type ActivitiesPanelProps = {
 /** The shared activities block for both the workspace and the client. */
 export function ActivitiesPanel({ scope, raisedBy, projects, clientLabel = "client" }: ActivitiesPanelProps) {
   const query = useActivities(scope);
+  const lastSeen = useLastSeen(`activities:${scope.kind}:${scope.id}`);
   const { setStatus, confirmDelete } = useActivityActions();
   const [kind, setKind] = useState<ActivityKind>("task");
   const [form, setForm] = useState<{ open: boolean; item: ActivityItem | null }>({ open: false, item: null });
@@ -60,12 +62,20 @@ export function ActivitiesPanel({ scope, raisedBy, projects, clientLabel = "clie
           {rows.map((item, index) => {
             const actions = actionsFor(item);
             const raised = item.raisedBy === "client" ? (raisedBy === "client" ? "Raised by you" : `Raised by ${clientLabel}`) : raisedBy === "client" ? "From your freelancer" : null;
+            const isNew = Boolean(lastSeen) && item.raisedBy !== raisedBy && item.createdAt > (lastSeen ?? "");
             const content = (
               <View className="gap-1 px-3.5 py-3">
                 <View className="flex-row items-start gap-3">
                   <Text numberOfLines={2} className="flex-1">
                     {item.title}
                   </Text>
+                  {isNew ? (
+                    <View className="rounded-full bg-chart-1 px-2 py-0.5">
+                      <Text variant="caption" className="text-white">
+                        New
+                      </Text>
+                    </View>
+                  ) : null}
                   <StatusPill label={statusLabel(item.status)} tone={ACTIVITY_STATUS_TONE[item.status]} />
                 </View>
                 <Text variant="caption" tone="muted">

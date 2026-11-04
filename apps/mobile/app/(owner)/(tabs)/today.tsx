@@ -5,6 +5,7 @@ import { Bell, CalendarClock, CircleCheck, Hourglass, Layers } from "lucide-reac
 import { useEffect, useMemo, useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 
+import { useNewActivityCount } from "@/features/activities/useNewActivityCount";
 import { useAuth, useUserId } from "@/features/auth/AuthProvider";
 import { useUnreadCount } from "@/features/notifications/useNotifications";
 import { sortByOrder } from "@/features/tasks/taskMeta";
@@ -54,6 +55,7 @@ export default function TodayScreen() {
   const projectsQuery = useQuery({ queryKey: ["projects"], queryFn: () => fetchProjects(userId) });
   const activityQuery = useQuery({ queryKey: ["activity-counts"], queryFn: fetchOpenActivityCounts });
   const unreadQuery = useUnreadCount();
+  const newFromClients = useNewActivityCount("client");
   const refresh = useRefresh(tasksQuery, projectsQuery, activityQuery, unreadQuery);
   const { sheets, openDetails, openEdit, openNew } = useTaskSheets();
   const [filter, setFilter] = useState<DateFilterState>({ mode: "all" });
@@ -172,6 +174,7 @@ export default function TodayScreen() {
           actionLabel="View clients"
           onAction={() => router.navigate("/clients")}
           rows={[
+            ...(newFromClients > 0 ? [{ label: "New from clients", value: newFromClients }] : []),
             { label: "Open client tasks", value: activityQuery.data?.tasks ?? "–" },
             { label: "Open meetings", value: activityQuery.data?.meetings ?? "–" },
             { label: "Open calls", value: activityQuery.data?.calls ?? "–" },

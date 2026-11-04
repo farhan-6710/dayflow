@@ -2,6 +2,7 @@ import { CircleCheck, Layers, Phone, Users } from "lucide-react-native";
 import { format } from "date-fns";
 import { RefreshControl, ScrollView, View } from "react-native";
 
+import { useNewActivityCount } from "@/features/activities/useNewActivityCount";
 import { useAuth } from "@/features/auth/AuthProvider";
 import { ActivitiesPanel } from "@/features/activities/ActivitiesPanel";
 import { useClientOverview, usePortalClient, usePortalProjects } from "@/features/clientPortal/useClientOverview";
@@ -13,6 +14,7 @@ import { SectionHeader } from "@/ui/SectionHeader";
 import { Skeleton } from "@/ui/Skeleton";
 import { StatTile } from "@/ui/StatTile";
 import { ErrorState } from "@/ui/ErrorState";
+import { Text } from "@/ui/Text";
 
 export default function ClientHomeScreen() {
   const { colors } = useTheme();
@@ -21,6 +23,7 @@ export default function ClientHomeScreen() {
   const projects = usePortalProjects();
   const overview = useClientOverview();
   const refresh = useRefresh(projects, overview);
+  const newFromFreelancer = useNewActivityCount("workspace");
   const count = <T extends { status: string }>(items: T[] | undefined) => items?.filter((item) => item.status === "completed").length ?? 0;
   const loading = !projects.data || !overview.data;
 
@@ -43,6 +46,11 @@ export default function ClientHomeScreen() {
             <StatTile label="Calls attended" value={count(overview.data?.calls)} icon={Phone} />
           </View>
         )}
+        {newFromFreelancer > 0 ? (
+          <View accessibilityRole="alert" className="rounded-2xl border border-chart-1 bg-card p-3.5">
+            <Text>{`${newFromFreelancer} new ${newFromFreelancer === 1 ? "activity" : "activities"} from your freelancer since your last visit.`}</Text>
+          </View>
+        ) : null}
         <View className="gap-2">
           <SectionHeader title="Activities" />
           <ActivitiesPanel

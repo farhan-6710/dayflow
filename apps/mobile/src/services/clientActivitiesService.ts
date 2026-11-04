@@ -2,6 +2,7 @@ import type {
   ClientActivityCall,
   ClientActivityMeeting,
   ClientActivityProjectJoinRow,
+  ClientActivityRaisedBy,
   ClientActivityTask,
   CreateClientActivityCallInput,
   CreateClientActivityMeetingInput,
@@ -364,4 +365,23 @@ export async function fetchOpenActivityCounts(): Promise<{ tasks: number; meetin
     countOpen(DB.CLIENT_ACTIVITY_CALLS.TABLE),
   ]);
   return { tasks, meetings, calls };
+}
+
+/** Items the other side raised since a time, across every project this user can see. RLS scopes the rows. */
+export async function countActivitiesRaisedSince(raisedBy: ClientActivityRaisedBy, sinceIso: string): Promise<number> {
+  const countNew = async (table: string) => {
+    const { count, error } = await supabase
+      .from(table)
+      .select("id", { count: "exact", head: true })
+      .eq("raised_by", raisedBy)
+      .gt("created_at", sinceIso);
+    if (error) throw error;
+    return count ?? 0;
+  };
+  const counts = await Promise.all([
+    countNew(DB.CLIENT_ACTIVITY_TASKS.TABLE),
+    countNew(DB.CLIENT_ACTIVITY_MEETINGS.TABLE),
+    countNew(DB.CLIENT_ACTIVITY_CALLS.TABLE),
+  ]);
+  return counts.reduce((sum, count) => sum + count, 0);
 }
