@@ -15,6 +15,7 @@ import type {
   CreateClientActivityTaskInput,
 } from "@/features/workspace/client-activities/types/types";
 import { formatActivityDateTime } from "@/features/workspace/client-activities/utils/activityDisplay";
+import { isClientActivityOpen } from "@/features/workspace/client-activities/utils/activityFormUtils";
 import {
   createClientActivityCall,
   createClientActivityMeeting,
@@ -42,6 +43,7 @@ export function useClientActivities(props: ClientActivitiesBlockProps) {
   const projectId = props.scope === "project" ? props.projectId : undefined;
   const clientId = props.scope === "client" ? props.clientId : undefined;
   const [deleting, setDeleting] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
   const [rowToDelete, setRowToDelete] = useState<ActivityListRow | null>(null);
 
   const loader = useCallback(async () => {
@@ -135,6 +137,32 @@ export function useClientActivities(props: ClientActivitiesBlockProps) {
     );
   }
 
+  async function toggleStatus(row: ActivityListRow) {
+    if (togglingId) {
+      return;
+    }
+    const nextStatus = isClientActivityOpen(row.status) ? "completed" : "pending";
+    const { kind } = row.source;
+    setTogglingId(row.id);
+    try {
+      if (kind === "task") {
+        await updateClientActivityTask(row.id, { status: nextStatus });
+      } else if (kind === "meeting") {
+        await updateClientActivityMeeting(row.id, { status: nextStatus });
+      } else {
+        await updateClientActivityCall(row.id, { status: nextStatus });
+      }
+      showToast("success", nextStatus === "completed" ? "Marked completed." : "Moved back to open.");
+      reload();
+      onChange?.();
+    } catch (toggleError) {
+      console.error(`Failed to update ${kind} status:`, toggleError);
+      showToast("error", `Couldn't update the ${kind}. Please try again.`);
+    } finally {
+      setTogglingId(null);
+    }
+  }
+
   async function confirmDelete() {
     if (!rowToDelete) {
       return;
@@ -168,6 +196,8 @@ export function useClientActivities(props: ClientActivitiesBlockProps) {
     saveTask,
     saveMeeting,
     saveCall,
+    toggleStatus,
+    togglingId,
     rowToDelete,
     setRowToDelete,
     deleting,

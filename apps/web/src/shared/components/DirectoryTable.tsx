@@ -81,7 +81,7 @@ export function DirectoryTable({
         ) : isEmpty ? (
           <EmptyState bare title={emptyTitle} description={emptyDescription} image={emptyImage} action={emptyAction} />
         ) : (
-          <div className="divide-y divide-border">{children}</div>
+          <div>{children}</div>
         )}
         {isLoading || isEmpty ? null : footer}
       </div>

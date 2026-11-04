@@ -2,8 +2,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { CALENDAR_VIEWS } from "@/features/workspace/tasks/constants/calendar";
 import type { TasksCalendarToolbarProps } from "@/features/workspace/tasks/types/components";
-import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 
 /** Title on its own row on phones, with the arrows and view tabs sharing the row below. */
 export function TasksCalendarToolbar({ title, view, onViewChange, onPrevious, onNext, onToday }: TasksCalendarToolbarProps) {
@@ -25,26 +25,19 @@ export function TasksCalendarToolbar({ title, view, onViewChange, onPrevious, on
       <h2 aria-live="polite" className="col-span-2 truncate text-center text-xl sm:col-span-1 sm:col-start-2 sm:text-2xl">
         {title}
       </h2>
-      <div
-        role="group"
-        aria-label="Calendar view"
-        className="col-start-2 row-start-2 inline-flex justify-self-end rounded-lg border border-border bg-muted/40 p-0.5 sm:col-start-3 sm:row-start-1"
+      <Tabs
+        value={view}
+        onValueChange={(next) => onViewChange(next as typeof view)}
+        className="col-start-2 row-start-2 min-w-0 justify-self-end gap-0 sm:col-start-3 sm:row-start-1"
       >
-        {CALENDAR_VIEWS.map((item) => (
-          <button
-            key={item.value}
-            type="button"
-            aria-pressed={view === item.value}
-            onClick={() => onViewChange(item.value)}
-            className={cn(
-              "h-8 rounded-md px-2.5 text-sm transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-3",
-              view === item.value ?"bg-primary text-primary-foreground" :"hover:bg-accent",
-            )}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
+        <TabsList aria-label="Calendar view" variant="solid" size="default">
+          {CALENDAR_VIEWS.map((item) => (
+            <TabsTrigger key={item.value} value={item.value}>
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
     </div>
   );
 }

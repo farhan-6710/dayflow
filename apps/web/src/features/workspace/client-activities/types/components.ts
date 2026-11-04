@@ -45,6 +45,8 @@ export type ActivityListProps = {
   rows: ActivityListRow[];
   emptyLabel: string;
   canEditRow: (row: ActivityListRow) => boolean;
+  togglingId?: string | null;
+  onToggleStatus: (row: ActivityListRow) => void;
   onEdit: (row: ActivityListRow) => void;
   onDelete: (row: ActivityListRow) => void;
 };

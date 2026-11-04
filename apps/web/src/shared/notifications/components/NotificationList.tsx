@@ -15,9 +15,9 @@ export function NotificationList({ title, notifications, emptyLabel, markingId, 
       {notifications.length === 0 ? (
         <EmptyState bare className="py-6" image="icon-empty-notifications" title="All caught up" description={emptyLabel} />
       ) : (
-        <ul className="mt-2 divide-y divide-border">
+        <ul className="mt-2">
           {notifications.map((notification) => (
-            <li key={notification.id} className="flex items-start gap-2 py-2.5">
+            <li key={notification.id} className="flex items-start gap-2 border-b border-border py-2.5 last:border-b-0">
               <div className="min-w-0 flex-1">
                 <p className="break-words">{notification.title}</p>
                 <p className="text-sm text-pretty text-muted-foreground">{notification.message}</p>

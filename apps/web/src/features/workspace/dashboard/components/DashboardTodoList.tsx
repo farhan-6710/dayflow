@@ -50,7 +50,7 @@ export function DashboardTodoList() {
         />
       ) : (
         <>
-          <ul className="mt-2 divide-y divide-border">
+          <ul className="mt-2">
             <SortableList ids={list.pending.map((todo) => todo.id)} onReorder={(ids) => void list.reorder(ids)}>
               {list.pending.map((todo) => (
                 <TodoRow key={todo.id} todo={todo} sortable {...rowHandlers} />
@@ -69,7 +69,7 @@ export function DashboardTodoList() {
                 <ChevronDown className={cn("transition-transform", showCompleted && "rotate-180")} aria-hidden="true" />
               </Button>
               {showCompleted ? (
-                <ul className="divide-y divide-border">
+                <ul>
                   <SortableList ids={[]} onReorder={() => undefined}>
                     {list.completed.map((todo) => (
                       <TodoRow key={todo.id} todo={todo} sortable={false} {...rowHandlers} />

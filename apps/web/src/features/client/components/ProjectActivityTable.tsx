@@ -20,9 +20,9 @@ export function ProjectActivityTable({ rows }: ProjectActivityTableProps) {
               <th scope="col" className="w-16 py-2 text-right font-normal">Done</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody>
             {rows.map((row) => (
-              <tr key={row.id}>
+              <tr key={row.id} className="border-b border-border last:border-b-0">
                 <td className="py-2 pr-2">
                   <span className="flex min-w-0 items-center gap-2.5">
                     <ProjectChip color={row.color} className="size-7 [&_svg]:size-3.5" />

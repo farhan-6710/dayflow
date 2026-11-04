@@ -42,12 +42,12 @@ export function ReferenceLinksSection<T extends ReferenceLink>(props: ReferenceL
           description={`Keep docs, tickets and articles with this ${ownerLabel}.`}
         />
       ) : (
-        <ul className="mt-3 divide-y divide-border">
+        <ul className="mt-3">
           {links.map((link) => {
             const name = link.label?.trim() || link.url;
             const href = safeExternalHref(link.url);
             return (
-              <li key={link.id} className="flex items-center gap-1 py-2">
+              <li key={link.id} className="flex items-center gap-1 border-b border-border py-2 last:border-b-0">
                 <div className="min-w-0 flex-1">
                   {href ? (
                     <a

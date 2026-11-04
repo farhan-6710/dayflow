@@ -157,7 +157,13 @@ export function ProjectDetailPage() {
               </div>
             ) : null}
           </div>
-          <div className={cn("grid min-w-0 grid-cols-1 gap-4", (tab === "notes" || tab === "activities") && "hidden")}>
+          <div
+            className={cn(
+              "grid min-w-0 grid-cols-1 gap-4",
+              (tab === "notes" || tab === "activities") && "hidden",
+              tab === "overview" && "xl:sticky xl:top-4",
+            )}
+          >
             <div className={showOn("")}>
               <DetailsPanel
                 icon={Info}

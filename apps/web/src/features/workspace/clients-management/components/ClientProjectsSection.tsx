@@ -36,9 +36,9 @@ export function ClientProjectsSection({ projects, canAdd, onAdd }: ClientProject
           description="Projects you create for this client appear in their portal."
         />
       ) : (
-        <ul className="mt-2 divide-y divide-border">
+        <ul className="mt-2">
           {projects.map((project) => (
-            <li key={project.id}>
+            <li key={project.id} className="border-b border-border last:border-b-0">
               <Link
                 to={buildProjectPath(project.id)}
                 className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2.5 outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"

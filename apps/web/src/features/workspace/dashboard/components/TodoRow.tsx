@@ -16,7 +16,10 @@ export function TodoRow({ todo, sortable, onToggle, onEdit, onDelete }: TodoRowP
     <li
       ref={sortable ? setNodeRef : undefined}
       style={sortable ? style : undefined}
-      className={cn("relative flex items-center gap-1 bg-card py-1", isDragging && "z-10 opacity-70")}
+      className={cn(
+        "relative flex items-center gap-1 border-b border-border bg-card py-1 last:border-b-0",
+        isDragging && "z-10 opacity-70",
+      )}
     >
       {sortable ? <DragHandle label={`Reorder ${todo.title}`} handleProps={handleProps} /> : null}
       <label htmlFor={checkboxId} className="flex min-h-10 min-w-0 flex-1 cursor-pointer items-center gap-2.5 py-1">

@@ -9,9 +9,9 @@ export function DetailsPanel({ icon, title, rows }: DetailsPanelProps) {
   return (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <PanelHeading icon={icon} title={title} />
-      <dl className="mt-2 divide-y divide-border text-sm">
+      <dl className="mt-2 text-sm">
         {rows.map(({ icon: RowIcon, label, value }) => (
-          <div key={label} className="flex items-center gap-3 py-2.5">
+          <div key={label} className="flex items-center gap-3 border-b border-border py-2.5 last:border-b-0">
             <dt className="flex w-28 shrink-0 items-center gap-2 text-muted-foreground">
               <RowIcon className="size-4 shrink-0" aria-hidden="true" />
               {label}
