@@ -9,7 +9,6 @@ import { WeeklyInsightsCard } from "@/features/workspace/dashboard/components/We
 import { useDashboard } from "@/features/workspace/dashboard/hooks/useDashboard";
 import { getDashboardCards } from "@/features/workspace/dashboard/utils/getDashboardCards";
 import { DEMO_ACCOUNT } from "@/shared/auth/constants/demoAccount";
-import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { DateFilters } from "@/shared/components/DateFilters";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { StatsCards } from "@/shared/components/StatsCards";
@@ -19,7 +18,7 @@ export function DashboardPage() {
   const page = useDashboard();
   const { displayName } = useUserDisplay();
   const heading =
-    page.userEmail === DEMO_ACCOUNT.email ? `Welcome to the ${BRAND_NAME} demo` : `Welcome, ${displayName}`;
+    page.userEmail === DEMO_ACCOUNT.email ? `Welcome Demo User` : `Welcome, ${displayName}`;
 
   return (
     <>

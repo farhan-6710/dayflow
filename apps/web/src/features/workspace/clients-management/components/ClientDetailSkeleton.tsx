@@ -8,7 +8,6 @@ export function ClientDetailSkeleton() {
   return (
     <Phantom>
       <PageHeader
-        backButton={<span className="text-sm">Clients Management</span>}
         leading={<div className="size-14 rounded-xl" />}
         heading="A company name"
         description="Active, the contact, and when it changed"

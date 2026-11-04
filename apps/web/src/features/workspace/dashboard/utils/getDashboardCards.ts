@@ -45,7 +45,7 @@ export function getDashboardCards({ stats, projectsCount, sparklines, periodLabe
     },
     {
       id: "projects",
-      label: "Projects",
+      label: "Total Projects",
       value: projectsCount,
       description: `Created ${period === "all time" ? "so far" : `in ${period}`}`,
       icon: Layers,

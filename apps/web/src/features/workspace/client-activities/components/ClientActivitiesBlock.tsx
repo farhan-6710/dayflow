@@ -19,6 +19,7 @@ import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { PanelHeading } from "@/shared/components/PanelHeading";
+import { Phantom } from "@/shared/components/Phantom";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -63,7 +64,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
   };
   const activeLabel = TABS.find((tab) => tab.kind === activeKind)?.label.slice(0, -1) ?? "";
 
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "@container min-w-0 p-4 sm:p-5")}>
       <Tabs value={activeKind} onValueChange={(kind) => setActiveKind(kind as ActivityKind)}>
         <PanelHeading
@@ -172,4 +173,6 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
       />
     </Reveal>
   );
+
+  return activities.loading ? <Phantom>{panel}</Phantom> : panel;
 }

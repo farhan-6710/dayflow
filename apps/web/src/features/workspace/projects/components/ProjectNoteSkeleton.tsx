@@ -8,7 +8,6 @@ export function ProjectNoteSkeleton() {
   return (
     <Phantom>
       <PageHeader
-        backButton={<span className="text-sm">Projects Management, a project, a note</span>}
         leading={<div className="size-14 rounded-xl" />}
         heading="A note title"
         description="Active, the client it's for, and when it changed"

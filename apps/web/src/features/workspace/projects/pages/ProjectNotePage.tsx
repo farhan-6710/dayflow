@@ -8,7 +8,6 @@ import { ReferenceLinksSection } from "@/features/workspace/projects/components/
 import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
 import { ProjectNoteSkeleton } from "@/features/workspace/projects/components/ProjectNoteSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
-import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { DetailsPanel } from "@/shared/components/DetailsPanel";
 import { EmptyState } from "@/shared/components/EmptyState";
@@ -17,6 +16,7 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
 import { NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
+import { usePageBreadcrumbs } from "@/shared/hooks/usePageBreadcrumbs";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
@@ -27,6 +27,8 @@ function formatDate(value: string) {
 export function ProjectNotePage() {
   const page = useProjectNotePage();
   const { project, note, isDraft } = page;
+  const heading = isDraft ? "New note" : note?.title.trim() || "Note";
+  usePageBreadcrumbs(project ? [{ label: project.name, to: page.projectPath }, { label: heading }] : []);
 
   if (page.loading) {
     return <ProjectNoteSkeleton />;
@@ -54,21 +56,9 @@ export function ProjectNotePage() {
     );
   }
 
-  const heading = isDraft ? "New note" : note?.title.trim() || "Note";
-
   return (
     <>
       <PageHeader
-        backButton={
-          <Breadcrumbs
-            back
-            items={[
-              { label: "Projects Management", to: WORKSPACE_PROJECTS_MANAGEMENT_PATH },
-              { label: project.name, to: page.projectPath },
-              { label: heading },
-            ]}
-          />
-        }
         leading={<ProjectChip color={project.color_hex} className="size-14 rounded-xl [&_svg]:size-6" />}
         heading={heading}
         description={

@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { TaskRow } from "@/features/workspace/tasks/components/TaskRow";
 import type { TasksDayPanelProps } from "@/features/workspace/tasks/types/components";
 import { EmptyState } from "@/shared/components/EmptyState";
+import { Phantom } from "@/shared/components/Phantom";
 import { Reveal } from "@/shared/components/Reveal";
 import { SortableList } from "@/shared/components/SortableList";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
@@ -14,7 +15,7 @@ import { Button } from "@/shared/ui/button";
 export function TasksDayPanel({ date, tasks, isLoading, onAdd, onOpen, onEdit, onDelete, onReorder }: TasksDayPanelProps) {
   const count = isLoading ? "Loading tasks" : tasks.length === 0 ? "No tasks" : `${tasks.length} task${tasks.length === 1 ? "" : "s"}`;
 
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "flex h-[min(32rem,70dvh)] min-w-0 flex-col overflow-hidden p-4 sm:p-5 xl:h-full xl:min-h-0")}>
       <div className="flex shrink-0 items-start justify-between gap-3">
         <div className="min-w-0">
@@ -49,4 +50,6 @@ export function TasksDayPanel({ date, tasks, isLoading, onAdd, onOpen, onEdit, o
       </div>
     </Reveal>
   );
+
+  return isLoading ? <Phantom className="min-h-0">{panel}</Phantom> : panel;
 }

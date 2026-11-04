@@ -10,6 +10,7 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { SortableList } from "@/shared/components/SortableList";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { PanelHeading } from "@/shared/components/PanelHeading";
+import { Phantom } from "@/shared/components/Phantom";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -20,7 +21,7 @@ export function DashboardTodoList() {
   const [showCompleted, setShowCompleted] = useState(false);
   const rowHandlers = { onToggle: (todo: Parameters<typeof list.toggle>[0]) => void list.toggle(todo), onEdit: list.openEdit, onDelete: list.setTodoToDelete };
 
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "h-full min-w-0 p-4 sm:p-5")}>
       <PanelHeading
         icon={CircleCheck}
@@ -93,4 +94,6 @@ export function DashboardTodoList() {
       />
     </Reveal>
   );
+
+  return list.loading ? <Phantom>{panel}</Phantom> : panel;
 }

@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 
 import { EmptyState } from "@/shared/components/EmptyState";
+import { Phantom } from "@/shared/components/Phantom";
 import { Reveal } from "@/shared/components/Reveal";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
 import { panelClassName } from "@/shared/constants/layoutStyles";
@@ -43,7 +44,7 @@ export function DirectoryTable({
   footer,
   children,
 }: DirectoryTableProps) {
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "grid min-w-0 gap-4 overflow-hidden p-4 sm:p-5")}>
       {title || action ? (
         <div className="flex items-center justify-between gap-3">
@@ -86,4 +87,6 @@ export function DirectoryTable({
       </div>
     </Reveal>
   );
+
+  return isLoading ? <Phantom>{panel}</Phantom> : panel;
 }

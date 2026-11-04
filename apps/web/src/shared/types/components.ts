@@ -39,6 +39,10 @@ export type AppShellLayoutProps = {
   mobileNavDescription: string;
 };
 
+export type PageOutletProps = {
+  sidebarConfig: ShellSidebarConfig;
+};
+
 export type ShellHeaderProps = {
   sidebarConfig: ShellSidebarConfig;
   signOutRedirect: string;
@@ -98,7 +102,6 @@ export type PageHeaderProps = {
   leading?: ReactNode;
   heading: ReactNode;
   description?: ReactNode;
-  backButton?: ReactNode;
   actions?: ReactNode;
 };
 
@@ -427,9 +430,12 @@ export type NotificationListProps = {
   onMarkRead: (id: string) => void;
 };
 
+export type BreadcrumbItem = { label: string; to?: string };
+
 export type BreadcrumbsProps = {
-  items: { label: string; to?: string }[];
-  back?: boolean;
+  nav: ShellNavItem[];
+  homeLink: string;
+  className?: string;
 };
 
 export type PillTabsProps = {

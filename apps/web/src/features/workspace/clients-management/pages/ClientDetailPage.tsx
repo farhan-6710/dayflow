@@ -14,7 +14,6 @@ import { DELETE_CLIENT_DESCRIPTION } from "@/features/workspace/clients-manageme
 import { useClientDetail } from "@/features/workspace/clients-management/hooks/useClientDetail";
 import { ClientDetailSkeleton } from "@/features/workspace/clients-management/components/ClientDetailSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
-import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
@@ -22,6 +21,7 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { PillTabs } from "@/shared/components/PillTabs";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { StatusPill } from "@/shared/components/StatusPill";
+import { usePageBreadcrumbs } from "@/shared/hooks/usePageBreadcrumbs";
 import { cn } from "@/shared/lib/utils";
 import { ProjectFormDialog } from "@/shared/projects/components/ProjectFormDialog";
 import { Button } from "@/shared/ui/button";
@@ -39,6 +39,7 @@ export function ClientDetailPage() {
   const page = useClientDetail();
   const { client } = page;
   const [tab, setTab] = useState("overview");
+  usePageBreadcrumbs(client ? [{ label: client.company_name }] : []);
   const [activityRows, setActivityRows] = useState<ActivityRows | null>(null);
 
   if (page.loading) {
@@ -70,9 +71,6 @@ export function ClientDetailPage() {
   return (
     <>
       <PageHeader
-        backButton={
-          <Breadcrumbs back items={[{ label: "Clients Management", to: WORKSPACE_CLIENTS_MANAGEMENT_PATH }, { label: client.company_name }]} />
-        }
         leading={
           <span aria-hidden="true" className="flex size-14 items-center justify-center rounded-xl bg-primary text-2xl text-primary-foreground shadow-xs">
             {client.company_name.charAt(0).toUpperCase()}

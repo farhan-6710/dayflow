@@ -16,7 +16,7 @@ export function ShellNavSearch({ nav, placeholder }: ShellNavSearchProps) {
   return (
     <Popover open={search.open}>
       <PopoverAnchor asChild>
-        <div className="relative min-w-0 flex-1 md:max-w-sm">
+        <div className="relative min-w-0 flex-1 md:w-40 md:flex-none lg:w-52 xl:w-64">
           <Search
             className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
             aria-hidden="true"
@@ -39,7 +39,7 @@ export function ShellNavSearch({ nav, placeholder }: ShellNavSearchProps) {
         </div>
       </PopoverAnchor>
       <PopoverContent
-        align="start"
+        align="end"
         className="w-(--radix-popover-trigger-width) min-w-56 p-1"
         onOpenAutoFocus={(event) => event.preventDefault()}
         onCloseAutoFocus={(event) => event.preventDefault()}

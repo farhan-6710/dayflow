@@ -1,10 +1,7 @@
 import { CircleCheck, CircleOff, Folder, Plus, Users } from "lucide-react";
 
-import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
-
 import { ProjectsTable } from "@/features/workspace/projects/components/ProjectsTable";
 import { useProjectsManagement } from "@/features/workspace/projects/hooks/useProjectsManagement";
-import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -21,7 +18,6 @@ export function ProjectsManagementPage() {
   return (
     <>
       <PageHeader
-        backButton={<Breadcrumbs items={[{ label: "Workspace", to: WORKSPACE_DASHBOARD_PATH }, { label: "Projects" }]} />}
         heading="Projects Management"
         description="Organize your client and personal projects, with their notes and links, in one place."
         actions={

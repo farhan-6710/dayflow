@@ -6,9 +6,9 @@ export function DashboardHero({ heading, today, filters }: DashboardHeroProps) {
     <div className="mb-6 flex min-w-0 flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
       <div className="min-w-0">
         <Reveal kind="hero">
-          <h1 className="text-3xl leading-tight text-balance sm:text-4xl">{heading}</h1>
+          <h1 className="text-3xl leading-tight text-balance sm:text-4xl font-bold">{heading}</h1>
         </Reveal>
-        <Reveal kind="hero" className="mt-2 text-muted-foreground">
+        <Reveal kind="hero" className="text-muted-foreground">
           {today}
         </Reveal>
       </div>

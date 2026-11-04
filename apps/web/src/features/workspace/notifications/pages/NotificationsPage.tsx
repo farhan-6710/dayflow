@@ -18,8 +18,8 @@ export function NotificationsPage() {
       ) : null}
       {inbox.loading ? (
         <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
-          <TableSkeleton rows={2} panel title="Reminders" cells={[["A notification title", "A short message about what happened", "2 hours ago"], "··"]} />
-          <TableSkeleton rows={2} panel title="Tasks" cells={[["A notification title", "A short message about what happened", "2 hours ago"], "··"]} />
+          <TableSkeleton rows={2} panel title="Reminders" cells={[["A notification title", "A short message about what happened", "2 hours ago"], "Mark read"]} />
+          <TableSkeleton rows={2} panel title="Tasks" cells={[["A notification title", "A short message about what happened", "2 hours ago"], "Mark read"]} />
         </div>
       ) : (
         <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">

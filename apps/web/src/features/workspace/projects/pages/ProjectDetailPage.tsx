@@ -26,7 +26,6 @@ import { ReferenceLinksSection } from "@/features/workspace/projects/components/
 import { useProjectDetail } from "@/features/workspace/projects/hooks/useProjectDetail";
 import { ProjectDetailSkeleton } from "@/features/workspace/projects/components/ProjectDetailSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
-import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { DetailsPanel } from "@/shared/components/DetailsPanel";
 import { EmptyState } from "@/shared/components/EmptyState";
@@ -36,6 +35,7 @@ import { PillTabs } from "@/shared/components/PillTabs";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { StatusPill } from "@/shared/components/StatusPill";
+import { usePageBreadcrumbs } from "@/shared/hooks/usePageBreadcrumbs";
 import { cn } from "@/shared/lib/utils";
 import { ProjectFormDialog } from "@/shared/projects/components/ProjectFormDialog";
 import { Button } from "@/shared/ui/button";
@@ -46,6 +46,7 @@ export function ProjectDetailPage() {
   const page = useProjectDetail();
   const { project } = page;
   const [tab, setTab] = useState("overview");
+  usePageBreadcrumbs(project ? [{ label: project.name }] : []);
   const [activityRows, setActivityRows] = useState<ActivityRows | null>(null);
 
   if (page.loading) {
@@ -85,9 +86,6 @@ export function ProjectDetailPage() {
   return (
     <>
       <PageHeader
-        backButton={
-          <Breadcrumbs back items={[{ label: "Projects Management", to: WORKSPACE_PROJECTS_MANAGEMENT_PATH }, { label: project.name }]} />
-        }
         leading={<ProjectChip color={project.color_hex} className="size-14 rounded-xl [&_svg]:size-6" />}
         heading={<span className="break-words">{project.name}</span>}
         description={

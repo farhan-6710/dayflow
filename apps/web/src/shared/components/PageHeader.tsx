@@ -1,14 +1,9 @@
 import { Reveal } from "@/shared/components/Reveal";
 import type { PageHeaderProps } from "@/shared/types/components";
 
-export function PageHeader({ leading, heading, description, backButton, actions }: PageHeaderProps) {
+export function PageHeader({ leading, heading, description, actions }: PageHeaderProps) {
   return (
-    <header className="mb-6 min-w-0 space-y-3">
-      {backButton ? (
-        <Reveal kind="hero" className="flex items-center">
-          {backButton}
-        </Reveal>
-      ) : null}
+    <header className="mb-6 min-w-0">
       <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex min-w-0 items-start gap-4">
           {leading ? (

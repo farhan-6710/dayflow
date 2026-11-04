@@ -41,6 +41,9 @@ Durable context for future sessions. Short facts, not narrative.
 - Theme is not stored per user. It defaults to the device (`defaultTheme="system"`), and the toggle's choice is remembered by next-themes in `localStorage` under `DF-theme` (which holds `"system"` until the owner picks). A saved profile theme made a light-mode sign-in switch to dark, so it was removed. `main.tsx` sets the class before first paint because next-themes' own script is inert here.
 - Migration 038 drops `profiles.theme_preference` and first redefines `handle_new_user()`, which inserted that column: dropping it alone would break every sign-up. Apply it only after the new web build is live, because the deployed old build still selects the column and would fail to load profiles. Not applied by the agent.
 
+- Skeletons stay on phantom-ui. The first fix corrected how elements are measured. The second wraps self-loading panels (`DirectoryTable`, todo list, activities block, day panel) whole, because a panel inside `Reveal` animated in late and looked like only the stat cards had skeletons.
+- The user menu's Profile and Settings both open the settings page, since profile is a card there and no separate page exists. Help & support links to the repo's GitHub issues (`shared/constants/support.ts`) because no support contact exists yet.
+
 ## Ops
 
 - Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `docs/theme.css` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.

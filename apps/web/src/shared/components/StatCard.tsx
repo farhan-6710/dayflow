@@ -6,7 +6,7 @@ import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import type { StatCardProps } from "@/shared/types/components";
 
-/** One left edge for the icon, value and description, with the trend on the right of the value. */
+/** Label and icon on top, the value as the focus, then the trend and its context along the bottom. */
 export function StatCard({ card }: StatCardProps) {
   const { icon: Icon } = card;
 
@@ -19,11 +19,8 @@ export function StatCard({ card }: StatCardProps) {
           card.href && "transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
         )}
       >
-        <div className="flex items-center gap-2.5">
-          <span data-shimmer-no-children className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted/60 sm:size-9">
-            <Icon className="size-4" aria-hidden="true" />
-          </span>
-          <h3 className="min-w-0 text-sm leading-tight text-muted-foreground">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="min-w-0 text-sm leading-tight text-muted-foreground sm:pt-1">
             {card.href ? (
               <Link
                 to={card.href}
@@ -35,16 +32,15 @@ export function StatCard({ card }: StatCardProps) {
               card.label
             )}
           </h3>
+          <span data-shimmer-no-children className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted/60 sm:size-9">
+            <Icon className="size-4" aria-hidden="true" />
+          </span>
         </div>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
-          <p className="min-w-8 text-2xl leading-none tabular-nums sm:min-w-14 sm:text-3xl">{card.value}</p>
+        <p className="mt-2 min-w-14 text-2xl leading-none tabular-nums sm:text-3xl">{card.value}</p>
+        <div className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 pt-3">
           {card.delta ? <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} /> : null}
+          {card.description ? <p className="min-w-0 text-xs text-muted-foreground text-pretty">{card.description}</p> : null}
         </div>
-        {card.description ? (
-          <div className="mt-auto pt-3">
-            <p className="text-xs text-muted-foreground text-pretty">{card.description}</p>
-          </div>
-        ) : null}
       </article>
     </Reveal>
   );

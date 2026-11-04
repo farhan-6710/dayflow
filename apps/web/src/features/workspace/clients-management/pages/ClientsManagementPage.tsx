@@ -1,11 +1,9 @@
 import { CircleCheck, CircleOff, KeyRound, Plus, Users } from "lucide-react";
 
-import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
 import { ClientDialog } from "@/features/workspace/clients-management/components/ClientDialog";
 import { ClientsTable } from "@/features/workspace/clients-management/components/ClientsTable";
 import { DELETE_CLIENT_DESCRIPTION } from "@/features/workspace/clients-management/constants/copy";
 import { useClientsManagement } from "@/features/workspace/clients-management/hooks/useClientsManagement";
-import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -21,7 +19,6 @@ export function ClientsManagementPage() {
   return (
     <>
       <PageHeader
-        backButton={<Breadcrumbs items={[{ label: "Workspace", to: WORKSPACE_DASHBOARD_PATH }, { label: "Clients" }]} />}
         heading="Clients Management"
         description="Manage your client relationships and contact details in one place."
         actions={

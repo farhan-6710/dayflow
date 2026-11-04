@@ -9,7 +9,6 @@ export function ProjectDetailSkeleton() {
   return (
     <Phantom>
       <PageHeader
-        backButton={<span className="text-sm">Projects Management</span>}
         leading={<div className="size-14 rounded-xl" />}
         heading="A project name"
         description="Active, the client it's for, and when it changed"

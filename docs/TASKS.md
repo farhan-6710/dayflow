@@ -92,6 +92,7 @@ Each item: service → hook → page → states → verify.
 - [x] 3D art removed from stat cards and page headers everywhere
 - [x] Every workspace screen and the auth screens checked down to 310px
 - [x] Logos, favicons and mobile icons recoloured to the theme with a script
+- [x] Full-panel skeletons on every screen; header breadcrumbs, search on the right, user pill and menu; stat cards with icons on the right
 
 ## Phase 7: Mobile rebuild
 

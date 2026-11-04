@@ -84,10 +84,11 @@ Both portals use the same shell (`AppShellLayout`). Only the config passed to it
   - Collapsible on desktop. On mobile it is replaced by a slide-in sheet.
 - **Header**
   - Sidebar collapse toggle (opens the mobile nav sheet on mobile)
+  - Breadcrumbs: home, section, then the detail page and note
   - Page search ("Search pages...")
   - Theme toggle
   - Header actions: the workspace shows a notifications bell with an unread badge
-  - User menu: account / settings / sign out
+  - User menu: profile / settings / help and support / log out
 - **Main content**
   - Scrollable area with page transitions
   - Each page starts with a page header (heading, description, actions)

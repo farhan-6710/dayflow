@@ -13,6 +13,7 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { Phantom } from "@/shared/components/Phantom";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
+import { usePageBreadcrumbs } from "@/shared/hooks/usePageBreadcrumbs";
 import { useLoadData } from "@/shared/hooks/useLoadData";
 
 const backLink = <BackLink to={CLIENT_PORTAL_PROJECTS_PATH}>Projects</BackLink>;
@@ -27,11 +28,12 @@ export function ClientProjectDetailPage() {
     return projects.find((project) => project.id === projectId) ?? null;
   }, [companyName, projectId]);
   const { data: project, loading, error, reload } = useLoadData(loader, "Couldn't load this project.");
+  usePageBreadcrumbs(project ? [{ label: project.name }] : []);
 
   if (loading) {
     return (
       <Phantom>
-        <PageHeader backButton={<span className="text-sm">Projects</span>} heading="A project name" description="Active" />
+        <PageHeader heading="A project name" description="Active" />
         <ClientActivitiesSkeleton title="Activities" />
       </Phantom>
     );
@@ -60,7 +62,6 @@ export function ClientProjectDetailPage() {
   return (
     <>
       <PageHeader
-        backButton={backLink}
         heading={
           <span className="flex min-w-0 items-center gap-3">
             <ProjectChip color={project.color_hex} className="size-11" />
