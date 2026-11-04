@@ -38,7 +38,7 @@ export function TasksCalendarToolbar({ title, view, onViewChange, onPrevious, on
             onClick={() => onViewChange(item.value)}
             className={cn(
               "h-8 rounded-md px-2.5 text-sm transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-3",
-              view === item.value ? "bg-primary text-primary-foreground shadow-sm" : "hover:bg-accent",
+              view === item.value ?"bg-primary text-primary-foreground" :"hover:bg-accent",
             )}
           >
             {item.label}

@@ -13,15 +13,15 @@ export function TaskBlock({ positioned, compact, onOpen }: TaskBlockProps) {
   return (
     <button
       type="button"
-      aria-label={`${task.title}, ${range ?? "no time"}, ${TASK_STATUS_LABELS[task.status]}`}
+      aria-label={`${task.title}, ${range ??"no time"}, ${TASK_STATUS_LABELS[task.status]}`}
       onClick={(event) => {
         event.stopPropagation();
         onOpen(task);
       }}
       style={{ top: topPx, height: heightPx, left: `calc(${leftPercent}% + 2px)`, width: `calc(${widthPercent}% - 4px)` }}
       className={cn(
-        "absolute z-[1] overflow-hidden rounded-md border-l-4 text-left shadow-xs transition-opacity outline-none hover:opacity-90 focus-visible:ring-[3px] focus-visible:ring-ring/50",
-        compact ? "px-1.5 py-1" : "flex items-start justify-between gap-3 px-3 py-2",
+        "absolute z-[1] overflow-hidden rounded-md border-l-4 text-left transition-opacity outline-none hover:opacity-90 focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        compact ?"px-1.5 py-1" :"flex items-start justify-between gap-3 px-3 py-2",
         TASK_BLOCK_CLASS[task.status],
       )}
     >

@@ -17,10 +17,10 @@ export function ShellNavLink({ item, collapsed, onNavigate }: ShellNavLinkProps)
       aria-label={collapsed ? item.label : undefined}
       className={cn(
         "flex h-10 items-center gap-3 rounded-lg text-sm transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-sidebar-ring/50",
-        collapsed ? "justify-center" : "px-3",
+        collapsed ?"justify-center" :"px-3",
         isActive
-          ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-          : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+          ?"bg-sidebar-primary text-sidebar-primary-foreground"
+          :"text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
       )}
     >
       <Icon className="size-[1.125rem] shrink-0" aria-hidden="true" />

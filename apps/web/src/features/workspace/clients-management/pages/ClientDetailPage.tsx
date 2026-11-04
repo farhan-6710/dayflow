@@ -66,22 +66,22 @@ export function ClientDetailPage() {
     );
   }
 
-  const showOn = (section: string) => (tab === "overview" || tab === section ? "min-w-0" : "hidden");
+  const showOn = (section: string) => (tab ==="overview" || tab === section ?"min-w-0" :"hidden");
 
   return (
     <>
       <PageHeader
         leading={
-          <span aria-hidden="true" className="flex size-14 items-center justify-center rounded-xl bg-primary text-2xl text-primary-foreground shadow-xs">
+          <span aria-hidden="true" className="flex size-14 items-center justify-center rounded-xl bg-primary text-2xl text-primary-foreground">
             {client.company_name.charAt(0).toUpperCase()}
           </span>
         }
         heading={<span className="break-words">{client.company_name}</span>}
         description={
           <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-            <StatusPill active={client.is_active}>{client.is_active ? "Active" : "Inactive"}</StatusPill>
+            <StatusPill active={client.is_active}>{client.is_active ?"Active" :"Inactive"}</StatusPill>
             {client.client_name ? <span>{client.client_name}</span> : null}
-            <span>Updated {format(new Date(client.updated_at), "MMM d, yyyy")}</span>
+            <span>Updated {format(new Date(client.updated_at),"MMM d, yyyy")}</span>
           </span>
         }
         actions={
@@ -102,9 +102,9 @@ export function ClientDetailPage() {
         <div className="border-b border-border pb-3">
           <PillTabs label="Client sections" value={tab} onChange={setTab} options={TABS} />
         </div>
-        {tab === "overview" ? <ActivitySummaryStats rows={activityRows} /> : null}
+        {tab ==="overview" ? <ActivitySummaryStats rows={activityRows} /> : null}
         {/* Sections stay mounted across tabs, so nothing refetches or loses a chat draft. */}
-        <div className={cn("grid min-w-0 items-start gap-4", tab === "overview" && "xl:grid-cols-[minmax(0,1fr)_22rem]")}>
+        <div className={cn("grid min-w-0 items-start gap-4", tab ==="overview" && "xl:grid-cols-[minmax(0,1fr)_22rem]")}>
           <div className="grid min-w-0 grid-cols-1 gap-4">
             <div className={showOn("projects")}>
               <ClientProjectsSection
@@ -131,7 +131,7 @@ export function ClientDetailPage() {
               />
             </div>
           </div>
-          <div className={cn(tab === "overview" ? "min-w-0 xl:sticky xl:top-4" : "hidden")}>
+          <div className={cn(tab ==="overview" ?"min-w-0 xl:sticky xl:top-4" :"hidden")}>
             <ClientSummary client={client} />
           </div>
         </div>

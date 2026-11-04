@@ -30,9 +30,9 @@ export function ShellHeader({
         <Menu aria-hidden="true" />
       </Button>
       <Button
-        variant="ghost"
+        variant="default"
         size="icon-lg"
-        className="-ml-2 hidden lg:inline-flex"
+        className="hidden shrink-0 lg:inline-flex"
         aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         aria-expanded={!isSidebarCollapsed}
         onClick={onToggleSidebar}

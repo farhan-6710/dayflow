@@ -17,7 +17,7 @@ export function TaskRow({ task, onOpen, onEdit, onDelete }: TaskRowProps) {
     <li
       ref={setNodeRef}
       style={style}
-      className={cn("relative flex items-start rounded-xl border border-border bg-card shadow-xs", isDragging && "z-10 opacity-70 shadow-md")}
+      className={cn("relative flex items-start rounded-xl border border-border bg-card", isDragging && "z-10 opacity-70")}
     >
       <DragHandle label={`Reorder ${task.title}`} handleProps={handleProps} />
       <button
@@ -26,22 +26,22 @@ export function TaskRow({ task, onOpen, onEdit, onDelete }: TaskRowProps) {
         className="flex min-w-0 flex-1 gap-3 rounded-lg py-2.5 text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
       >
         <span className="hidden w-14 shrink-0 text-xs leading-snug text-muted-foreground min-[400px]:block">
-          <span className="block text-foreground">{task.due_time ?? "No time"}</span>
+          <span className="block text-foreground">{task.due_time ??"No time"}</span>
           {end}
         </span>
         <span className="grid min-w-0 flex-1 justify-items-start gap-1">
-          <span className={cn("max-w-full truncate", task.status === "done" && "text-muted-foreground line-through")}>{task.title}</span>
+          <span className={cn("max-w-full truncate", task.status ==="done" && "text-muted-foreground line-through")}>{task.title}</span>
           <TaskStatusBadge status={task.status} />
           <span className="flex max-w-full items-center gap-1.5 text-xs text-muted-foreground">
             <CalendarClock className="size-3.5 shrink-0" aria-hidden="true" />
             <span className="truncate">
-              <span className="min-[400px]:hidden">{task.due_time ? `${task.due_time} · ` : ""}</span>
+              <span className="min-[400px]:hidden">{task.due_time ? `${task.due_time} · ` :""}</span>
               {TASK_PRIORITY_LABELS[task.priority]} priority
             </span>
           </span>
           <span className="flex max-w-full items-center gap-1.5 text-xs text-muted-foreground">
             <FileText className="size-3.5 shrink-0" aria-hidden="true" />
-            <span className="truncate">{task.description || "No description"}</span>
+            <span className="truncate">{task.description ||"No description"}</span>
           </span>
         </span>
       </button>

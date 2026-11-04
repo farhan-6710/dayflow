@@ -9,7 +9,7 @@ export function ProjectChip({ color, className }: ProjectChipProps) {
     <span
       aria-hidden="true"
       style={{ backgroundColor: color }}
-      className={cn("inline-flex size-9 shrink-0 items-center justify-center rounded-lg text-white shadow-xs", className)}
+      className={cn("inline-flex size-9 shrink-0 items-center justify-center rounded-lg text-white", className)}
     >
       <Folder className="size-4" />
     </span>

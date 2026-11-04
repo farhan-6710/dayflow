@@ -9,14 +9,14 @@ import { Checkbox } from "@/shared/ui/checkbox";
 
 export function TodoRow({ todo, sortable, onToggle, onEdit, onDelete }: TodoRowProps) {
   const { setNodeRef, style, handleProps, isDragging } = useSortableRow(todo.id);
-  const done = todo.status === "completed";
+  const done = todo.status ==="completed";
   const checkboxId = `todo-${todo.id}`;
 
   return (
     <li
       ref={sortable ? setNodeRef : undefined}
       style={sortable ? style : undefined}
-      className={cn("relative flex items-center gap-1 bg-card py-1", isDragging && "z-10 opacity-70 shadow-md")}
+      className={cn("relative flex items-center gap-1 bg-card py-1", isDragging && "z-10 opacity-70")}
     >
       {sortable ? <DragHandle label={`Reorder ${todo.title}`} handleProps={handleProps} /> : null}
       <label htmlFor={checkboxId} className="flex min-h-10 min-w-0 flex-1 cursor-pointer items-center gap-2.5 py-1">

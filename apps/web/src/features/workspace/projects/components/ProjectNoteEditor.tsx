@@ -27,9 +27,9 @@ export function ProjectNoteEditor({
   return (
     <Reveal className="relative pb-1 pl-1">
     {/* A sheet behind, a bookmark and a folded corner, so the editor reads as a page. */}
-    <div aria-hidden="true" className={cn(panelClassName, "absolute inset-x-0 top-1 bottom-0 right-1 bg-muted/40")} />
+    <div aria-hidden="true" className={cn(panelClassName,"absolute inset-x-0 top-1 bottom-0 right-1 bg-muted/40")} />
     <Bookmark aria-hidden="true" className="pointer-events-none absolute -top-1.5 left-5 z-10 size-6 fill-chart-1 text-chart-1" />
-    <form onSubmit={editor.handleSubmit} className={cn(panelClassName, "relative flex min-h-[32rem] min-w-0 flex-col")}>
+    <form onSubmit={editor.handleSubmit} className={cn(panelClassName,"relative flex min-h-[32rem] min-w-0 flex-col")}>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-0 bottom-0 size-12 rounded-br-xl bg-linear-to-tl from-background from-50% to-muted to-50%"
@@ -84,7 +84,7 @@ export function ProjectNoteEditor({
             </Button>
           )}
           <SubmitButton loading={editor.saving} disabled={!canEdit || !editor.title.trim() || (Boolean(note) && !editor.isDirty)}>
-            {note ? "Save" : "Create note"}
+            {note ?"Save" :"Create note"}
           </SubmitButton>
         </div>
       </div>
@@ -104,7 +104,7 @@ export function ProjectNoteEditor({
           placeholder="Plans, decisions, anything worth keeping…"
           aria-label="Note body"
           readOnly={!canEdit}
-          className="min-h-72 flex-1 resize-none border-0 bg-transparent p-0 font-serif text-sm leading-7 shadow-none focus-visible:ring-0 dark:bg-transparent"
+          className="min-h-72 flex-1 resize-none border-0 bg-transparent p-0 font-serif text-sm leading-7 focus-visible:ring-0 dark:bg-transparent"
         />
       </div>
     </form>

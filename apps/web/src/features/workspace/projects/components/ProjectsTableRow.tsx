@@ -16,7 +16,7 @@ export function ProjectsTableRow({ project, onEdit, onToggleActive, onDelete }: 
   const actions = [
     ...(project.is_active ? [{ label: "Edit", icon: Pencil, onSelect: () => onEdit(project) }] : []),
     {
-      label: project.is_active ? "Mark inactive" : "Mark active",
+      label: project.is_active ?"Mark inactive" :"Mark active",
       icon: project.is_active ? CircleOff : RotateCcw,
       onSelect: () => onToggleActive(project),
     },
@@ -32,7 +32,7 @@ export function ProjectsTableRow({ project, onEdit, onToggleActive, onDelete }: 
       className={cn(
         "grid grid-cols-[2.5rem_1fr_2.5rem] items-center gap-x-2 gap-y-1 px-3 md:gap-x-4",
         PROJECTS_GRID_CLASS,
-        isDragging && "z-10 opacity-70 shadow-md",
+        isDragging && "z-10 opacity-70",
       )}
     >
       <DragHandle label={`Reorder ${project.name}`} handleProps={handleProps} />
@@ -47,7 +47,7 @@ export function ProjectsTableRow({ project, onEdit, onToggleActive, onDelete }: 
         {project.project_for_label}
       </p>
       <div className="col-start-2 md:col-start-auto">
-        <StatusPill active={project.is_active}>{project.is_active ? "Active" : "Inactive"}</StatusPill>
+        <StatusPill active={project.is_active}>{project.is_active ?"Active" :"Inactive"}</StatusPill>
       </div>
       <div className="hidden md:flex md:justify-end">
         <RowActionsMenu label={`Actions for ${project.name}`} actions={actions} />

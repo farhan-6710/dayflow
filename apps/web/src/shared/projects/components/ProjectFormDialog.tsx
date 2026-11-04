@@ -30,7 +30,7 @@ export function ProjectFormDialog(props: ProjectFormDialogProps) {
     <Dialog open={open} onOpenChange={form.handleOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-normal">{project ? "Edit project" : "New project"}</DialogTitle>
+          <DialogTitle className="text-2xl font-normal">{project ?"Edit project" :"New project"}</DialogTitle>
           <DialogDescription>A folder for notes and links, personal or for a client.</DialogDescription>
         </DialogHeader>
         <form onSubmit={form.handleSubmit} className="space-y-4">
@@ -69,7 +69,7 @@ export function ProjectFormDialog(props: ProjectFormDialogProps) {
                   <span
                     style={{ backgroundColor: color }}
                     className={cn(
-                      "size-7 rounded-full transition-shadow",
+                      "size-7 rounded-full transition-colors",
                       form.color === color && "ring-2 ring-foreground ring-offset-2 ring-offset-popover",
                     )}
                   />
@@ -88,7 +88,7 @@ export function ProjectFormDialog(props: ProjectFormDialogProps) {
               Cancel
             </Button>
             <SubmitButton loading={form.submitting} disabled={!form.name.trim()}>
-              {project ? "Save changes" : "Create project"}
+              {project ?"Save changes" :"Create project"}
             </SubmitButton>
           </DialogFooter>
         </form>

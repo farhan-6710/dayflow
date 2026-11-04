@@ -31,7 +31,7 @@ export function DateFilters({
         onClick={onClick}
         className={cn(
           "h-8 shrink-0 rounded-md px-3 text-sm whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          active ? "bg-primary text-primary-foreground shadow-sm" : "hover:bg-accent",
+          active ?"bg-primary text-primary-foreground" :"hover:bg-accent",
         )}
       >
         {label}
@@ -43,7 +43,7 @@ export function DateFilters({
     <Reveal
       role="group"
       aria-label={`Date filter: ${periodLabel}`}
-      className="flex w-fit max-w-full flex-wrap items-center gap-0.5 rounded-lg border border-border bg-card p-1 shadow-xs"
+      className="flex w-fit max-w-full flex-wrap items-center gap-0.5 rounded-lg border border-border bg-card p-1"
     >
       {segment("All", isAll, onClearFilters)}
       {DATE_FILTER_PERIODS.map((period) =>

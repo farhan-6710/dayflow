@@ -13,7 +13,7 @@ import { cn } from "@/shared/lib/utils";
 
 export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotesTableRowProps) {
   const { setNodeRef, style, handleProps, isDragging } = useSortableRow(note.id);
-  const title = note.title.trim() || "Untitled note";
+  const title = note.title.trim() ||"Untitled note";
 
   const menu = (
     <RowActionsMenu
@@ -31,7 +31,7 @@ export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotes
       className={cn(
         "grid grid-cols-[2.5rem_1fr_2.5rem] items-center gap-x-2 gap-y-0.5 px-3 md:gap-x-4",
         NOTES_GRID_CLASS,
-        isDragging && "z-10 opacity-70 shadow-md",
+        isDragging && "z-10 opacity-70",
       )}
     >
       <DragHandle label={`Reorder ${title}`} handleProps={handleProps} />
@@ -44,7 +44,7 @@ export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotes
         {NOTE_CATEGORY_LABELS[note.category]}
       </p>
       <p className="col-start-2 text-sm text-muted-foreground tabular-nums md:col-start-auto">
-        {format(new Date(note.updated_at), "MMM d, yyyy")}
+        {format(new Date(note.updated_at),"MMM d, yyyy")}
       </p>
       <div className="hidden md:flex md:justify-end">{menu}</div>
     </DirectoryTableRow>

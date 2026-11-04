@@ -9,7 +9,7 @@ import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
 /** Coral, darkened in the light theme so it keeps 4.5:1 on the card. */
-const credentialClassName = "select-all text-[color-mix(in_oklab,var(--chart-1)_60%,var(--foreground))] dark:text-chart-1";
+const credentialClassName ="select-all text-[color-mix(in_oklab,var(--chart-1)_60%,var(--foreground))] dark:text-chart-1";
 
 const SLIDE_IN = { delay: 1, duration: 0.6, ease: [0.22, 1, 0.36, 1] } as const;
 
@@ -32,7 +32,7 @@ export function DemoAccountCard() {
         initial={{ x: "120%" }}
         animate={{ x: 0 }}
         transition={SLIDE_IN}
-        className={cn(panelClassName, "pointer-events-auto relative w-full max-w-xs px-4 py-3 shadow-lg")}
+        className={cn(panelClassName,"pointer-events-auto relative w-full max-w-xs px-4 py-3")}
       >
         <Button
           type="button"
@@ -47,7 +47,7 @@ export function DemoAccountCard() {
         <h2 className="pr-8 text-lg leading-tight text-success-text">Just looking around?</h2>
         <dl className="mt-1.5 grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-0 text-sm">
           <dt className="text-muted-foreground">Email</dt>
-          <dd className={cn(credentialClassName, "break-all")}>{DEMO_ACCOUNT.email}</dd>
+          <dd className={cn(credentialClassName,"break-all")}>{DEMO_ACCOUNT.email}</dd>
           <dt className="text-muted-foreground">Password</dt>
           <dd className={credentialClassName}>{DEMO_ACCOUNT.password}</dd>
         </dl>

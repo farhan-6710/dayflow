@@ -16,7 +16,7 @@ export function StatCard({ card }: StatCardProps) {
         className={cn(
           panelClassName,
           "relative flex h-full min-w-0 flex-col p-3 sm:p-4",
-          card.href && "transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md",
+          card.href && "transition-transform duration-200 hover:-translate-y-0.5",
         )}
       >
         <div className="flex items-start justify-between gap-2">
