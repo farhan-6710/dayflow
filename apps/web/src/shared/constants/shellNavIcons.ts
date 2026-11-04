@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   ListTodo,
   Settings,
+  UserRound,
   Users,
 } from "lucide-react";
 
@@ -18,6 +19,7 @@ export type ShellNavIconKey =
   | "reminders"
   | "notifications"
   | "analytics"
+  | "account"
   | "settings";
 
 export const shellNavIcons: Record<ShellNavIconKey, LucideIcon> = {
@@ -28,5 +30,6 @@ export const shellNavIcons: Record<ShellNavIconKey, LucideIcon> = {
   reminders: CalendarClock,
   notifications: Bell,
   analytics: BarChart3,
+  account: UserRound,
   settings: Settings,
 };

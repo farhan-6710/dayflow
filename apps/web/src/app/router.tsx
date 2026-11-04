@@ -74,6 +74,10 @@ const AnalyticsPage = lazyRoutePage(
   () => import("@/features/workspace/analytics/pages/AnalyticsPage"),
   "AnalyticsPage",
 );
+const AccountPage = lazyRoutePage(
+  () => import("@/features/workspace/account/pages/AccountPage"),
+  "AccountPage",
+);
 const SettingsPage = lazyRoutePage(
   () => import("@/features/workspace/settings/pages/SettingsPage"),
   "SettingsPage",
@@ -107,6 +111,10 @@ const ClientNotificationsPage = lazyRoutePage(
 const ClientAnalyticsPage = lazyRoutePage(
   () => import("@/features/client/pages/ClientAnalyticsPage"),
   "ClientAnalyticsPage",
+);
+const ClientAccountPage = lazyRoutePage(
+  () => import("@/features/client/pages/ClientAccountPage"),
+  "ClientAccountPage",
 );
 const ClientSettingsPage = lazyRoutePage(
   () => import("@/features/client/pages/ClientSettingsPage"),
@@ -158,6 +166,7 @@ export const router = createBrowserRouter([
               { path: "daily-reminders", element: <RemindersManagementPage /> },
               { path: "notifications", element: <NotificationsPage /> },
               { path: "analytics", element: <AnalyticsPage /> },
+              { path: "account", element: <AccountPage /> },
               { path: "settings", element: <SettingsPage /> },
               redirect("projects", WORKSPACE_PROJECTS_MANAGEMENT_PATH),
               { path: "projects/:id", element: <LegacyProjectRedirect /> },
@@ -190,6 +199,7 @@ export const router = createBrowserRouter([
               { path: "projects/:id", element: <ClientProjectDetailPage /> },
               { path: "notifications", element: <ClientNotificationsPage /> },
               { path: "analytics", element: <ClientAnalyticsPage /> },
+              { path: "account", element: <ClientAccountPage /> },
               { path: "settings", element: <ClientSettingsPage /> },
               redirect("*", CLIENT_PORTAL_DASHBOARD_PATH),
             ],

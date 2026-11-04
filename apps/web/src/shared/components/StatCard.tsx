@@ -6,7 +6,7 @@ import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 import type { StatCardProps } from "@/shared/types/components";
 
-/** Label and icon on top, the value as the focus, then the trend and its context along the bottom. */
+/** Label and icon on top, then the value with its caption on one row, then the trend. */
 export function StatCard({ card }: StatCardProps) {
   const { icon: Icon } = card;
 
@@ -36,11 +36,17 @@ export function StatCard({ card }: StatCardProps) {
             <Icon className="size-4" aria-hidden="true" />
           </span>
         </div>
-        <p className="mt-2 min-w-14 text-2xl leading-none tabular-nums sm:text-3xl">{card.value}</p>
-        <div className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 pt-3">
-          {card.delta ? <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} /> : null}
-          {card.description ? <p className="min-w-0 text-xs text-muted-foreground text-pretty">{card.description}</p> : null}
+        <div className="mt-2 flex min-w-0 items-baseline gap-2">
+          <p className="min-w-14 shrink-0 text-2xl leading-none tabular-nums sm:text-3xl">{card.value}</p>
+          {card.description ? (
+            <p className="min-w-0 text-xs leading-snug text-muted-foreground text-pretty">{card.description}</p>
+          ) : null}
         </div>
+        {card.delta ? (
+          <div className="mt-2">
+            <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} />
+          </div>
+        ) : null}
       </article>
     </Reveal>
   );

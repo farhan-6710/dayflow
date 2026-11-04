@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 export type SettingsViewProps = {
@@ -10,7 +11,16 @@ export type SettingsViewProps = {
 export type SettingsCardProps = {
   title: string;
   description?: string;
+  icon?: LucideIcon;
   children: ReactNode;
+};
+
+export type PreferenceToggleRowProps = {
+  id: string;
+  title: string;
+  description: string;
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
 };
 
 export type EmailCardProps = {
@@ -19,4 +29,12 @@ export type EmailCardProps = {
 
 export type PasswordCardProps = {
   authPath: string;
+};
+
+export type AccountViewProps = {
+  settingsPath: string;
+  homePath: string;
+  tasksPath: string;
+  projectsPath: string;
+  roleLabel: string;
 };

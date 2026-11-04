@@ -18,7 +18,11 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { showToast } from "@/shared/utils/showToast";
 
-export function PortalUserHeaderMenu({ settingsPath, signOutRedirect }: PortalUserHeaderMenuProps) {
+export function PortalUserHeaderMenu({
+  accountPath,
+  settingsPath,
+  signOutRedirect,
+}: PortalUserHeaderMenuProps) {
   const { signOut } = useAuth();
   const { displayName, firstName, initials, avatarUrl, email } = useUserDisplay();
   const navigate = useNavigate();
@@ -58,9 +62,9 @@ export function PortalUserHeaderMenu({ settingsPath, signOutRedirect }: PortalUs
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link to={settingsPath}>
+            <Link to={accountPath}>
               <UserRound aria-hidden="true" />
-              Profile
+              Account
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

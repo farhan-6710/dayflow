@@ -22,7 +22,9 @@ export type ShellSidebarConfig = {
   brandSubtitle: string;
   nav: ShellNavItem[];
   searchPlaceholder: string;
+  /** Account / profile page. */
   profilePath: string;
+  settingsPath: string;
   quickAction: {
     image: DayflowImageName;
     title: string;
@@ -90,6 +92,7 @@ export type ShellNavSearchProps = {
 };
 
 export type PortalUserHeaderMenuProps = {
+  accountPath: string;
   settingsPath: string;
   signOutRedirect: string;
 };

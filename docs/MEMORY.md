@@ -11,7 +11,7 @@ Durable context for future sessions. Short facts, not narrative.
 
 - **The database is never changed.** Same Supabase project for web and mobile; existing data must keep working.
 - Routes and features are fixed by [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md): `/workspace` (8 nav items) and `/client-portal` (5 nav items) in one shared shell layout.
-- Look and feel: [theme.css](./theme.css) (warm paper neutrals, charcoal primary, Ovo + Merriweather, 0.5rem radius). It replaces the old gold/Trail theme.
+- Look and feel: [theme.css](./theme.css) (warm paper neutrals, charcoal primary, Ovo UI, EB Garamond headings, Merriweather notes). It replaces the old gold/Trail theme.
 - Client portal: clients never own projects; access via RPCs and RLS only.
 - `project_for`: `null` = personal, UUID = client project. `raised_by`: `workspace` | `client`. Projects use `is_active`, never archive.
 - Brand copy is only in `shared/brand/brandManifest.json`.

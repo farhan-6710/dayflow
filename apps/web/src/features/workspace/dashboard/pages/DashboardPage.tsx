@@ -13,17 +13,18 @@ import { DateFilters } from "@/shared/components/DateFilters";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { useUserDisplay } from "@/shared/hooks/useUserDisplay";
+import { getGreeting } from "@/shared/utils/greeting";
 
 export function DashboardPage() {
   const page = useDashboard();
   const { displayName } = useUserDisplay();
-  const heading =
-    page.userEmail === DEMO_ACCOUNT.email ? `Welcome Demo User` : `Welcome, ${displayName}`;
+  const name = page.userEmail === DEMO_ACCOUNT.email ? "Guest Account" : displayName;
 
   return (
     <>
       <DashboardHero
-        heading={heading}
+        greeting={getGreeting()}
+        name={name}
         today={format(new Date(), "EEEE, MMMM d")}
         filters={<DateFilters {...page.dateFilterProps} />}
       />

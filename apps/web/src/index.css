@@ -2,6 +2,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@fontsource/ovo/400.css";
+@import "@fontsource/eb-garamond/400.css";
+@import "@fontsource/eb-garamond/700.css";
 @import "@fontsource/merriweather/400.css";
 @import "@fontsource/merriweather/700.css";
 
@@ -35,7 +37,14 @@
   --success: oklch(0.5 0.12 150);
   --success-foreground: oklch(0.985 0.01 150);
   --success-text: oklch(0.42 0.11 150);
-  --sidebar: oklch(0.8985 0.0199 87.5195);
+  /* Soft insight chips for stat trends (warm cream UI — not neon green/red). */
+  --insight-up: oklch(0.4 0.055 155);
+  --insight-up-bg: oklch(0.93 0.02 150);
+  --insight-up-border: oklch(0.84 0.03 150);
+  --insight-down: oklch(0.45 0.07 35);
+  --insight-down-bg: oklch(0.945 0.02 45);
+  --insight-down-border: oklch(0.86 0.035 45);
+  --sidebar: oklch(0.953 0.0156 86.4257);
   --sidebar-foreground: oklch(0.235 0 0);
   --sidebar-primary: oklch(0.3012 0 0);
   --sidebar-primary-foreground: oklch(0.9169 0.0175 99.616);
@@ -44,6 +53,7 @@
   --sidebar-border: oklch(0.8434 0.0231 87.1621);
   --sidebar-ring: oklch(0.3012 0 0);
   --font-sans: Ovo, ui-serif, serif;
+  --font-heading: "EB Garamond", ui-serif, serif;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: Merriweather, ui-serif, serif;
   --radius: 1rem;
@@ -98,7 +108,13 @@
   --success: oklch(0.5 0.085 152);
   --success-foreground: oklch(0.97 0.01 152);
   --success-text: oklch(0.78 0.095 152);
-  --sidebar: oklch(0.173 0 0);
+  --insight-up: oklch(0.8 0.055 155);
+  --insight-up-bg: oklch(0.26 0.02 155);
+  --insight-up-border: oklch(0.36 0.03 155);
+  --insight-down: oklch(0.82 0.05 40);
+  --insight-down-bg: oklch(0.27 0.02 40);
+  --insight-down-border: oklch(0.38 0.03 40);
+  --sidebar: oklch(0.2264 0 0);
   --sidebar-foreground: oklch(0.9173 0.0133 82.4015);
   --sidebar-primary: oklch(0.852 0.0205 100.6306);
   --sidebar-primary-foreground: oklch(0.3329 0 0);
@@ -107,6 +123,7 @@
   --sidebar-border: oklch(0.2931 0 0);
   --sidebar-ring: oklch(0.852 0.0205 100.6306);
   --font-sans: Ovo, ui-serif, serif;
+  --font-heading: "EB Garamond", ui-serif, serif;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: Merriweather, ui-serif, serif;
   --radius: 1rem;
@@ -154,6 +171,12 @@
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-success-text: var(--success-text);
+  --color-insight-up: var(--insight-up);
+  --color-insight-up-bg: var(--insight-up-bg);
+  --color-insight-up-border: var(--insight-up-border);
+  --color-insight-down: var(--insight-down);
+  --color-insight-down-bg: var(--insight-down-bg);
+  --color-insight-down-border: var(--insight-down-border);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -169,6 +192,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
 
@@ -209,6 +233,11 @@
   body {
     font-synthesis-weight: none; /* Ovo has one weight: never fake a bold. */
     scrollbar-color: var(--border) transparent;
+  }
+  h1,
+  h2 {
+    font-family: var(--font-heading);
+    font-weight: 700;
   }
   ::selection {
     background-color: var(--primary);

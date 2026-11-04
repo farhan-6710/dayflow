@@ -15,7 +15,7 @@ export function ShellHeader({
   onOpenMobileNav,
 }: ShellHeaderProps) {
   return (
-    <Reveal as="header" kind="shell-down" className="flex h-16 shrink-0 items-center gap-1 border-b border-border bg-background px-3 sm:gap-2 md:gap-3 md:px-6 lg:px-8">
+    <Reveal as="header" kind="shell-down" className="flex h-16 shrink-0 items-center gap-1 border-b border-border bg-sidebar px-3 sm:gap-2 md:gap-3 md:px-6 lg:px-8">
       <Button
         variant="ghost"
         size="icon-lg"
@@ -34,7 +34,8 @@ export function ShellHeader({
         <ThemeToggle />
         {headerActions}
         <PortalUserHeaderMenu
-          settingsPath={sidebarConfig.profilePath}
+          accountPath={sidebarConfig.profilePath}
+          settingsPath={sidebarConfig.settingsPath}
           signOutRedirect={signOutRedirect}
         />
       </div>

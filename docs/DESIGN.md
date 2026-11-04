@@ -15,11 +15,12 @@ Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Cal
 
 | Token | Font | Use |
 |-------|------|-----|
-| `font-sans` | Ovo | UI and headings |
+| `font-sans` | Ovo | UI |
+| `font-heading` | EB Garamond | Page and panel headings (`h1`, `h2`) |
 | `font-serif` | Merriweather | Long text, notes, emphasis |
 | `font-mono` | Merriweather (token default) | Timer and numbers: add `tabular-nums` |
 
-Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weight, so build hierarchy with size, colour and spacing rather than `font-bold`. Check that visually.
+Load via `@fontsource/ovo`, `@fontsource/eb-garamond` (400 and 700), and `@fontsource/merriweather`. Ovo has a single weight, so never `font-bold` it. Headings use EB Garamond 700.
 
 ## Shape and depth
 
@@ -44,7 +45,7 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 - **Page:** `PageHeader` (heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
 - **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (`PillTabs` status tabs with counts, one filter opposite, search beneath), the inset `DirectoryTable` and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
 - **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, under a column named "Actions", never inline icon buttons. A row that opens something does so on click.
-- **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards`: label on the left and icon tile on the right on top, value below, then the trend chip and description along the bottom. List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
+- **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards`: label on the left and icon tile on the right on top, then the value and its caption on one row (`12/45 Still to do, all time`), then the trend chip if present. No divider under the value. List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
 - **3D art:** on auth screens, empty states, the sidebar quick-action card, and the not-a-client and error pages. Never in stat cards or page headers.
 - **Date filters:** one bordered bar with a dark active pill and the date range after a divider. On the dashboard it sits right of the heading from `xl`.
 - **Calendar:** Month, Week and Day tabs beside a selected-day panel, filling the window from `xl`. Week and day are hour timelines: `TIMELINE_START_HOUR` to `TIMELINE_END_HOUR`, opening at 8 AM. Tasks assume 60 minutes, overlapping tasks share the width, and tasks with no time sit in a "No time" row. Week headers scroll with their columns, so they stay aligned on phones.

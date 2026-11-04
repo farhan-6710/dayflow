@@ -5,7 +5,6 @@ import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { Reveal } from "@/shared/components/Reveal";
 import { ShellNavLink } from "@/shared/components/ShellNavLink";
 import { ShellQuickAction } from "@/shared/components/ShellQuickAction";
-import { ShellSidebarProfile } from "@/shared/components/ShellSidebarProfile";
 import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { cn } from "@/shared/lib/utils";
 import type { ShellSidebarContentProps } from "@/shared/types/components";

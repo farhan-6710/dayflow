@@ -7,6 +7,7 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
 import { useUserDisplay } from "@/shared/hooks/useUserDisplay";
+import { getGreeting } from "@/shared/utils/greeting";
 import type { StatCardItem } from "@/shared/types/components";
 
 type Countable = { status: string };
@@ -41,7 +42,7 @@ export function ClientDashboardPage() {
 
   return (
     <>
-      <PageHeader heading={`Welcome, ${displayName}`} description={`Projects and activities for ${page.client.company_name}.`} />
+      <PageHeader heading={`${getGreeting()}, ${displayName}`} description={`Projects and activities for ${page.client.company_name}.`} />
       <div className="grid min-w-0 gap-4">
         {page.error ? <ErrorBanner message={page.error} onRetry={page.reload} /> : null}
         <StatsCards cards={cards} isLoading={page.loading} />

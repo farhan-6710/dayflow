@@ -9,6 +9,7 @@ export const WORKSPACE_CLIENTS_MANAGEMENT_PATH = `${WORKSPACE_PREFIX}/clients-ma
 export const WORKSPACE_DAILY_REMINDERS_PATH = `${WORKSPACE_PREFIX}/daily-reminders`;
 export const WORKSPACE_NOTIFICATIONS_PATH = `${WORKSPACE_PREFIX}/notifications`;
 export const WORKSPACE_ANALYTICS_PATH = `${WORKSPACE_PREFIX}/analytics`;
+export const WORKSPACE_ACCOUNT_PATH = `${WORKSPACE_PREFIX}/account`;
 export const WORKSPACE_SETTINGS_PATH = `${WORKSPACE_PREFIX}/settings`;
 
 export function buildProjectPath(projectId: string): string {
