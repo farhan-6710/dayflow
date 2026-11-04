@@ -7,6 +7,7 @@ module.exports = [
   {
     ignores: [
       "node_modules/**",
+      "_vault/**",
       "dist/**",
       ".expo/**",
       ".expo-shared/**",

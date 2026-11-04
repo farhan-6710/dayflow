@@ -5,8 +5,8 @@ import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
 import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
-import { updateReminderRequest } from "@redux/slices/remindersSlice";
-import { store } from "@redux/store";
+import { queryClient } from "@/lib/query";
+import { updateReminder } from "@services/remindersService";
 import { REMINDER_NOTIFICATION_CATEGORY } from "@notifications/constants";
 import type { ReminderStatus } from "@types";
 
@@ -61,7 +61,9 @@ function applyReminderStatusFromNotification(
   status: ReminderStatus,
   toast: { type: "success" | "info" | "error"; title: string; message: string },
 ) {
-  store.dispatch(updateReminderRequest({ id: reminderId, updates: { status } }));
+  void updateReminder(reminderId, { status })
+    .then(() => queryClient.invalidateQueries({ queryKey: ["reminders"] }))
+    .catch((error) => console.error(`${LOG_PREFIX} status update failed:`, error));
   Toast.show({
     type: toast.type,
     text1: toast.title,

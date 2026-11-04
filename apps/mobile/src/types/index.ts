@@ -19,6 +19,7 @@ export interface Reminder {
   status: ReminderStatus;
   category?: ReminderCategory; // Optional grouping until backend sync
   repeatDays?: DayOfWeek[]; // Days when reminder should repeat
+  disabledUntil?: string | null; // Paused until this date, then active again
   createdAt?: string; // Backend timestamp
   updatedAt?: string; // Backend timestamp
   syncState?: SyncState; // Client-only: tracks sync status for optimistic UI
@@ -38,9 +39,3 @@ export interface ReminderHistoryItem {
   totalReminders: number;
   date: string;
 }
-
-// Component types
-export * from "./ai-assist";
-export * from "./analytics";
-export * from "./components";
-export * from "./profile";

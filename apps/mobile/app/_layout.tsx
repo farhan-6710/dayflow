@@ -1,64 +1,65 @@
-import { useEffect } from "react";
-import { Platform, useColorScheme } from "react-native";
-import { Providers as AppProviders } from "@providers/AppProviders";
-import Notifications from "@notifications/expoNotifications";
+import { Merriweather_400Regular, Merriweather_700Bold } from "@expo-google-fonts/merriweather";
+import { Ovo_400Regular } from "@expo-google-fonts/ovo";
+import { YoungSerif_400Regular } from "@expo-google-fonts/young-serif";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { useNavigationBarTheme } from "@hooks/navigation/useNavigationBarTheme";
-import {
-  useFonts,
-  Cinzel_400Regular,
-  Cinzel_500Medium,
-  Cinzel_600SemiBold,
-  Cinzel_700Bold,
-  Cinzel_800ExtraBold,
-  Cinzel_900Black,
-} from "@expo-google-fonts/cinzel";
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from "react-native-reanimated";
-import {
-  REMINDER_NOTIFICATION_CHANNEL,
-  REMINDER_NOTIFICATION_SOUND,
-} from "@notifications/constants";
-import "@styles/global.css";
-import "@styles/dynamicClasses.css";
-import { THEME_COLORS } from "@constants/theme";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import { Platform } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-configureReanimatedLogger({
-  level: ReanimatedLogLevel.warn,
-  strict: false, // Disable strict mode to hide the warning
-});
+import "@/theme/global.css";
+import { AuthProvider } from "@/features/auth/AuthProvider";
+import { queryClient } from "@/lib/query";
+import { NotificationProvider } from "@notifications/context/NotificationProvider";
+import { REMINDER_NOTIFICATION_CHANNEL, REMINDER_NOTIFICATION_SOUND } from "@notifications/constants";
+import Notifications from "@notifications/expoNotifications";
+import { ThemeProvider, useTheme } from "@/theme/ThemeProvider";
+import { Toaster } from "@/ui/Toaster";
+
+void SplashScreen.preventAutoHideAsync();
+
+const isNative = Platform.OS !== "web";
 
 // Set up notification handler
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
+if (isNative) {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
+}
+
+function RootStack() {
+  const { scheme, colors } = useTheme();
+  return (
+    <>
+      <StatusBar style={scheme === "dark" ? "light" : "dark"} />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }} />
+      <Toaster />
+    </>
+  );
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [fontsLoaded] = useFonts({
-    Cinzel_400Regular,
-    Cinzel_500Medium,
-    Cinzel_600SemiBold,
-    Cinzel_700Bold,
-    Cinzel_800ExtraBold,
-    Cinzel_900Black,
-  });
+  const [fontsLoaded, fontError] = useFonts({ Ovo_400Regular, YoungSerif_400Regular, Merriweather_400Regular, Merriweather_700Bold });
+  const ready = fontsLoaded || Boolean(fontError);
 
-  // Set up navigation bar theme for Android
-  useNavigationBarTheme();
+  useEffect(() => {
+    if (ready) void SplashScreen.hideAsync();
+  }, [ready]);
 
   // setup notification channel for Android
   useEffect(() => {
     if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync(REMINDER_NOTIFICATION_CHANNEL, {
+      void Notifications.setNotificationChannelAsync(REMINDER_NOTIFICATION_CHANNEL, {
         name: "Reminders",
         importance: Notifications.AndroidImportance.HIGH,
         enableVibrate: true,
@@ -69,59 +70,25 @@ export default function RootLayout() {
     }
   }, []);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  if (!ready) return null;
 
   return (
-    <AppProviders>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor:
-              colorScheme === "dark"
-                ? THEME_COLORS.dark.background
-                : THEME_COLORS.light.card,
-          },
-          headerTintColor:
-            colorScheme === "dark"
-              ? THEME_COLORS.dark.text
-              : THEME_COLORS.light.text,
-          headerTitleStyle: {
-            fontWeight: "600",
-            fontSize: 17,
-            color:
-              colorScheme === "dark"
-                ? THEME_COLORS.dark.heading
-                : THEME_COLORS.light.heading,
-          },
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "Back",
-          headerBackButtonMenuEnabled: false,
-        }}
-      >
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-            title: "Home",
-          }}
-        />
-        <Stack.Screen
-          name="auth/login"
-          options={{
-            headerShown: false,
-            title: "Login",
-          }}
-        />
-        <Stack.Screen
-          name="auth/signup"
-          options={{
-            headerShown: false,
-            title: "Sign Up",
-          }}
-        />
-      </Stack>
-    </AppProviders>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
+            <AuthProvider>
+              {isNative ? (
+                <NotificationProvider>
+                  <RootStack />
+                </NotificationProvider>
+              ) : (
+                <RootStack />
+              )}
+            </AuthProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

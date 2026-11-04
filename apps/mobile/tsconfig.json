@@ -6,65 +6,8 @@
       "@/*": [
         "./src/*"
       ],
-      "@components": [
-        "./src/components"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@hooks": [
-        "./src/hooks"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@utils": [
-        "./src/utils"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@constants": [
-        "./src/constants"
-      ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
-      "@types": [
-        "./src/types"
-      ],
-      "@types/*": [
-        "./src/types/*"
-      ],
-      "@screens": [
-        "./src/screens"
-      ],
-      "@screens/*": [
-        "./src/screens/*"
-      ],
-      "@redux": [
-        "./src/redux"
-      ],
-      "@redux/*": [
-        "./src/redux/*"
-      ],
-      "@styles": [
-        "./src/styles"
-      ],
-      "@styles/*": [
-        "./src/styles/*"
-      ],
-      "@api": [
-        "./src/api"
-      ],
-      "@api/*": [
-        "./src/api/*"
-      ],
-      "@config": [
-        "./src/config"
-      ],
-      "@config/*": [
-        "./src/config/*"
+      "@dayflow/brand/*": [
+        "../../shared/brand/*"
       ],
       "@notifications": [
         "./src/notifications"
@@ -72,38 +15,14 @@
       "@notifications/*": [
         "./src/notifications/*"
       ],
-      "@providers": [
-        "./src/providers"
-      ],
-      "@providers/*": [
-        "./src/providers/*"
-      ],
-      "@lib": [
-        "./src/lib"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@services": [
-        "./src/services"
-      ],
       "@services/*": [
         "./src/services/*"
       ],
-      "@assets": [
-        "./assets"
+      "@types": [
+        "./src/types"
       ],
       "@assets/*": [
         "./assets/*"
-      ],
-      "@app": [
-        "./app"
-      ],
-      "@app/*": [
-        "./app/*"
-      ],
-      "@dayflow/brand/*": [
-        "../../shared/brand/*"
       ]
     }
   },
@@ -111,6 +30,11 @@
     "**/*.ts",
     "**/*.tsx",
     "nativewind-env.d.ts",
-    "../../shared/brand/**/*.json"
+    "../../shared/brand/theme.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "_vault",
+    "dist"
   ]
 }

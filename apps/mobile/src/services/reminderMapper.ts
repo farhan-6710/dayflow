@@ -4,6 +4,7 @@ import type {
   ReminderCategory,
   ReminderStatus,
 } from "@types";
+import { formatLocalDate } from "@/shared/utils/reminderDay";
 
 export type SupabaseReminderRow = {
   id: string;
@@ -34,9 +35,9 @@ export function parseReminderTime(time: string): {
     return { hour: 9, minute: 0, displayTime: "9:00 AM" };
   }
 
-  let hour = Number.parseInt(match[1]!, 10);
-  const minute = Number.parseInt(match[2]!, 10);
-  const period = match[3]!.toUpperCase();
+  let hour = Number.parseInt(match[1] ?? "", 10);
+  const minute = Number.parseInt(match[2] ?? "", 10);
+  const period = (match[3] ?? "").toUpperCase();
 
   if (period === "PM" && hour !== 12) hour += 12;
   if (period === "AM" && hour === 12) hour = 0;
@@ -53,7 +54,17 @@ export function formatReminderTime(hour: number, minute: number): string {
   return `${displayHour}:${pad(minute)} ${period}`;
 }
 
+/** Disabled on either app, unless its "until" date has arrived. */
+function isPaused(row: SupabaseReminderRow): boolean {
+  if (!row.is_disabled && row.status !== "paused") return false;
+  const today = formatLocalDate();
+  return !row.disabled_until || row.disabled_until > today;
+}
+
 function mapStatus(row: SupabaseReminderRow): ReminderStatus {
+  if (isPaused(row)) return "paused";
+  if (row.status === "paused") return "upcoming";
+
   if (
     row.status === "done" ||
     row.status === "paused" ||
@@ -61,10 +72,6 @@ function mapStatus(row: SupabaseReminderRow): ReminderStatus {
     row.status === "missed"
   ) {
     return row.status;
-  }
-
-  if (row.is_disabled) {
-    return "paused";
   }
 
   return "upcoming";
@@ -96,6 +103,7 @@ export function mapRowToReminder(row: SupabaseReminderRow): Reminder {
     status: mapStatus(row),
     category: mapCategory(row.category),
     repeatDays: row.days_of_week as DayOfWeek[],
+    disabledUntil: row.disabled_until,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -114,7 +122,7 @@ export function mapReminderToInsert(
     reminder_time: reminder.displayTime ?? formatReminderTime(reminder.hour, reminder.minute),
     days_of_week: reminder.repeatDays ?? [],
     is_disabled: status === "paused",
-    disabled_until: null,
+    disabled_until: reminder.disabledUntil ?? null,
     status,
     category: reminder.category ?? null,
   };
@@ -132,10 +140,11 @@ export function mapReminderToUpdate(updates: Partial<Reminder>) {
     payload.reminder_time = formatReminderTime(hour, minute);
   }
   if (updates.repeatDays !== undefined) payload.days_of_week = updates.repeatDays;
+  if (updates.disabledUntil !== undefined) payload.disabled_until = updates.disabledUntil;
   if (updates.category !== undefined) payload.category = updates.category ?? null;
 
   if (updates.status !== undefined) {
-    payload.status = updates.status === "missed" ? "missed" : updates.status;
+    payload.status = updates.status;
     payload.is_disabled = updates.status === "paused";
   }
 

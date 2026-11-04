@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { supabase } from "@lib/supabase";
+import { supabase } from "@/services/supabaseClient";
 import { DB } from "@services/db";
 import type {
   OccurrenceStatus,
@@ -15,13 +15,13 @@ import {
   hasReminderTimePassed,
   parseLocalDate,
   repeatsOn,
-} from "@utils/reminderDay";
+} from "@/shared/utils/reminderDay";
 
 type OccurrenceRow = {
   reminder_id: string;
   occurrence_date: string;
   status: string;
-  reminders:
+  reminders?:
     | { category: string | null }
     | { category: string | null }[]
     | null;

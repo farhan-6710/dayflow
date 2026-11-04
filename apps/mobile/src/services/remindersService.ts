@@ -1,4 +1,4 @@
-import { supabase } from "@lib/supabase";
+import { supabase } from "@/services/supabaseClient";
 import { DB } from "@services/db";
 import {
   mapReminderToInsert,
@@ -7,7 +7,7 @@ import {
   type SupabaseReminderRow,
 } from "@services/reminderMapper";
 import { recordReminderOccurrence, clearOccurrenceForDate } from "@services/reminderOccurrencesService";
-import { statusForSchedule } from "@utils/reminderDay";
+import { statusForSchedule } from "@/shared/utils/reminderDay";
 import type { Reminder } from "@types";
 
 async function getCurrentUserId(): Promise<string> {
