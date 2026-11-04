@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 
 import { useAuth, useUserId } from "@/features/auth/AuthProvider";
+import { useUnreadCount } from "@/features/notifications/useNotifications";
 import { sortByOrder } from "@/features/tasks/taskMeta";
 import { TaskListCard } from "@/features/tasks/TaskListCard";
 import { useTasks } from "@/features/tasks/useTasks";
@@ -17,7 +18,6 @@ import { TimeTrackerCard } from "@/features/today/TimeTrackerCard";
 import { TodoCard } from "@/features/today/TodoCard";
 import { useRefresh } from "@/lib/query";
 import { fetchOpenActivityCounts } from "@/services/clientActivitiesService";
-import { countUnreadNotifications } from "@/services/notificationsService";
 import { fetchProjects } from "@/services/projectsService";
 import { DATE_FILTER_PERIODS, dateFilterLabel, resolveDateRange, type DateFilterState } from "@/shared/utils/dateFilters";
 import { parseDateValue, serializeDateValue } from "@/shared/utils/dateValue";
@@ -53,7 +53,7 @@ export default function TodayScreen() {
   const tasksQuery = useTasks();
   const projectsQuery = useQuery({ queryKey: ["projects"], queryFn: () => fetchProjects(userId) });
   const activityQuery = useQuery({ queryKey: ["activity-counts"], queryFn: fetchOpenActivityCounts });
-  const unreadQuery = useQuery({ queryKey: ["notifications"], queryFn: () => countUnreadNotifications(userId), select: (count) => count });
+  const unreadQuery = useUnreadCount();
   const refresh = useRefresh(tasksQuery, projectsQuery, activityQuery, unreadQuery);
   const { sheets, openDetails, openEdit, openNew } = useTaskSheets();
   const [filter, setFilter] = useState<DateFilterState>({ mode: "all" });
