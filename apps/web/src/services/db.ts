@@ -5,7 +5,7 @@ export const DB = {
   PROFILES: {
     TABLE: "profiles",
     SELECT:
-      "id, display_name, avatar_url, theme_preference, created_at, updated_at",
+      "id, display_name, avatar_url, created_at, updated_at",
   },
   PROJECTS: {
     TABLE: "projects",

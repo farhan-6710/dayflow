@@ -1,12 +1,9 @@
 import type { NoteCategory } from "@/shared/constants/noteCategories";
 
-export type ThemePreference = "light" | "dark";
-
 export type Profile = {
   id: string;
   display_name: string | null;
   avatar_url: string | null;
-  theme_preference: ThemePreference;
   created_at: string;
   updated_at: string;
 };

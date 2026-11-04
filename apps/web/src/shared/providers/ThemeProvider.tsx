@@ -7,8 +7,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="light"
-      enableSystem={false}
+      defaultTheme="system"
+      enableSystem
       storageKey="DF-theme"
       disableTransitionOnChange
       // Client-rendered app: main.tsx applies the theme, so next-themes' inline script is inert.

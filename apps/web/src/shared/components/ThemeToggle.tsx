@@ -12,7 +12,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon-lg"
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-      onClick={() => void setDarkMode(!isDark)}
+      onClick={() => setDarkMode(!isDark)}
     >
       <Icon aria-hidden="true" />
     </Button>

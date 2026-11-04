@@ -8,14 +8,13 @@ import { showToast } from "@/shared/utils/showToast";
 export function ThemeCard() {
   const { isDark, setDarkMode } = useThemeMode();
 
-  async function handleChange(enabled: boolean) {
-    if (await setDarkMode(enabled)) {
-      showToast("success", `Theme set to ${enabled ? "dark" : "light"}.`);
-    }
+  function handleChange(enabled: boolean) {
+    setDarkMode(enabled);
+    showToast("success", `Theme set to ${enabled ? "dark" : "light"}.`);
   }
 
   return (
-    <SettingsCard title="Appearance" description="Saved to your account, so it follows you across devices.">
+    <SettingsCard title="Appearance" description="Follows your device until you choose. Remembered in this browser.">
       <div className="flex min-h-10 items-center justify-between gap-4">
         <label htmlFor="settings-dark-mode" className="text-sm">
           Dark mode
@@ -26,7 +25,7 @@ export function ThemeCard() {
             id="settings-dark-mode"
             className="relative after:absolute after:-inset-3"
             checked={isDark}
-            onCheckedChange={(checked) => void handleChange(checked)}
+            onCheckedChange={handleChange}
           />
           <Moon className="size-4" aria-hidden="true" />
         </div>
