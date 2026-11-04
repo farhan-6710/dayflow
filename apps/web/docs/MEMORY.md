@@ -9,8 +9,8 @@ Durable context for the web app. Project-wide decisions (database, order of work
 
 ## Decisions
 
-- Routes and features are fixed by [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md): `/workspace` (8 nav items) and `/client-portal` (5 nav items) in one shared shell layout.
-- Look and feel: [theme.css](../../../shared/theme/theme.css) (warm paper neutrals, charcoal primary, Ovo UI, Young Serif headings, Merriweather notes). It replaces the old gold/Trail theme.
+- Routes live in `src/app/router.tsx`: `/workspace` (8 nav items) and `/client-portal` (5 nav items) in one shared shell layout.
+- Look and feel: [theme.json](../../../shared/brand/theme.json) (warm paper neutrals, charcoal primary, Ovo UI, Young Serif headings, Merriweather notes). It replaces the old gold/Trail theme.
 
 ## Known gaps in the old app (fix in the rebuild where the DB allows)
 
@@ -42,7 +42,7 @@ Durable context for the web app. Project-wide decisions (database, order of work
 
 ## Ops
 
-- Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `shared/theme/theme.css` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.
+- Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `shared/brand/theme.json` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.
 - Shipped images are WebP; PNG masters and logos live in `apps/web/design/` and are not deployed. Regenerate WebP from them with `cwebp` if art changes.
 
 - Desktop (Tauri) is out of scope until the web rebuild ships.
@@ -51,13 +51,10 @@ Durable context for the web app. Project-wide decisions (database, order of work
 
 | File | Role |
 |------|------|
-| `WEB_REBUILD_SPEC.md` | Routes, nav, features, notifications |
-| `WEB_ENV_AND_LINKS.md` | Env vars, links, auth redirects, deploy |
-| `ARCHITECTURE.md` | Stack, folders, data flow |
+| `ARCHITECTURE.md` | Stack, folders, data flow, env, auth redirects, deploy |
 | `RULES.md` | Web conventions (shared rules are in the root `docs/RULES.md`) |
-| `DESIGN.md` | UI direction (tokens are in `shared/theme/theme.css`) |
-| `IMPLEMENTATION_PLAN.md` | Per-route data and components, build order |
+| `DESIGN.md` | UI direction (tokens are in `shared/brand/theme.json`) |
 | `TASKS.md` | Phased rebuild checklist |
 | `MEMORY.md` | This file |
 
-Read order for a new agent: root `docs/PRD.md` → `docs/DATABASE.md` → `docs/RULES.md` → WEB_REBUILD_SPEC → ARCHITECTURE → RULES → DESIGN → IMPLEMENTATION_PLAN → TASKS.
+Read order for a new agent: root `docs/PRD.md` → `docs/DATABASE.md` → `docs/RULES.md` → ARCHITECTURE → RULES → DESIGN → TASKS.

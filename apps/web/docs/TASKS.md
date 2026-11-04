@@ -5,8 +5,7 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 ## Phase 0: Prep
 
 - [x] Old web app removed (commit `0e42896`); `.env` kept; DB untouched
-- [x] Route/feature spec: [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md)
-- [x] Env, links, DB contract: [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md)
+- [x] Route and feature spec, env, links and DB contract written (now in the code, ARCHITECTURE and the root DATABASE)
 - [x] Docs rewritten (awaiting review)
 
 ## Phase 1: Foundation
@@ -14,7 +13,7 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 - [x] Scaffold Vite + React 19 + TypeScript in `apps/web` (keep `.env`)
 - [x] Install dependencies listed in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - [x] Tailwind 4 + `shadcn init` (alias `@/`, components in `shared/ui`)
-- [x] Apply [theme.css](../../../shared/theme/theme.css) to `src/index.css`; add Ovo + Merriweather fonts
+- [x] Apply [theme.json](../../../shared/brand/theme.json) to `src/index.css`; add Ovo + Merriweather fonts
 - [x] `@dayflow/brand` alias to `shared/brand`; SEO title and description from manifest
 - [x] `services/supabaseClient.ts` and `services/db.ts` (columns from old `db.ts` in git)
 - [x] Restore logos, favicons, 3D assets into `public/`
@@ -22,7 +21,7 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 
 ## Phase 2: App shell
 
-- [x] Generate icon and illustration sheets, slice into `public/images/dayflow/{icons,illustrations}` (see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md))
+- [x] Generate icon and illustration sheets, slice into `public/images/dayflow/{icons,illustrations}`
 - [x] `AuthProvider`, `ThemeProvider`, Toaster, tooltip provider
 - [x] Router, `lazyRoutePage`, route constants, legacy redirects, `RouteErrorPage`
 - [x] Guards: `PublicRoute`, `ProtectedRoute`, `ClientPublicRoute`, `ClientProtectedRoute`
@@ -96,7 +95,7 @@ Each item: service → hook → page → states → verify.
 
 ## Phase 7: Mobile rebuild
 
-- [ ] Plan mobile scope from the web spec; reuse [theme.css](../../../shared/theme/theme.css) tokens
+- [ ] Plan mobile scope from the web spec; reuse [theme.json](../../../shared/brand/theme.json) tokens
 - [ ] Rebuild `apps/mobile` screens with feature parity
 - [ ] iOS release
 

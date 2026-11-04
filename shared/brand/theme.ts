@@ -1,0 +1,128 @@
+// Generated from shared/brand/theme.json by apps/web/scripts/generate-theme.mjs. Do not edit.
+// Colours are hex, so React Native and CSS read the same values.
+
+export const themeTokens = {
+  "light": {
+    "colors": {
+      "background": "#e9e4d8",
+      "foreground": "#1e1e1e",
+      "card": "#f4efe4",
+      "card-foreground": "#1e1e1e",
+      "popover": "#f4efe4",
+      "popover-foreground": "#1e1e1e",
+      "primary": "#2e2e2e",
+      "primary-foreground": "#e6e4d7",
+      "secondary": "#d8d2c4",
+      "secondary-foreground": "#2e2e2e",
+      "muted": "#cfc8b8",
+      "muted-foreground": "#5e5a52",
+      "accent": "#e6e4d7",
+      "accent-foreground": "#2e2e2e",
+      "destructive": "#dc2626",
+      "destructive-foreground": "#ffffff",
+      "border": "#d2cbbb",
+      "input": "#d2cbbb",
+      "ring": "#2e2e2e",
+      "chart-1": "#f26a4b",
+      "chart-2": "#1e1e1e",
+      "chart-3": "#5e5a52",
+      "chart-4": "#a89f8f",
+      "chart-5": "#cfc8b8",
+      "success": "#21763c",
+      "success-foreground": "#f6fcf6",
+      "success-text": "#0b5d2a",
+      "insight-up": "#2e513b",
+      "insight-up-bg": "#dfece1",
+      "insight-up-border": "#bdd0c0",
+      "insight-down": "#77473a",
+      "insight-down-bg": "#f9e9e2",
+      "insight-down-border": "#e6cabe",
+      "sidebar": "#f4efe4",
+      "sidebar-foreground": "#1e1e1e",
+      "sidebar-primary": "#2e2e2e",
+      "sidebar-primary-foreground": "#e6e4d7",
+      "sidebar-accent": "#dcdacf",
+      "sidebar-accent-foreground": "#2e2e2e",
+      "sidebar-border": "#d2cbbb",
+      "sidebar-ring": "#2e2e2e"
+    },
+    "shadows": {
+      "2xs": "0px 4px 10px 0px #0000000d",
+      "xs": "0px 4px 10px 0px #0000000d",
+      "sm": "0px 4px 10px 0px #0000001a, 0px 1px 2px -1px #0000001a",
+      "DEFAULT": "0px 4px 10px 0px #0000001a, 0px 1px 2px -1px #0000001a",
+      "md": "0px 4px 10px 0px #0000001a, 0px 2px 4px -1px #0000001a",
+      "lg": "0px 4px 10px 0px #0000001a, 0px 4px 6px -1px #0000001a",
+      "xl": "0px 4px 10px 0px #0000001a, 0px 8px 10px -1px #0000001a",
+      "2xl": "0px 4px 10px 0px #00000040"
+    }
+  },
+  "dark": {
+    "colors": {
+      "background": "#141414",
+      "foreground": "#e8e3da",
+      "card": "#1c1c1c",
+      "card-foreground": "#e8e3da",
+      "popover": "#1c1c1c",
+      "popover-foreground": "#e8e3da",
+      "primary": "#d1cfc0",
+      "primary-foreground": "#363636",
+      "secondary": "#222222",
+      "secondary-foreground": "#d1cfc0",
+      "muted": "#2a2a2a",
+      "muted-foreground": "#8e8a83",
+      "accent": "#363636",
+      "accent-foreground": "#d1cfc0",
+      "destructive": "#ef4444",
+      "destructive-foreground": "#ffffff",
+      "border": "#2c2c2c",
+      "input": "#2c2c2c",
+      "ring": "#d1cfc0",
+      "chart-1": "#f26a4b",
+      "chart-2": "#d9cfc2",
+      "chart-3": "#8e8a83",
+      "chart-4": "#5c5a56",
+      "chart-5": "#3b3b3b",
+      "success": "#3a714b",
+      "success-foreground": "#f0f7f2",
+      "success-text": "#88c999",
+      "insight-up": "#a3c9ae",
+      "insight-up-bg": "#1c2720",
+      "insight-up-border": "#314236",
+      "insight-down": "#e2baac",
+      "insight-down-bg": "#2f231f",
+      "insight-down-border": "#513d36",
+      "sidebar": "#1c1c1c",
+      "sidebar-foreground": "#e8e3da",
+      "sidebar-primary": "#d1cfc0",
+      "sidebar-primary-foreground": "#363636",
+      "sidebar-accent": "#212121",
+      "sidebar-accent-foreground": "#d1cfc0",
+      "sidebar-border": "#2c2c2c",
+      "sidebar-ring": "#d1cfc0"
+    },
+    "shadows": {
+      "2xs": "0px 6px 15px 0px #00000026",
+      "xs": "0px 6px 15px 0px #00000026",
+      "sm": "0px 6px 15px 0px #0000004d, 0px 1px 2px -1px #0000004d",
+      "DEFAULT": "0px 6px 15px 0px #0000004d, 0px 1px 2px -1px #0000004d",
+      "md": "0px 6px 15px 0px #0000004d, 0px 2px 4px -1px #0000004d",
+      "lg": "0px 6px 15px 0px #0000004d, 0px 4px 6px -1px #0000004d",
+      "xl": "0px 6px 15px 0px #0000004d, 0px 8px 10px -1px #0000004d",
+      "2xl": "0px 6px 15px 0px #000000bf"
+    }
+  },
+  "shared": {
+    "fonts": {
+      "sans": "Ovo, ui-serif, serif",
+      "heading": "\"Young Serif\", ui-serif, serif",
+      "serif": "Merriweather, ui-serif, serif",
+      "mono": "Merriweather, ui-serif, serif"
+    },
+    "radius": "1rem",
+    "tracking": "0.01em",
+    "spacing": "0.25rem"
+  }
+} as const;
+
+export type ThemeMode = "light" | "dark";

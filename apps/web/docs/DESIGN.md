@@ -2,7 +2,7 @@
 
 Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Calm and readable; depth comes from soft shadows and spacing, not decoration.
 
-**Tokens:** [theme.css](../../../shared/theme/theme.css) is the single source of truth for web and mobile. `apps/web/src/index.css` imports it, so never copy token values into the web app.
+**Tokens:** [theme.json](../../../shared/brand/theme.json) is the single source of truth for web and mobile, in hex. `bun run theme:generate` (in `apps/web`) writes `shared/brand/theme.css`, which `apps/web/src/index.css` imports, and `theme.ts` for mobile. Never edit the generated files or copy token values into an app; `bun run build` fails if they are stale.
 
 ## Rules
 
@@ -81,4 +81,4 @@ Visible focus ring (`ring` token), labelled icon buttons, keyboard-operable drag
 
 ## Brand
 
-Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`: charcoal or cream (`foreground`) with a coral (`chart-1`) check. To change their colours, edit `theme.css` and run `apps/web/scripts/recolor-logos.py`, then `apps/mobile/scripts/generate-brand-assets.py`. 3D icons and illustrations ship as WebP in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; see [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md).
+Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`: charcoal or cream (`foreground`) with a coral (`chart-1`) check. To change their colours, edit `theme.json`, run `bun run theme:generate`, then `apps/web/scripts/recolor-logos.py`, then `apps/mobile/scripts/generate-brand-assets.py`. 3D icons and illustrations ship as WebP in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; paths are in `shared/constants/dayflowImages.ts`.

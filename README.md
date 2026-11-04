@@ -61,7 +61,7 @@ apps/web/src/services/             Web Supabase access
 apps/web/src/shared/               Shared UI, auth, settings and brand re-exports
 apps/mobile/                       Expo app (same Auth + DB)
 scripts/migrations/                Shared Postgres SQL
-shared/theme/                      Theme tokens (theme.css), used by web and mobile
+shared/brand/                      Brand manifest and theme tokens (theme.json), used by web and mobile
 docs/                              Shared: PRD, database, rules, memory
 apps/web/docs/                     Web: spec, architecture, design, rules, tasks, memory
 apps/mobile/docs/                  Mobile docs (added when the rebuild starts)
@@ -77,7 +77,7 @@ apps/mobile/docs/                  Mobile docs (added when the rebuild starts)
 | [docs/DATABASE.md](./docs/DATABASE.md) | Data model, client portal RPCs, DB contract (both apps) |
 | [docs/RULES.md](./docs/RULES.md) | Rules for every app |
 | [docs/MEMORY.md](./docs/MEMORY.md) | Durable project-wide decisions |
-| [shared/theme/theme.css](./shared/theme/theme.css) | Theme tokens for web and mobile |
+| [shared/brand/theme.json](./shared/brand/theme.json) | Theme tokens for web and mobile (CSS and TypeScript are generated from it) |
 | [apps/web/docs/ARCHITECTURE.md](./apps/web/docs/ARCHITECTURE.md) | Web structure and data flow |
 | [apps/web/docs/DESIGN.md](./apps/web/docs/DESIGN.md) | Web UI/UX direction |
 | [apps/web/docs/RULES.md](./apps/web/docs/RULES.md) | Web conventions |

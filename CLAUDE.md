@@ -12,7 +12,7 @@ This file holds what applies to every app. Each app has its own `docs/`, loaded 
 @docs/DATABASE.md
 @docs/MEMORY.md
 
-Theme tokens: `shared/theme/theme.css` (open it when changing colours, radius or shadows).
+Theme tokens: `shared/brand/theme.json` (edit it when changing colours, radius or shadows, then run `bun run theme:generate` in `apps/web`).
 
 ## App docs
 

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "theme:generate": "node scripts/generate-theme.mjs",
+    "build": "node scripts/generate-theme.mjs --check && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "seed:nov-tasks": "bun scripts/seed-november-tasks.ts",

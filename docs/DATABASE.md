@@ -25,7 +25,7 @@ profiles
 | `raised_by` | `workspace` or `client`: who created the activity |
 | `owner_user_id` | Workspace owner of a client |
 
-Exact columns per table: `apps/web/src/services/db.ts` (the old one is recoverable from git, see [WEB_ENV_AND_LINKS.md](../apps/web/docs/WEB_ENV_AND_LINKS.md)). Mobile keeps its own copy of the names.
+Exact columns per table: `apps/web/src/services/db.ts` (the old one is recoverable from git at `b1335f3`). Mobile keeps its own copy of the names.
 
 ## Client portal security
 

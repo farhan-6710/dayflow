@@ -1,10 +1,4 @@
-/*
- * DayFlow theme tokens: the single source of truth for web and mobile.
- * Web imports this from apps/web/src/index.css, after `@import "tailwindcss"`.
- * Change colours, radius or shadows here, nowhere else.
- */
-
-@custom-variant dark (&:is(.dark *));
+/* Generated from shared/brand/theme.json by apps/web/scripts/generate-theme.mjs. Do not edit. */
 
 :root {
   --background: #e9e4d8;
@@ -34,7 +28,6 @@
   --success: #21763c;
   --success-foreground: #f6fcf6;
   --success-text: #0b5d2a;
-  /* Soft insight chips for stat trends (warm cream UI — not neon green/red). */
   --insight-up: #2e513b;
   --insight-up-bg: #dfece1;
   --insight-up-border: #bdd0c0;
@@ -49,17 +42,6 @@
   --sidebar-accent-foreground: #2e2e2e;
   --sidebar-border: #d2cbbb;
   --sidebar-ring: #2e2e2e;
-  --font-sans: Ovo, ui-serif, serif;
-  --font-heading: "Young Serif", ui-serif, serif;
-  --font-serif: Merriweather, ui-serif, serif;
-  --font-mono: Merriweather, ui-serif, serif;
-  --radius: 1rem;
-  --shadow-x: 0px;
-  --shadow-y: 4px;
-  --shadow-blur: 10px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: #000000;
   --shadow-2xs: 0px 4px 10px 0px #0000000d;
   --shadow-xs: 0px 4px 10px 0px #0000000d;
   --shadow-sm: 0px 4px 10px 0px #0000001a, 0px 1px 2px -1px #0000001a;
@@ -68,6 +50,11 @@
   --shadow-lg: 0px 4px 10px 0px #0000001a, 0px 4px 6px -1px #0000001a;
   --shadow-xl: 0px 4px 10px 0px #0000001a, 0px 8px 10px -1px #0000001a;
   --shadow-2xl: 0px 4px 10px 0px #00000040;
+  --font-sans: Ovo, ui-serif, serif;
+  --font-heading: "Young Serif", ui-serif, serif;
+  --font-serif: Merriweather, ui-serif, serif;
+  --font-mono: Merriweather, ui-serif, serif;
+  --radius: 1rem;
   --tracking-normal: 0.01em;
   --spacing: 0.25rem;
 }
@@ -114,17 +101,6 @@
   --sidebar-accent-foreground: #d1cfc0;
   --sidebar-border: #2c2c2c;
   --sidebar-ring: #d1cfc0;
-  --font-sans: Ovo, ui-serif, serif;
-  --font-heading: "Young Serif", ui-serif, serif;
-  --font-serif: Merriweather, ui-serif, serif;
-  --font-mono: Merriweather, ui-serif, serif;
-  --radius: 1rem;
-  --shadow-x: 0px;
-  --shadow-y: 6px;
-  --shadow-blur: 15px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.3;
-  --shadow-color: #000000;
   --shadow-2xs: 0px 6px 15px 0px #00000026;
   --shadow-xs: 0px 6px 15px 0px #00000026;
   --shadow-sm: 0px 6px 15px 0px #0000004d, 0px 1px 2px -1px #0000004d;
@@ -155,6 +131,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-success-text: var(--success-text);
@@ -164,11 +145,6 @@
   --color-insight-down: var(--insight-down);
   --color-insight-down-bg: var(--insight-down-bg);
   --color-insight-down-border: var(--insight-down-border);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -203,19 +179,4 @@
   --tracking-wide: calc(var(--tracking-normal) + 0.025em);
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    letter-spacing: var(--tracking-normal);
-  }
-  h1,
-  h2 {
-    font-family: var(--font-heading);
-    font-weight: 400; /* Young Serif ships Regular only. */
-  }
 }

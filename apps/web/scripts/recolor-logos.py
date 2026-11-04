@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Recolour the DayFlow logos to the current theme, then rebuild every size made from them.
 
-Colours come from shared/theme/theme.css (repo root): the accent is --chart-1, the ink is --foreground for that theme.
+Colours come from shared/brand/theme.json (repo root): the accent is chart-1, the ink is foreground for that theme.
 Both themes are built from the dark masters, whose edges are clean, so the two logos match exactly.
 Each pixel is split into accent and ink coverage and rebuilt from those. Safe to run again: the
 accent is read as accent.
@@ -12,14 +12,14 @@ Run apps/mobile/scripts/generate-brand-assets.py afterwards for the mobile icons
 """
 
 import colorsys
-import math
+import json
 import re
 from pathlib import Path
 
 from PIL import Image
 
 WEB = Path(__file__).resolve().parents[1]
-THEME = WEB.parents[1] / "shared" / "theme" / "theme.css"
+THEME = WEB.parents[1] / "shared" / "brand" / "theme.json"
 BRAND = WEB / "design" / "brand"
 PUBLIC = WEB / "public"
 
@@ -35,31 +35,11 @@ ACCENT_CHROMA = (0.15, 0.35)
 SOLID_INK_VALUE = 0.75
 
 
-def oklch_to_rgb(lightness: float, chroma: float, hue: float) -> tuple[int, int, int]:
-    a = chroma * math.cos(math.radians(hue))
-    b = chroma * math.sin(math.radians(hue))
-    l_ = (lightness + 0.3963377774 * a + 0.2158037573 * b) ** 3
-    m_ = (lightness - 0.1055613458 * a - 0.0638541728 * b) ** 3
-    s_ = (lightness - 0.0894841775 * a - 1.2914855480 * b) ** 3
-    linear = (
-        4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
-        -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
-        -0.0041960863 * l_ - 0.7034186147 * m_ + 1.7076147010 * s_,
-    )
-
-    def encode(value: float) -> int:
-        value = min(1.0, max(0.0, value))
-        srgb = 12.92 * value if value <= 0.0031308 else 1.055 * value ** (1 / 2.4) - 0.055
-        return round(srgb * 255)
-
-    return encode(linear[0]), encode(linear[1]), encode(linear[2])
-
-
-def theme_color(block: str, token: str) -> tuple[int, int, int]:
-    match = re.search(rf"--{token}:\s*oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)", block)
-    if not match:
-        raise SystemExit(f"--{token} not found in {THEME}")
-    return oklch_to_rgb(*(float(value) for value in match.groups()))
+def theme_color(colors: dict[str, str], token: str) -> tuple[int, int, int]:
+    value = colors.get(token)
+    if value is None or not re.fullmatch(r"#[0-9a-fA-F]{6}", value):
+        raise SystemExit(f"{token} is missing or not a hex colour in {THEME}")
+    return tuple(int(value[i : i + 2], 16) for i in (1, 3, 5))
 
 
 def recolor(source: Image.Image, accent: tuple[int, int, int], ink: tuple[int, int, int]) -> Image.Image:
@@ -108,31 +88,28 @@ def presentation_logo(lockup: Image.Image, background: tuple[int, int, int]) -> 
 
 
 def main() -> None:
-    css = THEME.read_text()
-    # Anchored to line starts, because the file's header comment also mentions these selectors.
-    root, dark, theme_inline = (re.search(pattern, css, re.M).start() for pattern in (r"^:root \{", r"^\.dark \{", r"^@theme"))
-    light_block = css[root:dark]
-    dark_block = css[dark:theme_inline]
-    accent = theme_color(light_block, "chart-1")
+    theme = json.loads(THEME.read_text())
+    accent = theme_color(theme["light"]["colors"], "chart-1")
 
     # Load first: the dark masters are also written to in this loop.
     lockup = Image.open(BRAND / "logo-dark.png").convert("RGBA")
     icon = Image.open(BRAND / "logo-dark-icon.png").convert("RGBA")
 
-    for theme, block in (("light", light_block), ("dark", dark_block)):
-        ink = theme_color(block, "foreground")
-        recolor(lockup, accent, ink).save(BRAND / f"logo-{theme}.png", optimize=True)
-        recolor(icon, accent, ink).save(BRAND / f"logo-{theme}-icon.png", optimize=True)
-        presentation_logo(recolor(lockup, accent, ink), theme_color(block, "background")).save(
-            BRAND / f"dayflow-logo-{theme}.png", optimize=True
+    for name in ("light", "dark"):
+        colors = theme[name]["colors"]
+        ink = theme_color(colors, "foreground")
+        recolor(lockup, accent, ink).save(BRAND / f"logo-{name}.png", optimize=True)
+        recolor(icon, accent, ink).save(BRAND / f"logo-{name}-icon.png", optimize=True)
+        presentation_logo(recolor(lockup, accent, ink), theme_color(colors, "background")).save(
+            BRAND / f"dayflow-logo-{name}.png", optimize=True
         )
-        print(f"{theme}: accent {accent}, ink {ink}")
+        print(f"{name}: accent {accent}, ink {ink}")
 
-        mark = Image.open(BRAND / f"logo-{theme}-icon.png")
+        mark = Image.open(BRAND / f"logo-{name}-icon.png")
         mark.resize((MARK_WEBP_SIZE, MARK_WEBP_SIZE), Image.Resampling.LANCZOS).save(
-            PUBLIC / f"logo-{theme}-icon.webp", quality=92, method=6
+            PUBLIC / f"logo-{name}-icon.webp", quality=92, method=6
         )
-        favicon_frame(mark).save(PUBLIC / f"favicon-{theme}.ico", sizes=FAVICON_SIZES)
+        favicon_frame(mark).save(PUBLIC / f"favicon-{name}.ico", sizes=FAVICON_SIZES)
 
     favicon_frame(Image.open(BRAND / "logo-light-icon.png")).save(PUBLIC / "favicon.ico", sizes=FAVICON_SIZES)
 

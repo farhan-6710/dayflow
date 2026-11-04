@@ -29,6 +29,6 @@ Durable, project-wide context. App-specific notes live in `apps/<app>/docs/MEMOR
 | `docs/PRD.md` | Goal, users, scope, success criteria |
 | `docs/DATABASE.md` | Data model, client portal RPCs, DB contract |
 | `docs/RULES.md` | Rules for every app |
-| `shared/theme/theme.css` | Theme tokens for web and mobile (not a doc: apps import it) |
+| `shared/brand/theme.json` | Theme tokens for web and mobile (not a doc). `theme.css` and `theme.ts` beside it are generated from it |
 | `apps/web/docs/` | Web spec, architecture, design, rules, plan, tasks, memory |
 | `apps/mobile/docs/` | Created when the mobile rebuild starts |

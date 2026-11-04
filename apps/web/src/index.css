@@ -1,11 +1,28 @@
-/* Web styles. Theme tokens live in the repo-root shared/theme/theme.css. */
+/* Web styles. Theme tokens are generated from shared/brand/theme.json (see shared/brand/theme.css). */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@fontsource/ovo/400.css";
 @import "@fontsource/young-serif/400.css";
 @import "@fontsource/merriweather/400.css";
 @import "@fontsource/merriweather/700.css";
-@import "../../../shared/theme/theme.css";
+@import "../../../shared/brand/theme.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+  }
+  h1,
+  h2 {
+    font-family: var(--font-heading);
+    font-weight: 400; /* Young Serif ships Regular only. */
+  }
+}
 
 @layer base {
   html,

@@ -20,7 +20,7 @@ React 19 · TypeScript · Vite · React Router 7 · Tailwind 4 · shadcn/ui · l
 | Workspace | `/workspace` | `PublicRoute` for `/auth`, `ProtectedRoute` for the rest | `AppLayout` |
 | Client portal | `/client-portal` | `ClientPublicRoute`, `ClientProtectedRoute` | `ClientAppLayout` |
 
-Both layouts wrap one shared `AppShellLayout` (header, left sidebar, main content area with `<Outlet />`) and differ only by config: nav items, quick-action card, header actions. Full route list: [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md).
+Both layouts wrap one shared `AppShellLayout` (header, left sidebar, main content area with `<Outlet />`) and differ only by config: nav items, quick-action card, header actions. The route list is `apps/web/src/app/router.tsx`.
 
 ## Folder structure
 
@@ -61,6 +61,31 @@ Shared by web and mobile: see [DATABASE.md](../../../docs/DATABASE.md). The tabl
 
 | Item | Where |
 |------|-------|
-| Env | `apps/web/.env`: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` |
-| Auth redirects | Fixed paths, see [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md) |
+| Env | `apps/web/.env` (untracked): `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`; `VITE_APP_ORIGIN` optional (desktop OAuth bridge origin); `SEED_EMAIL`, `SEED_PASSWORD` for local seed scripts only. Mobile uses `EXPO_PUBLIC_SUPABASE_*`. |
 | Migrations | `scripts/migrations/` (001–037), append-only. The rebuild adds none. |
+| Hosting | https://bisque-gull-237581.hostingersite.com (Hostinger). Desktop releases: https://github.com/farhan-6710/dayflow/releases |
+
+### Auth redirect paths (keep identical)
+
+These are on the Supabase Auth allow list. The app must serve the same paths, or the list must change in Supabase. `<origin>` is the hosting URL, or `http://localhost:5173` in development.
+
+| Path / URL | Purpose |
+|------------|---------|
+| `<origin>/auth/oauth-callback` | Google OAuth popup callback (both portals), carries `?next=` |
+| `<origin>/auth/desktop-oauth-bridge` | Desktop OAuth: the browser lands here, then forwards to the app |
+| `dayflow://auth/callback` | Desktop deep link (Tauri scheme `dayflow`) |
+| `<origin>/workspace/auth?form-type=reset-password` | Password-reset email link |
+| `<origin>/workspace/dashboard` | Default redirect after email confirmation or sign-in |
+
+Google is the only OAuth provider.
+
+### Deploy
+
+- `bun run build` in `apps/web` writes `dist/`. Upload only its contents, including `.htaccess`, to the Hostinger site root. Nothing outside `dist/` is deployed.
+- `.htaccess` sends every route to `index.html`, so deep links and refreshes work on Apache.
+- Env vars are baked in at build time, so build with `apps/web/.env` present.
+- Keep the desktop bridge page live: released desktop builds use it.
+
+### Recover from git
+
+The old web app is at commit `b1335f3` under `apps/web/`. Restore a path with `git checkout b1335f3 -- <path>`. Useful for the desktop phase: `apps/web/src-tauri/` (identifier `com.dayflow.app`, version `0.1.9`, window 1280×840 min 960×600, deep-link scheme `dayflow`, CSP allowing `*.supabase.co`, plugins opener and deep-link) and the old `apps/web/src/services/`.
