@@ -32,7 +32,7 @@ export function StatCard({ card }: StatCardProps) {
               card.label
             )}
           </h3>
-          <span data-shimmer-no-children className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted/60 sm:size-9">
+          <span data-shimmer-no-children className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background border border-border sm:size-9">
             <Icon className="size-4" aria-hidden="true" />
           </span>
         </div>

@@ -14,7 +14,7 @@ export function StatCardTrend({ delta, deltaLabel, trend }: StatCardTrendProps) 
       <span
         className={cn(
           "inline-flex h-6 w-fit shrink-0 items-center gap-1 rounded-md border px-1.5 text-xs font-medium tabular-nums",
-          isFlat && "border-border bg-muted/70 text-muted-foreground",
+          isFlat && "border-border bg-background text-muted-foreground",
           isBad &&
             "border-insight-down-border bg-insight-down-bg text-insight-down",
           !isFlat &&
