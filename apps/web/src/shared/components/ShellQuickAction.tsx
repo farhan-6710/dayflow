@@ -7,7 +7,7 @@ import { Button } from "@/shared/ui/button";
 /** Hidden on short windows so the nav always fits. Title leads; art and CTA follow. */
 export function ShellQuickAction({ action, onNavigate }: ShellQuickActionProps) {
   return (
-    <section className="rounded-xl border border-sidebar-border bg-background px-3 pt-3 pb-3 text-center text-sidebar-accent-foreground [@media(max-height:760px)]:hidden">
+    <section className="rounded-xl border border-sidebar-border bg-sidebar-accent px-3 pt-3 pb-3 text-center text-sidebar-accent-foreground [@media(max-height:760px)]:hidden">
       <p className="text-[11px] font-semibold tracking-[0.14em] text-sidebar-foreground/55 uppercase">
         {action.title}
       </p>
