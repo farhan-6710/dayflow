@@ -37,7 +37,7 @@ export function DirectoryTableRow({ to, onActivate, label, className, ref, style
       onClick={activate}
       onKeyDown={onKeyDown}
       className={cn(
-        "relative cursor-pointer bg-card px-5 py-3.5 transition-colors outline-none hover:bg-accent focus-visible:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset",
+        "relative cursor-pointer bg-card px-3 py-2.5 transition-colors md:py-1 outline-none hover:bg-accent focus-visible:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset",
         className,
       )}
     >

@@ -1,4 +1,4 @@
-import { Copy, Trash2 } from "lucide-react";
+import { Bookmark, Copy, Trash2 } from "lucide-react";
 
 import { useNoteEditor } from "@/features/workspace/projects/hooks/useNoteEditor";
 import type { ProjectNoteEditorProps } from "@/features/workspace/projects/types/components";
@@ -25,9 +25,16 @@ export function ProjectNoteEditor({
   const editor = useNoteEditor({ note, onSave, onCreated });
 
   return (
-    <Reveal>
-    <form onSubmit={editor.handleSubmit} className={cn(panelClassName, "flex min-h-[28rem] min-w-0 flex-col")}>
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-3">
+    <Reveal className="relative pb-1 pl-1">
+    {/* A sheet behind, a bookmark and a folded corner, so the editor reads as a page. */}
+    <div aria-hidden="true" className={cn(panelClassName, "absolute inset-x-0 top-1 bottom-0 right-1 bg-muted/40")} />
+    <Bookmark aria-hidden="true" className="pointer-events-none absolute -top-1.5 left-5 z-10 size-6 fill-chart-1 text-chart-1" />
+    <form onSubmit={editor.handleSubmit} className={cn(panelClassName, "relative flex min-h-[32rem] min-w-0 flex-col")}>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 bottom-0 size-12 rounded-br-xl bg-linear-to-tl from-background from-50% to-muted to-50%"
+      />
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-3 pt-5">
         <OptionDropdown
           label="Category"
           value={editor.category}

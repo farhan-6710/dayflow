@@ -1,9 +1,10 @@
-import { Plus } from "lucide-react";
+import { Folder, Plus } from "lucide-react";
 import { Link } from "react-router";
 
 import { buildProjectPath } from "@/app/constants/workspaceRoutes";
 import type { ClientProjectsSectionProps } from "@/features/workspace/clients-management/types/components";
 import { EmptyState } from "@/shared/components/EmptyState";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
 import { Reveal } from "@/shared/components/Reveal";
@@ -14,15 +15,18 @@ import { Button } from "@/shared/ui/button";
 export function ClientProjectsSection({ projects, canAdd, onAdd }: ClientProjectsSectionProps) {
   return (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-xl">Projects</h2>
-        {canAdd ? (
-          <Button variant="outline" className="h-10" onClick={onAdd}>
-            <Plus aria-hidden="true" />
-            New project
-          </Button>
-        ) : null}
-      </div>
+      <PanelHeading
+        icon={Folder}
+        title="Projects"
+        action={
+          canAdd ? (
+            <Button variant="outline" className="h-10" onClick={onAdd}>
+              <Plus aria-hidden="true" />
+              New Project
+            </Button>
+          ) : null
+        }
+      />
       {projects.length === 0 ? (
         <EmptyState
           bare

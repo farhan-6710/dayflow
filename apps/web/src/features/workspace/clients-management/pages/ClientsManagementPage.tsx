@@ -1,26 +1,33 @@
-import { Plus } from "lucide-react";
+import { CircleCheck, CircleOff, KeyRound, Plus, Users } from "lucide-react";
 
+import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
 import { ClientDialog } from "@/features/workspace/clients-management/components/ClientDialog";
 import { ClientsTable } from "@/features/workspace/clients-management/components/ClientsTable";
 import { DELETE_CLIENT_DESCRIPTION } from "@/features/workspace/clients-management/constants/copy";
 import { useClientsManagement } from "@/features/workspace/clients-management/hooks/useClientsManagement";
+import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { SummaryStats } from "@/shared/components/SummaryStats";
 import { Button } from "@/shared/ui/button";
+import { newThisMonthLabel } from "@/shared/utils/newThisMonthLabel";
 
 export function ClientsManagementPage() {
   const page = useClientsManagement();
+  const { clients } = page;
+  const active = clients.filter((client) => client.is_active).length;
 
   return (
     <>
       <PageHeader
+        backButton={<Breadcrumbs items={[{ label: "Workspace", to: WORKSPACE_DASHBOARD_PATH }, { label: "Clients" }]} />}
         heading="Clients Management"
-        description="Company and contact details for everyone you work with."
+        description="Manage your client relationships and contact details in one place."
         actions={
           <Button size="lg" onClick={page.openCreate}>
             <Plus aria-hidden="true" />
-            New client
+            New Client
           </Button>
         }
       />
@@ -29,19 +36,24 @@ export function ClientsManagementPage() {
           <ErrorBanner message={page.error} onRetry={page.reload} />
         </div>
       ) : null}
-      {page.error && page.clients.length === 0 ? null : (
-        <ClientsTable
-          clients={page.filteredClients}
-          isFiltered={page.isFiltered}
-          isLoading={page.loading}
-          statusFilter={page.statusFilter}
-          onStatusFilterChange={page.setStatusFilter}
-          searchQuery={page.searchQuery}
-          onSearchQueryChange={page.setSearchQuery}
-          onCreate={page.openCreate}
-          onEdit={page.openEdit}
-          onDelete={page.setClientToDelete}
-        />
+      {page.error && clients.length === 0 ? null : (
+        <div className="grid min-w-0 grid-cols-1 gap-4">
+          <SummaryStats
+            isLoading={page.loading}
+            items={[
+              { id: "total", label: "Total Clients", value: clients.length, icon: Users, trend: newThisMonthLabel(clients) },
+              { id: "active", label: "Active Clients", value: active, icon: CircleCheck },
+              { id: "inactive", label: "Inactive", value: clients.length - active, icon: CircleOff },
+              {
+                id: "portal",
+                label: "Portal Access",
+                value: clients.filter((client) => client.auth_user_id).length,
+                icon: KeyRound,
+              },
+            ]}
+          />
+          <ClientsTable page={page} />
+        </div>
       )}
       <ClientDialog
         open={page.dialogOpen}

@@ -39,7 +39,7 @@ export function RemindersManagementPage() {
           action={addButton}
         />
       ) : (
-        <RemindersWeekTable reminders={page.reminders} isLoading={page.loading} onEdit={page.openEdit} />
+        <RemindersWeekTable reminders={page.reminders} isLoading={page.loading} onEdit={page.openEdit} onDelete={page.setReminderToDelete} />
       )}
       <ReminderDialog
         open={page.dialogOpen}

@@ -5,6 +5,7 @@ import { deleteProject, fetchProjects, reorderProjects, updateProject } from "@/
 import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { useLoadData } from "@/shared/hooks/useLoadData";
+import { usePagination } from "@/shared/hooks/usePagination";
 import type { Project } from "@/shared/types/types";
 import { filterByActiveStatus } from "@/shared/utils/activeStatusFilterUtils";
 import { matchesListingSearch } from "@/shared/utils/listingSearch";
@@ -16,6 +17,7 @@ export function useProjectsManagement() {
   const userId = user?.id;
   const [statusFilter, setStatusFilter] = useState<ActiveStatusFilterId>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
@@ -30,11 +32,14 @@ export function useProjectsManagement() {
   const projects = useMemo(() => data?.projects ?? [], [data]);
   const filteredProjects = useMemo(
     () =>
-      filterByActiveStatus(projects, statusFilter).filter((project) =>
-        matchesListingSearch(searchQuery, [project.name, project.project_for_label]),
+      filterByActiveStatus(projects, statusFilter).filter(
+        (project) =>
+          (typeFilter === "all" || Boolean(project.project_for) === (typeFilter === "client")) &&
+          matchesListingSearch(searchQuery, [project.name, project.project_for_label]),
       ),
-    [projects, searchQuery, statusFilter],
+    [projects, searchQuery, statusFilter, typeFilter],
   );
+  const pagination = usePagination(filteredProjects, `${statusFilter}|${typeFilter}|${searchQuery}`);
 
   function setProjects(update: (current: Project[]) => Project[]) {
     setData((current) => ({ ...current, projects: update(current.projects) }));
@@ -103,6 +108,9 @@ export function useProjectsManagement() {
   return {
     projects,
     filteredProjects,
+    pagination,
+    typeFilter,
+    setTypeFilter,
     clients: data?.clients ?? [],
     loading,
     error,
@@ -111,7 +119,7 @@ export function useProjectsManagement() {
     setStatusFilter,
     searchQuery,
     setSearchQuery,
-    isFiltered: statusFilter !== "all" || searchQuery.trim().length > 0,
+    isFiltered: statusFilter !== "all" || typeFilter !== "all" || searchQuery.trim().length > 0,
     dialogOpen,
     setDialogOpen,
     editingProject,

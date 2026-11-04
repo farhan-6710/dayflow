@@ -27,7 +27,6 @@ const sidebarConfig: ShellSidebarConfig = {
     description: "View project updates and activities from your provider.",
     buttonLabel: "View Projects",
     buttonTo: CLIENT_PORTAL_PROJECTS_PATH,
-    image: "illo-sidebar-client",
   },
 };
 

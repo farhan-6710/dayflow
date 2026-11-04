@@ -49,7 +49,7 @@ export function ProjectsTableRow({ project, onEdit, onToggleActive, onDelete }: 
       <div className="col-start-2 md:col-start-auto">
         <StatusPill active={project.is_active}>{project.is_active ? "Active" : "Inactive"}</StatusPill>
       </div>
-      <div className="hidden md:block">
+      <div className="hidden md:flex md:justify-end">
         <RowActionsMenu label={`Actions for ${project.name}`} actions={actions} />
       </div>
     </DirectoryTableRow>

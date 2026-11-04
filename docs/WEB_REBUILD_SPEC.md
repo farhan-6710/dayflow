@@ -210,7 +210,7 @@ Legacy redirects (keep or drop):
   - Status legend shown on the page.
 
 **Projects Management**
-- Projects list with search and an Active / Inactive filter, drag to reorder.
+- Summary stats, then a paginated projects list with status tabs, a project-type filter and search, drag to reorder.
 - Create / edit / delete a project:
   - Fields: name, color.
   - "Project for": personal or a client.
@@ -220,14 +220,14 @@ Legacy redirects (keep or drop):
   - Activate / deactivate
   - Delete, which also deletes the project's notes
   - Reference links (URL + label)
-  - Notes table: sortable, searchable, filterable by category
+  - Notes table: drag to reorder, searchable, filterable by category
   - Client activities, for client projects
 - Notes:
   - Full-page editor with title, body and category (general, meeting, research, decision, reference)
   - Per-note reference links
 
 **Clients Management**
-- Clients table with search and an Active / Inactive filter.
+- Summary stats, then a paginated clients table with status tabs, a portal-access filter, search and sortable columns.
 - Create / edit / delete a client. Fields:
   - Company name
   - Client name

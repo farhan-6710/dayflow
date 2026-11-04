@@ -60,8 +60,8 @@ UI icons (nav, buttons, inputs) come from lucide-react. The custom assets below 
 |---|------|---------|
 | 1 | `illo-auth-workspace.png` | Workspace auth brand panel |
 | 2 | `illo-auth-client.png` | Client portal auth brand panel |
-| 3 | `illo-sidebar-workspace.png` | Workspace sidebar quick-action card |
-| 4 | `illo-sidebar-client.png` | Client sidebar quick-action card |
+| 3 | `illo-sidebar-workspace.png` | Not used since the sidebar card redesign |
+| 4 | `illo-sidebar-client.png` | Not used since the sidebar card redesign |
 | 5 | `illo-dashboard-hero.png` | Dashboard greeting / hero corner |
 | 6 | `illo-not-a-client.png` | `/client-portal/not-a-client` |
 | 7 | `illo-error.png` | Route error and not-found page |
@@ -131,9 +131,9 @@ Illustrations in order:
   - Sidebar: brand, nav, quick-action card, profile row. Becomes a mobile sheet on small screens.
   - Main outlet.
 - **Shared components:**
-  - `PageHeader`, `StatCard` / `StatsCards`, `DirectoryTable`
-  - `ListingSearchInput`, `ActiveStatusFilter`, `DateFilters` / `DateRangePicker`, `DatePicker`
-  - `EmptyState`, `ErrorBanner`, `Phantom` + `TableSkeleton` + `PageSkeleton`, `Reveal`
+  - `PageHeader`, `Breadcrumbs`, `StatCard` / `StatsCards`, `SummaryStats`, `DirectoryTable`, `TablePagination`, `PillTabs`, `PanelHeading`, `DetailsPanel`
+  - `ListingToolbar`, `ListingSearchInput`, `ActiveStatusTabs`, `DateFilters` / `DateRangePicker`, `DatePicker`
+  - `EmptyState`, `ErrorBanner`, `Phantom` + `TableSkeleton` + `ChartSkeleton`, `Reveal`
   - `ConfirmationModal`, `showToast`, `StatusPill`, `UserAvatar`
 
 ## 3. Routes: data and components

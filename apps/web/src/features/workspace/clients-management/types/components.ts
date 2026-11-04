@@ -1,19 +1,10 @@
-import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
+import type { useClientsManagement } from "@/features/workspace/clients-management/hooks/useClientsManagement";
 import type { Client, Project } from "@/shared/types/types";
 
 import type { ClientChatMessage } from "@/features/workspace/clients-management/types/types";
 
 export type ClientsTableProps = {
-  clients: Client[];
-  isFiltered: boolean;
-  isLoading: boolean;
-  statusFilter: ActiveStatusFilterId;
-  onStatusFilterChange: (filter: ActiveStatusFilterId) => void;
-  searchQuery: string;
-  onSearchQueryChange: (query: string) => void;
-  onCreate: () => void;
-  onEdit: (client: Client) => void;
-  onDelete: (client: Client) => void;
+  page: ReturnType<typeof useClientsManagement>;
 };
 
 export type ClientsTableRowProps = {

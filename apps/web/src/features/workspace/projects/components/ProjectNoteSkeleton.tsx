@@ -7,10 +7,15 @@ import { cn } from "@/shared/lib/utils";
 export function ProjectNoteSkeleton() {
   return (
     <Phantom>
-      <PageHeader backButton={<span className="text-sm">A project name</span>} heading="A note title" />
+      <PageHeader
+        backButton={<span className="text-sm">Projects Management, a project, a note</span>}
+        leading={<div className="size-14 rounded-xl" />}
+        heading="A note title"
+        description="Active, the client it's for, and when it changed"
+      />
       <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className={cn(panelClassName, "flex min-h-[28rem] min-w-0 flex-col")}>
-          <div className="flex items-center justify-between gap-2 border-b border-border p-3">
+          <div className="flex items-center justify-between gap-2 border-b border-border p-3 pt-5">
             <div className="h-10 w-36 rounded-lg" />
             <div className="h-10 w-48 rounded-lg" />
           </div>
@@ -20,7 +25,10 @@ export function ProjectNoteSkeleton() {
             <span className="text-sm">The second line of the note goes here.</span>
           </div>
         </div>
-        <TableSkeleton rows={2} panel title="Reference links" cells={[["A link label", "https://example.com/a-page"]]} />
+        <div className="grid min-w-0 gap-4">
+          <TableSkeleton rows={3} panel title="Note Details" cells={["A label", "A value here"]} />
+          <TableSkeleton rows={2} panel title="Reference Links" cells={[["A link label", "https://example.com/a-page"], "··"]} />
+        </div>
       </div>
     </Phantom>
   );

@@ -17,7 +17,7 @@ export function TableSkeleton({ rows = 5, gridClass, columns, cells, flush = fal
         <div
           key={row}
           style={gridClass ? undefined : { gridTemplateColumns: `minmax(0,1fr) repeat(${rowCells.length - 1},auto)` }}
-          className={cn("grid items-center gap-4 py-3.5", !flush && !panel && "px-5", gridClass && ["grid-cols-1", gridClass])}
+          className={cn("grid items-center gap-4 py-3.5", !flush && !panel && "px-3", gridClass && ["grid-cols-1", gridClass])}
         >
           {rowCells.map((cell, index) => (
             <div key={index} className="grid min-w-0 justify-items-start gap-1 text-sm">

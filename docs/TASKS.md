@@ -76,6 +76,15 @@ Each item: service → hook → page → states → verify.
 - [x] Entrance motion: blur, slide and fade with Trail's timings, through framer-motion
 - [ ] Verify the client portal screens with a real client login (needs the owner)
 
+## Phase 6c: Clients and projects redesign
+
+- [x] Clients and Projects lists: stats, status tabs, filter, search, pagination, Actions column
+- [x] Project detail: breadcrumb, section tabs, activity stats, details rail
+- [x] Note page: paper editor, note details rail
+- [x] Client detail: same system as project detail
+- [x] Reminders: Actions column
+- [ ] Client portal screens checked with a real client login (needs the owner)
+
 ## Phase 7: Mobile rebuild
 
 - [ ] Plan mobile scope from the web spec; reuse [theme.css](./theme.css) tokens

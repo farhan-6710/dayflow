@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Plus } from "lucide-react";
+import { FileText, Plus } from "lucide-react";
 import { Link } from "react-router";
 
 import { buildProjectNotePath } from "@/app/constants/workspaceRoutes";
@@ -10,6 +10,7 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { SortableList } from "@/shared/components/SortableList";
 import { NOTE_CATEGORIES, NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
 import type { Note } from "@/shared/types/types";
@@ -50,7 +51,7 @@ export function ProjectNotesTable({
     <Button asChild className="h-10">
       <Link to={buildProjectNotePath(projectId, "new")}>
         <Plus aria-hidden="true" />
-        Add note
+        Add Note
       </Link>
     </Button>
   );
@@ -58,7 +59,7 @@ export function ProjectNotesTable({
   return (
     <>
       <DirectoryTable
-        title="Notes"
+        title={<PanelHeading icon={FileText} title="Notes" />}
         gridClass={NOTES_GRID_CLASS}
         columns={notesColumns}
         isEmpty={filtered.length === 0}
@@ -71,7 +72,7 @@ export function ProjectNotesTable({
         action={canAddNote ? addButton : undefined}
         headerAside={
           <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
-            <ListingSearchInput value={searchQuery} onChange={setSearchQuery} placeholder="Search notes" />
+            <ListingSearchInput value={searchQuery} onChange={setSearchQuery} placeholder="Search notes…" />
             <OptionDropdown
               label="Filter by category"
               value={category}

@@ -13,6 +13,7 @@ export type RemindersWeekTableProps = {
   reminders: Reminder[];
   isLoading: boolean;
   onEdit: (reminder: Reminder) => void;
+  onDelete: (reminder: Reminder) => void;
 };
 
 export type ReminderDialogProps = {

@@ -1,19 +1,8 @@
 import type { Note, Project, ReferenceLink } from "@/shared/types/types";
-import type { ActiveStatusFilterId } from "@/shared/constants/activeStatusFilter";
+import type { useProjectsManagement } from "@/features/workspace/projects/hooks/useProjectsManagement";
 
 export type ProjectsTableProps = {
-  projects: Project[];
-  isFiltered: boolean;
-  isLoading: boolean;
-  statusFilter: ActiveStatusFilterId;
-  onStatusFilterChange: (filter: ActiveStatusFilterId) => void;
-  searchQuery: string;
-  onSearchQueryChange: (query: string) => void;
-  onCreate: () => void;
-  onEdit: (project: Project) => void;
-  onToggleActive: (project: Project) => void;
-  onDelete: (project: Project) => void;
-  onReorder: (orderedIds: string[]) => void;
+  page: ReturnType<typeof useProjectsManagement>;
 };
 
 export type ProjectsTableRowProps = {

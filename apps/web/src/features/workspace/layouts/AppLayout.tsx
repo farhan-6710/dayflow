@@ -35,7 +35,6 @@ const sidebarConfig: ShellSidebarConfig = {
     description: "Open today's tasks calendar and keep the day on track.",
     buttonLabel: "Tasks Calendar",
     buttonTo: WORKSPACE_TASKS_CALENDAR_PATH,
-    image: "illo-sidebar-workspace",
   },
 };
 

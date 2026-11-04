@@ -1,55 +1,82 @@
-import { Plus } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 
 import { ClientsTableRow } from "@/features/workspace/clients-management/components/ClientsTableRow";
-import { CLIENTS_GRID_CLASS, clientsColumns } from "@/features/workspace/clients-management/constants/directory";
+import {
+  CLIENT_PORTAL_FILTERS,
+  CLIENT_SORT_COLUMNS,
+  CLIENTS_GRID_CLASS,
+  clientsTrailingColumns,
+} from "@/features/workspace/clients-management/constants/directory";
 import type { ClientsTableProps } from "@/features/workspace/clients-management/types/components";
-import { ActiveStatusFilter } from "@/shared/components/ActiveStatusFilter";
+import { ActiveStatusTabs } from "@/shared/components/ActiveStatusTabs";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
+import { ListingToolbar } from "@/shared/components/ListingToolbar";
+import { OptionDropdown } from "@/shared/components/OptionDropdown";
+import { TablePagination } from "@/shared/components/TablePagination";
 import { Button } from "@/shared/ui/button";
 
-const STATUS_LABELS = { all: "All clients", active: "Active", inactive: "Inactive" };
+const STATUS_LABELS = { all: "All Clients", active: "Active", inactive: "Inactive" };
 
-export function ClientsTable({
-  clients,
-  isFiltered,
-  isLoading,
-  statusFilter,
-  onStatusFilterChange,
-  searchQuery,
-  onSearchQueryChange,
-  onCreate,
-  onEdit,
-  onDelete,
-}: ClientsTableProps) {
+export function ClientsTable({ page }: ClientsTableProps) {
+  const active = page.clients.filter((client) => client.is_active).length;
+  const columns = [
+    ...CLIENT_SORT_COLUMNS.map(({ key, label }) => ({
+      label,
+      onSort: () => page.toggleSort(key),
+      sortDirection: page.sort.key === key ? page.sort.direction : null,
+    })),
+    ...clientsTrailingColumns,
+  ];
+
   return (
     <DirectoryTable
       gridClass={CLIENTS_GRID_CLASS}
-      columns={clientsColumns}
-      isLoading={isLoading}
-      isEmpty={clients.length === 0}
-      emptyImage={isFiltered ? "icon-empty-search" : "icon-empty-clients"}
-      emptyTitle={isFiltered ? "No matching clients" : "No clients yet"}
+      columns={columns}
+      isLoading={page.loading}
+      isEmpty={page.filteredClients.length === 0}
+      emptyImage={page.isFiltered ? "icon-empty-search" : "icon-empty-clients"}
+      emptyTitle={page.isFiltered ? "No matching clients" : "No clients yet"}
       emptyDescription={
-        isFiltered ? "Try a different search or status." : "Add a client to share projects and activities with them."
+        page.isFiltered ? "Try a different search or status." : "Add a client to share projects and activities with them."
       }
       emptyAction={
-        isFiltered ? undefined : (
-          <Button size="lg" onClick={onCreate}>
+        page.isFiltered ? undefined : (
+          <Button size="lg" onClick={page.openCreate}>
             <Plus aria-hidden="true" />
-            New client
+            New Client
           </Button>
         )
       }
       headerAside={
-        <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
-          <ListingSearchInput value={searchQuery} onChange={onSearchQueryChange} placeholder="Search clients" />
-          <ActiveStatusFilter value={statusFilter} onChange={onStatusFilterChange} labels={STATUS_LABELS} />
-        </div>
+        <ListingToolbar
+          tabs={
+            <ActiveStatusTabs
+              value={page.statusFilter}
+              onChange={page.setStatusFilter}
+              labels={STATUS_LABELS}
+              counts={page.loading ? undefined : { all: page.clients.length, active, inactive: page.clients.length - active }}
+            />
+          }
+          filter={
+            <OptionDropdown
+              label="Filter by portal access"
+              value={page.portalFilter}
+              onChange={page.setPortalFilter}
+              options={CLIENT_PORTAL_FILTERS}
+              icon={Filter}
+              className="w-auto"
+            />
+          }
+          search={
+            <ListingSearchInput value={page.searchQuery} onChange={page.setSearchQuery} placeholder="Search clients, company or email…" />
+          }
+        />
       }
+      footer={<TablePagination pagination={page.pagination} noun="clients" />}
     >
-      {clients.map((client) => (
-        <ClientsTableRow key={client.id} client={client} onEdit={onEdit} onDelete={onDelete} />
+      {page.pagination.pageItems.map((client) => (
+        <ClientsTableRow key={client.id} client={client} onEdit={page.openEdit} onDelete={page.setClientToDelete} />
       ))}
     </DirectoryTable>
   );

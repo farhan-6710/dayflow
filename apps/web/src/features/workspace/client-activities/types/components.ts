@@ -20,6 +20,8 @@ export type ClientActivitiesBlockProps = ClientActivitiesScope & {
   activityRaisedBy?: ClientActivityRaisedBy;
   /** Called after any create, edit or delete, so a page's own totals can refresh. */
   onChange?: () => void;
+  /** Hands the loaded rows to the page, for its own summary. */
+  onRowsChange?: (rows: ActivityRows) => void;
 };
 
 export type ActivityKind = "task" | "meeting" | "call";
@@ -80,4 +82,10 @@ export type ActivityCommonFieldsProps = {
   fixedProjectId?: string;
   projectOptions?: Project[];
   onChange: (patch: Partial<ActivityCommonValues>) => void;
+};
+
+export type ActivityRows = Record<ActivityKind, ActivityListRow[]>;
+
+export type ActivitySummaryStatsProps = {
+  rows: ActivityRows | null;
 };

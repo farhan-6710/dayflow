@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Mail, Pencil, Trash2 } from "lucide-react";
 
 import { buildClientPath } from "@/app/constants/workspaceRoutes";
 import { CLIENTS_GRID_CLASS } from "@/features/workspace/clients-management/constants/directory";
@@ -24,12 +24,15 @@ export function ClientsTableRow({ client, onEdit, onDelete }: ClientsTableRowPro
       <div className="col-start-2 row-start-1 md:hidden">
         <RowActionsMenu label={`Actions for ${client.company_name}`} actions={actions} />
       </div>
-      <p className="truncate text-sm text-muted-foreground">{client.client_name || "No contact"}</p>
-      <p className="truncate text-sm text-muted-foreground">{client.email || "No email"}</p>
-      <div className="mt-1 md:mt-0">
+      <p className="col-span-2 truncate text-sm text-muted-foreground md:col-span-1">{client.client_name || "No contact"}</p>
+      <p className="col-span-2 flex min-w-0 items-center gap-2 text-sm text-muted-foreground md:col-span-1">
+        <Mail className="size-4 shrink-0" aria-hidden="true" />
+        <span className="truncate">{client.email || "No email"}</span>
+      </p>
+      <div className="col-span-2 mt-1 md:col-span-1 md:mt-0">
         <StatusPill active={client.is_active}>{client.is_active ? "Active" : "Inactive"}</StatusPill>
       </div>
-      <div className="hidden md:block">
+      <div className="hidden md:flex md:justify-end">
         <RowActionsMenu label={`Actions for ${client.company_name}`} actions={actions} />
       </div>
     </DirectoryTableRow>

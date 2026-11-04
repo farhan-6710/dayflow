@@ -1,4 +1,5 @@
-import { Plus } from "lucide-react";
+import { format } from "date-fns";
+import { CalendarPlus, Clock, Folder, Info, Plus } from "lucide-react";
 import { Link } from "react-router";
 
 import { buildProjectNotePath, WORKSPACE_PROJECTS_MANAGEMENT_PATH } from "@/app/constants/workspaceRoutes";
@@ -7,12 +8,21 @@ import { ReferenceLinksSection } from "@/features/workspace/projects/components/
 import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
 import { ProjectNoteSkeleton } from "@/features/workspace/projects/components/ProjectNoteSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
+import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
+import { DetailsPanel } from "@/shared/components/DetailsPanel";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { ProjectChip } from "@/shared/components/ProjectChip";
+import { StatusPill } from "@/shared/components/StatusPill";
+import { NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+
+function formatDate(value: string) {
+  return format(new Date(value), "MMM d, yyyy");
+}
 
 export function ProjectNotePage() {
   const page = useProjectNotePage();
@@ -44,17 +54,36 @@ export function ProjectNotePage() {
     );
   }
 
+  const heading = isDraft ? "New note" : note?.title.trim() || "Note";
+
   return (
     <>
       <PageHeader
-        backButton={<BackLink to={page.projectPath}>{project.name}</BackLink>}
-        heading={isDraft ? "New note" : note?.title.trim() || "Note"}
+        backButton={
+          <Breadcrumbs
+            back
+            items={[
+              { label: "Projects Management", to: WORKSPACE_PROJECTS_MANAGEMENT_PATH },
+              { label: project.name, to: page.projectPath },
+              { label: heading },
+            ]}
+          />
+        }
+        leading={<ProjectChip color={project.color_hex} className="size-14 rounded-xl [&_svg]:size-6" />}
+        heading={heading}
+        description={
+          <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            <StatusPill active={project.is_active}>{project.is_active ? "Active" : "Inactive"}</StatusPill>
+            <span>in {project.project_for_label}</span>
+            {note ? <span>Last updated {formatDate(note.updated_at)}</span> : null}
+          </span>
+        }
         actions={
           !isDraft && project.is_active ? (
             <Button asChild variant="outline" size="lg">
               <Link to={buildProjectNotePath(project.id, "new")}>
                 <Plus aria-hidden="true" />
-                New note
+                New Note
               </Link>
             </Button>
           ) : undefined
@@ -78,13 +107,28 @@ export function ProjectNotePage() {
           onDiscard={() => void page.goToProject()}
         />
         {note ? (
-          <ReferenceLinksSection
-            links={page.links}
-            canEdit={project.is_active}
-            ownerLabel="note"
-            api={page.linksApi}
-            onLinksChange={page.setLinks}
-          />
+          <div className="grid min-w-0 grid-cols-1 gap-4">
+            <DetailsPanel
+              icon={Info}
+              title="Note Details"
+              rows={[
+                {
+                  icon: Folder,
+                  label: "Category",
+                  value: <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs">{NOTE_CATEGORY_LABELS[note.category]}</span>,
+                },
+                { icon: CalendarPlus, label: "Created", value: formatDate(note.created_at) },
+                { icon: Clock, label: "Last Updated", value: formatDate(note.updated_at) },
+              ]}
+            />
+            <ReferenceLinksSection
+              links={page.links}
+              canEdit={project.is_active}
+              ownerLabel="note"
+              api={page.linksApi}
+              onLinksChange={page.setLinks}
+            />
+          </div>
         ) : null}
       </div>
       <ConfirmationModal

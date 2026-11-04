@@ -19,6 +19,7 @@ export function OptionDropdown({
   placeholder = "Select option",
   disabled = false,
   className,
+  icon: Icon,
 }: OptionDropdownProps) {
   const selected = options.find((option) => option.value === value);
 
@@ -31,7 +32,8 @@ export function OptionDropdown({
           aria-label={`${label}: ${selected?.label ?? placeholder}`}
           className={cn("h-10 w-full min-w-0 justify-between font-normal", className)}
         >
-          <span className="truncate">{selected?.label ?? placeholder}</span>
+          {Icon ? <Icon className="text-muted-foreground" aria-hidden="true" /> : null}
+          <span className="flex-1 truncate text-left">{selected?.label ?? placeholder}</span>
           <ChevronDown className="text-muted-foreground" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>

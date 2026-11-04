@@ -1,66 +1,77 @@
-import { Plus } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 
 import { ProjectsTableRow } from "@/features/workspace/projects/components/ProjectsTableRow";
-import { PROJECTS_GRID_CLASS, projectsColumns } from "@/features/workspace/projects/constants/directory";
+import { PROJECT_TYPE_FILTERS, PROJECTS_GRID_CLASS, projectsColumns } from "@/features/workspace/projects/constants/directory";
 import type { ProjectsTableProps } from "@/features/workspace/projects/types/components";
-import { ActiveStatusFilter } from "@/shared/components/ActiveStatusFilter";
+import { ActiveStatusTabs } from "@/shared/components/ActiveStatusTabs";
 import { DirectoryTable } from "@/shared/components/DirectoryTable";
 import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
+import { ListingToolbar } from "@/shared/components/ListingToolbar";
+import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { SortableList } from "@/shared/components/SortableList";
+import { TablePagination } from "@/shared/components/TablePagination";
 import { Button } from "@/shared/ui/button";
 
-const STATUS_LABELS = { all: "All projects", active: "Active", inactive: "Inactive" };
+const STATUS_LABELS = { all: "All Projects", active: "Active", inactive: "Inactive" };
 
-export function ProjectsTable({
-  projects,
-  isFiltered,
-  isLoading,
-  statusFilter,
-  onStatusFilterChange,
-  searchQuery,
-  onSearchQueryChange,
-  onCreate,
-  onEdit,
-  onToggleActive,
-  onDelete,
-  onReorder,
-}: ProjectsTableProps) {
+export function ProjectsTable({ page }: ProjectsTableProps) {
+  const active = page.projects.filter((project) => project.is_active).length;
+  const rows = page.pagination.pageItems;
+
   return (
     <DirectoryTable
       gridClass={PROJECTS_GRID_CLASS}
       columns={projectsColumns}
-      isLoading={isLoading}
-      isEmpty={projects.length === 0}
-      emptyImage={isFiltered ? "icon-empty-search" : "icon-empty-projects"}
-      emptyTitle={isFiltered ? "No matching projects" : "No projects yet"}
+      isLoading={page.loading}
+      isEmpty={page.filteredProjects.length === 0}
+      emptyImage={page.isFiltered ? "icon-empty-search" : "icon-empty-projects"}
+      emptyTitle={page.isFiltered ? "No matching projects" : "No projects yet"}
       emptyDescription={
-        isFiltered
+        page.isFiltered
           ? "Try a different search or status."
           : "Create a project to keep its notes, links and client activities together."
       }
       emptyAction={
-        isFiltered ? undefined : (
-          <Button size="lg" onClick={onCreate}>
+        page.isFiltered ? undefined : (
+          <Button size="lg" onClick={page.openCreate}>
             <Plus aria-hidden="true" />
-            New project
+            New Project
           </Button>
         )
       }
       headerAside={
-        <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
-          <ListingSearchInput value={searchQuery} onChange={onSearchQueryChange} placeholder="Search projects" />
-          <ActiveStatusFilter value={statusFilter} onChange={onStatusFilterChange} labels={STATUS_LABELS} />
-        </div>
+        <ListingToolbar
+          tabs={
+            <ActiveStatusTabs
+              value={page.statusFilter}
+              onChange={page.setStatusFilter}
+              labels={STATUS_LABELS}
+              counts={page.loading ? undefined : { all: page.projects.length, active, inactive: page.projects.length - active }}
+            />
+          }
+          filter={
+            <OptionDropdown
+              label="Filter by project type"
+              value={page.typeFilter}
+              onChange={page.setTypeFilter}
+              options={PROJECT_TYPE_FILTERS}
+              icon={Filter}
+              className="w-auto"
+            />
+          }
+          search={<ListingSearchInput value={page.searchQuery} onChange={page.setSearchQuery} placeholder="Search projects…" />}
+        />
       }
+      footer={<TablePagination pagination={page.pagination} noun="projects" />}
     >
-      <SortableList ids={projects.map((project) => project.id)} onReorder={onReorder}>
-        {projects.map((project) => (
+      <SortableList ids={rows.map((project) => project.id)} onReorder={(ids) => void page.reorder(ids)}>
+        {rows.map((project) => (
           <ProjectsTableRow
             key={project.id}
             project={project}
-            onEdit={onEdit}
-            onToggleActive={onToggleActive}
-            onDelete={onDelete}
+            onEdit={page.openEdit}
+            onToggleActive={(target) => void page.toggleActive(target)}
+            onDelete={page.setProjectToDelete}
           />
         ))}
       </SortableList>

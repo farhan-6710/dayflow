@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Activity, Plus } from "lucide-react";
 
 import { ActivityCallDialog } from "@/features/workspace/client-activities/components/ActivityCallDialog";
 import { ActivityList } from "@/features/workspace/client-activities/components/ActivityList";
@@ -18,6 +18,7 @@ import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { TableSkeleton } from "@/shared/components/TableSkeleton";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -38,6 +39,14 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
   const [activeKind, setActiveKind] = useState<ActivityKind>("task");
   const [dialog, setDialog] = useState<DialogState>(null);
 
+  const { loading, rows } = activities;
+  const { onRowsChange } = props;
+  useEffect(() => {
+    if (!loading) {
+      onRowsChange?.(rows);
+    }
+  }, [loading, rows, onRowsChange]);
+
   const isPortal = activityRaisedBy === "client";
   const fixedProjectId = props.scope === "project" ? props.projectId : undefined;
   const projectOptions = props.scope === "client" ? props.projects : undefined;
@@ -57,27 +66,28 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
   return (
     <Reveal as="section" className={cn(panelClassName, "@container min-w-0 p-4 sm:p-5")}>
       <Tabs value={activeKind} onValueChange={(kind) => setActiveKind(kind as ActivityKind)}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl">{isPortal ? "Activities" : "Client activities"}</h2>
-          <div className="flex flex-wrap items-center gap-2">
-            <TabsList className="h-10 p-1">
-              {TABS.map((tab) => (
-                <TabsTrigger key={tab.kind} value={tab.kind} className="h-8 min-h-8 px-3 text-foreground dark:text-foreground">
-                  {tab.label}
-                  {activities.loading ? null : (
-                    <span className="tabular-nums">{activities.rows[tab.kind].length}</span>
-                  )}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            {canEdit ? (
-              <Button className="h-10" onClick={() => setDialog({ kind: activeKind, source: null })}>
-                <Plus aria-hidden="true" />
-                New {activeLabel.toLowerCase()}
-              </Button>
-            ) : null}
-          </div>
-        </div>
+        <PanelHeading
+          icon={Activity}
+          title={isPortal ? "Activities" : "Client Activities"}
+          action={
+            <div className="flex flex-wrap items-center gap-2">
+              <TabsList className="h-10 p-1">
+                {TABS.map((tab) => (
+                  <TabsTrigger key={tab.kind} value={tab.kind} className="h-8 min-h-8 px-3 text-foreground dark:text-foreground">
+                    {tab.label}
+                    {activities.loading ? null : <span className="tabular-nums">{activities.rows[tab.kind].length}</span>}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {canEdit ? (
+                <Button className="h-10" onClick={() => setDialog({ kind: activeKind, source: null })}>
+                  <Plus aria-hidden="true" />
+                  New {activeLabel}
+                </Button>
+              ) : null}
+            </div>
+          }
+        />
 
         {activities.error ? (
           <div className="mt-4">
@@ -105,14 +115,14 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
                     description={canEdit ? `Add one to keep ${tab.plural} in view for both of you.` : `${tab.label} will show up here.`}
                   />
                 ) : (
-                  <div className="grid gap-4 @3xl:grid-cols-2 @3xl:gap-8">
+                  <div className="grid gap-4 @3xl:grid-cols-2 @3xl:gap-6 @3xl:[&>*+*]:border-l @3xl:[&>*+*]:border-border @3xl:[&>*+*]:pl-6">
                     {[
                       { title: "Open", list: open, empty: `Nothing open.` },
                       { title: "Closed", list: closed, empty: `Nothing closed yet.` },
                     ].map((group) => (
                       <div key={group.title} className="min-w-0">
-                        <h3 className="text-sm text-muted-foreground">
-                          {group.title} <span className="tabular-nums">({group.list.length})</span>
+                        <h3 className="mb-1 text-sm">
+                          {group.title} <span className="text-muted-foreground tabular-nums">({group.list.length})</span>
                         </h3>
                         <ActivityList
                           clientLabel={isPortal ? "you" : "client"}

@@ -34,16 +34,17 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 | To do / pending | `muted` |
 | In progress | `chart-1` (coral) |
 | Done / completed | `primary` |
+| Active (`StatusPill`) | `success` |
 | Missed / overdue / destructive | `destructive` |
 
 ## Layout
 
 - **Shell:** left sidebar, header, scrollable main area. Sidebar collapses to icons on desktop and becomes a slide-in sheet on small screens.
-- **Page:** `PageHeader` (heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
-- **Lists:** table on desktop, stacked cards on phones. The list's main action sits opposite its title; search and filters sit on their own row below, aligned left.
-- **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, never inline icon buttons. A row that opens something does so on click.
-- **Stat cards:** two columns on phones, four from `xl`. The label and a small icon share the top line so the value has the full width.
-- **Detail pages:** back link and one main action (edit) in the header, with less common actions in a menu. Related records link from the header's meta line. Client detail keeps its details in a sticky rail beside one work column.
+- **Page:** `PageHeader` (`Breadcrumbs`, heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
+- **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (`PillTabs` status tabs with counts, one filter opposite, search beneath), the inset `DirectoryTable` and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
+- **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, under a column named "Actions", never inline icon buttons. A row that opens something does so on click.
+- **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards` (3D icon, sparkline). List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
+- **Detail pages:** breadcrumb with a back arrow, a chip beside the heading (`leading`) and a meta line, one main action (edit) with less common actions in a menu. Below: `PillTabs` sections, `SummaryStats`, then a work column beside a 22rem rail (`DetailsPanel`, reference links). Panels start with `PanelHeading`. Tabs hide sections rather than unmount them, so nothing refetches. The note editor reads as a page: a sheet behind, a bookmark and a folded corner.
 - **Forms:** in dialogs; dirty forms use the unsaved-changes guard.
 
 ## Feedback states
@@ -67,7 +68,7 @@ Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer
 | `hero` | Page heading lines | y 12, blur 6px, fade | 700ms | 70ms |
 | `enter` | Panels and cards, once scrolled into view | y 24, blur 6px, fade | 750ms | 70ms |
 
-Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. The sign-in demo card is the one exception: it slides down from above the screen after 1 second, and is the one place `success` (green) fills a button, to draw the eye there. `success`, `success-foreground` and `success-text` are the only tokens beyond the original paper-and-coral set; `success-text` is the readable green for small text. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
+Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. The sign-in demo card is the one exception: it slides down from above the screen after 1 second, and is the one place `success` (green) fills a button, to draw the eye there. `success`, `success-foreground` and `success-text` are the only tokens beyond the original paper-and-coral set: they also colour `StatusPill` and `SummaryStats` chips, and `success-text` is the readable green for small text. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
 
 ## Accessibility
 

@@ -1,10 +1,11 @@
-import { ExternalLink, Pencil, Plus, Trash2 } from "lucide-react";
+import { ExternalLink, Link2, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { ReferenceLinkDialog } from "@/features/workspace/projects/components/ReferenceLinkDialog";
 import { useReferenceLinksSection } from "@/features/workspace/projects/hooks/useReferenceLinksSection";
 import type { ReferenceLinksSectionProps } from "@/features/workspace/projects/types/components";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
+import { PanelHeading } from "@/shared/components/PanelHeading";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
@@ -19,20 +20,23 @@ export function ReferenceLinksSection<T extends ReferenceLink>(props: ReferenceL
 
   return (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-xl">Reference links</h2>
-        {canEdit ? (
-          <Button variant="outline" onClick={section.openAdd} className="h-10">
-            <Plus aria-hidden="true" />
-            Add
-          </Button>
-        ) : null}
-      </div>
+      <PanelHeading
+        icon={Link2}
+        title="Reference Links"
+        action={
+          canEdit ? (
+            <Button variant="outline" onClick={section.openAdd} className="h-10">
+              <Plus aria-hidden="true" />
+              Add
+            </Button>
+          ) : null
+        }
+      />
 
       {links.length === 0 ? (
         <EmptyState
           bare
-          className="px-2 py-6"
+          className="mt-3 rounded-lg border border-dashed border-border px-4 py-6"
           image="icon-empty-links"
           title="No links yet"
           description={`Keep docs, tickets and articles with this ${ownerLabel}.`}

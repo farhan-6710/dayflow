@@ -7,6 +7,7 @@ import type { DayflowImageName } from "@/shared/constants/dayflowImages";
 import type { DateFilterPeriodId } from "@/shared/constants/dateFilters";
 import type { AppNotification, Client, Project } from "@/shared/types/types";
 import type { ShellNavIconKey } from "@/shared/constants/shellNavIcons";
+import type { usePagination } from "@/shared/hooks/usePagination";
 
 /* Shell */
 
@@ -27,7 +28,6 @@ export type ShellSidebarConfig = {
     description: string;
     buttonLabel: string;
     buttonTo: string;
-    image: DayflowImageName;
   };
 };
 
@@ -93,6 +93,8 @@ export type PortalUserHeaderMenuProps = {
 /* Page chrome and feedback */
 
 export type PageHeaderProps = {
+  /** Sits left of the heading and description, such as a project chip. */
+  leading?: ReactNode;
   heading: ReactNode;
   description?: ReactNode;
   backButton?: ReactNode;
@@ -207,10 +209,13 @@ export type DirectoryTableColumn = {
   label: string;
   align?: "left" | "center" | "right";
   className?: string;
+  /** Makes the header a sort button. */
+  onSort?: () => void;
+  sortDirection?: "asc" | "desc" | null;
 };
 
 export type DirectoryTableProps = {
-  title?: string;
+  title?: ReactNode;
   description?: string;
   /** `md:grid-cols-[...]` class, shared by the header and the rows. */
   gridClass: string;
@@ -226,6 +231,8 @@ export type DirectoryTableProps = {
   action?: ReactNode;
   /** Search and filters, on their own row under the title. */
   headerAside?: ReactNode;
+  /** Pagination, under the rows. */
+  footer?: ReactNode;
   children: ReactNode;
 };
 
@@ -292,13 +299,15 @@ export type OptionDropdownProps = {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  icon?: LucideIcon;
 };
 
-export type ActiveStatusFilterProps = {
+export type ActiveStatusTabsProps = {
   value: ActiveStatusFilterId;
   onChange: (value: ActiveStatusFilterId) => void;
   labels: Record<ActiveStatusFilterId, string>;
-  disabled?: boolean;
+  /** Left out while loading, so the tabs never show a false zero. */
+  counts?: Record<ActiveStatusFilterId, number>;
 };
 
 /* Dates */
@@ -420,4 +429,53 @@ export type NotificationListProps = {
   emptyLabel: string;
   markingId: string | null;
   onMarkRead: (id: string) => void;
+};
+
+export type BreadcrumbsProps = {
+  items: { label: string; to?: string }[];
+  back?: boolean;
+};
+
+export type PillTabsProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string; count?: number; icon?: LucideIcon }[];
+};
+
+export type SummaryStatItem = {
+  id: string;
+  label: string;
+  value: ReactNode;
+  icon: LucideIcon;
+  trend?: string;
+};
+
+export type SummaryStatsProps = {
+  items: SummaryStatItem[];
+  isLoading?: boolean;
+};
+
+export type ListingToolbarProps = {
+  tabs: ReactNode;
+  filter?: ReactNode;
+  search: ReactNode;
+};
+
+export type TablePaginationProps = {
+  pagination: ReturnType<typeof usePagination>;
+  /** Plural, as in "Showing 1–7 of 24 clients". */
+  noun: string;
+};
+
+export type PanelHeadingProps = {
+  icon: LucideIcon;
+  title: string;
+  action?: ReactNode;
+};
+
+export type DetailsPanelProps = {
+  icon: LucideIcon;
+  title: string;
+  rows: { icon: LucideIcon; label: string; value: ReactNode }[];
 };
