@@ -7,7 +7,7 @@ Each pixel is split into accent and ink coverage and rebuilt from those. Safe to
 accent is read as accent.
 
 Writes apps/web/design/brand/logo-{light,dark}[-icon].png (masters), dayflow-logo-{light,dark}.png and
-apps/web/public/logo-{light,dark}-icon.webp and favicon*.ico (shipped).
+apps/web/public/logo-{light,dark}-icon.webp (shipped), then the favicons through brand_icon.py, which draws each size on its own.
 Run apps/mobile/scripts/generate-brand-assets.py afterwards for the mobile icons.
 """
 
@@ -18,13 +18,14 @@ from pathlib import Path
 
 from PIL import Image
 
+from brand_icon import write_favicons
+
 WEB = Path(__file__).resolve().parents[1]
 THEME = WEB.parents[1] / "shared" / "brand" / "theme.json"
 BRAND = WEB / "design" / "brand"
 PUBLIC = WEB / "public"
 
 MARK_WEBP_SIZE = 160
-FAVICON_SIZES = [(16, 16), (32, 32), (48, 48)]
 PRESENTATION_SIZE = (1672, 941)
 # Hues the accent can be, old gold or current coral.
 ACCENT_HUES = (5 / 360, 65 / 360)
@@ -68,16 +69,6 @@ def recolor(source: Image.Image, accent: tuple[int, int, int], ink: tuple[int, i
     return result
 
 
-def favicon_frame(mark: Image.Image) -> Image.Image:
-    """Crops to the artwork and centres it on a square, since tiny sizes can't spare the master's margin."""
-    box = mark.getchannel("A").point(lambda alpha: 255 if alpha > 16 else 0).getbbox()
-    glyph = mark.crop(box)
-    side = round(max(glyph.size) * 1.08)
-    frame = Image.new("RGBA", (side, side), (0, 0, 0, 0))
-    frame.alpha_composite(glyph, ((side - glyph.width) // 2, (side - glyph.height) // 2))
-    return frame
-
-
 def presentation_logo(lockup: Image.Image, background: tuple[int, int, int]) -> Image.Image:
     """The lockup centred on the theme background, for use outside the app."""
     width = round(PRESENTATION_SIZE[0] * 0.6)
@@ -109,9 +100,8 @@ def main() -> None:
         mark.resize((MARK_WEBP_SIZE, MARK_WEBP_SIZE), Image.Resampling.LANCZOS).save(
             PUBLIC / f"logo-{name}-icon.webp", quality=92, method=6
         )
-        favicon_frame(mark).save(PUBLIC / f"favicon-{name}.ico", sizes=FAVICON_SIZES)
 
-    favicon_frame(Image.open(BRAND / "logo-light-icon.png")).save(PUBLIC / "favicon.ico", sizes=FAVICON_SIZES)
+    write_favicons()
 
 
 if __name__ == "__main__":
