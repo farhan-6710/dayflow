@@ -43,9 +43,14 @@ export function useDashboard() {
 
   const tasks = useMemo(() => data?.tasks ?? [], [data]);
   const filteredTasks = useMemo(() => tasks.filter((task) => isInRange(task.created_at, resolvedRange)), [tasks, resolvedRange]);
-  const projectsCount = useMemo(
-    () => (data?.projects ?? []).filter((project) => isInRange(project.created_at, resolvedRange)).length,
+  const filteredProjects = useMemo(
+    () => (data?.projects ?? []).filter((project) => isInRange(project.created_at, resolvedRange)),
     [data, resolvedRange],
+  );
+  const projectsCount = filteredProjects.length;
+  const activeProjectsCount = useMemo(
+    () => filteredProjects.filter((project) => project.is_active).length,
+    [filteredProjects],
   );
   const stats = useMemo(() => computeTaskStats(filteredTasks), [filteredTasks]);
   const chart = useMemo(() => buildCompletionChart(tasks, primaryMonth, compareMonth), [tasks, primaryMonth, compareMonth]);
@@ -73,6 +78,7 @@ export function useDashboard() {
     dateFilterProps,
     stats,
     projectsCount,
+    activeProjectsCount,
     sparklines,
     chart,
     primaryMonth,

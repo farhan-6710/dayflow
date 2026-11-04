@@ -34,6 +34,7 @@ export function DashboardPage() {
           cards={getDashboardCards({
             stats: page.stats,
             projectsCount: page.projectsCount,
+            activeProjectsCount: page.activeProjectsCount,
             sparklines: page.sparklines,
             periodLabel: page.periodLabel,
           })}
