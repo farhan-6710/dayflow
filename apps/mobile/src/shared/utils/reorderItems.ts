@@ -20,3 +20,14 @@ export function reorderItems<T extends Sortable>(items: T[], visibleOrderedIds: 
       .sort((a, b) => a.sort_order - b.sort_order),
   };
 }
+
+/** The id list with one id moved a place up or down, or null if it can't move. */
+export function moveId(ids: string[], id: string, direction: -1 | 1): string[] | null {
+  const from = ids.indexOf(id);
+  const moved = ids[from + direction];
+  if (from < 0 || moved === undefined) return null;
+  const next = [...ids];
+  next[from + direction] = id;
+  next[from] = moved;
+  return next;
+}
