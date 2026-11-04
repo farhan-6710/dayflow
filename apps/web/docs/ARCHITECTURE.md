@@ -45,40 +45,9 @@ Feature folders contain: `components/ hooks/ pages/ constants/ types/ utils/` (o
 
 `page` → `hook` → `service` → Supabase. Pages compose; hooks hold state and logic; services hold every query.
 
-## Data model
+## Data model and client portal security
 
-```text
-profiles
-  ├── projects (user_id, project_for, is_active)
-  │     ├── notes (+ note_reference_links)
-  │     ├── project_reference_links
-  │     └── client_activity_tasks | _meetings | _calls  (raised_by)
-  ├── clients (owner_user_id, auth_user_id, email)
-  │     └── client_conversation_messages
-  ├── tasks, todos
-  ├── reminders → reminder_occurrences
-  ├── notifications
-  └── expo_push_tokens (mobile)
-```
-
-| Field | Meaning |
-|-------|---------|
-| `project_for` | `null` = personal; client UUID = client project |
-| `is_active` | Active / inactive (no archive) |
-| `raised_by` | `workspace` or `client`: who created the activity |
-| `owner_user_id` | Workspace owner of a client |
-
-Exact columns per table: `services/db.ts` (recover the old one from git, see [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md)).
-
-## Client portal security
-
-Clients never own `projects`. Access only through:
-
-- `link_client_portal_user()`: links the login email to a `clients` row
-- `fetch_client_portal_projects()`: projects shared with the client
-- `client_portal_can_access_project(uuid)`: per-project check
-
-Clients read activities of accessible projects and write only with `raised_by = 'client'`. Never grant `SELECT` on `auth.users`.
+Shared by web and mobile: see [DATABASE.md](../../../docs/DATABASE.md). The tables, the RPCs a client may call and the RLS contract live there.
 
 ## Shared module
 

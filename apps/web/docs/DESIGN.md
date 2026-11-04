@@ -2,7 +2,7 @@
 
 Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Calm and readable; depth comes from soft shadows and spacing, not decoration.
 
-**Tokens:** [theme.css](./theme.css) is the source of truth for web and mobile. After `shadcn init`, paste it into `apps/web/src/index.css` and keep shadcn's own imports.
+**Tokens:** [theme.css](../../../shared/theme/theme.css) is the single source of truth for web and mobile. `apps/web/src/index.css` imports it, so never copy token values into the web app.
 
 ## Rules
 

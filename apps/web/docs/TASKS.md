@@ -14,7 +14,7 @@ Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top
 - [x] Scaffold Vite + React 19 + TypeScript in `apps/web` (keep `.env`)
 - [x] Install dependencies listed in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - [x] Tailwind 4 + `shadcn init` (alias `@/`, components in `shared/ui`)
-- [x] Apply [theme.css](./theme.css) to `src/index.css`; add Ovo + Merriweather fonts
+- [x] Apply [theme.css](../../../shared/theme/theme.css) to `src/index.css`; add Ovo + Merriweather fonts
 - [x] `@dayflow/brand` alias to `shared/brand`; SEO title and description from manifest
 - [x] `services/supabaseClient.ts` and `services/db.ts` (columns from old `db.ts` in git)
 - [x] Restore logos, favicons, 3D assets into `public/`
@@ -96,7 +96,7 @@ Each item: service → hook → page → states → verify.
 
 ## Phase 7: Mobile rebuild
 
-- [ ] Plan mobile scope from the web spec; reuse [theme.css](./theme.css) tokens
+- [ ] Plan mobile scope from the web spec; reuse [theme.css](../../../shared/theme/theme.css) tokens
 - [ ] Rebuild `apps/mobile` screens with feature parity
 - [ ] iOS release
 

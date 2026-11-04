@@ -18,9 +18,9 @@ Rebuild the DayFlow web app from scratch (mobile after) with better UI/UX, keepi
 
 | In | Out (for now) |
 |----|---------------|
-| All routes and features in [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md) | Desktop (Tauri) |
+| All routes and features in [WEB_REBUILD_SPEC.md](../apps/web/docs/WEB_REBUILD_SPEC.md) | Desktop (Tauri) |
 | Light + dark theme, responsive layouts | Any database, schema or RLS change |
-| Existing Google OAuth + email/password auth | Server-side notifications and email (needs a backend decision, see [TASKS.md](./TASKS.md)) |
+| Existing Google OAuth + email/password auth | Server-side notifications and email (needs a backend decision, see [TASKS.md](../apps/web/docs/TASKS.md)) |
 
 ## Requirements
 
@@ -39,4 +39,4 @@ Rebuild the DayFlow web app from scratch (mobile after) with better UI/UX, keepi
 
 ## References
 
-[WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md) routes and features · [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md) env, links, DB contract
+[WEB_REBUILD_SPEC.md](../apps/web/docs/WEB_REBUILD_SPEC.md) routes and features · [WEB_ENV_AND_LINKS.md](../apps/web/docs/WEB_ENV_AND_LINKS.md) env, links, DB contract

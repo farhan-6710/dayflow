@@ -61,7 +61,10 @@ apps/web/src/services/             Web Supabase access
 apps/web/src/shared/               Shared UI, auth, settings and brand re-exports
 apps/mobile/                       Expo app (same Auth + DB)
 scripts/migrations/                Shared Postgres SQL
-docs/                              PRD, architecture, design, rules, tasks, memory
+shared/theme/                      Theme tokens (theme.css), used by web and mobile
+docs/                              Shared: PRD, database, rules, memory
+apps/web/docs/                     Web: spec, architecture, design, rules, tasks, memory
+apps/mobile/docs/                  Mobile docs (added when the rebuild starts)
 ```
 
 ---
@@ -70,12 +73,16 @@ docs/                              PRD, architecture, design, rules, tasks, memo
 
 | Doc | Purpose |
 |-----|---------|
-| [docs/PRD.md](./docs/PRD.md) | Product goals, users, requirements |
-| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Systems, schema, APIs |
-| [docs/DESIGN.md](./docs/DESIGN.md) | UI/UX direction |
-| [docs/RULES.md](./docs/RULES.md) | Dev / agent conventions |
-| [docs/TASKS.md](./docs/TASKS.md) | Roadmap and status |
-| [docs/MEMORY.md](./docs/MEMORY.md) | Durable project decisions |
+| [docs/PRD.md](./docs/PRD.md) | Product goals, users, requirements (both apps) |
+| [docs/DATABASE.md](./docs/DATABASE.md) | Data model, client portal RPCs, DB contract (both apps) |
+| [docs/RULES.md](./docs/RULES.md) | Rules for every app |
+| [docs/MEMORY.md](./docs/MEMORY.md) | Durable project-wide decisions |
+| [shared/theme/theme.css](./shared/theme/theme.css) | Theme tokens for web and mobile |
+| [apps/web/docs/ARCHITECTURE.md](./apps/web/docs/ARCHITECTURE.md) | Web structure and data flow |
+| [apps/web/docs/DESIGN.md](./apps/web/docs/DESIGN.md) | Web UI/UX direction |
+| [apps/web/docs/RULES.md](./apps/web/docs/RULES.md) | Web conventions |
+| [apps/web/docs/TASKS.md](./apps/web/docs/TASKS.md) | Web roadmap and status |
+| [apps/web/docs/MEMORY.md](./apps/web/docs/MEMORY.md) | Web decisions |
 
 Brand copy (shared by web + mobile): [`shared/brand/brandManifest.json`](./shared/brand/brandManifest.json)
 

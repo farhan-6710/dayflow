@@ -14,7 +14,7 @@ Use it read-mostly: never change the schema or delete real data while checking.
 ## Context
 `apps/web` was wiped (only `.env` remains) so DayFlow can be rebuilt from scratch with better UI/UX. The build must:
 - reuse the existing Supabase database unchanged;
-- follow `docs/` (RULES, ARCHITECTURE, DESIGN, `theme.css`, WEB_REBUILD_SPEC).
+- follow the docs: root `docs/` (RULES, DATABASE) and `shared/theme/theme.css` and `apps/web/docs/` (RULES, ARCHITECTURE, DESIGN, WEB_REBUILD_SPEC).
 
 This plan lists every route, the data it shows and the components it needs, in build order.
 
@@ -24,7 +24,7 @@ This plan lists every route, the data it shows and the components it needs, in b
   - Before a page: shape its layout and hierarchy.
   - After a page: run critique and polish (responsive, both themes, states, a11y).
   - At the end: capture the design system.
-- Build one page at a time, in this order for each page: service → hook → page → loading / empty / error states → check in the browser → tick it off in `docs/TASKS.md`.
+- Build one page at a time, in this order for each page: service → hook → page → loading / empty / error states → check in the browser → tick it off in `apps/web/docs/TASKS.md`.
 
 ## Asset requirements: icons and illustrations
 
@@ -118,7 +118,7 @@ Illustrations in order:
 
 ## 1. Foundation
 - Vite + React 19 + TS in `apps/web` (keep `.env`).
-- Tailwind 4, `shadcn init` (alias `@/`, ui in `shared/ui`), then apply `docs/theme.css`. Fonts: Ovo + Merriweather.
+- Tailwind 4, `shadcn init` (alias `@/`, ui in `shared/ui`), then import the root `shared/theme/theme.css` from `src/index.css`. Fonts: Ovo + Merriweather.
 - Deps: react-router 7, @supabase/supabase-js, framer-motion, @aejkatappaja/phantom-ui, recharts, @dnd-kit, date-fns, sonner, next-themes, lucide-react.
 - `services/supabaseClient.ts` + `services/db.ts`. Columns come from the old `db.ts` in git at `b1335f3`.
 - `@dayflow/brand` alias pointing at `shared/brand`. Restore logos and favicons from git.
@@ -226,7 +226,7 @@ Illustrations in order:
 
 ## 4. Finish
 - **Quality passes:** responsive (phone, tablet, desktop) and both themes on every page, plus an `/impeccable` audit.
-- **Checks:** parity against `docs/WEB_REBUILD_SPEC.md`, then `bun run build` + lint clean.
+- **Checks:** parity against `apps/web/docs/WEB_REBUILD_SPEC.md`, then `bun run build` + lint clean.
 - **Deploy:** Hostinger. Confirm the Supabase auth redirects work.
 
 ## Out of scope

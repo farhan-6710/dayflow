@@ -1,15 +1,13 @@
-# Rules — DayFlow
+# Rules — DayFlow Web
 
-For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md) · Look: [DESIGN.md](./DESIGN.md).
+For web developers and AI agents. Shared rules (database, secrets, redirects): [docs/RULES.md](../../../docs/RULES.md). Product: [PRD.md](../../../docs/PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md) · Look: [DESIGN.md](./DESIGN.md).
 
 ## Non-negotiable
 
-- **Never change the database**: no migrations, schema, RLS or data edits. The rebuild reads and writes existing tables only. Exception: `scripts/migrations/038_drop_profiles_theme_preference.sql`, written at the owner's request. The owner applies it, never an agent.
+The database, RLS, secrets and redirect rules are in the shared rules above. Web adds:
+
 - **Supabase only through `services/`.** Features never import `supabaseClient`.
 - **Table and column names live only in `services/db.ts`.**
-- **RLS is the access contract.** Owners by `user_id` / `owner_user_id`; clients only through the portal RPCs.
-- **Never commit** `.env`, credentials or keys. Use the existing `VITE_SUPABASE_*` variables.
-- **Auth redirect paths stay exactly as listed** in [WEB_ENV_AND_LINKS.md](./WEB_ENV_AND_LINKS.md).
 
 ## UX behaviour
 

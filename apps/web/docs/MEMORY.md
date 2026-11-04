@@ -1,20 +1,16 @@
-# Memory — DayFlow
+# Memory — DayFlow Web
 
-Durable context for future sessions. Short facts, not narrative.
+Durable context for the web app. Project-wide decisions (database, order of work, hosting) are in [docs/MEMORY.md](../../../docs/MEMORY.md). Short facts, not narrative.
 
 ## Status
 
 - 2026-11-04: old `apps/web` wiped from the repo (commit `0e42896`); full rebuild starts from scratch. Last commit that still has the old code: `b1335f3`. `apps/web/.env` was preserved.
-- Order of work: web first, then mobile. One step at a time, reviewed by the owner before moving on.
+- The web rebuild is complete apart from the owner-only items in [TASKS.md](./TASKS.md).
 
 ## Decisions
 
-- **The database is never changed.** Same Supabase project for web and mobile; existing data must keep working.
 - Routes and features are fixed by [WEB_REBUILD_SPEC.md](./WEB_REBUILD_SPEC.md): `/workspace` (8 nav items) and `/client-portal` (5 nav items) in one shared shell layout.
-- Look and feel: [theme.css](./theme.css) (warm paper neutrals, charcoal primary, Ovo UI, Young Serif headings, Merriweather notes). It replaces the old gold/Trail theme.
-- Client portal: clients never own projects; access via RPCs and RLS only.
-- `project_for`: `null` = personal, UUID = client project. `raised_by`: `workspace` | `client`. Projects use `is_active`, never archive.
-- Brand copy is only in `shared/brand/brandManifest.json`.
+- Look and feel: [theme.css](../../../shared/theme/theme.css) (warm paper neutrals, charcoal primary, Ovo UI, Young Serif headings, Merriweather notes). It replaces the old gold/Trail theme.
 
 ## Known gaps in the old app (fix in the rebuild where the DB allows)
 
@@ -39,32 +35,29 @@ Durable context for future sessions. Short facts, not narrative.
 - The calendar follows the Deccan Dentics admin calendar (`/Users/farhan/my-learnings/deccan-dentics-dental-clinic`, `components/admin/calendar`), adapted for tasks: no duration (60 minutes assumed), optional time ("No time" row), overlaps share width, and week headers inside the scroller, which Deccan keeps outside and so misaligns on phones.
 - Sign-out uses `scope: "local"`. The default global scope ended every session on the shared demo account whenever anyone signed out.
 - Theme is not stored per user. It defaults to the device (`defaultTheme="system"`), and the toggle's choice is remembered by next-themes in `localStorage` under `DF-theme` (which holds `"system"` until the owner picks). A saved profile theme made a light-mode sign-in switch to dark, so it was removed. `main.tsx` sets the class before first paint because next-themes' own script is inert here.
-- Migration 038 drops `profiles.theme_preference` and first redefines `handle_new_user()`, which inserted that column: dropping it alone would break every sign-up. Apply it only after the new web build is live, because the deployed old build still selects the column and would fail to load profiles. Not applied by the agent.
+- Migration 038 (see the shared memory) drops `profiles.theme_preference` and first redefines `handle_new_user()`, which inserted that column: dropping it alone would break every sign-up. Apply it only after the new web build is live, because the deployed old build still selects the column and would fail to load profiles. Not applied by the agent.
 
 - Skeletons stay on phantom-ui. The first fix corrected how elements are measured. The second wraps self-loading panels (`DirectoryTable`, todo list, activities block, day panel) whole, because a panel inside `Reveal` animated in late and looked like only the stat cards had skeletons.
 - The user menu's Profile and Settings both open the settings page, since profile is a card there and no separate page exists. Help & support links to the repo's GitHub issues (`shared/constants/support.ts`) because no support contact exists yet.
 
 ## Ops
 
-- Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `docs/theme.css` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.
+- Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `shared/theme/theme.css` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.
 - Shipped images are WebP; PNG masters and logos live in `apps/web/design/` and are not deployed. Regenerate WebP from them with `cwebp` if art changes.
 
-- Hosting: Hostinger. Desktop (Tauri) is out of scope until the web rebuild ships.
-- Migrations stay append-only in `scripts/migrations/`; none are planned.
-- Do not commit `.env` or credentials.
+- Desktop (Tauri) is out of scope until the web rebuild ships.
 
 ## Docs
 
 | File | Role |
 |------|------|
-| `PRD.md` | Goal, users, scope, success criteria |
 | `WEB_REBUILD_SPEC.md` | Routes, nav, features, notifications |
-| `WEB_ENV_AND_LINKS.md` | Env vars, links, auth redirects, DB contract |
-| `ARCHITECTURE.md` | Stack, folders, data flow, data model |
-| `DESIGN.md` + `theme.css` | UI direction and theme tokens |
-| `RULES.md` | Conventions for developers and agents |
+| `WEB_ENV_AND_LINKS.md` | Env vars, links, auth redirects, deploy |
+| `ARCHITECTURE.md` | Stack, folders, data flow |
+| `RULES.md` | Web conventions (shared rules are in the root `docs/RULES.md`) |
+| `DESIGN.md` | UI direction (tokens are in `shared/theme/theme.css`) |
 | `IMPLEMENTATION_PLAN.md` | Per-route data and components, build order |
 | `TASKS.md` | Phased rebuild checklist |
 | `MEMORY.md` | This file |
 
-Read order for a new agent: PRD → WEB_REBUILD_SPEC → ARCHITECTURE → RULES → DESIGN → IMPLEMENTATION_PLAN → TASKS.
+Read order for a new agent: root `docs/PRD.md` → `docs/DATABASE.md` → `docs/RULES.md` → WEB_REBUILD_SPEC → ARCHITECTURE → RULES → DESIGN → IMPLEMENTATION_PLAN → TASKS.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Recolour the DayFlow logos to the current theme, then rebuild every size made from them.
 
-Colours come from docs/theme.css: the accent is --chart-1, the ink is --foreground for that theme.
+Colours come from shared/theme/theme.css (repo root): the accent is --chart-1, the ink is --foreground for that theme.
 Both themes are built from the dark masters, whose edges are clean, so the two logos match exactly.
 Each pixel is split into accent and ink coverage and rebuilt from those. Safe to run again: the
 accent is read as accent.
@@ -19,7 +19,7 @@ from pathlib import Path
 from PIL import Image
 
 WEB = Path(__file__).resolve().parents[1]
-THEME = WEB.parents[1] / "docs" / "theme.css"
+THEME = WEB.parents[1] / "shared" / "theme" / "theme.css"
 BRAND = WEB / "design" / "brand"
 PUBLIC = WEB / "public"
 

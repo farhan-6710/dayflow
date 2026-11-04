@@ -2,7 +2,7 @@
 
 Expo (React Native) app. Same Supabase Auth + Postgres as web and desktop — same demo login, same `reminders` rows.
 
-Product overview: [README.md](../../README.md). Shared schema: [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md).
+Product overview: [README.md](../../README.md). Shared schema: [docs/DATABASE.md](../../docs/DATABASE.md).
 
 **Platforms:** Expo SDK 57 · React Native 0.86 · Expo Go compatible
 

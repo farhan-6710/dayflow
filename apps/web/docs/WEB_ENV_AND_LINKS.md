@@ -54,27 +54,7 @@ The Supabase Auth dashboard has these URLs on its allow list. The new app must s
 
 ## 4. Database contract (do not change)
 
-**Tables:**
-
-`profiles` (no `theme_preference` once migration 038 is applied), `projects`, `notes`, `project_reference_links`, `note_reference_links`, `clients`, `client_conversation_messages`, `tasks`, `todos`, `reminders`, `reminder_occurrences`, `notifications`, `client_activity_tasks`, `client_activity_meetings`, `client_activity_calls`, `expo_push_tokens`
-
-**Functions and RPCs:**
-
-| Function | Purpose |
-|----------|---------|
-| `link_client_portal_user()` | Links a client-portal login to its `clients` row |
-| `fetch_client_portal_projects()` | Returns the projects shared with the signed-in client |
-| `client_portal_can_access_project(uuid)` | Checks client access to one project |
-| `client_portal_session_email()` | Helper used by the client-portal functions |
-| `client_portal_resolved_email()` | Helper used by the client-portal functions |
-| `handle_new_user()` | Trigger that creates the `profiles` row |
-| `handle_updated_at()` | Trigger that maintains `updated_at` |
-
-**Where the schema lives and how it is protected:**
-
-- Schema history: `scripts/migrations/001–037` at the repo root. Kept, and append-only.
-- Exact column selects per table: in the old `apps/web/src/services/db.ts`, recoverable from git.
-- RLS policies stay as they are. The new code must work within them.
+Shared by web and mobile: see [DATABASE.md](../../../docs/DATABASE.md).
 
 ---
 

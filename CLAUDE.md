@@ -1,26 +1,24 @@
 # DayFlow
 
-Freelancer workspace (web + mobile) on one Supabase project. The web app is being rebuilt from scratch in `apps/web`; the database must never change.
+Freelancer workspace on one Supabase project: a web app (`apps/web`, rebuilt) and a mobile app (`apps/mobile`, being rebuilt). The database must never change.
 
-Read and follow these docs. When they conflict, RULES wins.
+This file holds what applies to every app. Each app has its own `docs/`, loaded by the `CLAUDE.md` inside that app's folder (`apps/web/CLAUDE.md`, and `apps/mobile/CLAUDE.md` once mobile starts). When docs conflict, RULES wins.
 
-## Rules
+## Shared rules
 @docs/RULES.md
 
-## Product and scope
+## Product and data
 @docs/PRD.md
-@docs/WEB_REBUILD_SPEC.md
-
-## Structure and design
-@docs/ARCHITECTURE.md
-@docs/DESIGN.md
-
-## Config and data contract
-@docs/WEB_ENV_AND_LINKS.md
-
-## Work tracking
-@docs/IMPLEMENTATION_PLAN.md
-@docs/TASKS.md
+@docs/DATABASE.md
 @docs/MEMORY.md
 
-Theme tokens: `docs/theme.css` (open it when setting up or changing styles).
+Theme tokens: `shared/theme/theme.css` (open it when changing colours, radius or shadows).
+
+## App docs
+
+| App | Docs | Loaded by |
+|-----|------|-----------|
+| Web | `apps/web/docs/` | `apps/web/CLAUDE.md` |
+| Mobile | `apps/mobile/docs/` (not created yet) | `apps/mobile/CLAUDE.md` (not created yet) |
+
+Working in an app folder loads that app's docs. When working from the repo root, read `apps/<app>/CLAUDE.md` first.
