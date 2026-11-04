@@ -4,6 +4,7 @@ import { EllipsisVertical, FileText, Link2, Pause, Pencil, Play, Trash2 } from "
 import { useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 
+import { ActivitiesPanel } from "@/features/activities/ActivitiesPanel";
 import { NotesPanel } from "@/features/projects/NotesPanel";
 import { ProjectChip } from "@/features/projects/ProjectChip";
 import { ProjectFormSheet } from "@/features/projects/ProjectFormSheet";
@@ -25,7 +26,7 @@ import { StatTile } from "@/ui/StatTile";
 import { StatusPill } from "@/ui/StatusPill";
 import { Text } from "@/ui/Text";
 
-type Tab = "overview" | "notes" | "links";
+type Tab = "overview" | "notes" | "links" | "activities";
 
 export default function ProjectDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -45,6 +46,7 @@ export default function ProjectDetailScreen() {
     { value: "overview", label: "Overview" },
     { value: "notes", label: "Notes" },
     { value: "links", label: "Links" },
+    ...(project?.project_for ? [{ value: "activities" as const, label: "Activities" }] : []),
   ];
 
   return (
@@ -89,12 +91,13 @@ export default function ProjectDetailScreen() {
                 ) : null}
                 {tab === "notes" ? <NotesPanel projectId={id} /> : null}
                 {tab === "links" ? <ReferenceLinks owner={{ kind: "project", id }} heading={false} /> : null}
+                {tab === "activities" ? <ActivitiesPanel scope={{ kind: "project", id }} raisedBy="workspace" projects={[{ id, name: loaded.name }]} clientLabel={loaded.project_for_label} /> : null}
               </>
             )
           }
         </QueryState>
       </ScrollView>
-      {project && tab !== "links" ? <Fab label="New note" onPress={() => router.push(`/project/${id}/note/new`)} /> : null}
+      {project && (tab === "overview" || tab === "notes") ? <Fab label="New note" onPress={() => router.push(`/project/${id}/note/new`)} /> : null}
       <ProjectFormSheet open={editing} project={project} onClose={() => setEditing(false)} />
       {project ? (
         <ActionSheet

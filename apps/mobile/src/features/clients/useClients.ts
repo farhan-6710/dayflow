@@ -56,7 +56,7 @@ export function useClientActions() {
     confirmDelete: async (client: Client) => {
       const ok = await confirm({
         title: `Delete ${client.company_name}?`,
-        message: "Their conversation goes with them. Their projects stop being linked to a client. This can't be undone.",
+        message: "Their conversation goes with them, and their projects become personal. This can't be undone.",
         confirmLabel: "Delete",
       });
       if (ok) remove.mutate(client.id);
