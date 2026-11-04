@@ -64,7 +64,7 @@ Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `
 
 ## Motion
 
-Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout.
+Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Entrance easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout. The sidebar's collapse and expand is the one other curve: width over 500ms with `cubic-bezier(0.32, 0.72, 0, 1)`.
 
 | `kind` | Use | From | Duration | Stagger |
 |--------|-----|------|----------|---------|

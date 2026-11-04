@@ -85,8 +85,8 @@ export function ShellSidebarContent({
             type="button"
             variant="outline"
             className={`h-10 w-full gap-3 px-3 ${collapsed ? "justify-center" : "justify-start"}`}
-            aria-label="Collapse sidebar"
-            aria-expanded
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-expanded={!collapsed}
             onClick={onToggleSidebar}
           >
             {collapsed ? (

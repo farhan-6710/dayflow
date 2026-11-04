@@ -6,7 +6,7 @@ export function ShellSidebar({ config, collapsed, onToggleSidebar }: ShellSideba
   return (
     <aside
       className={cn(
-        "hidden shrink-0 border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-out lg:block",
+        "hidden shrink-0 border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-600 ease-[cubic-bezier(0.32,0.72,0,1)] lg:block",
         collapsed ? "w-[4.5rem]" : "w-64",
       )}
     >
