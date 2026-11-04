@@ -3,15 +3,38 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@dayflow/brand/*": ["../../shared/brand/*"],
-      "@notifications": ["./src/notifications"],
-      "@notifications/*": ["./src/notifications/*"],
-      "@services/*": ["./src/services/*"],
-      "@types": ["./src/types"],
-      "@assets/*": ["./assets/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@dayflow/brand/*": [
+        "../../shared/brand/*"
+      ],
+      "@notifications": [
+        "./src/notifications"
+      ],
+      "@notifications/*": [
+        "./src/notifications/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@types": [
+        "./src/types"
+      ],
+      "@assets/*": [
+        "./assets/*"
+      ]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts", "../../shared/brand/theme.ts"],
-  "exclude": ["node_modules", "_vault", "dist"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "nativewind-env.d.ts",
+    "../../shared/brand/theme.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "_vault",
+    "dist"
+  ]
 }

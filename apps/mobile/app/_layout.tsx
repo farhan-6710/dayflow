@@ -11,6 +11,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import "@/theme/global.css";
+import { AuthProvider } from "@/features/auth/AuthProvider";
 import { queryClient } from "@/lib/query";
 import { ThemeProvider, useTheme } from "@/theme/ThemeProvider";
 import { Toaster } from "@/ui/Toaster";
@@ -43,7 +44,9 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
-            <RootStack />
+            <AuthProvider>
+              <RootStack />
+            </AuthProvider>
           </ThemeProvider>
         </QueryClientProvider>
       </SafeAreaProvider>

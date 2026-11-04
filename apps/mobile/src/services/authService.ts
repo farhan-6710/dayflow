@@ -1,4 +1,5 @@
 import type { AuthChangeEvent, AuthError, Session, User } from "@supabase/supabase-js";
+import * as WebBrowser from "expo-web-browser";
 
 import { supabase } from "@/services/supabaseClient";
 
@@ -134,4 +135,43 @@ export async function getCurrentSession(): Promise<Session | null> {
     throw error;
   }
   return data.session;
+}
+
+/** Finishes a sign-in that came back through `dayflow://auth/callback`. Handles both token and code redirects. */
+export async function applyAuthCallback(url: string): Promise<{ recovery: boolean; error: string | null }> {
+  const parsed = new URL(url);
+  const params = new URLSearchParams(parsed.hash.replace(/^#/, ""));
+  const description = params.get("error_description") ?? parsed.searchParams.get("error_description");
+  if (description) return { recovery: false, error: description };
+
+  const recovery = params.get("type") === "recovery" || parsed.searchParams.get("type") === "recovery";
+  const accessToken = params.get("access_token");
+  const refreshToken = params.get("refresh_token");
+  const code = parsed.searchParams.get("code");
+
+  if (accessToken && refreshToken) {
+    const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+    return { recovery, error: error?.message ?? null };
+  }
+  if (code) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    return { recovery, error: error?.message ?? null };
+  }
+  return { recovery, error: null };
+}
+
+export type GoogleSignInResult = { ok: true } | { ok: false; cancelled?: boolean; message?: string };
+
+export async function signInWithGoogle(): Promise<GoogleSignInResult> {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: AUTH_CALLBACK_URL, skipBrowserRedirect: true },
+  });
+  if (error || !data.url) return { ok: false, message: error?.message };
+
+  const result = await WebBrowser.openAuthSessionAsync(data.url, AUTH_CALLBACK_URL);
+  if (result.type !== "success") return { ok: false, cancelled: true };
+
+  const applied = await applyAuthCallback(result.url);
+  return applied.error ? { ok: false, message: applied.error } : { ok: true };
 }

@@ -18,7 +18,7 @@ export function EmptyState({ art, title, description, actionLabel, onAction }: E
 
   return (
     <View className="items-center gap-2 px-6 py-10">
-      <Image source={emptyArt[art][scheme]} accessibilityIgnoresInvertColors className="mb-2 size-24" resizeMode="contain" />
+      <Image source={emptyArt[art][scheme]} accessibilityIgnoresInvertColors style={{ width: 96, height: 96, marginBottom: 8 }} resizeMode="contain" />
       <Text variant="heading" className="text-center">
         {title}
       </Text>
