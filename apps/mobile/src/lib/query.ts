@@ -34,9 +34,11 @@ export function useAction<TArgs = void, TResult = unknown>(
   const client = useQueryClient();
   return useMutation<TResult, Error, TArgs>({
     mutationFn: run,
+    onSettled: () => {
+      for (const key of invalidate) void client.invalidateQueries({ queryKey: [key] });
+    },
     onSuccess: (result) => {
       haptics.success();
-      for (const key of invalidate) void client.invalidateQueries({ queryKey: [key] });
       if (success) showToast("success", typeof success === "function" ? success(result) : success);
       onSuccess?.(result);
     },

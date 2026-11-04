@@ -8,11 +8,13 @@ type StatTileProps = {
   label: string;
   value: string | number;
   caption?: string;
+  /** e.g. "+2 vs last week". */
+  trend?: { label: string; good: boolean };
   icon: LucideIcon;
   onPress?: () => void;
 };
 
-export function StatTile({ label, value, caption, icon: Icon, onPress }: StatTileProps) {
+export function StatTile({ label, value, caption, trend, icon: Icon, onPress }: StatTileProps) {
   const { colors } = useTheme();
   return (
     <Pressable
@@ -33,6 +35,13 @@ export function StatTile({ label, value, caption, icon: Icon, onPress }: StatTil
       <Text variant="stat" numberOfLines={1}>
         {value}
       </Text>
+      {trend ? (
+        <View className="self-start rounded-full bg-muted px-2 py-0.5">
+          <Text variant="caption" tone={trend.good ? "success" : "default"}>
+            {trend.label}
+          </Text>
+        </View>
+      ) : null}
       {caption ? (
         <Text variant="caption" tone="muted" numberOfLines={1}>
           {caption}

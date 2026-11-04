@@ -12,9 +12,10 @@ type IconButtonProps = {
   badge?: number;
   disabled?: boolean;
   className?: string;
+  iconColor?: string;
 };
 
-export function IconButton({ icon: Icon, label, onPress, badge, disabled, className }: IconButtonProps) {
+export function IconButton({ icon: Icon, label, onPress, badge, disabled, className, iconColor }: IconButtonProps) {
   const { colors } = useTheme();
   const hasBadge = Boolean(badge && badge > 0);
 
@@ -25,9 +26,9 @@ export function IconButton({ icon: Icon, label, onPress, badge, disabled, classN
       onPress={onPress}
       disabled={disabled}
       hitSlop={4}
-      className={cn("size-11 items-center justify-center rounded-full active:bg-muted", disabled && "opacity-50", className)}
+      className={cn("size-11 items-center justify-center rounded-full active:opacity-70", disabled && "opacity-50", className)}
     >
-      <Icon size={22} color={colors.foreground} />
+      <Icon size={22} color={iconColor ?? colors.foreground} />
       {hasBadge ? (
         <View className="absolute right-0.5 top-0.5 min-w-[18px] items-center rounded-full bg-chart-1 px-1">
           <Text variant="caption" className="text-[11px] leading-[18px] text-white">

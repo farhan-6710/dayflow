@@ -1,8 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { themeTokens } from "@dayflow/brand/theme";
-import { vars } from "nativewind";
+import { cssInterop, vars } from "nativewind";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { useColorScheme, View } from "react-native";
+import { Animated, useColorScheme, View } from "react-native";
+
+// Lets Animated.View take class names, as the sheet and skeleton do.
+cssInterop(Animated.View, { className: "style" });
 
 export type ThemeMode = "system" | "light" | "dark";
 export type ColorScheme = "light" | "dark";
