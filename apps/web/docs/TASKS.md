@@ -109,5 +109,7 @@ Each item: service → hook → page → states → verify.
 
 ## Later
 
-- [ ] Desktop app (Tauri) on the new web build
+- [x] Desktop app (Tauri): `src-tauri/` set up, builds, branded icons
+- [ ] Install the built desktop app and test Google sign-in (the `dayflow://` link only works for the installed app on macOS)
+- [ ] Desktop notifications (`tauri-plugin-notification`); on Windows or Linux also `tauri-plugin-single-instance` so the sign-in link reaches the running app
 - [ ] Release automation

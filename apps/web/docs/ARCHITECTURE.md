@@ -86,6 +86,15 @@ Google is the only OAuth provider.
 - Env vars are baked in at build time, so build with `apps/web/.env` present.
 - Keep the desktop bridge page live: released desktop builds use it.
 
+### Desktop (Tauri)
+
+Needs Rust (`rustup` recommended) and Xcode command line tools. From `apps/web`:
+
+- `bun run tauri:dev` opens the app on the Vite dev server.
+- `bun run tauri:build` builds the installer into `src-tauri/target/release/bundle/`. Install that build to test the `dayflow://` sign-in link.
+
+The window, icons and bundle settings are in `src-tauri/tauri.conf.json`; allowed window and plugin actions are in `src-tauri/capabilities/default.json`.
+
 ### Recover from git
 
 The old web app is at commit `b1335f3` under `apps/web/`. Restore a path with `git checkout b1335f3 -- <path>`. Useful for the desktop phase: `apps/web/src-tauri/` (identifier `com.dayflow.app`, version `0.1.9`, window 1280×840 min 960×600, deep-link scheme `dayflow`, CSP allowing `*.supabase.co`, plugins opener and deep-link) and the old `apps/web/src/services/`.

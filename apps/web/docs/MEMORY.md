@@ -45,7 +45,7 @@ Durable context for the web app. Project-wide decisions (database, order of work
 - Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `shared/brand/theme.json` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.
 - Shipped images are WebP; PNG masters and logos live in `apps/web/design/` and are not deployed. Regenerate WebP from them with `cwebp` if art changes.
 
-- Desktop (Tauri) is out of scope until the web rebuild ships.
+- Desktop (Tauri) lives in `src-tauri/` and reuses the web build. Identifier `com.dayflow.app` is kept from released builds, although Tauri warns that it ends in `.app`. App icons come from `bunx tauri icon` on a cream tile with the light logo mark; regenerate them after a brand change. `serde_json` must stay in `Cargo.toml` (the `generate_context!` macro needs it).
 
 ## Docs
 

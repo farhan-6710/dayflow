@@ -10,7 +10,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "seed:nov-tasks": "bun scripts/seed-november-tasks.ts",
-    "seed:present-month-tasks": "bun scripts/seed-present-month-tasks.ts"
+    "seed:present-month-tasks": "bun scripts/seed-present-month-tasks.ts",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "dependencies": {
     "@aejkatappaja/phantom-ui": "^1.6.1",
@@ -22,6 +25,9 @@
     "@fontsource/young-serif": "^5.3.0",
     "@supabase/supabase-js": "^2.118.0",
     "@tailwindcss/vite": "^4.3.4",
+    "@tauri-apps/api": "~2.11.0",
+    "@tauri-apps/plugin-deep-link": "~2.4.0",
+    "@tauri-apps/plugin-opener": "~2.5.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
     "date-fns": "^4.4.0",
@@ -40,6 +46,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@tauri-apps/cli": "~2.11.0",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

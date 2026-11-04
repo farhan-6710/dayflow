@@ -6,6 +6,7 @@ import { GoogleIcon } from "@/shared/auth/components/GoogleIcon";
 import type { AuthOAuthSignInProps } from "@/shared/auth/types/components";
 import { formatAuthErrorMessage } from "@/shared/auth/utils/formatAuthErrorMessage";
 import { Button } from "@/shared/ui/button";
+import { isDesktopApp } from "@/shared/utils/platform";
 import { showToast } from "@/shared/utils/showToast";
 
 export function AuthOAuthSignIn({ disabled = false, redirectPath, onError, onBeforeSignIn }: AuthOAuthSignInProps) {
@@ -14,6 +15,9 @@ export function AuthOAuthSignIn({ disabled = false, redirectPath, onError, onBef
   async function handleClick() {
     onBeforeSignIn();
     setLoading(true);
+    if (isDesktopApp()) {
+      showToast("info", "Opening your browser to sign in with Google…");
+    }
     const result = await signInWithOAuthProvider("google", redirectPath);
     setLoading(false);
 

@@ -3,6 +3,8 @@ import type { Provider } from "@supabase/supabase-js";
 import { OAUTH_CALLBACK_MESSAGE_TYPE, OAUTH_CALLBACK_PATH } from "@/app/constants/oauthRoutes";
 import { getCurrentSession, onAuthChange } from "@/services/authService";
 import { supabase } from "@/services/supabaseClient";
+import { buildDesktopOAuthBridgeUrl, openDesktopOAuth } from "@/shared/auth/utils/oauthDesktop";
+import { isDesktopApp } from "@/shared/utils/platform";
 
 export type OAuthPopupResult =
   | { ok: true }
@@ -69,13 +71,18 @@ export async function signInWithOAuthProvider(
   provider: Provider,
   redirectPath: string,
 ): Promise<OAuthPopupResult> {
-  const callbackUrl = new URL(OAUTH_CALLBACK_PATH, window.location.origin);
-  callbackUrl.searchParams.set("next", redirectPath);
+  const redirectTo = isDesktopApp()
+    ? buildDesktopOAuthBridgeUrl(redirectPath)
+    : (() => {
+        const callbackUrl = new URL(OAUTH_CALLBACK_PATH, window.location.origin);
+        callbackUrl.searchParams.set("next", redirectPath);
+        return callbackUrl.toString();
+      })();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: callbackUrl.toString(),
+      redirectTo,
       skipBrowserRedirect: true,
       queryParams: { access_type: "offline", prompt: "consent" },
     },
@@ -83,6 +90,9 @@ export async function signInWithOAuthProvider(
 
   if (error || !data.url) {
     return { ok: false, message: error?.message };
+  }
+  if (isDesktopApp()) {
+    return openDesktopOAuth(data.url);
   }
   return openOAuthPopup(data.url);
 }

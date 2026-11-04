@@ -9,12 +9,14 @@ import {
 } from "react";
 import { useBlocker } from "react-router";
 
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { UnsavedChangesModal } from "@/shared/unsaved-changes/UnsavedChangesModal";
 import { UnsavedChangesContext } from "@/shared/unsaved-changes/unsavedChangesContext";
 import type {
   UnsavedChangesConfirmOptions,
   UnsavedChangesRegistration,
 } from "@/shared/unsaved-changes/types";
+import { isDesktopApp } from "@/shared/utils/platform";
 
 const DEFAULT_TITLE = "Unsaved changes";
 const DEFAULT_DESCRIPTION =
@@ -127,6 +129,46 @@ export function UnsavedChangesProvider({ children }: { children: ReactNode }) {
     }
     window.addEventListener("beforeunload", onBeforeUnload);
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
+
+  // Desktop app window close: intercept and show the same unsaved modal.
+  useEffect(() => {
+    if (!isDesktopApp()) {
+      return;
+    }
+
+    let unlisten: (() => void) | undefined;
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const { getCurrentWindow } = await import("@tauri-apps/api/window");
+        const currentWindow = getCurrentWindow();
+        unlisten = await currentWindow.onCloseRequested(async (event) => {
+          if (dirtyRef.current.length === 0 || allowLeaveRef.current) {
+            return;
+          }
+          event.preventDefault();
+          setRequested({
+            title: DEFAULT_TITLE,
+            description: `You have changes that haven't been saved. Save before closing ${BRAND_NAME}, or close without saving.`,
+            proceed: async () => {
+              await currentWindow.destroy();
+            },
+          });
+        });
+        if (cancelled) {
+          unlisten();
+        }
+      } catch {
+        /* window API unavailable outside a built desktop shell */
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      unlisten?.();
+    };
   }, []);
 
   const value = useMemo(
