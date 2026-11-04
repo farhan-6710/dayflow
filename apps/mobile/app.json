@@ -20,7 +20,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "monochromeImage": "./assets/icons/ios-tinted.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#e9e4d8"
       },
       "predictiveBackGestureEnabled": false,
       "package": "dev.expo.personalassistantapp",
@@ -43,7 +43,9 @@
         "expo-notifications",
         {
           "icon": "./assets/icons/ios-tinted.png",
-          "sounds": ["./assets/sounds/notification_sound.wav"]
+          "sounds": [
+            "./assets/sounds/notification_sound.wav"
+          ]
         }
       ],
       [
@@ -52,14 +54,15 @@
           "image": "./assets/icons/splash-icon-light.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#f6f3ea",
+          "backgroundColor": "#e9e4d8",
           "dark": {
             "image": "./assets/icons/splash-icon-dark.png",
-            "backgroundColor": "#0b0b0b"
+            "backgroundColor": "#141414"
           }
         }
       ],
       "expo-font"
-    ]
+    ],
+    "scheme": "dayflow"
   }
 }

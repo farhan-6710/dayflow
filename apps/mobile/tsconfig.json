@@ -3,114 +3,15 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@components": [
-        "./src/components"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@hooks": [
-        "./src/hooks"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@utils": [
-        "./src/utils"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@constants": [
-        "./src/constants"
-      ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
-      "@types": [
-        "./src/types"
-      ],
-      "@types/*": [
-        "./src/types/*"
-      ],
-      "@screens": [
-        "./src/screens"
-      ],
-      "@screens/*": [
-        "./src/screens/*"
-      ],
-      "@redux": [
-        "./src/redux"
-      ],
-      "@redux/*": [
-        "./src/redux/*"
-      ],
-      "@styles": [
-        "./src/styles"
-      ],
-      "@styles/*": [
-        "./src/styles/*"
-      ],
-      "@api": [
-        "./src/api"
-      ],
-      "@api/*": [
-        "./src/api/*"
-      ],
-      "@config": [
-        "./src/config"
-      ],
-      "@config/*": [
-        "./src/config/*"
-      ],
-      "@notifications": [
-        "./src/notifications"
-      ],
-      "@notifications/*": [
-        "./src/notifications/*"
-      ],
-      "@providers": [
-        "./src/providers"
-      ],
-      "@providers/*": [
-        "./src/providers/*"
-      ],
-      "@lib": [
-        "./src/lib"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@services": [
-        "./src/services"
-      ],
-      "@services/*": [
-        "./src/services/*"
-      ],
-      "@assets": [
-        "./assets"
-      ],
-      "@assets/*": [
-        "./assets/*"
-      ],
-      "@app": [
-        "./app"
-      ],
-      "@app/*": [
-        "./app/*"
-      ],
-      "@dayflow/brand/*": [
-        "../../shared/brand/*"
-      ]
+      "@/*": ["./src/*"],
+      "@dayflow/brand/*": ["../../shared/brand/*"],
+      "@notifications": ["./src/notifications"],
+      "@notifications/*": ["./src/notifications/*"],
+      "@services/*": ["./src/services/*"],
+      "@types": ["./src/types"],
+      "@assets/*": ["./assets/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "nativewind-env.d.ts",
-    "../../shared/brand/**/*.json"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts", "../../shared/brand/theme.ts"],
+  "exclude": ["node_modules", "_vault", "dist"]
 }
