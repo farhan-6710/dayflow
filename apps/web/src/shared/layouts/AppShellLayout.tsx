@@ -32,14 +32,16 @@ export function AppShellLayout({
             Skip to content
           </a>
           <div className="fixed inset-0 flex min-w-0 overflow-hidden bg-background text-foreground">
-            <ShellSidebar config={sidebarConfig} collapsed={collapsed} />
+            <ShellSidebar
+              config={sidebarConfig}
+              collapsed={collapsed}
+              onToggleSidebar={toggle}
+            />
             <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
               <ShellHeader
                 sidebarConfig={sidebarConfig}
                 signOutRedirect={signOutRedirect}
                 headerActions={headerActions}
-                isSidebarCollapsed={collapsed}
-                onToggleSidebar={toggle}
                 onOpenMobileNav={() => setIsMobileNavOpen(true)}
               />
               <PageOutlet sidebarConfig={sidebarConfig} />

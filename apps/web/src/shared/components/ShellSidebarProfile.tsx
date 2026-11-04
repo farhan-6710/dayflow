@@ -14,8 +14,8 @@ export function ShellSidebarProfile({ profilePath, collapsed, onNavigate }: Shel
       onClick={onNavigate}
       aria-label={collapsed ? `${displayName}, open settings` : undefined}
       className={cn(
-        "flex min-h-12 items-center gap-2.5 rounded-lg transition-colors outline-none hover:bg-sidebar-accent focus-visible:ring-[3px] focus-visible:ring-sidebar-ring/50",
-        collapsed ? "justify-center" : "px-2",
+        "flex h-12 items-center gap-2.5 rounded-lg transition-colors outline-none hover:bg-sidebar-accent focus-visible:ring-[3px] focus-visible:ring-sidebar-ring/50",
+        collapsed ? "justify-center" : "px-3",
       )}
     >
       <UserAvatar src={avatarUrl} initials={initials} alt="" className="size-9" />

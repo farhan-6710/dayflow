@@ -2,7 +2,7 @@ import { ShellSidebarContent } from "@/shared/components/ShellSidebarContent";
 import { cn } from "@/shared/lib/utils";
 import type { ShellSidebarProps } from "@/shared/types/components";
 
-export function ShellSidebar({ config, collapsed }: ShellSidebarProps) {
+export function ShellSidebar({ config, collapsed, onToggleSidebar }: ShellSidebarProps) {
   return (
     <aside
       className={cn(
@@ -10,7 +10,11 @@ export function ShellSidebar({ config, collapsed }: ShellSidebarProps) {
         collapsed ? "w-[4.5rem]" : "w-64",
       )}
     >
-      <ShellSidebarContent config={config} collapsed={collapsed} />
+      <ShellSidebarContent
+        config={config}
+        collapsed={collapsed}
+        onToggleSidebar={onToggleSidebar}
+      />
     </aside>
   );
 }

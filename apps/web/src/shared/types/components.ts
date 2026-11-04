@@ -47,14 +47,13 @@ export type ShellHeaderProps = {
   sidebarConfig: ShellSidebarConfig;
   signOutRedirect: string;
   headerActions?: ReactNode;
-  isSidebarCollapsed: boolean;
-  onToggleSidebar: () => void;
   onOpenMobileNav: () => void;
 };
 
 export type ShellSidebarProps = {
   config: ShellSidebarConfig;
   collapsed: boolean;
+  onToggleSidebar?: () => void;
 };
 
 export type ShellSidebarContentProps = ShellSidebarProps & {
