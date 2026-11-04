@@ -77,7 +77,8 @@ let stale = [];
 for (const [file, content] of Object.entries(outputs)) {
   const path = join(OUT_DIR, file);
   if (CHECK) {
-    if (!existsSync(path) || readFileSync(path, "utf8") !== content) stale.push(path);
+    // Git on Windows checks these files out with CRLF, which isn't a real change.
+    if (!existsSync(path) || readFileSync(path, "utf8").replaceAll("\r\n", "\n") !== content) stale.push(path);
   } else {
     writeFileSync(path, content);
     console.log(`wrote ${path}`);
