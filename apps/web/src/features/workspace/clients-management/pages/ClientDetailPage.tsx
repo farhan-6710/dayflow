@@ -8,12 +8,12 @@ import { ClientProjectsSection } from "@/features/workspace/clients-management/c
 import { ClientSummary } from "@/features/workspace/clients-management/components/ClientSummary";
 import { DELETE_CLIENT_DESCRIPTION } from "@/features/workspace/clients-management/constants/copy";
 import { useClientDetail } from "@/features/workspace/clients-management/hooks/useClientDetail";
+import { ClientDetailSkeleton } from "@/features/workspace/clients-management/components/ClientDetailSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { StatusPill } from "@/shared/components/StatusPill";
 import { ProjectFormDialog } from "@/shared/projects/components/ProjectFormDialog";
 import { Button } from "@/shared/ui/button";
@@ -25,7 +25,7 @@ export function ClientDetailPage() {
   const { client } = page;
 
   if (page.loading) {
-    return <PageSkeleton />;
+    return <ClientDetailSkeleton />;
   }
   if (page.error && !client) {
     return (

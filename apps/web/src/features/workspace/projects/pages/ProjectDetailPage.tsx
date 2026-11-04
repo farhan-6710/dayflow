@@ -7,12 +7,12 @@ import { ClientActivitiesBlock } from "@/features/workspace/client-activities/co
 import { ProjectNotesTable } from "@/features/workspace/projects/components/ProjectNotesTable";
 import { ReferenceLinksSection } from "@/features/workspace/projects/components/ReferenceLinksSection";
 import { useProjectDetail } from "@/features/workspace/projects/hooks/useProjectDetail";
+import { ProjectDetailSkeleton } from "@/features/workspace/projects/components/ProjectDetailSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
 import { StatusPill } from "@/shared/components/StatusPill";
@@ -26,7 +26,7 @@ export function ProjectDetailPage() {
   const { project } = page;
 
   if (page.loading) {
-    return <PageSkeleton />;
+    return <ProjectDetailSkeleton />;
   }
   if (page.error && !project) {
     return (

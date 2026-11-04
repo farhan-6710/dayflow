@@ -34,7 +34,7 @@ export function DashboardTodoList() {
         </div>
       ) : null}
       {list.loading ? (
-        <TableSkeleton rows={3} />
+        <TableSkeleton rows={3} flush cells={[["A todo title goes here", "A short description of it"], "··"]} />
       ) : list.pending.length === 0 && list.completed.length === 0 && !list.error ? (
         <EmptyState
           bare

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router";
 
 /** Scrollable main area. The key remounts each route, so it plays its entrance and starts at the top. */
@@ -17,9 +17,11 @@ export function PageOutlet() {
       tabIndex={-1}
       className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain outline-none"
     >
-      <div key={pathname} className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 lg:px-8 lg:py-8">
-        <Outlet />
-      </div>
+      <Suspense fallback={null}>
+        <div key={pathname} className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 lg:px-8 lg:py-8">
+          <Outlet />
+        </div>
+      </Suspense>
     </main>
   );
 }

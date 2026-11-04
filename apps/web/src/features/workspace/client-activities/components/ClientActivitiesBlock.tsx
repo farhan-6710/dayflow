@@ -5,6 +5,7 @@ import { ActivityCallDialog } from "@/features/workspace/client-activities/compo
 import { ActivityList } from "@/features/workspace/client-activities/components/ActivityList";
 import { ActivityMeetingDialog } from "@/features/workspace/client-activities/components/ActivityMeetingDialog";
 import { ActivityTaskDialog } from "@/features/workspace/client-activities/components/ActivityTaskDialog";
+import { ACTIVITY_SKELETON_CELLS } from "@/features/workspace/client-activities/constants/skeleton";
 import { useClientActivities } from "@/features/workspace/client-activities/hooks/useClientActivities";
 import type {
   ActivityItem,
@@ -86,7 +87,7 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
 
         {activities.loading ? (
           <div className="mt-3">
-            <TableSkeleton rows={3} />
+            <TableSkeleton rows={3} flush cells={ACTIVITY_SKELETON_CELLS} />
           </div>
         ) : (
           TABS.map((tab) => {

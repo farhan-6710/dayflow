@@ -12,6 +12,7 @@ export function DirectoryTable({
   gridClass,
   columns,
   isLoading = false,
+  loadingRows = 8,
   isEmpty,
   emptyTitle,
   emptyDescription,
@@ -50,7 +51,7 @@ export function DirectoryTable({
       )}
 
       {isLoading ? (
-        <TableSkeleton gridClass={gridClass} columns={columns} />
+        <TableSkeleton rows={loadingRows} gridClass={gridClass} columns={columns} />
       ) : isEmpty ? (
         <EmptyState
           bare

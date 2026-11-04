@@ -5,12 +5,12 @@ import { buildProjectNotePath, WORKSPACE_PROJECTS_MANAGEMENT_PATH } from "@/app/
 import { ProjectNoteEditor } from "@/features/workspace/projects/components/ProjectNoteEditor";
 import { ReferenceLinksSection } from "@/features/workspace/projects/components/ReferenceLinksSection";
 import { useProjectNotePage } from "@/features/workspace/projects/hooks/useProjectNotePage";
+import { ProjectNoteSkeleton } from "@/features/workspace/projects/components/ProjectNoteSkeleton";
 import { BackLink } from "@/shared/components/BackLink";
 import { ConfirmationModal } from "@/shared/components/ConfirmationModal";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { PageSkeleton } from "@/shared/components/PageSkeleton";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
@@ -19,7 +19,7 @@ export function ProjectNotePage() {
   const { project, note, isDraft } = page;
 
   if (page.loading) {
-    return <PageSkeleton />;
+    return <ProjectNoteSkeleton />;
   }
   if (page.error && !project) {
     return (

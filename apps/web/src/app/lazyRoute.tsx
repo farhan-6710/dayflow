@@ -1,11 +1,13 @@
 import { lazy, Suspense, type ComponentType, type ReactNode } from "react";
 
-import { PageSkeleton } from "@/shared/components/PageSkeleton";
-
+/**
+ * Without a `fallback` the page suspends up to `PageOutlet`, which keeps the previous page on screen
+ * until the new one is ready. Each page then shows its own skeleton, so no generic one flashes first.
+ */
 export function lazyRoutePage(
   loader: () => Promise<Record<string, ComponentType>>,
   exportName: string,
-  fallback: ReactNode = <PageSkeleton />,
+  fallback?: ReactNode,
 ) {
   const LazyPage = lazy(() =>
     loader().then((module) => {
@@ -18,10 +20,12 @@ export function lazyRoutePage(
   );
 
   return function LazyRoutePage() {
-    return (
+    return fallback ? (
       <Suspense fallback={fallback}>
         <LazyPage />
       </Suspense>
+    ) : (
+      <LazyPage />
     );
   };
 }

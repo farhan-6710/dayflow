@@ -50,7 +50,7 @@ Load via `@fontsource/ovo` and `@fontsource/merriweather`. Ovo has a single weig
 
 Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Mutations show a toast; deletes use `ConfirmationModal`.
 
-Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `shared/components/Phantom.tsx`, which measures the real layout and shimmers over it using the `muted` and `card` tokens. Prefer wrapping the real component (`StatsCards`, the calendar) over drawing a second layout. `TableSkeleton` covers lists and `PageSkeleton` covers whole screens. Render `Phantom` only while loading, because its host clips overflow. Auth guards and auth pages keep the centred spinner, as there is no page layout to mirror yet.
+Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `shared/components/Phantom.tsx`, which measures the real layout and shimmers over it using the `muted` and `card` tokens. Prefer wrapping the real component (`StatsCards`, the calendar) over drawing a second layout. `TableSkeleton` covers rows and `ChartSkeleton` covers chart panels; a detail screen composes these with its real `PageHeader` so the skeleton matches the page. Never add a generic screen skeleton: a screen shows exactly one skeleton, its own. While a route's code loads, `PageOutlet` keeps the previous page on screen. Render `Phantom` only while loading, because its host clips overflow. Auth guards and auth pages keep the centred spinner, as there is no page layout to mirror yet.
 
 ## Destructive text
 

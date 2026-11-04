@@ -16,7 +16,7 @@ export function ClientNotificationsPage() {
         </div>
       ) : null}
       {inbox.loading ? (
-        <TableSkeleton rows={4} panel />
+        <TableSkeleton rows={2} panel cells={[["A notification title", "A short message about what happened", "2 hours ago"], "··"]} />
       ) : inbox.error ? null : (
         <NotificationList
           notifications={inbox.notifications}

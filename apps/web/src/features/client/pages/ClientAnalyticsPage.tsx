@@ -1,6 +1,7 @@
 import { ActivitiesByStatusChart } from "@/features/client/components/ActivitiesByStatusChart";
 import { ProjectActivityTable } from "@/features/client/components/ProjectActivityTable";
 import { useClientAnalytics } from "@/features/client/hooks/useClientAnalytics";
+import { ChartSkeleton } from "@/shared/components/ChartSkeleton";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { StatsCards } from "@/shared/components/StatsCards";
@@ -24,8 +25,8 @@ export function ClientAnalyticsPage() {
         <StatsCards cards={cards} isLoading={page.loading} />
         {page.loading ? (
           <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
-            <TableSkeleton rows={6} panel />
-            <TableSkeleton rows={6} panel />
+            <ChartSkeleton title="Activities by status" chartClassName="h-64" />
+            <TableSkeleton rows={4} panel title="By project" cells={["A project name goes here", "00", "00"]} />
           </div>
         ) : page.error ? null : (
           <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">

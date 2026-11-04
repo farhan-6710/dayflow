@@ -187,8 +187,18 @@ export type TableSkeletonProps = {
   rows?: number;
   gridClass?: string;
   columns?: DirectoryTableColumn[];
+  cells?: (string | string[])[];
+  /** No side padding, for rows inside a panel that has its own. */
+  flush?: boolean;
   /** Give the rows their own panel when nothing around them provides one. */
   panel?: boolean;
+  title?: string;
+};
+
+export type ChartSkeletonProps = {
+  title: string;
+  /** The real chart's height, so nothing moves when it loads. */
+  chartClassName: string;
 };
 
 /* Lists */
@@ -206,6 +216,7 @@ export type DirectoryTableProps = {
   gridClass: string;
   columns: DirectoryTableColumn[];
   isLoading?: boolean;
+  loadingRows?: number;
   isEmpty: boolean;
   emptyTitle: string;
   emptyDescription: ReactNode;

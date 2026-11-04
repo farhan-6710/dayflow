@@ -16,7 +16,7 @@ For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITE
 - **Confirm every delete** with `ConfirmationModal`, naming what is deleted and what goes with it.
 - **Toast after every mutation** (`showToast` success or error). Never fail silently.
 - **Unsaved-changes guard** on every form that can be dirty.
-- **Every list and detail screen has loading, empty and error states.** No blank screens. Loading uses `Phantom`, `TableSkeleton` or `PageSkeleton`, never hand-drawn placeholder bars.
+- **Every list and detail screen has loading, empty and error states.** No blank screens. Loading uses `Phantom`, `TableSkeleton` or `ChartSkeleton`, shaped like that screen. No hand-drawn placeholder bars and no generic screen skeleton.
 - **One primary action per page.** Row actions go in `RowActionsMenu`.
 - **Disable controls while saving** to prevent double submits.
 

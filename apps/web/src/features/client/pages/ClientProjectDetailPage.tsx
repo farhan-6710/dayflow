@@ -4,12 +4,13 @@ import { useParams } from "react-router";
 import { CLIENT_PORTAL_PROJECTS_PATH } from "@/app/constants/clientPortalRoutes";
 import { useClientPortal } from "@/features/client/hooks/useClientPortal";
 import { ClientActivitiesBlock } from "@/features/workspace/client-activities/components/ClientActivitiesBlock";
+import { ClientActivitiesSkeleton } from "@/features/workspace/client-activities/components/ClientActivitiesSkeleton";
 import { fetchProjectsForClientPortal } from "@/services/projectsService";
 import { BackLink } from "@/shared/components/BackLink";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { PageSkeleton } from "@/shared/components/PageSkeleton";
+import { Phantom } from "@/shared/components/Phantom";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
 import { useLoadData } from "@/shared/hooks/useLoadData";
@@ -28,7 +29,12 @@ export function ClientProjectDetailPage() {
   const { data: project, loading, error, reload } = useLoadData(loader, "Couldn't load this project.");
 
   if (loading) {
-    return <PageSkeleton />;
+    return (
+      <Phantom>
+        <PageHeader backButton={<span className="text-sm">Projects</span>} heading="A project name" description="Active" />
+        <ClientActivitiesSkeleton title="Activities" />
+      </Phantom>
+    );
   }
   if (error) {
     return (

@@ -17,7 +17,7 @@ export function TasksDayPanel({ date, tasks, isLoading, onAdd, onEdit, onDelete,
       <h2 className="truncate text-xl">{isToday(date) ? "Today" : format(date, "EEEE")}</h2>
       <p className="text-sm text-muted-foreground">{format(date, "MMMM d, yyyy")}</p>
       {isLoading ? (
-        <TableSkeleton rows={3} />
+        <TableSkeleton rows={3} flush cells={[["A task title goes here", "A time, priority and status"], "··"]} />
       ) : tasks.length === 0 ? (
         <EmptyState
           bare
