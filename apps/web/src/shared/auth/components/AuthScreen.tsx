@@ -63,7 +63,7 @@ export function AuthScreen({ config }: AuthScreenProps) {
       ) : isSignup ? (
         <SignupForm homePath={config.homePath} />
       ) : (
-        <LoginForm authPath={config.authPath} homePath={config.homePath} />
+        <LoginForm authPath={config.authPath} homePath={config.homePath} showDemoLogin={config.showDemoLogin} />
       )}
 
       {isReset || isForgot ? null : (

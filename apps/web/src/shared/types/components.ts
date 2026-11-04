@@ -24,6 +24,7 @@ export type ShellSidebarConfig = {
   searchPlaceholder: string;
   profilePath: string;
   quickAction: {
+    image: DayflowImageName;
     title: string;
     description: string;
     buttonLabel: string;
@@ -473,4 +474,9 @@ export type DetailsPanelProps = {
   icon: LucideIcon;
   title: string;
   rows: { icon: LucideIcon; label: string; value: ReactNode }[];
+};
+
+export type PanelLinkProps = {
+  to: string;
+  children: ReactNode;
 };

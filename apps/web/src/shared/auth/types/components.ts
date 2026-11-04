@@ -40,7 +40,12 @@ export type AuthOAuthSignInProps = {
   onBeforeSignIn: () => void;
 };
 
+export type DemoLoginButtonProps = {
+  label: string;
+};
+
 export type LoginFormProps = {
+  showDemoLogin: boolean;
   authPath: string;
   homePath: string;
 };

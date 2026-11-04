@@ -1,7 +1,9 @@
 import { CalendarRange } from "lucide-react";
 
 import type { WeeklyInsightsCardProps } from "@/features/workspace/dashboard/types/components";
+import { PanelLink } from "@/shared/components/PanelLink";
 import { Phantom } from "@/shared/components/Phantom";
+import { WORKSPACE_TASKS_CALENDAR_PATH } from "@/app/constants/workspaceRoutes";
 import { PanelHeading } from "@/shared/components/PanelHeading";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
@@ -17,7 +19,11 @@ export function WeeklyInsightsCard({ isLoading, completedThisWeek, completedLast
 
   const panel = (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
-      <PanelHeading icon={CalendarRange} title="Weekly insights" />
+      <PanelHeading
+        icon={CalendarRange}
+        title="Weekly insights"
+        action={<PanelLink to={WORKSPACE_TASKS_CALENDAR_PATH}>View tasks</PanelLink>}
+      />
       <dl className="mt-3 divide-y divide-border text-sm">
         {rows.map((row) => (
           <div key={row.label} className="flex items-center justify-between gap-3 py-2">

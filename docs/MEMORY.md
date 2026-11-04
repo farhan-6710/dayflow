@@ -31,7 +31,7 @@ Durable context for future sessions. Short facts, not narrative.
 
 - Trail itself has no framer-motion: it uses CSS keyframes and `src/lib/entrance-motion.ts`. `Reveal` and `entranceMotion.ts` port its timings and scheduling to framer-motion, with blur added to `enter` (Trail blurs only `hero`) at the owner's request. Content triggers at 10% from the viewport bottom rather than Trail's 20%, so short items at the end of a page can't get stuck hidden.
 - A shared route-level `PageSkeleton` was removed: it flashed a wrong-shaped skeleton before each page's own on every route. Shell routes have no `Suspense` of their own, so they suspend to `PageOutlet` and the router's transition keeps the old page up.
-- The demo login is `DemoAccountCard`: absolutely positioned at top centre, sliding down after 1 second so the sign-in form never moves, and dismissible where it overlaps. It has its own slide rather than `Reveal` because the owner specified this entrance. The credentials stay visible on purpose: the account is public and they also work in the mobile app.
+- Demo login: a green `DemoLoginButton` under Google, plus `DemoAccountCard`, absolutely positioned at the top right and sliding in on the X axis after 1 second so the form never moves. It is dismissible where it overlaps. It has its own slide rather than `Reveal` because the owner specified this entrance. The credentials stay visible on purpose: the account is public and they also work in the mobile app.
 - Testing motion: a hidden Browser pane stops `requestAnimationFrame`, so `Reveal` elements read as `opacity: 0`. Show the pane first.
 - Reminders moved from seven day cards to one row per reminder, so the per-day add buttons are gone. New reminders default to today, and the dialog sets the days.
 
@@ -43,6 +43,7 @@ Durable context for future sessions. Short facts, not narrative.
 
 ## Ops
 
+- Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `docs/theme.css` and rebuilds both themes from the dark masters, then the WebP marks and favicons; `apps/mobile/scripts/generate-brand-assets.py` then rebuilds the mobile icons. The README banner image still has the old gold logo baked in.
 - Shipped images are WebP; PNG masters and logos live in `apps/web/design/` and are not deployed. Regenerate WebP from them with `cwebp` if art changes.
 
 - Hosting: Hostinger. Desktop (Tauri) is out of scope until the web rebuild ships.

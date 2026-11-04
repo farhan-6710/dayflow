@@ -95,7 +95,7 @@ The Supabase Auth dashboard has these URLs on its allow list. The new app must s
 |----------|------|
 | `apps/web/src/features/workspace/auth/constants/demoAccount.ts` | Demo account login credentials (the account shown on the login screen) |
 | `apps/web/src-tauri/` | Desktop config. Notable settings: <br>• identifier `com.dayflow.app` <br>• product name `DayFlow`, version `0.1.9` <br>• window 1280×840 (min 960×600) <br>• deep-link scheme `dayflow` <br>• CSP allowing `*.supabase.co` <br>• plugins: opener, deep-link |
-| `apps/web/public/` | Logos, favicons, 3D icons and illustrations, promotion banners |
+| `apps/web/public/` | Old logos, favicons, 3D icons and illustrations, promotion banners |
 | `apps/web/scripts/` | Seed scripts and logo/favicon generators |
 | `apps/web/src/services/` | Every existing Supabase query (useful as a reference) |
 

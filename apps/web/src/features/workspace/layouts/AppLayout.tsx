@@ -31,6 +31,7 @@ const sidebarConfig: ShellSidebarConfig = {
   searchPlaceholder: "Search pages...",
   profilePath: WORKSPACE_SETTINGS_PATH,
   quickAction: {
+    image: "illo-sidebar-workspace",
     title: "Quick Actions",
     description: "Open today's tasks calendar and keep the day on track.",
     buttonLabel: "Tasks Calendar",

@@ -23,6 +23,7 @@ const sidebarConfig: ShellSidebarConfig = {
   searchPlaceholder: "Search pages...",
   profilePath: CLIENT_PORTAL_SETTINGS_PATH,
   quickAction: {
+    image: "illo-sidebar-client",
     title: "Your projects",
     description: "View project updates and activities from your provider.",
     buttonLabel: "View Projects",

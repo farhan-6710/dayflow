@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/shared/components/ThemeToggle";
 
 export function AuthShellLayout({ config, children }: AuthShellLayoutProps) {
   return (
-    <div className="grid min-h-svh bg-background text-foreground lg:grid-cols-[1.1fr_1fr]">
+    <div className="relative grid min-h-svh overflow-x-clip bg-background text-foreground lg:grid-cols-[1.1fr_1fr]">
       <AuthBrandPanel config={config} />
       <main className="flex min-w-0 flex-col p-4 sm:p-6">
         <div className="flex items-center justify-between lg:justify-end">

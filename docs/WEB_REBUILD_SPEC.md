@@ -180,7 +180,7 @@ Legacy redirects (keep or drop):
 
 - Email + password: login, sign up, forgot password, reset password.
 - Google OAuth. Web uses a popup; desktop opens the system browser and returns through the `dayflow://` deep link.
-- Demo account card on the workspace sign-in screen (not the client portal): slides in at top centre after 1 second, shows the shared credentials and signs in with one click, so recruiters can get in without an account. It can be dismissed.
+- Demo access on the workspace sign-in screen (not the client portal), so recruiters can get in without an account: a green "Continue with demo account" button under Google, and a dismissible card that slides in from the top right after 1 second with the shared credentials and its own one-click button.
 - Client portal entry flow:
   1. The login email is matched to a `clients.email` record by the `link_client_portal_user()` RPC.
   2. If there is no match, the user is sent to `/not-a-client`.
@@ -199,7 +199,7 @@ Legacy redirects (keep or drop):
   - Add, edit, delete and complete todos
   - Drag to reorder
 - Time Tracker: a stopwatch with start, pause and reset.
-- "Weekly insights" and "Activity snapshot" cards, derived from tasks and activities.
+- "Weekly insights" and "Activity snapshot" cards, derived from tasks and activities, each linking to its page (Tasks Calendar, Clients).
 
 **Tasks Calendar**
 - Month, Week and Day views with arrows, a Today button and the view kept in the URL. Paging doesn't change the selected day.

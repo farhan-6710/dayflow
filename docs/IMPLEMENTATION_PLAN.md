@@ -60,8 +60,8 @@ UI icons (nav, buttons, inputs) come from lucide-react. The custom assets below 
 |---|------|---------|
 | 1 | `illo-auth-workspace.png` | Workspace auth brand panel |
 | 2 | `illo-auth-client.png` | Client portal auth brand panel |
-| 3 | `illo-sidebar-workspace.png` | Not used since the sidebar card redesign |
-| 4 | `illo-sidebar-client.png` | Not used since the sidebar card redesign |
+| 3 | `illo-sidebar-workspace.png` | Workspace sidebar quick-action card |
+| 4 | `illo-sidebar-client.png` | Client sidebar quick-action card |
 | 5 | `illo-dashboard-hero.png` | Dashboard greeting / hero corner |
 | 6 | `illo-not-a-client.png` | `/client-portal/not-a-client` |
 | 7 | `illo-error.png` | Route error and not-found page |
@@ -149,7 +149,7 @@ Illustrations in order:
 
 **`/auth`**
 - **Data:** auth (`authService`).
-- **Components:** `AuthShell` (brand panel from the manifest), Login, Signup, Forgot password, Reset password, Google button, `DemoAccountCard`.
+- **Components:** `AuthShell` (brand panel from the manifest), Login, Signup, Forgot password, Reset password, Google button, `DemoLoginButton`, `DemoAccountCard`.
 
 **`/dashboard`**
 - **Data:** profile, plus tasks, todos and projects filtered by the date range.

@@ -91,6 +91,7 @@ Each item: service → hook → page → states → verify.
 - [x] Dashboard: lucide stat cards, filters beside the heading, redesigned chart panel
 - [x] 3D art removed from stat cards and page headers everywhere
 - [x] Every workspace screen and the auth screens checked down to 310px
+- [x] Logos, favicons and mobile icons recoloured to the theme with a script
 
 ## Phase 7: Mobile rebuild
 
