@@ -67,7 +67,7 @@ Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer
 | `hero` | Page heading lines | y 12, blur 6px, fade | 700ms | 70ms |
 | `enter` | Panels and cards, once scrolled into view | y 24, blur 6px, fade | 750ms | 70ms |
 
-Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
+Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. The sign-in demo card is the one exception: it slides down from above the screen after 1 second, and is the one place `success` (green) fills a button, to draw the eye there. `success`, `success-foreground` and `success-text` are the only tokens beyond the original paper-and-coral set; `success-text` is the readable green for small text. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
 
 ## Accessibility
 

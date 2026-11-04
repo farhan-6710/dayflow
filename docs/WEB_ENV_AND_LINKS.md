@@ -56,7 +56,7 @@ The Supabase Auth dashboard has these URLs on its allow list. The new app must s
 
 **Tables:**
 
-`profiles`, `projects`, `notes`, `project_reference_links`, `note_reference_links`, `clients`, `client_conversation_messages`, `tasks`, `todos`, `reminders`, `reminder_occurrences`, `notifications`, `client_activity_tasks`, `client_activity_meetings`, `client_activity_calls`, `expo_push_tokens`
+`profiles` (no `theme_preference` once migration 038 is applied), `projects`, `notes`, `project_reference_links`, `note_reference_links`, `clients`, `client_conversation_messages`, `tasks`, `todos`, `reminders`, `reminder_occurrences`, `notifications`, `client_activity_tasks`, `client_activity_meetings`, `client_activity_calls`, `expo_push_tokens`
 
 **Functions and RPCs:**
 

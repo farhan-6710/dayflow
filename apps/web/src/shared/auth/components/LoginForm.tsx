@@ -4,15 +4,13 @@ import { AuthFormAlert } from "@/shared/auth/components/AuthFormAlert";
 import { AuthOAuthSignIn } from "@/shared/auth/components/AuthOAuthSignIn";
 import { useLoginForm } from "@/shared/auth/hooks/useLoginForm";
 import type { LoginFormProps } from "@/shared/auth/types/components";
-import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { PasswordField } from "@/shared/components/PasswordField";
 import { SubmitButton } from "@/shared/components/SubmitButton";
 import { TextField } from "@/shared/components/TextField";
 import { AUTH_FORM_TYPES } from "@/shared/constants/auth";
-import { Button } from "@/shared/ui/button";
 import { buildAuthUrl } from "@/shared/utils/authUrlParams";
 
-export function LoginForm({ authPath, homePath, showDemoLogin }: LoginFormProps) {
+export function LoginForm({ authPath, homePath }: LoginFormProps) {
   const form = useLoginForm();
 
   return (
@@ -57,19 +55,6 @@ export function LoginForm({ authPath, homePath, showDemoLogin }: LoginFormProps)
         onError={form.setError}
         onBeforeSignIn={() => form.setError(null)}
       />
-
-      {showDemoLogin ? (
-        <Button
-          type="button"
-          variant="ghost"
-          size="lg"
-          className="w-full"
-          disabled={form.isSubmitting}
-          onClick={form.loginWithDemoAccount}
-        >
-          Explore the {BRAND_NAME} demo
-        </Button>
-      ) : null}
     </div>
   );
 }

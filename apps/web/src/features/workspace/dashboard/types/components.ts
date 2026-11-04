@@ -26,6 +26,7 @@ export type DashboardHeroProps = {
 };
 
 export type TaskCompletionChartProps = {
+  isLoading: boolean;
   chart: TaskCompletionData;
   primary: MonthSelection;
   compare: MonthSelection;
@@ -54,6 +55,7 @@ export type TodoRowProps = {
 };
 
 export type WeeklyInsightsCardProps = {
+  isLoading: boolean;
   completedThisWeek: number;
   completedLastWeek: number;
   dueThisWeek: number;

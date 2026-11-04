@@ -11,7 +11,7 @@ export function ActivitySnapshotCard({ counts, error }: ActivitySnapshotCardProp
     { label: "Open calls", value: counts?.calls },
   ];
 
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Activity snapshot</h2>
       {error ? (
@@ -21,11 +21,13 @@ export function ActivitySnapshotCard({ counts, error }: ActivitySnapshotCardProp
           {rows.map((row) => (
             <div key={row.label} className="flex items-center justify-between gap-3 py-2">
               <dt className="text-muted-foreground">{row.label}</dt>
-              <dd className="tabular-nums">{row.value ?? <Phantom className="inline-block">00</Phantom>}</dd>
+              <dd className="tabular-nums">{row.value ?? "00"}</dd>
             </div>
           ))}
         </dl>
       )}
     </Reveal>
   );
+
+  return counts === null && !error ? <Phantom>{panel}</Phantom> : panel;
 }

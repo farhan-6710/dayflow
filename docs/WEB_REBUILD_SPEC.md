@@ -22,7 +22,7 @@ The same app also ships as a desktop app through Tauri. Web, desktop and mobile 
 | Drag & drop | @dnd-kit (core, sortable) |
 | Dates | date-fns, react-day-picker |
 | Toasts | sonner |
-| Theme | next-themes (light / dark, saved to profile) |
+| Theme | next-themes (follows the device, remembered in the browser) |
 | Backend | Supabase: Auth, Postgres, Row Level Security (RLS), RPCs |
 | Desktop | Tauri 2 (deep link `dayflow://` for OAuth) |
 | Package manager | bun |
@@ -180,7 +180,7 @@ Legacy redirects (keep or drop):
 
 - Email + password: login, sign up, forgot password, reset password.
 - Google OAuth. Web uses a popup; desktop opens the system browser and returns through the `dayflow://` deep link.
-- One-click demo account login (workspace only).
+- Demo account card on the workspace sign-in screen (not the client portal): slides in at top centre after 1 second, shows the shared credentials and signs in with one click, so recruiters can get in without an account. It can be dismissed.
 - Client portal entry flow:
   1. The login email is matched to a `clients.email` record by the `link_client_portal_user()` RPC.
   2. If there is no match, the user is sent to `/not-a-client`.
@@ -275,7 +275,7 @@ Legacy redirects (keep or drop):
 - Profile: display name, avatar URL.
 - Change email (with a confirmation step).
 - Set a password, or send a reset link.
-- Theme: light / dark, saved to the profile.
+- Theme: follows the device until the user chooses light or dark; the choice is remembered in the browser, not in the database.
 
 ### Client portal
 

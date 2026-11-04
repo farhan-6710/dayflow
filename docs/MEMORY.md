@@ -31,8 +31,12 @@ Durable context for future sessions. Short facts, not narrative.
 
 - Trail itself has no framer-motion: it uses CSS keyframes and `src/lib/entrance-motion.ts`. `Reveal` and `entranceMotion.ts` port its timings and scheduling to framer-motion, with blur added to `enter` (Trail blurs only `hero`) at the owner's request. Content triggers at 10% from the viewport bottom rather than Trail's 20%, so short items at the end of a page can't get stuck hidden.
 - A shared route-level `PageSkeleton` was removed: it flashed a wrong-shaped skeleton before each page's own on every route. Shell routes have no `Suspense` of their own, so they suspend to `PageOutlet` and the router's transition keeps the old page up.
+- The demo login is `DemoAccountCard`: absolutely positioned at top centre, sliding down after 1 second so the sign-in form never moves, and dismissible where it overlaps. It has its own slide rather than `Reveal` because the owner specified this entrance. The credentials stay visible on purpose: the account is public and they also work in the mobile app.
 - Testing motion: a hidden Browser pane stops `requestAnimationFrame`, so `Reveal` elements read as `opacity: 0`. Show the pane first.
 - Reminders moved from seven day cards to one row per reminder, so the per-day add buttons are gone. New reminders default to today, and the dialog sets the days.
+
+- Theme is not stored per user. It defaults to the device (`defaultTheme="system"`), and the toggle's choice is remembered by next-themes in `localStorage` under `DF-theme` (which holds `"system"` until the owner picks). A saved profile theme made a light-mode sign-in switch to dark, so it was removed. `main.tsx` sets the class before first paint because next-themes' own script is inert here.
+- Migration 038 drops `profiles.theme_preference` and first redefines `handle_new_user()`, which inserted that column: dropping it alone would break every sign-up. Apply it only after the new web build is live, because the deployed old build still selects the column and would fail to load profiles. Not applied by the agent.
 
 ## Ops
 

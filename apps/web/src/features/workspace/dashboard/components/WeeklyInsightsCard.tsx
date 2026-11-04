@@ -1,9 +1,10 @@
 import type { WeeklyInsightsCardProps } from "@/features/workspace/dashboard/types/components";
+import { Phantom } from "@/shared/components/Phantom";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
 
-export function WeeklyInsightsCard({ completedThisWeek, completedLastWeek, dueThisWeek, busiestDay }: WeeklyInsightsCardProps) {
+export function WeeklyInsightsCard({ isLoading, completedThisWeek, completedLastWeek, dueThisWeek, busiestDay }: WeeklyInsightsCardProps) {
   const rows = [
     { label: "Completed this week", value: completedThisWeek },
     { label: "Completed last week", value: completedLastWeek },
@@ -11,7 +12,7 @@ export function WeeklyInsightsCard({ completedThisWeek, completedLastWeek, dueTh
     { label: "Busiest day", value: busiestDay ?? "None yet" },
   ];
 
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <h2 className="text-xl">Weekly insights</h2>
       <dl className="mt-3 divide-y divide-border text-sm">
@@ -24,4 +25,6 @@ export function WeeklyInsightsCard({ completedThisWeek, completedLastWeek, dueTh
       </dl>
     </Reveal>
   );
+
+  return isLoading ? <Phantom>{panel}</Phantom> : panel;
 }

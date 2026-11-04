@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, Navigate, useSearchParams } from "react-router";
 
 import { AuthShellLayout } from "@/shared/auth/components/AuthShellLayout";
+import { DemoAccountCard } from "@/shared/auth/components/DemoAccountCard";
 import { ForgotPasswordForm } from "@/shared/auth/components/ForgotPasswordForm";
 import { LoginForm } from "@/shared/auth/components/LoginForm";
 import { ResetPasswordForm } from "@/shared/auth/components/ResetPasswordForm";
@@ -49,6 +50,7 @@ export function AuthScreen({ config }: AuthScreenProps) {
 
   return (
     <AuthShellLayout config={config}>
+      {config.showDemoLogin && !isReset && !isForgot && !isSignup ? <DemoAccountCard /> : null}
       <header className="mb-6">
         <h1 className="text-3xl leading-tight text-balance sm:text-4xl">{title}</h1>
         <p className="mt-2 text-muted-foreground text-pretty">{description}</p>
@@ -61,7 +63,7 @@ export function AuthScreen({ config }: AuthScreenProps) {
       ) : isSignup ? (
         <SignupForm homePath={config.homePath} />
       ) : (
-        <LoginForm authPath={config.authPath} homePath={config.homePath} showDemoLogin={config.showDemoLogin} />
+        <LoginForm authPath={config.authPath} homePath={config.homePath} />
       )}
 
       {isReset || isForgot ? null : (

@@ -4,7 +4,7 @@ For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITE
 
 ## Non-negotiable
 
-- **Never change the database**: no migrations, schema, RLS or data edits. The rebuild reads and writes existing tables only.
+- **Never change the database**: no migrations, schema, RLS or data edits. The rebuild reads and writes existing tables only. Exception: `scripts/migrations/038_drop_profiles_theme_preference.sql`, written at the owner's request. The owner applies it, never an agent.
 - **Supabase only through `services/`.** Features never import `supabaseClient`.
 - **Table and column names live only in `services/db.ts`.**
 - **RLS is the access contract.** Owners by `user_id` / `owner_user_id`; clients only through the portal RPCs.
@@ -49,7 +49,7 @@ For developers and AI agents. Product: [PRD.md](./PRD.md) · Structure: [ARCHITE
 - Presentational components stay around 120 lines; move logic into hooks.
 - TypeScript strict. No `any`. Type everything that crosses a service boundary.
 - Use semantic design tokens only (see [DESIGN.md](./DESIGN.md)).
-- Entrance motion only through `Reveal`; no one-off page animations.
+- Entrance motion only through `Reveal`; no one-off page animations. The sign-in demo card is the one exception.
 - Icons from lucide-react. Dates with date-fns.
 - Brand copy only from `shared/brand/brandManifest.json`.
 

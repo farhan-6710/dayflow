@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from "react";
 
 import { signInWithEmail } from "@/services/authService";
-import { DEMO_ACCOUNT } from "@/shared/auth/constants/demoAccount";
 import { formatAuthErrorMessage } from "@/shared/auth/utils/formatAuthErrorMessage";
 
 /** On success the auth listener updates the session and the public route guard redirects. */
@@ -11,10 +10,10 @@ export function useLoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function signIn(nextEmail: string, nextPassword: string) {
+  async function signIn() {
     setError(null);
     setIsSubmitting(true);
-    const authError = await signInWithEmail(nextEmail.trim(), nextPassword);
+    const authError = await signInWithEmail(email.trim(), password);
     if (authError) {
       setError(formatAuthErrorMessage(authError.message));
     }
@@ -23,7 +22,7 @@ export function useLoginForm() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    void signIn(email, password);
+    void signIn();
   }
 
   return {
@@ -35,6 +34,5 @@ export function useLoginForm() {
     setError,
     isSubmitting,
     handleSubmit,
-    loginWithDemoAccount: () => void signIn(DEMO_ACCOUNT.email, DEMO_ACCOUNT.password),
   };
 }

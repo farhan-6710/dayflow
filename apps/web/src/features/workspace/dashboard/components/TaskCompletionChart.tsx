@@ -3,6 +3,7 @@ import { Area, AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, XAx
 
 import type { MonthSelection, TaskCompletionChartProps } from "@/features/workspace/dashboard/types/components";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
+import { Phantom } from "@/shared/components/Phantom";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
 import { cn } from "@/shared/lib/utils";
@@ -18,14 +19,14 @@ function decode(value: string): MonthSelection {
   return { year: year ?? 0, month: month ?? 1 };
 }
 
-export function TaskCompletionChart({ chart, primary, compare, onPrimaryChange, onCompareChange }: TaskCompletionChartProps) {
+export function TaskCompletionChart({ isLoading, chart, primary, compare, onPrimaryChange, onCompareChange }: TaskCompletionChartProps) {
   const now = new Date();
   const monthOptions = eachMonthOfInterval({ start: subMonths(now, MONTHS_BACK), end: now })
     .reverse()
     .map((date) => ({ value: `${date.getFullYear()}-${date.getMonth() + 1}`, label: format(date, "MMM yyyy") }));
   const growth = chart.growthPercent;
 
-  return (
+  const panel = (
     <Reveal as="section" className={cn(panelClassName, "min-w-0 p-5")}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -59,6 +60,7 @@ export function TaskCompletionChart({ chart, primary, compare, onPrimaryChange, 
         role="img"
         aria-label={`Tasks completed per day: ${chart.primaryTotal} in ${chart.primaryLabel}, ${chart.compareTotal} in ${chart.compareLabel}.`}
       >
+        {isLoading ? null : (
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chart.points} margin={{ top: 8, right: 8, left: -24, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
@@ -77,6 +79,7 @@ export function TaskCompletionChart({ chart, primary, compare, onPrimaryChange, 
             <Line type="monotone" dataKey="compare" name={chart.compareLabel} stroke="var(--chart-3)" strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
           </AreaChart>
         </ResponsiveContainer>
+        )}
       </div>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <li className="flex items-center gap-1.5">
@@ -90,4 +93,6 @@ export function TaskCompletionChart({ chart, primary, compare, onPrimaryChange, 
       </ul>
     </Reveal>
   );
+
+  return isLoading ? <Phantom>{panel}</Phantom> : panel;
 }

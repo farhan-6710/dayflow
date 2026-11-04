@@ -149,7 +149,7 @@ Illustrations in order:
 
 **`/auth`**
 - **Data:** auth (`authService`).
-- **Components:** `AuthShell` (brand panel from the manifest), Login, Signup, Forgot password, Reset password, Google button, demo login.
+- **Components:** `AuthShell` (brand panel from the manifest), Login, Signup, Forgot password, Reset password, Google button, `DemoAccountCard`.
 
 **`/dashboard`**
 - **Data:** profile, plus tasks, todos and projects filtered by the date range.

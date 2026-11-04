@@ -39,6 +39,7 @@ export function DashboardPage() {
         <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="grid min-w-0 gap-4">
             <TaskCompletionChart
+              isLoading={page.loading}
               chart={page.chart}
               primary={page.primaryMonth}
               compare={page.compareMonth}
@@ -46,7 +47,7 @@ export function DashboardPage() {
               onCompareChange={page.setCompareMonth}
             />
             <div className="grid min-w-0 gap-4 md:grid-cols-2">
-              <WeeklyInsightsCard {...page.insights} />
+              <WeeklyInsightsCard isLoading={page.loading} {...page.insights} />
               <ActivitySnapshotCard counts={page.activityCounts} error={page.activityError} />
             </div>
           </div>

@@ -43,7 +43,6 @@ export type AuthOAuthSignInProps = {
 export type LoginFormProps = {
   authPath: string;
   homePath: string;
-  showDemoLogin: boolean;
 };
 
 export type SignupFormProps = {
