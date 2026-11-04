@@ -49,7 +49,7 @@ export function DateFilters({
     <Reveal
       role="group"
       aria-label={`Date filter: ${periodLabel}`}
-      className="flex w-fit max-w-full flex-wrap items-center gap-0.5 rounded-lg border border-border bg-card p-1"
+      className="flex w-fit max-w-full flex-wrap items-center gap-1.5 rounded-xl border border-border bg-card p-1.5"
     >
       {segment("All", isAll, onClearFilters)}
       {DATE_FILTER_PERIODS.map((period) =>
