@@ -10,12 +10,12 @@ export function SummaryStats({ items, isLoading = false }: SummaryStatsProps) {
     <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
       {items.map(({ id, label, value, icon: Icon, trend }) => (
         <Reveal key={id} className={cn(panelClassName, "flex min-w-0 items-center gap-3 p-3 sm:p-4")}>
-          <span className="hidden size-11 shrink-0 items-center justify-center rounded-full bg-muted/60 sm:flex">
+          <span data-shimmer-no-children className="hidden size-11 shrink-0 items-center justify-center rounded-full bg-muted/60 sm:flex">
             <Icon className="size-5" aria-hidden="true" />
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm text-muted-foreground">{label}</p>
-            <p className="text-2xl leading-tight tabular-nums">{value}</p>
+            <p className="min-w-10 text-2xl leading-tight tabular-nums">{value}</p>
           </div>
           {trend ? (
             <span className="shrink-0 self-end rounded-full bg-success/15 px-2 py-0.5 text-xs text-success-text">{trend}</span>

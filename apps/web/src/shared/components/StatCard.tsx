@@ -20,7 +20,7 @@ export function StatCard({ card }: StatCardProps) {
         )}
       >
         <div className="flex items-center gap-2.5">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted/60 sm:size-9">
+          <span data-shimmer-no-children className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted/60 sm:size-9">
             <Icon className="size-4" aria-hidden="true" />
           </span>
           <h3 className="min-w-0 text-sm leading-tight text-muted-foreground">
@@ -37,13 +37,13 @@ export function StatCard({ card }: StatCardProps) {
           </h3>
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
-          <p className="text-2xl leading-none tabular-nums sm:text-3xl">{card.value}</p>
+          <p className="min-w-8 text-2xl leading-none tabular-nums sm:min-w-14 sm:text-3xl">{card.value}</p>
           {card.delta ? <StatCardTrend delta={card.delta} deltaLabel={card.deltaLabel} trend={card.trend} /> : null}
         </div>
         {card.description ? (
-          <p className="mt-auto pt-3 text-xs text-muted-foreground text-pretty">
-            {card.description}
-          </p>
+          <div className="mt-auto pt-3">
+            <p className="text-xs text-muted-foreground text-pretty">{card.description}</p>
+          </div>
         ) : null}
       </article>
     </Reveal>

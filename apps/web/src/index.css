@@ -205,3 +205,9 @@
     color: var(--primary-foreground);
   }
 }
+
+/* phantom-ui draws the element's box, so text must be only as wide as its words while loading. */
+phantom-ui[loading] :is(h1, h2, h3, h4, p, dt, dd, label) {
+  width: fit-content;
+  max-width: 100%;
+}
