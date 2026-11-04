@@ -1,5 +1,6 @@
 import { useClientForm } from "@/features/workspace/clients-management/hooks/useClientForm";
 import type { ClientDialogProps } from "@/features/workspace/clients-management/types/components";
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { SubmitButton } from "@/shared/components/SubmitButton";
 import { TextField } from "@/shared/components/TextField";
 import { Button } from "@/shared/ui/button";
@@ -14,7 +15,7 @@ import {
 import { Switch } from "@/shared/ui/switch";
 
 export function ClientDialog(props: ClientDialogProps) {
-  const { open, client } = props;
+  const { open, client, onDelete } = props;
   const form = useClientForm(props);
   const { values, setField, saving } = form;
 
@@ -99,13 +100,16 @@ export function ClientDialog(props: ClientDialogProps) {
               />
             </div>
           ) : null}
-          <DialogFooter>
-            <Button type="button" variant="outline" size="lg" disabled={saving} onClick={() => form.handleOpenChange(false)}>
-              Cancel
-            </Button>
-            <SubmitButton loading={saving} disabled={!values.companyName.trim()}>
-              {client ? "Save changes" : "Add client"}
-            </SubmitButton>
+          <DialogFooter className={client && onDelete ? "flex-row justify-between sm:justify-between" : undefined}>
+            {client && onDelete ? <FormDialogDeleteButton disabled={saving} onClick={() => onDelete(client)} /> : null}
+            <div className="flex flex-row flex-wrap justify-end gap-2">
+              <Button type="button" variant="outline" size="lg" disabled={saving} onClick={() => form.handleOpenChange(false)}>
+                Cancel
+              </Button>
+              <SubmitButton loading={saving} disabled={!values.companyName.trim()}>
+                {client ? "Save changes" : "Add client"}
+              </SubmitButton>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

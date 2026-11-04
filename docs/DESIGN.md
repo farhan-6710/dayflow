@@ -16,11 +16,11 @@ Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Cal
 | Token | Font | Use |
 |-------|------|-----|
 | `font-sans` | Ovo | UI |
-| `font-heading` | EB Garamond | Page and panel headings (`h1`, `h2`) |
+| `font-heading` | Young Serif | Page and panel headings (`h1`, `h2`) |
 | `font-serif` | Merriweather | Long text, notes, emphasis |
 | `font-mono` | Merriweather (token default) | Timer and numbers: add `tabular-nums` |
 
-Load via `@fontsource/ovo`, `@fontsource/eb-garamond` (400 and 700), and `@fontsource/merriweather`. Ovo has a single weight, so never `font-bold` it. Headings use EB Garamond 700.
+Load via `@fontsource/ovo`, `@fontsource/young-serif` (400 only), and `@fontsource/merriweather`. Ovo and Young Serif are single-weight, so never `font-bold` them.
 
 ## Shape and depth
 
@@ -43,7 +43,7 @@ Load via `@fontsource/ovo`, `@fontsource/eb-garamond` (400 and 700), and `@fonts
 - **Shell:** left sidebar, header, scrollable main area. Sidebar collapses to icons on desktop and becomes a slide-in sheet on small screens.
 - **Header:** collapse toggle, `Breadcrumbs`, then page search, theme toggle, bell and a rounded user pill (avatar, first name, chevron) on the right. Breadcrumbs are home, the nav section, then the steps a detail page adds through `usePageBreadcrumbs`; the last is the current page. On phones they sit above the page, as the header has no room.
 - **Page:** `PageHeader` (heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
-- **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (`PillTabs` status tabs with counts, one filter opposite, search beneath), the inset `DirectoryTable` and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
+- **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (search on the left; `PillTabs` status tabs with counts and one filter on the right), the inset `DirectoryTable` and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
 - **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, under a column named "Actions", never inline icon buttons. A row that opens something does so on click.
 - **Stat cards:** two columns on phones, four from `xl`. Dashboard and analytics use `StatsCards`: label on the left and icon tile on the right on top, then the value and its caption on one row (`12/45 Still to do, all time`), then the trend chip if present. No divider under the value. List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
 - **3D art:** on auth screens, empty states, the sidebar quick-action card, and the not-a-client and error pages. Never in stat cards or page headers.

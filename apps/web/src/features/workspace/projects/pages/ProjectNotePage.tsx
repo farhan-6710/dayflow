@@ -15,7 +15,7 @@ import { ErrorBanner } from "@/shared/components/ErrorBanner";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ProjectChip } from "@/shared/components/ProjectChip";
 import { StatusPill } from "@/shared/components/StatusPill";
-import { NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
+import { noteCategoryLabel } from "@/shared/constants/noteCategories";
 import { usePageBreadcrumbs } from "@/shared/hooks/usePageBreadcrumbs";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
@@ -105,7 +105,7 @@ export function ProjectNotePage() {
                 {
                   icon: Folder,
                   label: "Category",
-                  value: <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs">{NOTE_CATEGORY_LABELS[note.category]}</span>,
+                  value: <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs">{noteCategoryLabel(note.category)}</span>,
                 },
                 { icon: CalendarPlus, label: "Created", value: formatDate(note.created_at) },
                 { icon: Clock, label: "Last Updated", value: formatDate(note.updated_at) },

@@ -12,8 +12,8 @@ export function SettingsView({ settingsPath, authPath }: SettingsViewProps) {
   return (
     <>
       <PageHeader
-        heading="Preferences"
-        description="Simple toggles for reminders and notifications, plus sign-in and appearance."
+        heading="Settings"
+        description="Manage your account settings and preferences."
       />
       <div className="grid min-w-0 items-start gap-4 lg:grid-cols-2">
         <div className="grid min-w-0 gap-4">

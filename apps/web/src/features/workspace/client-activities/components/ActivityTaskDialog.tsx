@@ -8,6 +8,7 @@ import {
 } from "@/features/workspace/client-activities/utils/activityFormUtils";
 import { DatePicker } from "@/shared/components/DatePicker";
 import { FormDialog } from "@/shared/components/FormDialog";
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { useDialogForm } from "@/shared/hooks/useDialogForm";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { TimeSelect } from "@/shared/components/TimeSelect";
@@ -20,6 +21,7 @@ export function ActivityTaskDialog({
   fixedProjectId,
   projectOptions,
   onSave,
+  onDelete,
 }: ActivityTaskDialogProps) {
   const form = useDialogForm({
     id: "activity-task-dialog",
@@ -49,6 +51,7 @@ export function ActivityTaskDialog({
       canSave={form.canSubmit}
       onOpenChange={form.handleOpenChange}
       onSubmit={form.handleSubmit}
+      footerStart={item && onDelete ? <FormDialogDeleteButton disabled={form.saving} onClick={onDelete} /> : undefined}
     >
       <ActivityCommonFields
         idPrefix="activity-task"

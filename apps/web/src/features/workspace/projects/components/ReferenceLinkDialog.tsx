@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 
 import type { ReferenceLinkDialogProps } from "@/features/workspace/projects/types/components";
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { SubmitButton } from "@/shared/components/SubmitButton";
 import { TextField } from "@/shared/components/TextField";
 import { Button } from "@/shared/ui/button";
@@ -16,7 +17,7 @@ import { useUnsavedDialogClose } from "@/shared/unsaved-changes/useUnsavedDialog
 import { safeExternalHref } from "@/shared/utils/safeExternalHref";
 import { showToast } from "@/shared/utils/showToast";
 
-export function ReferenceLinkDialog({ open, onOpenChange, link, ownerLabel, onSave }: ReferenceLinkDialogProps) {
+export function ReferenceLinkDialog({ open, onOpenChange, link, ownerLabel, onSave, onDelete }: ReferenceLinkDialogProps) {
   const initialLabel = link?.label ?? "";
   const initialUrl = link?.url ?? "";
   const [label, setLabel] = useState(initialLabel);
@@ -87,13 +88,16 @@ export function ReferenceLinkDialog({ open, onOpenChange, link, ownerLabel, onSa
             disabled={saving}
             required
           />
-          <DialogFooter>
-            <Button type="button" variant="outline" size="lg" disabled={saving} onClick={() => handleOpenChange(false)}>
-              Cancel
-            </Button>
-            <SubmitButton loading={saving} disabled={!url.trim()}>
-              {link ? "Save link" : "Add link"}
-            </SubmitButton>
+          <DialogFooter className={link && onDelete ? "flex-row justify-between sm:justify-between" : undefined}>
+            {link && onDelete ? <FormDialogDeleteButton disabled={saving} onClick={() => onDelete(link)} /> : null}
+            <div className="flex flex-row flex-wrap justify-end gap-2">
+              <Button type="button" variant="outline" size="lg" disabled={saving} onClick={() => handleOpenChange(false)}>
+                Cancel
+              </Button>
+              <SubmitButton loading={saving} disabled={!url.trim()}>
+                {link ? "Save link" : "Add link"}
+              </SubmitButton>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

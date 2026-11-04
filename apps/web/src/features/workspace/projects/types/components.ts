@@ -53,6 +53,8 @@ export type ReferenceLinkDialogProps = {
   link: ReferenceLink | null;
   ownerLabel: string;
   onSave: (input: ReferenceLinkInput) => Promise<void>;
+  /** Edit only: opens the delete confirmation flow. */
+  onDelete?: (link: ReferenceLink) => void;
 };
 
 export type NoteSavePayload = {

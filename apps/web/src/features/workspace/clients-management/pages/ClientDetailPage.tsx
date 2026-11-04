@@ -136,7 +136,16 @@ export function ClientDetailPage() {
           </div>
         </div>
       </div>
-      <ClientDialog open={page.editOpen} onOpenChange={page.setEditOpen} client={client} onSaved={page.handleClientSaved} />
+      <ClientDialog
+        open={page.editOpen}
+        onOpenChange={page.setEditOpen}
+        client={client}
+        onSaved={page.handleClientSaved}
+        onDelete={() => {
+          page.setEditOpen(false);
+          page.setDeleteOpen(true);
+        }}
+      />
       <ProjectFormDialog
         open={page.projectDialogOpen}
         onOpenChange={page.setProjectDialogOpen}

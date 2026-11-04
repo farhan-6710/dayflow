@@ -2,8 +2,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@fontsource/ovo/400.css";
-@import "@fontsource/eb-garamond/400.css";
-@import "@fontsource/eb-garamond/700.css";
+@import "@fontsource/young-serif/400.css";
 @import "@fontsource/merriweather/400.css";
 @import "@fontsource/merriweather/700.css";
 
@@ -48,12 +47,12 @@
   --sidebar-foreground: oklch(0.235 0 0);
   --sidebar-primary: oklch(0.3012 0 0);
   --sidebar-primary-foreground: oklch(0.9169 0.0175 99.616);
-  --sidebar-accent: oklch(0.9169 0.0175 99.616);
+  --sidebar-accent: oklch(88.689% 0.0149 98.362);
   --sidebar-accent-foreground: oklch(0.3012 0 0);
   --sidebar-border: oklch(0.8434 0.0231 87.1621);
   --sidebar-ring: oklch(0.3012 0 0);
   --font-sans: Ovo, ui-serif, serif;
-  --font-heading: "EB Garamond", ui-serif, serif;
+  --font-heading: "Young Serif", ui-serif, serif;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: Merriweather, ui-serif, serif;
   --radius: 1rem;
@@ -123,7 +122,7 @@
   --sidebar-border: oklch(0.2931 0 0);
   --sidebar-ring: oklch(0.852 0.0205 100.6306);
   --font-sans: Ovo, ui-serif, serif;
-  --font-heading: "EB Garamond", ui-serif, serif;
+  --font-heading: "Young Serif", ui-serif, serif;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: Merriweather, ui-serif, serif;
   --radius: 1rem;
@@ -237,7 +236,7 @@
   h1,
   h2 {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 400; /* Young Serif ships Regular only. */
   }
   ::selection {
     background-color: var(--primary);

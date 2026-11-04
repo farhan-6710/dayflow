@@ -48,6 +48,8 @@ export type TodoFormDialogProps = {
   onOpenChange: (open: boolean) => void;
   todo: Todo | null;
   onSave: (todoId: string | null, values: TodoFormValues) => Promise<void>;
+  /** Edit only: opens the delete confirmation flow. */
+  onDelete?: (todo: Todo) => void;
 };
 
 export type TodoRowProps = {

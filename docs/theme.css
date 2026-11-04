@@ -44,7 +44,7 @@
   --sidebar-border: oklch(0.8434 0.0231 87.1621);
   --sidebar-ring: oklch(0.3012 0 0);
   --font-sans: Ovo, ui-serif, serif;
-  --font-heading: "EB Garamond", ui-serif, serif;
+  --font-heading: "Young Serif", ui-serif, serif;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: Merriweather, ui-serif, serif;
   --radius: 0.5rem;
@@ -103,7 +103,7 @@
   --sidebar-border: oklch(0.2931 0 0);
   --sidebar-ring: oklch(0.8520 0.0205 100.6306);
   --font-sans: Ovo, ui-serif, serif;
-  --font-heading: "EB Garamond", ui-serif, serif;
+  --font-heading: "Young Serif", ui-serif, serif;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: Merriweather, ui-serif, serif;
   --radius: 0.5rem;
@@ -198,6 +198,6 @@
   h1,
   h2 {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 400; /* Young Serif ships Regular only. */
   }
 }

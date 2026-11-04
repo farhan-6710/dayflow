@@ -2,6 +2,7 @@ import type { ReminderDialogProps, ReminderFormValues } from "@/features/workspa
 import { REMINDER_DAYS } from "@/features/workspace/reminders/utils/reminderSchedule";
 import { DatePicker } from "@/shared/components/DatePicker";
 import { FormDialog } from "@/shared/components/FormDialog";
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { TextAreaField } from "@/shared/components/TextAreaField";
 import { TextField } from "@/shared/components/TextField";
 import { TimeSelect } from "@/shared/components/TimeSelect";
@@ -9,7 +10,6 @@ import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/
 import { DEFAULT_TIME } from "@/shared/constants/times";
 import { useDialogForm } from "@/shared/hooks/useDialogForm";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/ui/button";
 import { Switch } from "@/shared/ui/switch";
 
 export function ReminderDialog({ open, onOpenChange, reminder, defaultDay, onSave, onDelete }: ReminderDialogProps) {
@@ -42,6 +42,9 @@ export function ReminderDialog({ open, onOpenChange, reminder, defaultDay, onSav
       canSave={form.canSubmit}
       onOpenChange={form.handleOpenChange}
       onSubmit={form.handleSubmit}
+      footerStart={
+        reminder ? <FormDialogDeleteButton disabled={saving} onClick={() => onDelete(reminder)} /> : undefined
+      }
     >
       <TextField
         id="reminder-title"
@@ -114,17 +117,6 @@ export function ReminderDialog({ open, onOpenChange, reminder, defaultDay, onSav
           onClear={() => setField("disabledUntil", "")}
           disabled={saving}
         />
-      ) : null}
-      {reminder ? (
-        <Button
-          type="button"
-          variant="ghost"
-          className="h-10 justify-start px-0 underline underline-offset-4 hover:bg-transparent"
-          disabled={saving}
-          onClick={() => onDelete(reminder)}
-        >
-          Delete this reminder
-        </Button>
       ) : null}
     </FormDialog>
   );

@@ -1,3 +1,4 @@
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { SubmitButton } from "@/shared/components/SubmitButton";
 import { TextField } from "@/shared/components/TextField";
@@ -18,7 +19,7 @@ import {
 import { MYSELF_PROJECT_FOR_VALUE } from "@/shared/utils/projectFor";
 
 export function ProjectFormDialog(props: ProjectFormDialogProps) {
-  const { open, project, clients, lockProjectFor = false } = props;
+  const { open, project, clients, lockProjectFor = false, onDelete } = props;
   const form = useProjectForm(props);
 
   const projectForOptions = [
@@ -77,19 +78,24 @@ export function ProjectFormDialog(props: ProjectFormDialogProps) {
               ))}
             </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              disabled={form.submitting}
-              onClick={() => form.handleOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <SubmitButton loading={form.submitting} disabled={!form.name.trim()}>
-              {project ?"Save changes" :"Create project"}
-            </SubmitButton>
+          <DialogFooter className={project && onDelete ? "flex-row justify-between sm:justify-between" : undefined}>
+            {project && onDelete ? (
+              <FormDialogDeleteButton disabled={form.submitting} onClick={() => onDelete(project)} />
+            ) : null}
+            <div className="flex flex-row flex-wrap justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="lg"
+                disabled={form.submitting}
+                onClick={() => form.handleOpenChange(false)}
+              >
+                Cancel
+              </Button>
+              <SubmitButton loading={form.submitting} disabled={!form.name.trim()}>
+                {project ? "Save changes" : "Create project"}
+              </SubmitButton>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

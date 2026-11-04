@@ -81,7 +81,16 @@ export function DashboardTodoList() {
           ) : null}
         </>
       )}
-      <TodoFormDialog open={list.dialogOpen} onOpenChange={list.setDialogOpen} todo={list.editingTodo} onSave={list.save} />
+      <TodoFormDialog
+        open={list.dialogOpen}
+        onOpenChange={list.setDialogOpen}
+        todo={list.editingTodo}
+        onSave={list.save}
+        onDelete={(todo) => {
+          list.setDialogOpen(false);
+          list.setTodoToDelete(todo);
+        }}
+      />
       <ConfirmationModal
         open={list.todoToDelete !== null}
         onOpenChange={(open) => !open && list.setTodoToDelete(null)}

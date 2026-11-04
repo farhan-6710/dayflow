@@ -12,7 +12,7 @@ import { ListingSearchInput } from "@/shared/components/ListingSearchInput";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { PanelHeading } from "@/shared/components/PanelHeading";
 import { SortableList } from "@/shared/components/SortableList";
-import { NOTE_CATEGORIES, NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
+import { NOTE_CATEGORIES, NOTE_CATEGORY_LABELS, noteCategoryLabel } from "@/shared/constants/noteCategories";
 import type { Note } from "@/shared/types/types";
 import { Button } from "@/shared/ui/button";
 import { matchesListingSearch } from "@/shared/utils/listingSearch";
@@ -41,7 +41,7 @@ export function ProjectNotesTable({
       notes.filter(
         (note) =>
           (category === ALL_CATEGORIES || note.category === category) &&
-          matchesListingSearch(searchQuery, [note.title, note.body, NOTE_CATEGORY_LABELS[note.category]]),
+          matchesListingSearch(searchQuery, [note.title, note.body, noteCategoryLabel(note.category)]),
       ),
     [notes, searchQuery, category],
   );

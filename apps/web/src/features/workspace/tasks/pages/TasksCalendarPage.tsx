@@ -101,6 +101,10 @@ export function TasksCalendarPage() {
         defaultDate={page.createAt?.date ?? page.selectedKey}
         defaultTime={page.createAt?.time}
         onSave={page.saveTask}
+        onDelete={(task) => {
+          page.setDialogOpen(false);
+          page.setTaskToDelete(task);
+        }}
       />
       <ConfirmationModal
         open={page.taskToDelete !== null}

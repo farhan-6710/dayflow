@@ -52,6 +52,10 @@ export function ProjectsManagementPage() {
         project={page.editingProject}
         clients={page.clients}
         onSaved={page.handleSaved}
+        onDelete={(project) => {
+          page.setDialogOpen(false);
+          page.setProjectToDelete(project);
+        }}
       />
       <ConfirmationModal
         open={page.projectToDelete !== null}

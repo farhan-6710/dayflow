@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 
 import type { NoteSavePayload } from "@/features/workspace/projects/types/components";
-import { DEFAULT_NOTE_CATEGORY, type NoteCategory } from "@/shared/constants/noteCategories";
+import { type NoteCategory } from "@/shared/constants/noteCategories";
 import type { Note } from "@/shared/types/types";
 import { useRegisterUnsavedChanges } from "@/shared/unsaved-changes/useRegisterUnsavedChanges";
 import { showToast } from "@/shared/utils/showToast";
@@ -16,10 +16,10 @@ type UseNoteEditorOptions = {
 export function useNoteEditor({ note, onSave, onCreated }: UseNoteEditorOptions) {
   const initialTitle = note?.title ?? "";
   const initialBody = note?.body ?? "";
-  const initialCategory = note?.category ?? DEFAULT_NOTE_CATEGORY;
+  const initialCategory = note?.category ?? null;
   const [title, setTitle] = useState(initialTitle);
   const [body, setBody] = useState(initialBody);
-  const [category, setCategory] = useState<NoteCategory>(initialCategory);
+  const [category, setCategory] = useState<NoteCategory | null>(initialCategory);
   const [saving, setSaving] = useState(false);
   const isDirty = title !== initialTitle || body !== initialBody || category !== initialCategory;
 

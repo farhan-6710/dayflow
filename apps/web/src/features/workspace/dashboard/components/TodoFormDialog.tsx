@@ -1,10 +1,11 @@
 import type { TodoFormDialogProps } from "@/features/workspace/dashboard/types/components";
 import { FormDialog } from "@/shared/components/FormDialog";
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { TextAreaField } from "@/shared/components/TextAreaField";
 import { TextField } from "@/shared/components/TextField";
 import { useDialogForm } from "@/shared/hooks/useDialogForm";
 
-export function TodoFormDialog({ open, onOpenChange, todo, onSave }: TodoFormDialogProps) {
+export function TodoFormDialog({ open, onOpenChange, todo, onSave, onDelete }: TodoFormDialogProps) {
   const form = useDialogForm({
     id: "todo-form-dialog",
     open,
@@ -25,6 +26,9 @@ export function TodoFormDialog({ open, onOpenChange, todo, onSave }: TodoFormDia
       canSave={form.canSubmit}
       onOpenChange={form.handleOpenChange}
       onSubmit={form.handleSubmit}
+      footerStart={
+        todo && onDelete ? <FormDialogDeleteButton disabled={form.saving} onClick={() => onDelete(todo)} /> : undefined
+      }
     >
       <TextField
         id="todo-title"

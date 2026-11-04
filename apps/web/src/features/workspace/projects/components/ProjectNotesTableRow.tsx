@@ -7,7 +7,7 @@ import type { ProjectNotesTableRowProps } from "@/features/workspace/projects/ty
 import { DirectoryTableRow } from "@/shared/components/DirectoryTableRow";
 import { DragHandle } from "@/shared/components/DragHandle";
 import { RowActionsMenu } from "@/shared/components/RowActionsMenu";
-import { NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
+import { noteCategoryLabel } from "@/shared/constants/noteCategories";
 import { useSortableRow } from "@/shared/hooks/useSortableRow";
 import { cn } from "@/shared/lib/utils";
 
@@ -41,7 +41,7 @@ export function ProjectNotesTableRow({ projectId, note, onDelete }: ProjectNotes
       </p>
       <div className="col-start-3 row-start-1 md:hidden">{menu}</div>
       <p className="col-start-2 w-fit rounded-full bg-muted px-2.5 py-0.5 text-xs md:col-start-auto">
-        {NOTE_CATEGORY_LABELS[note.category]}
+        {noteCategoryLabel(note.category)}
       </p>
       <p className="col-start-2 text-sm text-muted-foreground tabular-nums md:col-start-auto">
         {format(new Date(note.updated_at),"MMM d, yyyy")}

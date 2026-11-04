@@ -74,7 +74,11 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
             <div className="flex flex-wrap items-center gap-2">
               <TabsList className="h-10 p-1">
                 {TABS.map((tab) => (
-                  <TabsTrigger key={tab.kind} value={tab.kind} className="h-8 min-h-8 px-3 text-foreground dark:text-foreground">
+                  <TabsTrigger
+                    key={tab.kind}
+                    value={tab.kind}
+                    className="h-8 min-h-8 px-3 dark:data-[state=active]:border-transparent dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  >
                     {tab.label}
                     {activities.loading ? null : <span className="tabular-nums">{activities.rows[tab.kind].length}</span>}
                   </TabsTrigger>
@@ -148,18 +152,45 @@ export function ClientActivitiesBlock(props: ClientActivitiesBlockProps) {
         open={dialog?.kind === "task"}
         item={dialogSource?.kind === "task" ? dialogSource.item : null}
         onSave={activities.saveTask}
+        onDelete={
+          dialogSource?.kind === "task"
+            ? () => {
+                const row = activities.rows.task.find((entry) => entry.id === dialogSource.item.id);
+                setDialog(null);
+                if (row) activities.setRowToDelete(row);
+              }
+            : undefined
+        }
       />
       <ActivityMeetingDialog
         {...dialogProps}
         open={dialog?.kind === "meeting"}
         item={dialogSource?.kind === "meeting" ? dialogSource.item : null}
         onSave={activities.saveMeeting}
+        onDelete={
+          dialogSource?.kind === "meeting"
+            ? () => {
+                const row = activities.rows.meeting.find((entry) => entry.id === dialogSource.item.id);
+                setDialog(null);
+                if (row) activities.setRowToDelete(row);
+              }
+            : undefined
+        }
       />
       <ActivityCallDialog
         {...dialogProps}
         open={dialog?.kind === "call"}
         item={dialogSource?.kind === "call" ? dialogSource.item : null}
         onSave={activities.saveCall}
+        onDelete={
+          dialogSource?.kind === "call"
+            ? () => {
+                const row = activities.rows.call.find((entry) => entry.id === dialogSource.item.id);
+                setDialog(null);
+                if (row) activities.setRowToDelete(row);
+              }
+            : undefined
+        }
       />
       <ConfirmationModal
         open={activities.rowToDelete !== null}

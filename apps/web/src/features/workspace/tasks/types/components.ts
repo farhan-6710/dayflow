@@ -94,4 +94,6 @@ export type TaskFormDialogProps = {
   /** Set when adding from a timeline hour. */
   defaultTime?: string;
   onSave: (taskId: string | null, values: TaskFormValues) => Promise<void>;
+  /** Edit only: opens the delete confirmation flow. */
+  onDelete?: (task: Task) => void;
 };

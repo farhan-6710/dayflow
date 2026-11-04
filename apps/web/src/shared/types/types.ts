@@ -43,7 +43,7 @@ export type Note = {
   project_id: string | null;
   title: string;
   body: string | null;
-  category: NoteCategory;
+  category: NoteCategory | null;
   sort_order: number;
   created_at: string;
   updated_at: string;

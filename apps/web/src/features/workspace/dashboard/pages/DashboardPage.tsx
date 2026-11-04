@@ -18,7 +18,7 @@ import { getGreeting } from "@/shared/utils/greeting";
 export function DashboardPage() {
   const page = useDashboard();
   const { displayName } = useUserDisplay();
-  const name = page.userEmail === DEMO_ACCOUNT.email ? "Guest Account" : displayName;
+  const name = page.userEmail === DEMO_ACCOUNT.email ? "Demo User" : displayName;
 
   return (
     <>

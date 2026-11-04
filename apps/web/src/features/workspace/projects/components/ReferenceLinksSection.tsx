@@ -85,6 +85,11 @@ export function ReferenceLinksSection<T extends ReferenceLink>(props: ReferenceL
         link={section.editingLink}
         ownerLabel={ownerLabel}
         onSave={section.save}
+        onDelete={() => {
+          const link = section.editingLink;
+          section.setDialogOpen(false);
+          if (link) section.setLinkToDelete(link);
+        }}
       />
       <ConfirmationModal
         open={section.linkToDelete !== null}

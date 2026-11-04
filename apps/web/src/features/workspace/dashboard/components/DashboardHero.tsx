@@ -7,7 +7,7 @@ export function DashboardHero({ greeting, name, today, filters }: DashboardHeroP
       <div className="min-w-0">
         <Reveal kind="hero">
           <h1 className="text-3xl leading-tight text-balance sm:text-4xl">
-            {greeting} <span className="text-chart-1">{name}</span>
+            {greeting}, <span className="text-chart-1">{name}</span>
           </h1>
         </Reveal>
         <Reveal kind="hero" className="text-muted-foreground">

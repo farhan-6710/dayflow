@@ -19,6 +19,8 @@ export type ClientDialogProps = {
   /** Null creates a new client. */
   client: Client | null;
   onSaved: (client: Client) => void;
+  /** Edit only: opens the delete confirmation flow. */
+  onDelete?: (client: Client) => void;
 };
 
 export type ClientSummaryProps = {

@@ -20,6 +20,7 @@ export function FormDialog({
   onOpenChange,
   onSubmit,
   children,
+  footerStart,
 }: FormDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -30,13 +31,16 @@ export function FormDialog({
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
           {children}
-          <DialogFooter>
-            <Button type="button" variant="outline" size="lg" disabled={saving} onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
-            <SubmitButton loading={saving} disabled={!canSave}>
-              {submitLabel}
-            </SubmitButton>
+          <DialogFooter className={footerStart ? "flex-row justify-between sm:justify-between" : undefined}>
+            {footerStart}
+            <div className="flex flex-row flex-wrap justify-end gap-2">
+              <Button type="button" variant="outline" size="lg" disabled={saving} onClick={() => onOpenChange(false)}>
+                Cancel
+              </Button>
+              <SubmitButton loading={saving} disabled={!canSave}>
+                {submitLabel}
+              </SubmitButton>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

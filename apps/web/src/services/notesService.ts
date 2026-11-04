@@ -1,4 +1,4 @@
-import { DEFAULT_NOTE_CATEGORY, isNoteCategory, type NoteCategory } from "@/shared/constants/noteCategories";
+import { isNoteCategory, type NoteCategory } from "@/shared/constants/noteCategories";
 import type { Note } from "@/shared/types/types";
 import { DB } from "@/services/db";
 import { supabase } from "@/services/supabaseClient";
@@ -7,7 +7,7 @@ export type CreateNoteInput = {
   project_id?: string | null;
   title: string;
   body?: string | null;
-  category?: NoteCategory;
+  category?: NoteCategory | null;
 };
 
 function sortByOrder(a: Note, b: Note) {
@@ -19,7 +19,7 @@ function normalizeNote(row: Note): Note {
   return {
     ...row,
     sort_order: row.sort_order ?? 0,
-    category: isNoteCategory(row.category) ? row.category : DEFAULT_NOTE_CATEGORY,
+    category: isNoteCategory(row.category) ? row.category : null,
   };
 }
 
@@ -81,7 +81,7 @@ export async function createNote(userId: string, input: CreateNoteInput): Promis
       project_id: input.project_id ?? null,
       title: input.title,
       body: input.body ?? null,
-      category: input.category ?? DEFAULT_NOTE_CATEGORY,
+      category: input.category ?? null,
       sort_order: 1,
     })
     .select(DB.NOTES.SELECT)

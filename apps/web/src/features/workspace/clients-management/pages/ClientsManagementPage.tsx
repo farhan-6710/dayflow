@@ -57,6 +57,10 @@ export function ClientsManagementPage() {
         onOpenChange={page.setDialogOpen}
         client={page.editingClient}
         onSaved={page.handleSaved}
+        onDelete={(client) => {
+          page.setDialogOpen(false);
+          page.setClientToDelete(client);
+        }}
       />
       <ConfirmationModal
         open={page.clientToDelete !== null}

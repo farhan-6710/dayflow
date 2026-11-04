@@ -397,6 +397,8 @@ export type ProjectFormDialogProps = {
   defaultProjectFor?: string | null;
   lockProjectFor?: boolean;
   onSaved: (project: Project) => void;
+  /** Edit only: opens the delete confirmation flow. */
+  onDelete?: (project: Project) => void;
 };
 
 export type TimeSelectProps = {
@@ -422,6 +424,8 @@ export type FormDialogProps = {
   onOpenChange: (open: boolean) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   children: ReactNode;
+  /** Edit flows: delete (or similar) sits bottom-left, opposite Cancel / Submit. */
+  footerStart?: ReactNode;
 };
 
 export type NotificationListProps = {

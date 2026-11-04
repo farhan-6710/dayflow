@@ -193,6 +193,10 @@ export function ProjectDetailPage() {
         project={project}
         clients={page.clients}
         onSaved={page.setProject}
+        onDelete={() => {
+          page.setEditOpen(false);
+          page.setDeleteOpen(true);
+        }}
       />
       <ConfirmationModal
         open={page.deleteOpen}

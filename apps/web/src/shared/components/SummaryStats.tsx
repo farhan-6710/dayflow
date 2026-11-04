@@ -13,7 +13,7 @@ export function SummaryStats({ items, isLoading = false }: SummaryStatsProps) {
           <span data-shimmer-no-children className="hidden size-11 shrink-0 items-center justify-center rounded-full bg-muted/60 sm:flex">
             <Icon className="size-5" aria-hidden="true" />
           </span>
-          <div className="min-w-0 flex-1">
+          <div className="flex flex-col gap-1 min-w-0 flex-1">
             <p className="truncate text-sm text-muted-foreground">{label}</p>
             <p className="min-w-10 text-2xl leading-tight tabular-nums">{value}</p>
           </div>

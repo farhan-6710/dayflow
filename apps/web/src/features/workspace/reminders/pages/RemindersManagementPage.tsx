@@ -47,7 +47,10 @@ export function RemindersManagementPage() {
         reminder={page.editingReminder}
         defaultDay={page.defaultDay}
         onSave={page.save}
-        onDelete={page.setReminderToDelete}
+        onDelete={(reminder) => {
+          page.setDialogOpen(false);
+          page.setReminderToDelete(reminder);
+        }}
       />
       <ConfirmationModal
         open={page.reminderToDelete !== null}

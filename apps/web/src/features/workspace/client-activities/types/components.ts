@@ -62,6 +62,8 @@ export type ActivityDialogProps<TItem, TInput> = {
   fixedProjectId?: string;
   projectOptions?: Project[];
   onSave: (itemId: string | null, projectId: string, input: TInput) => Promise<void>;
+  /** Edit only: opens the delete confirmation flow. */
+  onDelete?: () => void;
 };
 
 export type ActivityTaskDialogProps = ActivityDialogProps<ClientActivityTask, CreateClientActivityTaskInput>;

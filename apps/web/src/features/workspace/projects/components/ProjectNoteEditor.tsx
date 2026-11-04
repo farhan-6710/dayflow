@@ -6,7 +6,7 @@ import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { SubmitButton } from "@/shared/components/SubmitButton";
 import { Reveal } from "@/shared/components/Reveal";
 import { panelClassName } from "@/shared/constants/layoutStyles";
-import { NOTE_CATEGORIES, NOTE_CATEGORY_LABELS, type NoteCategory } from "@/shared/constants/noteCategories";
+import { isNoteCategory, NOTE_CATEGORIES, NOTE_CATEGORY_LABELS } from "@/shared/constants/noteCategories";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Textarea } from "@/shared/ui/textarea";
@@ -28,7 +28,7 @@ export function ProjectNoteEditor({
     <Reveal className="relative pb-1 pl-1">
     {/* A sheet behind, a bookmark and a folded corner, so the editor reads as a page. */}
     <div aria-hidden="true" className={cn(panelClassName,"absolute inset-x-0 top-1 bottom-0 right-1 bg-muted/40")} />
-    <Bookmark aria-hidden="true" className="pointer-events-none absolute -top-1.5 left-5 z-10 size-6 fill-chart-1 text-chart-1" />
+    <Bookmark aria-hidden="true" className="pointer-events-none absolute -top-1.5 left-5 z-10 size-6 fill-primary text-primary" />
     <form onSubmit={editor.handleSubmit} className={cn(panelClassName,"relative flex min-h-[32rem] min-w-0 flex-col")}>
       <div
         aria-hidden="true"
@@ -37,11 +37,12 @@ export function ProjectNoteEditor({
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-3 pt-5">
         <OptionDropdown
           label="Category"
-          value={editor.category}
-          onChange={(next) => editor.setCategory(next as NoteCategory)}
+          value={editor.category ?? ""}
+          onChange={(next) => editor.setCategory(isNoteCategory(next) ? next : null)}
           options={categoryOptions}
+          placeholder="Select note type/category"
           disabled={editor.saving || !canEdit}
-          className="w-40 bg-background"
+          className="w-56 bg-background"
         />
         <div className="flex flex-wrap items-center gap-1">
           {note ? (
@@ -56,13 +57,7 @@ export function ProjectNoteEditor({
                 <Copy aria-hidden="true" />
                 Duplicate
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className="h-10 [&_svg]:text-destructive"
-                disabled={editor.saving}
-                onClick={onDelete}
-              >
+              <Button type="button" variant="destructive" size="lg" disabled={editor.saving} onClick={onDelete}>
                 <Trash2 aria-hidden="true" />
                 Delete
               </Button>
@@ -96,7 +91,7 @@ export function ProjectNoteEditor({
           aria-label="Note title"
           autoFocus={!note}
           readOnly={!canEdit}
-          className="w-full min-w-0 rounded-md bg-transparent text-3xl leading-tight outline-none placeholder:text-muted-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          className="w-full min-w-0 rounded-md bg-transparent text-3xl leading-tight outline-none placeholder:text-muted-foreground focus-visible:ring-0"
         />
         <Textarea
           value={editor.body}

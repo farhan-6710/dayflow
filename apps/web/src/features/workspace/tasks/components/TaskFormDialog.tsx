@@ -1,6 +1,7 @@
 import type { TaskFormDialogProps, TaskFormValues } from "@/features/workspace/tasks/types/components";
 import { DatePicker } from "@/shared/components/DatePicker";
 import { FormDialog } from "@/shared/components/FormDialog";
+import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { TextAreaField } from "@/shared/components/TextAreaField";
 import { TextField } from "@/shared/components/TextField";
@@ -15,7 +16,7 @@ function toOptions<T extends string>(labels: Record<T, string>) {
   return (Object.keys(labels) as T[]).map((value) => ({ value, label: labels[value] }));
 }
 
-export function TaskFormDialog({ open, onOpenChange, task, defaultDate, defaultTime, onSave }: TaskFormDialogProps) {
+export function TaskFormDialog({ open, onOpenChange, task, defaultDate, defaultTime, onSave, onDelete }: TaskFormDialogProps) {
   const initialValues: TaskFormValues = {
     title: task?.title ?? "",
     description: task?.description ?? "",
@@ -45,6 +46,7 @@ export function TaskFormDialog({ open, onOpenChange, task, defaultDate, defaultT
       canSave={form.canSubmit}
       onOpenChange={form.handleOpenChange}
       onSubmit={form.handleSubmit}
+      footerStart={task && onDelete ? <FormDialogDeleteButton disabled={saving} onClick={() => onDelete(task)} /> : undefined}
     >
       <TextField
         id="task-title"
