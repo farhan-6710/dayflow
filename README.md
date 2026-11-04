@@ -64,7 +64,7 @@ scripts/migrations/                Shared Postgres SQL
 shared/brand/                      Brand manifest and theme tokens (theme.json), used by web and mobile
 docs/                              Shared: PRD, database, rules, memory
 apps/web/docs/                     Web: spec, architecture, design, rules, tasks, memory
-apps/mobile/docs/                  Mobile docs (added when the rebuild starts)
+apps/mobile/docs/                  Mobile: plan, rules, tasks, memory
 ```
 
 ---

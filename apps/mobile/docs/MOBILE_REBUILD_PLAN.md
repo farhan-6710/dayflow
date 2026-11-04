@@ -1,6 +1,6 @@
 # DayFlow Mobile: Rebuild Plan
 
-Status: approved direction. **No custom backend or server: the app talks to Supabase only.** Anything that needs our own backend is on hold (section 5).
+Status: built on branch `mobile-rebuild`, see [TASKS.md](./TASKS.md) for what still needs real devices. Approved direction: **No custom backend or server: the app talks to Supabase only.** Anything that needs our own backend is on hold (section 5).
 Written 2026-11-04 from the repository (`apps/mobile`, `apps/web`, `scripts/migrations`) and `docs/WEB_HANDOFF_FOR_MOBILE.md`.
 
 This plan rebuilds the entire mobile app to cover every screen the web app has, designed for phones rather than copied from the web, while **keeping the existing push and reminder notification setup untouched** and restoring it after the app is built.
@@ -133,6 +133,16 @@ Direction from the owner: **no backend server; use Supabase only; park anything 
 | **D7** | Migrations 038 and 039 | **Not blocking.** Notes screens accept a missing category, so they work whether or not 039 is applied. Owner applies 038 only after the new web build is deployed |
 | **D8** | AI Assist tab | **Parked** (hidden, code stays in git) |
 | **D9** | Legacy Vercel backend | **Not used.** Remove `axios` and `BASE_URL` after the rebuild |
+
+---
+
+### Changes made while building
+
+- Today has no reminders section and no large clock, at the owner's request. Reminders open from More.
+- Drag to reorder became a reorder mode with up and down buttons, which works with screen readers and needs no extra native dependency.
+- Date and time fields open in place instead of native pickers, so they work inside sheets without stacking modals or a new native module.
+- No persisted query cache or offline banner yet. The permission primer was left out so the preserved permission flow stays as it was.
+- Reminders keep the mobile `Reminder` shape throughout, as the preserved scheduler expects it.
 
 ---
 

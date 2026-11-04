@@ -23,7 +23,7 @@ export function SegmentedTabs<T extends string>({ tabs, value, onChange, scroll 
           haptics.tap();
           onChange(tab.value);
         }}
-        className={cn("min-h-9 flex-row items-center justify-center gap-1.5 rounded-lg px-3", !scroll && "flex-1", active && "bg-primary")}
+        className={cn("min-h-9 flex-row items-center justify-center gap-1.5 rounded-lg", scroll ? "px-3" : "flex-1 px-1", active && "bg-primary")}
       >
         <Text variant="label" numberOfLines={1} tone={active ? "inverse" : "muted"}>
           {tab.label}

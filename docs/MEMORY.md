@@ -5,7 +5,7 @@ Durable, project-wide context. App-specific notes live in `apps/<app>/docs/MEMOR
 ## Status
 
 - Order of work: web first, then mobile. One step at a time, reviewed by the owner before moving on.
-- The web rebuild is done ([apps/web/docs/TASKS.md](../apps/web/docs/TASKS.md)). The mobile app was under 10% complete and is being rebuilt from scratch next, with its own `apps/mobile/docs/`.
+- The web rebuild is done ([apps/web/docs/TASKS.md](../apps/web/docs/TASKS.md)). The mobile app has been rebuilt on the `mobile-rebuild` branch ([apps/mobile/docs/TASKS.md](../apps/mobile/docs/TASKS.md)); device testing is next.
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Durable, project-wide context. App-specific notes live in `apps/<app>/docs/MEMOR
 | `docs/RULES.md` | Rules for every app |
 | `shared/brand/theme.json` | Theme tokens for web and mobile (not a doc). `theme.css` and `theme.ts` beside it are generated from it |
 | `apps/web/docs/` | Web spec, architecture, design, rules, plan, tasks, memory |
-| `apps/mobile/docs/` | Created when the mobile rebuild starts |
+| `apps/mobile/docs/` | Mobile plan, rules, tasks, memory |

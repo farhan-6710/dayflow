@@ -89,7 +89,7 @@ export default function CalendarScreen() {
 
   const title =
     view === "month"
-      ? format(month, "MMMM yyyy")
+      ? format(month, "MMM yyyy")
       : view === "week"
         ? `${format(weekDays[0] ?? selected, "MMM d")} – ${format(weekDays[6] ?? selected, "MMM d")}`
         : format(selected, "EEE, MMM d");

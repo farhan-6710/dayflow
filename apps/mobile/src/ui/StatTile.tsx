@@ -32,7 +32,7 @@ export function StatTile({ label, value, caption, trend, icon: Icon, onPress }: 
           <Icon size={16} color={colors.foreground} />
         </View>
       </View>
-      <Text variant="stat" numberOfLines={1}>
+      <Text variant="stat" numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} className="text-[24px] leading-8">
         {value}
       </Text>
       {trend ? (
