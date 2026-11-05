@@ -1,6 +1,6 @@
 # DayFlow Web App: Handoff for Planning the Mobile App
 
-Purpose of this file: describe the finished DayFlow **web** app in enough detail that a person or an AI can plan the **mobile** rebuild without reading the web code. It covers why the product exists, what it contains, the stack, every screen, the database, and what the current mobile app is.
+Purpose of this file: describe the finished DayFlow **web** app in enough detail that a person or an AI can plan the **mobile** rebuild without reading the web code. It covers why the product exists, what it contains, the stack, every screen, the database, and where the mobile app stands.
 
 Written 2026-11-04 from the code in the repository (`apps/web`, `apps/mobile`, `scripts/migrations`).
 
@@ -19,7 +19,7 @@ There are two kinds of user, in one product:
 | **Workspace owner** (the freelancer) | Manages clients, projects, notes, tasks, todos, daily reminders; sees analytics; handles activities (tasks, meetings, calls) tied to client projects. |
 | **Client** (the freelancer's customer) | Signs in to a **client portal**, sees only the projects shared with them, and raises tasks, meetings and calls on those projects. |
 
-**Why it was rebuilt.** The old web app was replaced from scratch for a better UI/UX, keeping every feature and the **existing database untouched**, so existing accounts and data keep working. The web rebuild is finished. The mobile app was under 10% complete and is the next rebuild.
+**Why it was rebuilt.** The old web app was replaced from scratch for a better UI/UX, keeping every feature and the **existing database untouched**, so existing accounts and data keep working. The web rebuild is finished. Mobile is next, in Flutter.
 
 **Hard constraint for mobile too: the database is never changed.** No schema, RLS or data changes from app work. (The owner applies migrations by hand.)
 
@@ -29,7 +29,7 @@ There are two kinds of user, in one product:
 
 ```
 apps/web/        React web app (finished rebuild)
-apps/mobile/     Expo / React Native app (to be rebuilt)
+apps/mobile/     Flutter app, to be built (docs and images for now)
 shared/brand/    brandManifest.json (copy), theme.json (tokens, hex), theme.css, theme.ts
 docs/            shared docs: PRD, DATABASE, RULES, MEMORY
 scripts/migrations/   001-039 SQL, append-only
@@ -70,7 +70,7 @@ One **Supabase** project (Auth + Postgres + Row Level Security + RPCs) serves we
 
 - Warm paper surfaces, charcoal primary, one coral accent (`#f26a4b`), serif-forward type. Calm, with soft shadows rather than decoration.
 - Light and dark themes. Semantic tokens only (`background`, `card`, `muted`, `primary`, `chart-1..5`, `success`, `destructive`, `sidebar-*`, etc.).
-- **Tokens are defined once** in `shared/brand/theme.json` (hex values) and generated into `theme.css` (web) and `theme.ts` (for mobile). Colours are hex so React Native can read them. Radius is `1rem`.
+- **Tokens are defined once** in `shared/brand/theme.json` (hex values) and generated into `theme.css` (web). Dart output for Flutter is still to come. Colours are hex so every app reads them the same way. Radius is `1rem`.
 - Status colours: to do = muted, in progress = coral (`chart-1`), done = green (`success`), missed/overdue = `destructive`.
 - 3D art (icons and illustrations) is used on auth screens, empty states, the sidebar quick-action card, and error / not-a-client pages. Never in stat cards or page headers.
 - Everything works down to 310px wide.
@@ -174,7 +174,7 @@ profiles
   |-- tasks, todos
   |-- reminders -> reminder_occurrences
   |-- notifications
-  `-- expo_push_tokens   (used by mobile)
+  `-- expo_push_tokens   (from the old mobile app, unused while push is on hold)
 ```
 
 | Table | Columns (as the web app reads them) |
@@ -226,42 +226,10 @@ Activity status values: pending, in progress, completed. `raised_by`: `workspace
 
 ---
 
-## 9. The current mobile app (to be rebuilt)
+## 9. The mobile app
 
-Under 10% complete, and it does not match the web app yet.
+The Expo app was removed on 2026-11-05. Mobile is being built in Flutter and must do exactly what this web app does, on the **same Supabase project**, so all web data appears there once screens exist.
 
-| Area | Current state |
-|------|---------------|
-| Framework | Expo 57, React Native 0.86, React 19, expo-router (file routes), TypeScript |
-| Styling | NativeWind 4 (Tailwind 3). `tailwind.config.js` still has the **old gold palette** hard-coded, not the new theme |
-| State / data | Redux Toolkit, redux-persist, redux-saga, React Query, axios; a Supabase client (`@lib/supabase`) |
-| Backend | Supabase directly for reminders, reminder occurrences and Expo push tokens, plus an axios instance with a `BASE_URL` (`EXPO_PUBLIC_BASE_URL`) |
-| Screens | Tabs: Home, History, Analytics, AI Assist, Profile; auth login and signup; reminder details `/reminder-details/[id]` |
-| Features that exist | Reminders only (create, edit, delete, status, category, repeat days, history), plus an analytics view and a profile screen |
-| Not built | Tasks, todos, projects, notes, clients, client activities, calendar, notifications inbox, client portal, settings parity, dark theme parity |
-| Push | `expo-notifications` installed; push tokens are stored in `expo_push_tokens` |
-| Env | `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` |
-| Identity | App name DayFlow, bundle id `dev.expo.personalassistantapp`, EAS project configured |
+Stack, structure and rules are in `apps/mobile/docs/`. Its `MEMORY.md` holds what the old app learned and the decisions still open.
 
-The app talks to the **same Supabase project**, so all web data already appears on mobile once screens exist.
-
-Data-model difference to resolve: mobile's `Reminder` type uses `name`, `hour`, `minute` and `repeatDays`, while the table uses `title`, `reminder_time` (text such as "10:00 AM") and `days_of_week`. The mobile services map between them.
-
----
-
-## 10. Questions for the mobile plan
-
-Use these as the brief for ChatGPT.
-
-1. **Scope and order.** Which web features come first on mobile? A likely order: auth, dashboard, tasks and calendar (day view first), todos, daily reminders with local notifications, projects and notes, clients and activities, notifications inbox, analytics, settings, then the client portal.
-2. **One app or two roles.** Owner and client in one app (switching by login) or separate entry flows. The client portal screens are small and share components.
-3. **Navigation pattern.** The web sidebar has 8 items; propose a bottom-tab set plus a "More" stack, keeping detail routes (project, note, client).
-4. **Calendar on a phone.** Month list plus a day timeline, with add-from-hour.
-5. **Reminders and notifications.** Local scheduled notifications for reminders; whether to ask the owner for the database changes that server push would need.
-6. **Offline and sync.** Whether to cache with React Query/persist, and optimistic updates (the current app has a `syncState` idea).
-7. **Theme.** Consume `shared/brand/theme.ts` (hex), light and dark, following the device; map to NativeWind or move to a different styling approach. Fonts: Ovo, Young Serif, Merriweather.
-8. **Auth.** Email/password, Google OAuth, deep links (`dayflow://auth/callback`), password reset, client-portal linking via the RPC.
-9. **Keep or replace** the current Redux + saga + axios stack. The web app uses plain hooks and services calling Supabase directly, which is simpler.
-10. **Testing and release.** EAS builds, TestFlight / Play internal testing, the demo account for store review.
-
-**Constraints to include in the brief:** never change the database; Supabase only through a service layer; table and column names in one file; RLS is the contract; confirm every delete; toast after every mutation; loading, empty and error states on every screen; works on small phones; semantic design tokens only.
+**Constraints to include in any brief:** never change the database; Supabase only through a service layer; table and column names in one file; RLS is the contract; confirm every delete; feedback after every mutation; loading, empty and error states on every screen; works on small phones; semantic design tokens only.

@@ -1,28 +1,56 @@
-# Rules — DayFlow Mobile
+# Rules — DayFlow Mobile (Flutter)
 
-Shared rules (database, RLS, secrets, redirects, brand copy): [docs/RULES.md](../../../docs/RULES.md).
+Shared rules (database, RLS, secrets, redirects, brand copy): [docs/RULES.md](../../../docs/RULES.md). They win over this file. Structure and stack: [ARCHITECTURE.md](./ARCHITECTURE.md).
 
-## Notifications are frozen
+## Parity
 
-The setup in `src/notifications/`, `src/services/localReminderScheduler.ts` and `src/services/expoPushTokensService.ts` came from `_vault/notifications/` and works. Never change the channel `custom_channel`, sound `notification_sound.wav`, category `custom_category`, actions `action_done` and `action_missed`, schedule ids `dayflow-reminder:<id>:<day>`, data `{ reminderId }`, or the route `/reminder-details/[id]`. Android fixes a channel's sound when it is first created. New kinds of alert get a new channel. Screens reach notifications only through `src/features/reminders/notificationPort.ts`. Don't edit `_vault/`.
+- **The web app is the specification.** Same features, screens, fields, wording, statuses and behaviour, in both portals. Check `apps/web/src` when unsure, rather than guessing.
+- Adapt only what a phone requires, in the way the web's own phone layout already does: tables become stacked cards, and the sidebar becomes a drawer.
+- Features the web doesn't have aren't added without the owner's approval. Scheduled reminder alerts are the agreed exception to how the web fires them.
 
-## Structure
+## Non-negotiable
 
-- `app/` holds thin routes. `(auth)` sign-in flow, `(owner)` workspace, `client/` client portal.
-- `src/features/<feature>` owns screens' parts and hooks. `src/services` holds every Supabase call, with names in `services/db.ts`. `src/ui` is the design system.
-- Data flow: screen → hook (React Query) → service → Supabase. Every mutation uses `useAction`, which gives feedback and refreshes data.
+- **Supabase only through `data/services/`.** Widgets and ViewModels never touch the Supabase client.
+- **Table and column names live only in `data/services/db.dart`.**
+- **No logic in widgets.** It goes in a ViewModel or a repository.
+- **Models are immutable.** Changes make a new instance.
+- **Colours through theme tokens only.** No `Color(0x...)` in widgets. A project's `color_hex` is the one exception.
+- **Stored times stay display text**, such as "10:00 AM".
 
-## UX
+## UX behaviour (same as the web)
 
-- Colours through tokens only (`shared/brand/theme.json`); a project's `color_hex` is the one exception. Status colours as in the web's DESIGN.md.
-- Ovo for UI, Young Serif for headings, Merriweather for notes. These are single-weight or fixed fonts: never `font-bold`.
-- Every data screen has a skeleton shaped like it, an `EmptyState` and an `ErrorState` (`QueryState` does this).
-- One primary action per screen: `Fab` or a bottom button. Row actions are `SwipeRow` (swipe or long press), never kebabs on rows.
-- Forms use `FormSheet`, which handles saving state, inline errors and unsaved edits. Full-screen forms use `useUnsavedGuard`.
-- Fields that expand (`DateField`, `TimeField`, `SelectField`) open in place. Don't stack modals: a second RN Modal won't show over the first on iOS. Use `confirm()` for questions over a sheet.
-- Deletes go through `confirm()` and name what goes with them.
-- Works at 320pt wide, in light and dark. 44pt targets, labelled controls.
+- Confirm every delete, naming what is deleted and what goes with it.
+- Give feedback after every mutation, success or error. Never fail silently.
+- Guard every form that can be dirty against losing unsaved changes.
+- Every list and detail screen has loading, empty and error states. Loading uses a skeleton shaped like that screen.
+- One primary action per screen. Row actions go in the three dots menu.
+- Disable controls while saving.
 
-## Checks
+## Design
 
-`bunx tsc --noEmit`, `bunx eslint .`, `bunx expo export --platform android --platform ios`. Screens can be checked with `bun run web`, but anything native (notifications, haptics, Google, deep links) needs a device build.
+- Follow [web DESIGN](../../web/docs/DESIGN.md) for look, layout and motion: warm paper surfaces, charcoal primary, one coral accent.
+- Ovo for UI, Young Serif for headings, Merriweather for long text. Ovo and Young Serif have one weight, so never bold them.
+- Check every screen in light and dark, from 310 wide up to tablet.
+- Theme follows the device, and a manual choice is remembered on the device, never in the database.
+- Tap targets are at least 48 by 48, even when the visible control is smaller. Label icon buttons with `Semantics` or a tooltip, support large text, and keep contrast at WCAG AA.
+- Entrance motion goes through one shared widget. Respect the device's reduced motion setting.
+
+## Code
+
+- Follow [Effective Dart](https://dart.dev/effective-dart). Formatted with `dart format`, and `flutter analyze` stays clean.
+- Files are `snake_case.dart`, classes `PascalCase`. Name classes by role: `ProjectsViewModel`, `ProjectsRepository`, `ProjectsService`.
+- Shared widgets live in `ui/core/`. A feature never imports from another feature, except the shared client activities module.
+- Keep widgets small by splitting them into widget classes, not helper methods that return widgets. Use `const` wherever possible.
+- After an `await`, check `mounted` before using `BuildContext`.
+- Smallest change that solves the problem. No speculative abstractions.
+
+## Testing and checks
+
+- Unit tests for every service, repository and ViewModel. Widget tests for screens, routing and forms. Use hand-written fakes.
+- Before calling work done, run `dart format --set-exit-if-changed .`, `flutter analyze` and `flutter test`.
+- Anything native (notifications, deep links, Google sign-in) has to be checked on a real device.
+
+## Working
+
+- Follow the owner's plan and update [TASKS.md](./TASKS.md) and [MEMORY.md](./MEMORY.md) when work lands.
+- Never commit `env/dev.json`, signing keys or service account keys.

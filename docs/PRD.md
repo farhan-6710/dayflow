@@ -5,7 +5,7 @@ A workspace built for freelancers to manage clients, projects, tasks, meetings, 
 
 ## Goal
 
-Rebuild the DayFlow web app from scratch (mobile after) with better UI/UX, keeping every existing feature and the **existing Supabase database untouched**, so current data keeps working.
+Rebuild the DayFlow web app from scratch with better UI/UX, keeping every existing feature and the **existing Supabase database untouched**, so current data keeps working. Then build the exact same app in Flutter for iOS and Android.
 
 ## Users
 

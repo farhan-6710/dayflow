@@ -1,35 +1,27 @@
-# Tasks — DayFlow Mobile
+# Tasks — DayFlow Mobile (Flutter)
 
-`[x]` done · `[ ]` to do · `[~]` on hold. Phases are from [MOBILE_REBUILD_PLAN.md](./MOBILE_REBUILD_PLAN.md).
+`[x]` done · `[ ]` to do · `[~]` on hold. The build phases will come from the owner's plan.
 
-- [x] Phase 0: tag `mobile-notifications-baseline`, branch, notification vault
-- [x] Phase 1: foundation, theme from `theme.json`, services, UI kit
-- [x] Phase 2: navigation shell, sign in, sign up, reset, Google, demo, role, not-a-client
-- [x] Phase 3: Today, todos, time tracker, tasks calendar
-- [x] Phase 4: reminders, details, history
-- [x] Phase 5: projects, notes, reference links
-- [x] Phase 6: clients, shared activities, conversation
-- [x] Phase 7: client portal
-- [x] Phase 8: analytics, inbox, profile, settings
-- [x] Phase 9: notification system restored behind the port
-- [x] Phase 10: new-activity indicators in the app
+## Done
 
-## Needs the owner, on real devices
+- [x] Expo app removed. Only `images/` and `docs/` remain
+- [x] Docs rewritten for Flutter
 
-- [ ] New development build (the `dayflow` scheme and `expo-web-browser` are native changes), then the notification test in the plan, section 4.3
-- [ ] Google sign-in and the password-reset link on a device
-- [ ] Client portal with a real client login
-- [ ] Both directions of activities with two real accounts
-- [ ] Decide on the Expo patch updates (`expo-doctor` lists 15, including `expo-notifications`) and Xcode 26.4 or later for iOS builds
-- [ ] EAS preview build, internal testing, store submission (Phase 12)
+## Before development
+
+- [ ] Install Flutter, then confirm with `flutter doctor` (not on this Mac yet; needs Xcode and Android Studio)
+- [ ] Free up disk space (the Mac was full on 2026-11-05)
+- [ ] Owner's build plan
+- [ ] Decide the decisions in [MEMORY.md](./MEMORY.md)
+
+## First steps once the plan arrives
+
+- [ ] Create the Flutter project in `apps/mobile`, keeping `images/` and `docs/`
+- [ ] Add `apps/mobile/CLAUDE.md` so this folder loads its docs again, and update the table in the root `CLAUDE.md`
+- [ ] Generate Dart theme and brand values from `shared/brand/`, then remove `theme.ts`
+- [ ] Add illustrations from `apps/web/public/images/dayflow/illustrations/` and the fonts
 
 ## On hold (needs a server or a database change)
 
 - [~] Push between client and owner when an activity is raised or changed
-- [~] Background resync of reminders created on the web while the app is closed
-
-## Later
-
-- [ ] Drag to reorder (reorder mode uses up and down buttons today)
-- [ ] Offline cache across app restarts
-- [ ] Automated tests
+- [~] Updating a phone's reminders while the app is closed

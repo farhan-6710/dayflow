@@ -4,7 +4,7 @@
 
 ```text
 Web (Vite + React) ─┐
-Mobile (Expo) ──────┴──► one Supabase project: Auth · Postgres · RLS
+Mobile (Flutter) ───┴──► one Supabase project: Auth · Postgres · RLS
 ```
 
 No sync service. **RLS is the access contract.** The database is read as-is; the rebuild never changes it.
@@ -61,7 +61,7 @@ Shared by web and mobile: see [DATABASE.md](../../../docs/DATABASE.md). The tabl
 
 | Item | Where |
 |------|-------|
-| Env | `apps/web/.env` (untracked): `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`; `VITE_APP_ORIGIN` optional (desktop OAuth bridge origin); `SEED_EMAIL`, `SEED_PASSWORD` for local seed scripts only. Mobile uses `EXPO_PUBLIC_SUPABASE_*`. |
+| Env | `apps/web/.env` (untracked): `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`; `VITE_APP_ORIGIN` optional (desktop OAuth bridge origin); `SEED_EMAIL`, `SEED_PASSWORD` for local seed scripts only. Mobile: see its own [ARCHITECTURE.md](../../mobile/docs/ARCHITECTURE.md). |
 | Migrations | `scripts/migrations/` (001–037), append-only. The rebuild adds none. |
 | Hosting | https://bisque-gull-237581.hostingersite.com (Hostinger). Desktop releases: https://github.com/farhan-6710/dayflow/releases |
 

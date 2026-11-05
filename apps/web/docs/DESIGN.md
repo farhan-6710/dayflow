@@ -2,7 +2,7 @@
 
 Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Calm and readable; depth comes from soft shadows and spacing, not decoration.
 
-**Tokens:** [theme.json](../../../shared/brand/theme.json) is the single source of truth for web and mobile, in hex. `bun run theme:generate` (in `apps/web`) writes `shared/brand/theme.css`, which `apps/web/src/index.css` imports, and `theme.ts` for mobile. Never edit the generated files or copy token values into an app; `bun run build` fails if they are stale.
+**Tokens:** [theme.json](../../../shared/brand/theme.json) is the single source of truth for web and mobile, in hex. `bun run theme:generate` (in `apps/web`) writes `shared/brand/theme.css`, which `apps/web/src/index.css` imports, and `theme.ts`, unused until the Flutter app replaces it with Dart output. Never edit the generated files or copy token values into an app; `bun run build` fails if they are stale.
 
 ## Rules
 
@@ -82,4 +82,4 @@ Visible focus ring (`ring` token), labelled icon buttons, keyboard-operable drag
 
 ## Brand
 
-Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`: charcoal or cream (`foreground`) with a coral (`chart-1`) check. To change their colours, edit `theme.json`, run `bun run theme:generate`, then `apps/web/scripts/recolor-logos.py`, then `apps/mobile/scripts/generate-brand-assets.py` and `apps/web/scripts/generate-tauri-icon.py` (desktop app icons). 3D icons and illustrations ship as WebP in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; paths are in `shared/constants/dayflowImages.ts`.
+Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`: charcoal or cream (`foreground`) with a coral (`chart-1`) check. To change their colours, edit `theme.json`, run `bun run theme:generate`, then `apps/web/scripts/recolor-logos.py`, then `apps/web/scripts/generate-tauri-icon.py` (desktop app icons). Mobile icons in `apps/mobile/images/` need regenerating too (see its MEMORY). 3D icons and illustrations ship as WebP in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; paths are in `shared/constants/dayflowImages.ts`.

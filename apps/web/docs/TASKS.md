@@ -93,11 +93,9 @@ Each item: service → hook → page → states → verify.
 - [x] Logos, favicons and mobile icons recoloured to the theme with a script
 - [x] Full-panel skeletons on every screen; header breadcrumbs, search on the right, user pill and menu; stat cards with icons on the right
 
-## Phase 7: Mobile rebuild
+## Phase 7: Mobile
 
-- [ ] Plan mobile scope from the web spec; reuse [theme.json](../../../shared/brand/theme.json) tokens
-- [ ] Rebuild `apps/mobile` screens with feature parity
-- [ ] iOS release
+Moved to Flutter, tracked in [apps/mobile/docs/TASKS.md](../../mobile/docs/TASKS.md).
 
 ## Needs a decision (all conflict with "never change the database")
 

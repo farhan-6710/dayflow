@@ -15,7 +15,7 @@ profiles
   ├── tasks, todos
   ├── reminders → reminder_occurrences
   ├── notifications
-  └── expo_push_tokens (mobile)
+  └── expo_push_tokens (from the old mobile app, unused while push is on hold)
 ```
 
 | Field | Meaning |
@@ -25,7 +25,7 @@ profiles
 | `raised_by` | `workspace` or `client`: who created the activity |
 | `owner_user_id` | Workspace owner of a client |
 
-Exact columns per table: `apps/web/src/services/db.ts` (the old one is recoverable from git at `b1335f3`). Mobile keeps its own copy of the names.
+Exact columns per table: `apps/web/src/services/db.ts` (the old one is recoverable from git at `b1335f3`). Mobile keeps its own copy of the names in `lib/data/services/db.dart`.
 
 ## Client portal security
 

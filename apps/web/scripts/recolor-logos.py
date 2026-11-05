@@ -8,7 +8,7 @@ accent is read as accent.
 
 Writes apps/web/design/brand/logo-{light,dark}[-icon].png (masters), dayflow-logo-{light,dark}.png and
 apps/web/public/logo-{light,dark}-icon.webp (shipped), then the favicons through brand_icon.py, which draws each size on its own.
-Run apps/mobile/scripts/generate-brand-assets.py afterwards for the mobile icons.
+The mobile icons in apps/mobile/images need regenerating separately (see apps/mobile/docs/MEMORY.md).
 """
 
 import colorsys

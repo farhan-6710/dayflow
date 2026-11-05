@@ -5,7 +5,7 @@ The light logo on a cream rounded tile, moved right by 10% of its width. Small s
 pixel grid (see brand_icon.py), so they stay sharp, and the .ico and .icns files are written directly.
 Writes the six files the desktop app uses into src-tauri/icons/.
 
-The mobile icons use the same placement: apps/mobile/scripts/generate-brand-assets.py.
+The mobile icons in apps/mobile/images/app-icons use the same placement.
 Needs Pillow. Run from anywhere: python3 apps/web/scripts/generate-tauri-icon.py
 """
 

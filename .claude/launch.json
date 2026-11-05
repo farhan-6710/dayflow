@@ -11,17 +11,6 @@
         "dev"
       ],
       "port": 5173
-    },
-    {
-      "name": "mobile-web",
-      "runtimeExecutable": "bun",
-      "runtimeArgs": [
-        "run",
-        "--cwd",
-        "apps/mobile",
-        "web"
-      ],
-      "port": 8081
     }
   ]
 }

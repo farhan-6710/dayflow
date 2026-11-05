@@ -1,5 +1,5 @@
 {
-  "$comment": "DayFlow theme tokens: the single source for web and mobile. Edit values here only, then run `bun run theme:generate` in apps/web. Colours are hex so React Native and CSS read them the same way.",
+  "$comment": "DayFlow theme tokens: the single source for web and mobile. Edit values here only, then run `bun run theme:generate` in apps/web. Colours are hex so every app reads them the same way.",
   "light": {
     "colors": {
       "background": "#e9e4d8",
