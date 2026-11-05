@@ -5,7 +5,7 @@ Durable, project-wide context. App-specific notes live in `apps/<app>/docs/MEMOR
 ## Status
 
 - Order of work: web first, then mobile. One step at a time, reviewed by the owner before moving on.
-- The web rebuild is done ([apps/web/docs/TASKS.md](../apps/web/docs/TASKS.md)). The Expo mobile app was removed on 2026-11-05. Mobile is being rebuilt in Flutter to match the web exactly, and the owner will supply the plan ([apps/mobile/docs/TASKS.md](../apps/mobile/docs/TASKS.md)).
+- The web rebuild is done ([apps/web/docs/TASKS.md](../apps/web/docs/TASKS.md)). The Expo mobile app was removed on 2026-11-05. Mobile is being built in Flutter. The first milestone is UI only with sample data, and the database comes later ([apps/mobile/docs/TASKS.md](../apps/mobile/docs/TASKS.md)).
 
 ## Decisions
 

@@ -6,7 +6,7 @@
 
 A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.
 
-**Platforms:** Web · Desktop (macOS & Windows) · Mobile (Flutter app in development)
+**Platforms:** Web · Desktop (macOS & Windows) · Mobile (Flutter app in development, UI preview only)
 
 ---
 

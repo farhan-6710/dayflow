@@ -1,25 +1,38 @@
 # Tasks — DayFlow Mobile (Flutter)
 
-`[x]` done · `[ ]` to do · `[~]` on hold. The build phases will come from the owner's plan.
+`[x]` done · `[ ]` to do · `[~]` on hold or blocked. Details of each phase: [DayFlow_Flutter_UI_Plan.md](./DayFlow_Flutter_UI_Plan.md).
 
-## Done
+## Setup
 
-- [x] Expo app removed. Only `images/` and `docs/` remain
-- [x] Docs rewritten for Flutter
+- [x] Expo app removed
+- [x] Docs updated for the UI-only plan, and the plan checked against the reference image
+- [x] Disk space freed, Flutter 3.47.9 installed
+- [ ] Android tools: `flutter doctor` reports cmdline-tools missing and licenses not accepted, so Android hasn't been built yet
 
-## Before development
+## UI milestone
 
-- [ ] Install Flutter, then confirm with `flutter doctor` (not on this Mac yet; needs Xcode and Android Studio)
-- [ ] Free up disk space (the Mac was full on 2026-11-05)
-- [ ] Owner's build plan
-- [ ] Decide the decisions in [MEMORY.md](./MEMORY.md)
+- [x] Phase 1: foundation and design system
+- [x] Phase 2: app shell, bottom navigation, drawer, More
+- [x] Phase 3: Dashboard
+- [x] Phase 4: Tasks Calendar
+- [x] Phase 5: Projects
+- [x] Phase 6: Clients
+- [x] Phase 7: Daily Reminders
+- [x] Phase 8: Sign in and shared overlays
+- [x] Phase 9: polish, checks and delivery
 
-## First steps once the plan arrives
+## Before the UI is final
 
-- [ ] Create the Flutter project in `apps/mobile`, keeping `images/` and `docs/`
-- [ ] Add `apps/mobile/CLAUDE.md` so this folder loads its docs again, and update the table in the root `CLAUDE.md`
-- [ ] Generate Dart theme and brand values from `shared/brand/`, then remove `theme.ts`
-- [ ] Add illustrations from `apps/web/public/images/dayflow/illustrations/` and the fonts
+- [ ] Owner's review of every screen against the reference
+- [ ] Replace `images/illustrations/hero-plant-cup.png` (cut from the reference, so soft) with final art
+- [ ] Build and check on Android and real devices
+
+## Later milestone: connect the database
+
+- [ ] Connect Supabase, auth and real data, per [ARCHITECTURE.md](./ARCHITECTURE.md)
+- [ ] Generate Dart tokens from `shared/brand/theme.json`, then remove `theme.ts`
+- [ ] Scheduled reminder alerts
+- [ ] Decide the items in [MEMORY.md](./MEMORY.md)
 
 ## On hold (needs a server or a database change)
 

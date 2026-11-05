@@ -1,8 +1,8 @@
 # DayFlow
 
-Freelancer workspace on one Supabase project: a web app (`apps/web`, rebuilt) and a mobile app (`apps/mobile`, moving to Flutter; docs and images only for now). The database must never change.
+Freelancer workspace on one Supabase project: a web app (`apps/web`, rebuilt) and a mobile app (`apps/mobile`, Flutter, UI-only milestone). The database must never change.
 
-This file holds what applies to every app. Each app has its own `docs/`, loaded by the `CLAUDE.md` inside that app's folder (`apps/web/CLAUDE.md`, and `apps/mobile/CLAUDE.md` once the Flutter project exists). When docs conflict, RULES wins.
+This file holds what applies to every app. Each app has its own `docs/`, loaded by the `CLAUDE.md` inside that app's folder (`apps/web/CLAUDE.md`, `apps/mobile/CLAUDE.md`). When docs conflict, RULES wins.
 
 ## Shared rules
 @docs/RULES.md
@@ -19,6 +19,6 @@ Theme tokens: `shared/brand/theme.json` (edit it when changing colours, radius o
 | App | Docs | Loaded by |
 |-----|------|-----------|
 | Web | `apps/web/docs/` | `apps/web/CLAUDE.md` |
-| Mobile (Flutter) | `apps/mobile/docs/` | Read them directly until `apps/mobile/CLAUDE.md` exists |
+| Mobile (Flutter) | `apps/mobile/docs/` | `apps/mobile/CLAUDE.md` |
 
 Working in an app folder loads that app's docs. When working from the repo root, read `apps/<app>/CLAUDE.md` first.
