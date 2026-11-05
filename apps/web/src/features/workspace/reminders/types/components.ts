@@ -9,9 +9,15 @@ export type ReminderFormValues = {
   disabledUntil: string;
 };
 
-export type RemindersWeekTableProps = {
+export type RemindersGridProps = {
   reminders: Reminder[];
   isLoading: boolean;
+  onEdit: (reminder: Reminder) => void;
+  onDelete: (reminder: Reminder) => void;
+};
+
+export type ReminderCardProps = {
+  reminder: Reminder;
   onEdit: (reminder: Reminder) => void;
   onDelete: (reminder: Reminder) => void;
 };

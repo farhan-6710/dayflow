@@ -1,4 +1,4 @@
-import { startOfDay } from "date-fns";
+import { addDays, startOfDay } from "date-fns";
 
 import type { Reminder, ReminderDayKey } from "@/shared/types/types";
 import { parseDateValue } from "@/shared/utils/dateValue";
@@ -37,6 +37,19 @@ export function isReminderActive(reminder: Reminder, today = new Date()): boolea
   }
   const until = parseDateValue(reminder.disabled_until);
   return Boolean(until && startOfDay(today) > until);
+}
+
+/** The next day this reminder fires, today if its time is still ahead; null if it has no days. */
+export function nextOccurrenceDate(reminder: Reminder, now = new Date()): Date | null {
+  const minutesNow = now.getHours() * 60 + now.getMinutes();
+  const stillToday = (parseTimeToMinutes(reminder.reminder_time) ?? 0) > minutesNow;
+  for (let offset = stillToday ? 0 : 1; offset <= 7; offset += 1) {
+    const date = addDays(now, offset);
+    if (reminder.days_of_week.includes(dayKeyForDate(date))) {
+      return date;
+    }
+  }
+  return null;
 }
 
 export function byTime(a: Reminder, b: Reminder): number {

@@ -61,7 +61,7 @@ export function DirectoryTable({
         {isEmpty && !isLoading ? null : (
           <div
             className={cn(
-              "hidden items-center gap-4 rounded-lg bg-muted/50 px-3 py-2.5 text-xs text-muted-foreground md:grid",
+              "hidden items-center gap-4 border-b border-border px-3 pb-2.5 text-sm text-muted-foreground md:grid",
               gridClass,
             )}
           >
