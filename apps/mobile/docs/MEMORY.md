@@ -6,7 +6,7 @@ Short facts for future sessions. Project-wide decisions: [docs/MEMORY.md](../../
 
 - 2026-11-05: the owner chose Flutter and removed the Expo app. The first milestone is UI only, matching `images/DayFlow Mobile App Showcase.png`, following `DayFlow_Flutter_UI_Plan.md`. The database comes later.
 - 2026-11-05: UI phases 1 to 9 built and checked on an iPhone 16e simulator (390 wide). Android hasn't been built.
-- The reference image's paper colour looks warmer than `theme.json`. The plan makes the tokens the source of truth, so the app uses the tokens.
+- The reference image's paper colour looks warmer than `theme.json`. Owner decided on 2026-11-05 to keep the `theme.json` colours, so don't match the image's tone.
 - `tileWarm` and `tileAmber` are the only colours not in `theme.json`. The reference needs them for icon tiles.
 - Young Serif's default numbers dip below the line, so `app_text_styles.dart` turns on lining figures. Without it, "14" looks wrong beside the reference.
 - Flutter's default theme adds letter spacing, so the styles set it to 0.
