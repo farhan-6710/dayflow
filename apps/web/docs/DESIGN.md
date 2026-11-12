@@ -65,7 +65,7 @@ Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `
 
 ## Motion
 
-Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Entrance easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout. The sidebar's collapse and expand is the one other curve: width over 600ms with `cubic-bezier(0.32, 0.72, 0, 1)`.
+Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Entrance easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout. The sidebar's collapse and expand is the one other curve: width over 600ms with `cubic-bezier(0.32, 0.72, 0, 1)`. Switching theme from `ThemeToggle` uses the View Transitions API: the new theme is revealed as a circle growing from the toggle over 850ms with `cubic-bezier(0.65, 0, 0.35, 1)` (`theme-reveal` in `index.css`), skipped under reduced motion or where unsupported. The toggle stays clickable mid-animation; a second click finishes the running switch and starts the next.
 
 | `kind` | Use | From | Duration | Stagger |
 |--------|-----|------|----------|---------|
