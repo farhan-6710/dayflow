@@ -1,26 +1,20 @@
-import { Sparkle } from "lucide-react";
-
-import { ASSISTANT_SUGGESTIONS } from "@/features/workspace/assistant/constants/assistantSuggestions";
+import { AssistantMark } from "@/features/workspace/assistant/components/AssistantMark";
+import { ASSISTANT_NAME, ASSISTANT_SUGGESTIONS } from "@/features/workspace/assistant/constants/assistantSuggestions";
 import type { AssistantWelcomeProps } from "@/features/workspace/assistant/types/components";
-import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 
 /** Empty state: who the assistant is, and four questions it answers well. */
 export function AssistantWelcome({ name, onAsk }: AssistantWelcomeProps) {
   return (
     <div className="relative flex flex-1 flex-col">
       <div className="relative z-10 flex flex-col items-center px-6 pt-8 text-center">
-        <div className="relative">
-          <span className="grid size-20 place-items-center rounded-3xl border border-border bg-card shadow-md">
-            <DayFlowLogo className="size-12" />
-          </span>
-          <Sparkle aria-hidden="true" className="absolute -top-2 -right-3 size-4 fill-chart-1 text-chart-1" />
-          <Sparkle aria-hidden="true" className="absolute top-3 -right-5 size-2.5 fill-chart-1/70 text-chart-1/70" />
-        </div>
+        <span className="grid size-20 animate-message-in place-items-center rounded-3xl border border-border bg-card text-chart-1 shadow-md">
+          <AssistantMark className="size-11" active />
+        </span>
         <h2 className="mt-6 text-3xl leading-tight">
           Hello, <span className="text-chart-1">{name || "there"}!</span>
         </h2>
         <p className="mt-2 max-w-[19rem] text-sm leading-relaxed text-muted-foreground">
-          I'm your DayFlow AI assistant. Ask me anything about your workspace, tasks, projects or how to get started!
+          I'm {ASSISTANT_NAME}, your DayFlow assistant. Ask me anything about your workspace, tasks, projects or how to get started!
         </p>
       </div>
 

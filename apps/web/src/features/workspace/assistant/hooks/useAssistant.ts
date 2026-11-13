@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useLocation } from "react-router";
 
 import { runAssistantTool } from "@/features/workspace/assistant/utils/assistantTools";
-import { requestAssistantTurn } from "@/services/assistantService";
+import { streamAssistantTurn } from "@/services/assistantService";
 import { useAuth } from "@/shared/hooks/useAuth";
 import type { AssistantContent, AssistantMessage, AssistantPart } from "@/shared/types/assistant";
 
@@ -10,14 +10,6 @@ import type { AssistantContent, AssistantMessage, AssistantPart } from "@/shared
 const MAX_STEPS = 6;
 /** Older turns are dropped so a long chat stays inside the function's limit. */
 const MAX_HISTORY = 30;
-
-function answerText(content: AssistantContent): string {
-  return content.parts
-    .filter((part) => part.text && !part.thought)
-    .map((part) => part.text)
-    .join("")
-    .trim();
-}
 
 /** Keeps the history starting at a plain user question, never mid tool exchange. */
 function trimHistory(history: AssistantContent[]): AssistantContent[] {
@@ -28,37 +20,64 @@ function trimHistory(history: AssistantContent[]): AssistantContent[] {
   return start > 0 ? history.slice(start) : history;
 }
 
-/** Chat state and the tool loop: ask the function, run any tool calls here, repeat until it answers. */
+/** idle: waiting for a question. thinking: waiting on the model or a tool. streaming: text is arriving. */
+export type AssistantStatus = "idle" | "thinking" | "streaming";
+
+const NO_ANSWER = "I couldn't find an answer to that. Try asking another way.";
+
+/**
+ * Chat state and the tool loop: stream a turn from the function, show its text as it arrives, run
+ * any tool calls here, repeat until the model answers. One question gets one assistant bubble.
+ */
 export function useAssistant() {
   const { user, profile } = useAuth();
   const { pathname } = useLocation();
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
-  const [isThinking, setIsThinking] = useState(false);
+  const [status, setStatus] = useState<AssistantStatus>("idle");
+  const [streamingId, setStreamingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const history = useRef<AssistantContent[]>([]);
   const displayName = profile?.display_name ?? "";
 
   async function ask(question: string) {
     const trimmed = question.trim();
-    if (!trimmed || isThinking || !user) return;
+    if (!trimmed || status !== "idle" || !user) return;
     setError(null);
-    setIsThinking(true);
+    setStatus("thinking");
     setMessages((current) => [...current, { id: crypto.randomUUID(), role: "user", text: trimmed }]);
 
     const context = { userName: displayName, today: new Date().toDateString(), currentPath: pathname };
     let contents = trimHistory([...history.current, { role: "user", parts: [{ text: trimmed }] }]);
+    const replyId = crypto.randomUUID();
+    let shown = "";
+    let paragraphBreak = false;
+
+    function showText(piece: string) {
+      const isFirst = !shown;
+      shown = `${shown}${paragraphBreak && shown ? "\n\n" : ""}${piece}`;
+      paragraphBreak = false;
+      const text = shown;
+      setMessages((current) =>
+        isFirst
+          ? [...current, { id: replyId, role: "assistant", text }]
+          : current.map((message) => (message.id === replyId ? { ...message, text } : message)),
+      );
+      setStreamingId(replyId);
+      setStatus("streaming");
+    }
 
     try {
       for (let step = 0; step < MAX_STEPS; step += 1) {
-        const reply = await requestAssistantTurn(contents, context);
+        const reply = await streamAssistantTurn(contents, context, showText);
         contents = [...contents, reply];
         const calls = reply.parts.filter((part) => part.functionCall);
         if (!calls.length) {
           history.current = contents;
-          const text = answerText(reply) || "I couldn't find an answer to that. Try asking another way.";
-          setMessages((current) => [...current, { id: crypto.randomUUID(), role: "assistant", text }]);
+          if (!shown) showText(NO_ANSWER);
           return;
         }
+        paragraphBreak = true;
+        setStatus("thinking");
         const responses: AssistantPart[] = await Promise.all(
           calls.map(async ({ functionCall }) => ({
             functionResponse: {
@@ -72,9 +91,10 @@ export function useAssistant() {
       }
       setError("That took too many steps. Try a more specific question.");
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "The assistant is unavailable right now.");
+      setError((caught instanceof Error && caught.message) || "The assistant is unavailable right now.");
     } finally {
-      setIsThinking(false);
+      setStatus("idle");
+      setStreamingId(null);
     }
   }
 
@@ -84,5 +104,5 @@ export function useAssistant() {
     setError(null);
   }
 
-  return { messages, isThinking, error, ask, reset, displayName };
+  return { messages, status, streamingId, error, ask, reset, displayName };
 }

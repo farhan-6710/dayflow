@@ -1,7 +1,8 @@
 /**
- * DayFlow assistant: one Gemini turn for the signed-in user.
+ * DayFlow assistant: one streamed Gemini turn for the signed-in user.
  * The Gemini key, the system instructions and the tool list stay here; the browser sends the
- * conversation, runs any tool calls with its own Supabase session, and calls again.
+ * conversation, runs any tool calls with its own Supabase session, and calls again. The reply is
+ * NDJSON: `text` events while Gemini writes, then `done` with the full turn, or `error`.
  *
  * Deploy:  supabase functions deploy assistant
  * Secret:  supabase secrets set GEMINI_API_KEY=...
@@ -9,7 +10,7 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 import { buildAssistantInstructions, type AssistantContext } from "./assistantInstructions.ts";
-import { generateTurn, type AssistantContent } from "./gemini.ts";
+import { streamTurn, type AssistantContent } from "./gemini.ts";
 
 const MAX_CONTENTS = 40;
 const MAX_TEXT = 4_000;
@@ -22,6 +23,18 @@ const CORS_HEADERS = {
 
 function reply(body: Record<string, unknown>, status: number): Response {
   return Response.json(body, { status, headers: { ...CORS_HEADERS, "Cache-Control": "no-store" } });
+}
+
+type StreamEvent = { type: "text"; text: string } | { type: "done"; content: AssistantContent } | { type: "error"; error: string };
+
+/** Turns an internal error into a message that is safe to show, and logs the original. */
+function friendlyError(error: unknown): string {
+  const message = error instanceof Error ? error.message : "unknown";
+  console.error("[assistant]", message);
+  if (message.includes("GEMINI_API_KEY")) return "The assistant is not configured yet.";
+  if (message === "FREE_QUOTA") return "The assistant has used today's free quota. Try again later.";
+  if (message.startsWith("That message was blocked")) return message;
+  return "The assistant is unavailable right now. Try again in a moment.";
 }
 
 /** Only accepts what the web client sends, within limits that keep one call cheap. */
@@ -60,17 +73,23 @@ Deno.serve(async (request) => {
   const body = parseBody(await request.json().catch(() => null));
   if (!body) return reply({ ok: false, error: "Invalid request." }, 400);
 
-  try {
-    const content = await generateTurn(buildAssistantInstructions(body.context), body.contents);
-    return reply({ ok: true, content }, 200);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "unknown";
-    console.error("[assistant]", message);
-    const friendly = message.includes("GEMINI_API_KEY")
-      ? "The assistant is not configured yet."
-      : message === "FREE_QUOTA"
-        ? "The assistant has used today's free quota. Try again later."
-        : "The assistant is unavailable right now. Try again in a moment.";
-    return reply({ ok: false, error: friendly }, message === "FREE_QUOTA" ? 429 : 502);
-  }
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const send = (event: StreamEvent) => controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
+      try {
+        const content = await streamTurn(buildAssistantInstructions(body.context), body.contents, (text) => send({ type: "text", text }));
+        send({ type: "done", content });
+      } catch (error) {
+        send({ type: "error", error: friendlyError(error) });
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    status: 200,
+    headers: { ...CORS_HEADERS, "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-store" },
+  });
 });

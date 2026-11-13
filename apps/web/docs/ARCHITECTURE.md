@@ -63,7 +63,7 @@ Shared by web and mobile: see [DATABASE.md](../../../docs/DATABASE.md). The tabl
 |------|-------|
 | Env | `apps/web/.env` (untracked): `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`; `VITE_APP_ORIGIN` optional (desktop OAuth bridge origin); `SEED_EMAIL`, `SEED_PASSWORD` for local seed scripts only. Mobile: see its own [ARCHITECTURE.md](../../mobile/docs/ARCHITECTURE.md). |
 | Migrations | `scripts/migrations/` (001–037), append-only. The rebuild adds none. |
-| Assistant | Supabase Edge Function `supabase/functions/assistant` (repo root). Secrets in `supabase/functions/.env` (untracked; template `.env.example`): `GEMINI_API_KEY` (required), `GEMINI_MODEL` (optional, free-tier models only, default `gemini-3.6-flash`). Push with `supabase secrets set --env-file supabase/functions/.env`, deploy with `supabase functions deploy assistant`. The demo account is `dayflow.demo@gmail.com` / `Dayflow@1234`. |
+| Assistant | Supabase Edge Function `supabase/functions/assistant` (repo root). Secrets in `supabase/functions/.env` (untracked; template `.env.example`): `GEMINI_API_KEY` (required). The model is fixed in code to the free-tier `gemini-3.5-flash-lite`. Push with `supabase secrets set --env-file supabase/functions/.env`, deploy with `supabase functions deploy assistant`. The demo account is `dayflow.demo@gmail.com` / `Dayflow@1234`. |
 | Hosting | https://bisque-gull-237581.hostingersite.com (Hostinger). Desktop releases: https://github.com/farhan-6710/dayflow/releases |
 
 ### Auth redirect paths (keep identical)
@@ -102,9 +102,12 @@ The old web app is at commit `b1335f3` under `apps/web/`. Restore a path with `g
 
 ## Assistant
 
-The workspace header's ✨ button (⌘J) opens `features/workspace/assistant/`, a sheet that talks to Gemini
+Tempo, the floating bottom-right button (⌘J), opens `features/workspace/assistant/`, a sheet that talks to Gemini
 through the `assistant` Edge Function. The function holds the key, the system instructions
 (`assistantInstructions.ts`) and the tool declarations (`assistantTools.ts`), and rejects callers without a
 valid Supabase session. The browser runs every tool call itself (`assistant/utils/assistantTools.ts`) through
 the normal services, so RLS limits the assistant to the user's own rows. `useAssistant` loops: ask, run
-tools, send results, until Gemini answers in text. Replies link only to in-app paths returned by tools.
+tools, send results, until Gemini answers in text. Each turn streams: the function relays Gemini's SSE as
+NDJSON (`text` pieces, then `done` with the full turn), and `assistantService` reads it with plain `fetch`
+because `supabase.functions.invoke` waits for the whole body. New words fade in as they arrive. Replies link
+only to in-app paths returned by tools.

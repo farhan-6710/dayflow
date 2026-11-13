@@ -13,5 +13,6 @@ export const ASSISTANT_SUGGESTIONS: AssistantSuggestion[] = [
   { label: "Summarize my projects", icon: FolderKanban },
 ];
 
-export const ASSISTANT_NAME = "DayFlow Assistant";
+/** Matches ASSISTANT_NAME in supabase/functions/assistant/assistantInstructions.ts. */
+export const ASSISTANT_NAME = "Flowy";
 export const ASSISTANT_SHORTCUT_KEY = "j";

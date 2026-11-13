@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { PageOutlet } from "@/shared/components/PageOutlet";
+import { RouteTransition } from "@/shared/components/RouteTransition";
 import { ShellHeader } from "@/shared/components/ShellHeader";
 import { ShellMobileNavSheet } from "@/shared/components/ShellMobileNavSheet";
 import { ShellSidebar } from "@/shared/components/ShellSidebar";
@@ -53,6 +54,7 @@ export function AppShellLayout({
             onOpenChange={setIsMobileNavOpen}
             description={mobileNavDescription}
           />
+          <RouteTransition />
         </TooltipProvider>
       </BreadcrumbTrailContext.Provider>
     </UnsavedChangesProvider>

@@ -15,30 +15,64 @@ export interface AssistantContent {
 
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models";
 /**
- * Free-tier models only (Google AI Studio pricing, Nov 2026). Paid-only models such as gemini-4-carbon,
- * gemini-4-argon and gemini-3.1-pro are never sent, even if GEMINI_MODEL names one.
+ * Fixed to a free-tier model with the largest free request allowance. Not configurable on purpose,
+ * so no environment setting can switch the assistant to a paid model.
  */
-const FREE_MODELS = ["gemini-3.6-flash", "gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-4-hydrogen"];
-const DEFAULT_MODEL = "gemini-3.6-flash";
-
-function pickModel(requested: string | undefined): string {
-  return requested && FREE_MODELS.includes(requested) ? requested : DEFAULT_MODEL;
-}
+const MODEL = "gemini-3.5-flash-lite";
 const TIMEOUT_MS = 30_000;
 
-interface GeminiResponse {
-  candidates?: { content?: AssistantContent }[];
+interface GeminiChunk {
+  candidates?: { content?: { parts?: AssistantPart[] } }[];
   promptFeedback?: { blockReason?: string };
   error?: { message?: string };
 }
 
-/** One generateContent call. Returns the model's turn untouched, so thought signatures survive the round trip. */
-export async function generateTurn(systemInstruction: string, contents: AssistantContent[]): Promise<AssistantContent> {
+function isPlainText(part: AssistantPart): boolean {
+  return typeof part.text === "string" && !part.functionCall && !part.thought;
+}
+
+/**
+ * Streamed text arrives in many small parts; joins them back into one so the turn sent back to
+ * Gemini looks like a normal reply. A thought signature on a later piece moves onto the joined part.
+ */
+function appendPart(parts: AssistantPart[], part: AssistantPart): AssistantPart[] {
+  const last = parts.at(-1);
+  if (last && isPlainText(last) && !last.thoughtSignature && isPlainText(part)) {
+    return [...parts.slice(0, -1), { ...last, ...part, text: `${last.text}${part.text}` }];
+  }
+  return [...parts, part];
+}
+
+/** Yields each JSON payload of a server-sent-events response. */
+async function* readEvents(body: ReadableStream<Uint8Array>): AsyncGenerator<GeminiChunk> {
+  const reader = body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    buffer += decoder.decode(value, { stream: !done });
+    const lines = buffer.split(/\r?\n/);
+    buffer = done ? "" : (lines.pop() ?? "");
+    for (const line of lines) {
+      if (line.startsWith("data:")) yield JSON.parse(line.slice(5)) as GeminiChunk;
+    }
+    if (done) return;
+  }
+}
+
+/**
+ * One streamed generateContent call. `onText` receives each piece of answer text as Gemini sends
+ * it; the full turn is returned at the end so the browser can send it back with signatures intact.
+ */
+export async function streamTurn(
+  systemInstruction: string,
+  contents: AssistantContent[],
+  onText: (text: string) => void,
+): Promise<AssistantContent> {
   const apiKey = Deno.env.get("GEMINI_API_KEY");
   if (!apiKey) throw new Error("GEMINI_API_KEY is not set.");
-  const model = pickModel(Deno.env.get("GEMINI_MODEL") ?? undefined);
 
-  const response = await fetch(`${GEMINI_URL}/${model}:generateContent`, {
+  const response = await fetch(`${GEMINI_URL}/${MODEL}:streamGenerateContent?alt=sse`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
     signal: AbortSignal.timeout(TIMEOUT_MS),
@@ -49,12 +83,24 @@ export async function generateTurn(systemInstruction: string, contents: Assistan
       generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
     }),
   });
-  const data = (await response.json()) as GeminiResponse;
 
   if (response.status === 429) throw new Error("FREE_QUOTA");
-  if (!response.ok) throw new Error(data.error?.message ?? `Gemini returned ${response.status}.`);
-  if (data.promptFeedback?.blockReason) throw new Error("That message was blocked. Try rephrasing it.");
-  const content = data.candidates?.[0]?.content;
-  if (!content?.parts?.length) throw new Error("The assistant had no answer. Try asking another way.");
-  return { role: "model", parts: content.parts };
+  if (!response.ok || !response.body) {
+    const data = (await response.json().catch(() => null)) as GeminiChunk | null;
+    throw new Error(data?.error?.message ?? `Gemini returned ${response.status}.`);
+  }
+
+  let parts: AssistantPart[] = [];
+  for await (const chunk of readEvents(response.body)) {
+    if (chunk.error) throw new Error(chunk.error.message ?? "Gemini stopped answering.");
+    if (chunk.promptFeedback?.blockReason) throw new Error("That message was blocked. Try rephrasing it.");
+    for (const part of chunk.candidates?.[0]?.content?.parts ?? []) {
+      if (part.text && !part.thought) onText(part.text);
+      parts = appendPart(parts, part);
+    }
+  }
+
+  const kept = parts.filter((part) => part.functionCall || part.thoughtSignature || part.text);
+  if (!kept.length) throw new Error("The assistant had no answer. Try asking another way.");
+  return { role: "model", parts: kept };
 }

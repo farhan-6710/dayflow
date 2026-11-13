@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router";
 
 import { router } from "@/app/router";
 import { useTauriOAuthDeepLink } from "@/shared/auth/hooks/useTauriOAuthDeepLink";
+import { AppOpener } from "@/shared/components/AppOpener";
 import { AuthProvider } from "@/shared/providers/AuthProvider";
 import { ThemeProvider } from "@/shared/providers/ThemeProvider";
 import { Toaster } from "@/shared/ui/sonner";
@@ -24,7 +25,9 @@ export function App() {
       <LazyMotion features={domAnimation} strict>
         <AuthProvider>
           <ThemeProvider>
-            <AppShell />
+            <AppOpener>
+              <AppShell />
+            </AppOpener>
           </ThemeProvider>
         </AuthProvider>
       </LazyMotion>

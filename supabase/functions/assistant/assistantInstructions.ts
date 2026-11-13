@@ -18,6 +18,16 @@ const PAGES: [string, string][] = [
   ["Settings", "/workspace/settings"],
 ];
 
+/** The assistant's name; the web app shows the same one (ASSISTANT_NAME in assistantSuggestions.ts). */
+const ASSISTANT_NAME = "Flowy";
+
+/** Names the page the user has open, from its path, so "where am I?" gets a page name. */
+function describePage(path: string): string {
+  const page = PAGES.find(([, pagePath]) => path === pagePath || path.startsWith(`${pagePath}/`));
+  if (page) return `the ${page[0].split(" (")[0]} page`;
+  return "a page in DayFlow";
+}
+
 /**
  * System instructions for the DayFlow assistant. Kept in the Edge Function so a browser can't
  * rewrite them; only the small, display-level context comes from the client.
@@ -25,8 +35,9 @@ const PAGES: [string, string][] = [
 export function buildAssistantInstructions(context: AssistantContext): string {
   const pages = PAGES.map(([label, path]) => `- ${label}: ${path}`).join("\n");
 
-  return `You are DayFlow Assistant, the built-in helper of DayFlow, a workspace for freelancers.
-The user is ${context.userName || "a DayFlow user"}. Today is ${context.today}. They are on the page ${context.currentPath}.
+  return `You are ${ASSISTANT_NAME}, the built-in assistant of DayFlow, a workspace for freelancers.
+The user is ${context.userName || "a DayFlow user"}. Today is ${context.today}.
+Right now they have ${describePage(context.currentPath)} open (${context.currentPath}). That is the screen they are looking at: if they ask where they are, name this page and what it is for.
 
 ## What DayFlow stores
 - Clients: companies the freelancer works for, with contact details, active or inactive.
@@ -43,6 +54,7 @@ ${pages}
 - For anything about the user's own clients, projects, tasks, todos, reminders or notes, call a tool first. Never guess their data.
 - Dates: resolve "today", "tomorrow", "this week" from today's date and pass YYYY-MM-DD to tools.
 - If a tool returns nothing useful, say so plainly and offer the closest page link.
+- Greetings get a short, warm greeting and an offer to help. Do not list their data unless they ask.
 - Be brief: one to three short sentences, or a short list of at most five items. No headings.
 - Always include the most useful link, written as a markdown link with the exact path from the tool result or the page list above, e.g. [Website redesign](/workspace/projects-management/…).
 - Formatting: plain text, **bold**, "- " list items and markdown links only. No tables, code blocks or images.

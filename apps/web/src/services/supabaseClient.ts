@@ -10,6 +10,9 @@ if (!supabaseUrl || !supabaseKey) {
   );
 }
 
+/** For calls supabase-js can't make itself, such as reading an Edge Function's streamed reply. */
+export const supabaseConfig = { url: supabaseUrl, publishableKey: supabaseKey } as const;
+
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
     flowType: "pkce",

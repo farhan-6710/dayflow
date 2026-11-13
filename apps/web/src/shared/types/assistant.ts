@@ -21,6 +21,15 @@ export type AssistantContext = {
   currentPath: string;
 };
 
+/**
+ * One line of the Edge Function's NDJSON stream: answer text as Gemini sends it, then the
+ * finished turn (to keep in the history), or an error.
+ */
+export type AssistantStreamEvent =
+  | { type: "text"; text: string }
+  | { type: "done"; content: AssistantContent }
+  | { type: "error"; error: string };
+
 /** One bubble in the chat. Tool traffic stays in the history, not on screen. */
 export type AssistantMessage = {
   id: string;

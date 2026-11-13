@@ -144,6 +144,27 @@ export type DayFlowLogoProps = {
   className?: string;
 };
 
+export type RouteTransitionWindowProps = {
+  isNavigating: boolean;
+};
+
+export type TransitionLogoMarkTiming = {
+  lineWidthDelay: number;
+  lineDuration: number;
+  lineOpacityDelay: number;
+  logoEnterDuration: number;
+  logoExitDelay: number;
+  logoExitDuration: number;
+};
+
+export type TransitionLogoMarkProps = {
+  timing: TransitionLogoMarkTiming;
+};
+
+export type AppOpenerProps = {
+  children: ReactNode;
+};
+
 export type UserAvatarProps = {
   src?: string | null;
   initials: string;
