@@ -40,28 +40,28 @@ function ScreenWindow() {
   return (
     <div className="relative mx-auto w-full max-w-6xl">
       <ScreenFrame>
-          {SITE_SCREEN_ORDER.map((id) => {
-            const screen = SITE_SCREENS[id];
-            return (
-              <TabsContent
-                key={id}
-                value={id}
-                forceMount
-                className="absolute inset-0 transition-opacity duration-500 data-[state=inactive]:pointer-events-none data-[state=inactive]:opacity-0"
-              >
-                <img
-                  src={isDark ? screen.dark : screen.light}
-                  alt={screen.alt}
-                  width={SITE_SCREEN_SIZE.width}
-                  height={SITE_SCREEN_SIZE.height}
-                  fetchPriority={id === FIRST_SCREEN ? "high" : "low"}
-                  decoding="async"
-                  draggable={false}
-                  className="size-full object-cover object-top select-none"
-                />
-              </TabsContent>
-            );
-          })}
+        {SITE_SCREEN_ORDER.map((id) => {
+          const screen = SITE_SCREENS[id];
+          return (
+            <TabsContent
+              key={id}
+              value={id}
+              forceMount
+              className="absolute inset-0 transition-opacity duration-500 data-[state=inactive]:pointer-events-none data-[state=inactive]:opacity-0"
+            >
+              <img
+                src={isDark ? screen.dark : screen.light}
+                alt={screen.alt}
+                width={SITE_SCREEN_SIZE.width}
+                height={SITE_SCREEN_SIZE.height}
+                fetchPriority={id === FIRST_SCREEN ? "high" : "low"}
+                decoding="async"
+                draggable={false}
+                className="size-full object-cover object-top select-none"
+              />
+            </TabsContent>
+          );
+        })}
       </ScreenFrame>
       {/* The window runs into the next section instead of ending on a hard edge. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent" />
