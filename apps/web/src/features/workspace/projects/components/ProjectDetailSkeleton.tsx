@@ -15,7 +15,9 @@ export function ProjectDetailSkeleton() {
         actions={<div className="h-10 w-40 rounded-lg" />}
       />
       <div className="grid min-w-0 grid-cols-1 gap-4">
-        <div className="h-10 w-96 max-w-full rounded-lg" />
+        <div className="border-b border-border pb-3">
+          <div className="h-10 w-96 max-w-full rounded-lg" />
+        </div>
         <ActivitySummaryStats rows={null} />
         <div className="grid min-w-0 items-start gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
           <DirectoryTable

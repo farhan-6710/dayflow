@@ -10,6 +10,7 @@ import {
   WORKSPACE_SETTINGS_PATH,
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
+import { AssistantLauncher } from "@/features/workspace/assistant/components/AssistantLauncher";
 import { useReminderAlerts } from "@/features/workspace/layouts/useReminderAlerts";
 import { NotificationsHeaderButton } from "@/features/workspace/notifications/components/NotificationsHeaderButton";
 import { BRAND_NAME, brandManifest } from "@/shared/brand/brandManifest";
@@ -46,11 +47,14 @@ export function AppLayout() {
   useReminderAlerts();
 
   return (
-    <AppShellLayout
-      sidebarConfig={sidebarConfig}
-      signOutRedirect={WORKSPACE_AUTH_PATH}
-      headerActions={<NotificationsHeaderButton />}
-      mobileNavDescription={`${BRAND_NAME} workspace navigation`}
-    />
+    <>
+      <AppShellLayout
+        sidebarConfig={sidebarConfig}
+        signOutRedirect={WORKSPACE_AUTH_PATH}
+        headerActions={<NotificationsHeaderButton />}
+        mobileNavDescription={`${BRAND_NAME} workspace navigation`}
+      />
+      <AssistantLauncher />
+    </>
   );
 }
