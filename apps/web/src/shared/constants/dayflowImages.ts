@@ -4,7 +4,6 @@ export type DayflowIconName =
   | "stat-projects"
   | "stat-completed"
   | "stat-tasks"
-  | "stat-rate"
   | "stat-notes"
   | "stat-meetings"
   | "stat-calls"

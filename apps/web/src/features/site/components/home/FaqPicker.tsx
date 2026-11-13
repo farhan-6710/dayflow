@@ -13,7 +13,7 @@ export function FaqPicker({ items }: FaqPickerProps) {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
-      <div aria-live="polite" className="order-2 flex flex-col justify-center rounded-xl border border-chart-1/30 bg-background p-6 sm:p-8 lg:order-none">
+      <div aria-live="polite" className="order-2 flex flex-col justify-center rounded-xl border border-foreground/15 bg-background p-6 sm:p-8 lg:order-none">
         <p className="m-0 font-serif text-lg text-muted-foreground italic">{FAQ.aside}</p>
         <p className="mt-2 mb-0 text-xs text-muted-foreground tabular-nums">
           Question {pad(activeIndex + 1)} of {pad(items.length)}

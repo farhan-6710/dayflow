@@ -1,38 +1,43 @@
-import { useRef } from "react";
-import { m, useScroll, useTransform } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
+import { ScreenFrame } from "@/features/site/components/section/ScreenFrame";
 import { SiteLinkButton } from "@/features/site/components/section/SiteLinkButton";
 import { CHAPTER_EASE } from "@/features/site/constants/siteMotion";
+import { SITE_SCREEN_SIZE, SITE_SCREENS } from "@/features/site/constants/siteScreens";
 import type { FeatureChapterProps } from "@/features/site/types/components";
-import { DayflowImage } from "@/shared/components/DayflowImage";
+import { useThemeMode } from "@/shared/hooks/useThemeMode";
 
 /** Rises in once its top reaches 88% of the screen (GSAP "top 88%" in the original). */
 const CHAPTER_VIEWPORT = { once: true, margin: "0px 0px -12% 0px" };
 
-/** One vertical chapter on the features rail: art that eases in as it passes, then the copy. */
+/** One vertical chapter on the features rail: a workspace screenshot that eases in as it passes, then the copy. */
 export function FeatureChapter({ feature, index }: FeatureChapterProps) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
   const number = String(index + 1).padStart(2, "0");
+  const { isDark } = useThemeMode();
+  const screen = SITE_SCREENS[feature.screen];
 
   return (
-    <article ref={ref} data-index={index} className="flex min-h-[min(78vh,44rem)] flex-col justify-center gap-7 py-12 lg:py-16">
+    <article data-index={index} className="flex min-h-[min(78vh,44rem)] flex-col justify-center gap-7 py-12 lg:py-16">
       <m.div
         initial={{ opacity: 0, y: 56 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={CHAPTER_VIEWPORT}
         transition={{ duration: 0.9, ease: CHAPTER_EASE }}
-        className="relative aspect-[16/11] overflow-hidden rounded-xl border border-border bg-card sm:aspect-[5/3]"
       >
-        <m.div style={{ scale: imageScale }} className="flex size-full items-center justify-center">
-          <DayflowImage name={feature.image} className="h-[62%] w-auto" />
-        </m.div>
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/60 to-transparent px-5 pt-16 pb-5 text-primary-foreground">
-          <p className="m-0 font-heading text-4xl tabular-nums opacity-85">{number}</p>
-        </div>
+        <ScreenFrame className="shadow-lg">
+          <img
+            src={isDark ? screen.dark : screen.light}
+            alt={screen.alt}
+            width={SITE_SCREEN_SIZE.width}
+            height={SITE_SCREEN_SIZE.height}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+            className="absolute inset-0 size-full object-cover object-top select-none"
+          />
+        </ScreenFrame>
       </m.div>
 
       <m.div

@@ -31,7 +31,7 @@ export function SpotlightSection() {
         </div>
         <div className="min-w-0">
           <BlurIn delay={0.12}>
-            <div className="rounded-lg border border-chart-1/30 bg-background p-5 sm:p-6">
+            <div className="rounded-lg border border-foreground/15 bg-background p-5 sm:p-6">
               <p className="m-0 font-serif text-2xl text-foreground italic sm:text-3xl">“{BRAND_TAGLINE}”</p>
               <p className="mt-3 mb-0 text-sm text-muted-foreground">{SPOTLIGHT.citation}</p>
             </div>

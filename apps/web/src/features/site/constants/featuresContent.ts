@@ -4,15 +4,26 @@ import type { FeatureChapterItem } from "@/features/site/types/components";
 export const FEATURES_BLOCK = {
   pill: "Our features",
   title: "Everything a freelance day needs",
-  lead: "Six parts of one workspace, each built around the way client work actually moves.",
+  lead: "Five parts of one workspace, each built around the way client work actually moves.",
   cta: { label: "See all features" },
 };
 
 export const FEATURE_CHAPTERS: FeatureChapterItem[] = [
   {
+    slug: "insights",
+    title: "Dashboard and analytics",
+    screen: "dashboard",
+    summary: "See what's done, what's due and how the week is going.",
+    benefits: [
+      "Stat cards with date filters",
+      "A task completion chart and a time tracker",
+      "Status and notes-per-project analytics",
+    ],
+  },
+  {
     slug: "clients",
     title: "Clients",
-    image: "icon-empty-clients",
+    screen: "clients",
     summary: "Keep every client's details, contacts and conversations on one record.",
     benefits: [
       "Company, main contact and a secondary contact on one card",
@@ -23,7 +34,7 @@ export const FEATURE_CHAPTERS: FeatureChapterItem[] = [
   {
     slug: "projects",
     title: "Projects and notes",
-    image: "icon-empty-projects",
+    screen: "projects",
     summary: "Track client and personal projects, with notes and reference links beside the work.",
     benefits: [
       "Client or personal projects, active or inactive",
@@ -34,7 +45,7 @@ export const FEATURE_CHAPTERS: FeatureChapterItem[] = [
   {
     slug: "calendar",
     title: "Tasks calendar",
-    image: "icon-empty-tasks",
+    screen: "calendar",
     summary: "Plan the day on a month, week or hour-by-hour day view.",
     benefits: [
       "Month, week and day timelines",
@@ -43,36 +54,14 @@ export const FEATURE_CHAPTERS: FeatureChapterItem[] = [
     ],
   },
   {
-    slug: "activities",
-    title: "Client activities",
-    image: "icon-empty-activities",
-    summary: "Log tasks, meetings and calls against each project, raised by you or by your client.",
-    benefits: [
-      "Tasks, meetings and calls per project",
-      "Clients raise their own requests from the portal",
-      "See who raised what at a glance",
-    ],
-  },
-  {
     slug: "reminders",
     title: "Daily reminders",
-    image: "icon-empty-reminders",
+    screen: "reminders",
     summary: "Recurring reminders for the follow-ups that keep work moving.",
     benefits: [
       "Choose the days and the time once",
       "Pause a reminder until a date",
       "Alerts arrive in your notifications while DayFlow is open",
-    ],
-  },
-  {
-    slug: "insights",
-    title: "Dashboard and analytics",
-    image: "icon-stat-rate",
-    summary: "See what's done, what's due and how the week is going.",
-    benefits: [
-      "Stat cards with date filters",
-      "A task completion chart and a time tracker",
-      "Status and notes-per-project analytics",
     ],
   },
 ];

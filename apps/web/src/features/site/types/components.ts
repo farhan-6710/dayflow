@@ -1,7 +1,6 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 
-import type { DayflowImageName } from "@/shared/constants/dayflowImages";
 
 export type FloatingIconName =
   | "calendar"
@@ -60,10 +59,16 @@ export type SiteLinkButtonProps = {
   children: ReactNode;
 };
 
+export type SiteScreenId = "dashboard" | "clients" | "projects" | "calendar" | "reminders";
+
+/** One workspace page captured for the site, in both themes. */
+export type SiteScreen = { id: SiteScreenId; label: string; alt: string; light: string; dark: string };
+
 export type FeatureChapterItem = {
   slug: string;
   title: string;
-  image: DayflowImageName;
+  /** Which workspace capture (see `siteScreens.ts`) illustrates this chapter. */
+  screen: SiteScreenId;
   summary: string;
   benefits: string[];
 };

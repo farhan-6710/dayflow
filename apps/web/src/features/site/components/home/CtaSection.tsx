@@ -10,7 +10,7 @@ import { CTA } from "@/features/site/constants/homeContent";
 export function CtaSection({ tone = "card" }: { tone?: "card" | "paper" }) {
   return (
     <PageSection tone={tone} icons={FLOATING_ICONS.cta} defer>
-      <div className="flex flex-col items-center gap-8 rounded-xl border border-chart-1/40 bg-background px-6 py-12 text-center sm:px-12">
+      <div className="flex flex-col items-center gap-8 rounded-xl border border-foreground/15 bg-background px-6 py-12 text-center sm:px-12">
         <SectionIntro eyebrow={CTA.pill} title={CTA.title} lead={CTA.text} center />
         <BlurIn delay={0.2}>
           <SiteLinkButton to={WORKSPACE_DASHBOARD_PATH} size="xl">Open Workspace</SiteLinkButton>

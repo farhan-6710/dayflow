@@ -10,6 +10,7 @@ import { HEADER_EASE } from "@/features/site/constants/siteMotion";
 import { useScrolled } from "@/features/site/hooks/useScrolled";
 import { BRAND_NAME } from "@/shared/brand/brandManifest";
 import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
+import { ThemeToggle } from "@/shared/components/ThemeToggle";
 import { cn } from "@/shared/lib/utils";
 
 const transition = { duration: 0.45, ease: HEADER_EASE };
@@ -51,10 +52,13 @@ export function Header() {
           <div className="hidden lg:block">
             <HeaderNavLinks />
           </div>
-          <div className="hidden lg:block">
-            <WorkspaceButton />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <div className="hidden lg:block">
+              <WorkspaceButton />
+            </div>
+            <MenuToggle open={open} onToggle={() => setOpen((value) => !value)} />
           </div>
-          <MenuToggle open={open} onToggle={() => setOpen((value) => !value)} />
         </div>
         <AnimatePresence initial={false}>
           {open ? (

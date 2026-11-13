@@ -2,11 +2,6 @@ import { CalendarCheck, FolderPlus, Handshake, UserPlus } from "lucide-react";
 
 import type { ProcessStep, SpotlightStat, UseCase } from "@/features/site/types/components";
 
-export const HERO = {
-  eyebrow: "The freelancer workspace",
-  points: ["Workspace and client portal", "Light and dark", "Web and desktop"],
-};
-
 export const INTRO_STRIP = "Two portals, one workspace: see how DayFlow keeps you and your clients in step";
 
 /** Eatrrite's founder spotlight, told as why DayFlow exists (no invented people or numbers). */
