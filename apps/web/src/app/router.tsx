@@ -19,7 +19,15 @@ import {
   WORKSPACE_PROJECTS_MANAGEMENT_PATH,
   WORKSPACE_TASKS_CALENDAR_PATH,
 } from "@/app/constants/workspaceRoutes";
+import {
+  SITE_ABOUT_PATH,
+  SITE_CONTACT_PATH,
+  SITE_FEATURES_PATH,
+  SITE_HOME_PATH,
+  SITE_HOW_IT_WORKS_PATH,
+} from "@/app/constants/siteRoutes";
 import { lazyRoutePage } from "@/app/lazyRoute";
+import { SiteLayout } from "@/features/site/layouts/SiteLayout";
 import { ClientProtectedRoute } from "@/features/client/auth/components/ClientProtectedRoute";
 import { ClientPublicRoute } from "@/features/client/auth/components/ClientPublicRoute";
 import { ClientAppLayout } from "@/features/client/layouts/ClientAppLayout";
@@ -29,6 +37,11 @@ import { AppLayout } from "@/features/workspace/layouts/AppLayout";
 import { CenteredLoading } from "@/shared/components/CenteredLoading";
 import { RouteErrorPage } from "@/shared/pages/RouteErrorPage";
 
+const SiteHomePage = lazyRoutePage(() => import("@/features/site/pages/HomePage"), "HomePage");
+const SiteFeaturesPage = lazyRoutePage(() => import("@/features/site/pages/FeaturesPage"), "FeaturesPage");
+const SiteHowItWorksPage = lazyRoutePage(() => import("@/features/site/pages/HowItWorksPage"), "HowItWorksPage");
+const SiteAboutPage = lazyRoutePage(() => import("@/features/site/pages/AboutPage"), "AboutPage");
+const SiteContactPage = lazyRoutePage(() => import("@/features/site/pages/ContactPage"), "ContactPage");
 const AuthPage = lazyRoutePage(
   () => import("@/features/workspace/auth/pages/AuthPage"),
   "AuthPage",
@@ -136,7 +149,18 @@ function redirect(path: string, to: string) {
 }
 
 export const router = createBrowserRouter([
-  { path: "/", element: <LegacyPathRedirect /> },
+  {
+    path: SITE_HOME_PATH,
+    element: <SiteLayout />,
+    errorElement: <RouteErrorPage />,
+    children: [
+      { index: true, element: <SiteHomePage /> },
+      { path: SITE_FEATURES_PATH, element: <SiteFeaturesPage /> },
+      { path: SITE_HOW_IT_WORKS_PATH, element: <SiteHowItWorksPage /> },
+      { path: SITE_ABOUT_PATH, element: <SiteAboutPage /> },
+      { path: SITE_CONTACT_PATH, element: <SiteContactPage /> },
+    ],
+  },
   { path: `${LEGACY_ADMIN_PORTAL_PREFIX}/*`, element: <LegacyPathRedirect /> },
   { path: OAUTH_CALLBACK_PATH, element: <OAuthCallbackPage />, errorElement: <RouteErrorPage /> },
   {

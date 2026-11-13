@@ -40,6 +40,8 @@ Durable context for the web app. Project-wide decisions (database, order of work
 - Skeletons stay on phantom-ui. The first fix corrected how elements are measured. The second wraps self-loading panels (`DirectoryTable`, todo list, activities block, day panel) whole, because a panel inside `Reveal` animated in late and looked like only the stat cards had skeletons.
 - The user menu's Profile and Settings both open the settings page, since profile is a card there and no separate page exists. Help & support links to the repo's GitHub issues (`shared/constants/support.ts`) because no support contact exists yet.
 
+- 2026-11-13: the public website replaced the `/` → dashboard redirect. Eatrrite's founder spotlight and testimonials became a "why we built it" spotlight and role-based use cases, because DayFlow has no real founder photo, reviews or user numbers to show; inventing them would publish fake reviews.
+
 ## Ops
 
 - Logos are generated: `apps/web/scripts/recolor-logos.py` reads the colours from `shared/brand/theme.json` and rebuilds both themes from the dark masters, then the WebP marks and favicons; the mobile icons need regenerating separately (see `apps/mobile/docs/MEMORY.md`). The README banner image still has the old gold logo baked in.

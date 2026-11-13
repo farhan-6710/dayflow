@@ -105,6 +105,12 @@ Moved to Flutter, tracked in [apps/mobile/docs/TASKS.md](../../mobile/docs/TASKS
 - [~] Client-side chat in the portal (may need new RLS)
 - [~] Mobile push events
 
+## Phase 8: Public website
+
+- [x] Home, Features, How it works, About and Contact pages at `/`, outside the guards, following eatrrite.com's section layouts and motion
+- [ ] Owner review of the copy and layout
+- [ ] Real testimonials and a founder photo, if the owner wants eatrrite's original content types (needs consent)
+
 ## Later
 
 - [x] Desktop app (Tauri): `src-tauri/` set up, builds, branded icons

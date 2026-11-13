@@ -78,6 +78,16 @@ Route changes inside the shell play the shutter transition ported from ShopNow's
 
 Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. The sign-in demo card is the one exception: it slides in from the right after 1 second. The demo buttons are the one place `success` (green) fills a button, to draw the eye there. `success`, `success-foreground` and `success-text` are the only tokens beyond the original paper-and-coral set: they also colour `StatusPill` and `SummaryStats` chips, and `success-text` is the readable green for small text. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
 
+## Website
+
+The public pages (`features/site/`) copy the layout, spacing and motion of eatrrite.com's home sections at the owner's request, in DayFlow's tokens and type. The hero is DayFlow's own, and the site has no top bar.
+
+- **Header:** a full-width bar that turns into a floating blurred pill once the page scrolls 40px (maxWidth, margin, padding and radius animate over 450ms). The links have a coral underline, and the "Open Workspace" button goes to the guarded workspace, which shows sign-in when signed out.
+- **Sections:** `PageSection` alternates `bg-card` and `bg-background`, with a bottom hairline and faint drifting lucide icons on desktop. `SectionIntro` stacks an italic serif eyebrow, the heading, a coral rule, the lead and a faded coral count. Eyebrows stay in `muted-foreground`, since coral fails contrast as small text.
+- **Home order (eatrrite's):** hero, intro strip, spotlight (eatrrite's founder spotlight), marquee, features rail (eatrrite's programs), why DayFlow, working process, FAQs, use cases (eatrrite's testimonials), start your journey. Inner pages open with `PageBanner` and reuse these sections.
+- **Motion:** the website's own `BlurIn` reveal (24px rise, 8px blur, 700ms, starting when the element's top passes a quarter of the screen) replaces `Reveal` there. That is a deliberate exception to "entrance motion only through `Reveal`". Feature chapters rise in with framer-motion (power3-out) as their art scales from 1.12 while scrolling. The use-case carousel is Embla with a 4.5s autoplay, which is off under reduced motion.
+- **Content:** website copy lives in `features/site/constants/`. Brand name, tagline, description and portal features come from `brandManifest.json`. It contains no invented people, reviews, ratings or user counts.
+
 ## Accessibility
 
 Visible focus ring (`ring` token), labelled icon buttons, keyboard-operable drag and drop, 40px minimum touch targets, WCAG AA contrast in both themes.

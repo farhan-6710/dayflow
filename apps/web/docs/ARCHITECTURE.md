@@ -11,7 +11,7 @@ No sync service. **RLS is the access contract.** The database is read as-is; the
 
 ## Stack
 
-React 19 · TypeScript · Vite · React Router 7 · Tailwind 4 · shadcn/ui · lucide-react · framer-motion · phantom-ui · recharts · @dnd-kit · date-fns · sonner · next-themes · bun.
+React 19 · TypeScript · Vite · React Router 7 · Tailwind 4 · shadcn/ui · lucide-react · framer-motion · phantom-ui · recharts · @dnd-kit · date-fns · sonner · next-themes · embla-carousel (website only) · bun.
 
 ## Portals and routes
 
@@ -19,6 +19,7 @@ React 19 · TypeScript · Vite · React Router 7 · Tailwind 4 · shadcn/ui · l
 |--------|------|--------|--------|
 | Workspace | `/workspace` | `PublicRoute` for `/auth`, `ProtectedRoute` for the rest | `AppLayout` |
 | Client portal | `/client-portal` | `ClientPublicRoute`, `ClientProtectedRoute` | `ClientAppLayout` |
+| Website | `/`, `/features`, `/how-it-works`, `/about`, `/contact` | none (public) | `SiteLayout` (`features/site/`) |
 
 Both layouts wrap one shared `AppShellLayout` (header, left sidebar, main content area with `<Outlet />`) and differ only by config: nav items, quick-action card, header actions. The route list is `apps/web/src/app/router.tsx`.
 
@@ -32,6 +33,7 @@ apps/web/src/
     workspace/<feature>/          auth, layouts, dashboard, tasks, projects, clients-management,
                                   client-activities, reminders, notifications, analytics, settings
     client/                       auth, layouts, pages, hooks, providers
+    site/                         public website: layout (Header, footer), sections, pages, content constants
   services/                       supabaseClient.ts, db.ts, one <domain>Service.ts each
   shared/                         ui/ (shadcn), components/, layouts/, providers/, hooks/,
                                   lib/, utils/, constants/, types/, unsaved-changes/,
