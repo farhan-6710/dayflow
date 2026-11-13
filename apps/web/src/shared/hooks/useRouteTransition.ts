@@ -3,6 +3,7 @@ import { useReducedMotion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router";
 
 import { ROUTE_TRANSITION_ANIMATION as ANIM } from "@/shared/constants/routeTransition";
+import { useUserSettings } from "@/shared/hooks/useUserSettings";
 import { useUnsavedChangesContext } from "@/shared/unsaved-changes/unsavedChangesContext";
 
 /** The in-app destination of a plain left click on a link, or null to let the click through. */
@@ -37,19 +38,20 @@ export function useRouteTransition(): boolean {
   const location = useLocation();
   const reducedMotion = useReducedMotion();
   const { isDirty } = useUnsavedChangesContext();
+  const enabled = useUserSettings().settings.page_transitions && !reducedMotion;
 
-  const stateRef = useRef({ pathname: location.pathname, isDirty, reducedMotion, busy: false });
+  const stateRef = useRef({ pathname: location.pathname, isDirty, enabled, busy: false });
   useEffect(() => {
-    stateRef.current = { ...stateRef.current, pathname: location.pathname, isDirty, reducedMotion };
-  }, [location.pathname, isDirty, reducedMotion]);
+    stateRef.current = { ...stateRef.current, pathname: location.pathname, isDirty, enabled };
+  }, [location.pathname, isDirty, enabled]);
 
   useEffect(() => {
     let pushTimer: number | undefined;
 
     function onClick(event: MouseEvent) {
       const state = stateRef.current;
-      // Dirty forms keep their unsaved-changes prompt; reduced motion skips the effect.
-      if (state.isDirty || state.reducedMotion) {
+      // Dirty forms keep their unsaved-changes prompt; the setting or reduced motion turns it off.
+      if (state.isDirty || !state.enabled) {
         return;
       }
       const target = transitionTarget(event, state.pathname);

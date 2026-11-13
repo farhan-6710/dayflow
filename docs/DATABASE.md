@@ -41,7 +41,7 @@ Clients read activities of accessible projects and write only with `raised_by = 
 
 **Tables:**
 
-`profiles` (no `theme_preference` once migration 038 is applied), `projects`, `notes`, `project_reference_links`, `note_reference_links`, `clients`, `client_conversation_messages`, `tasks`, `todos`, `reminders`, `reminder_occurrences`, `notifications`, `client_activity_tasks`, `client_activity_meetings`, `client_activity_calls`, `expo_push_tokens`
+`profiles` (no `theme_preference` once migration 038 is applied), `projects`, `notes`, `project_reference_links`, `note_reference_links`, `clients`, `client_conversation_messages`, `tasks`, `todos`, `reminders`, `reminder_occurrences`, `notifications`, `client_activity_tasks`, `client_activity_meetings`, `client_activity_calls`, `expo_push_tokens`, `user_settings` (migration 040: one row per user of on/off preferences such as `page_transitions`; own row only through RLS; a missing row means the column defaults)
 
 **Functions and RPCs:**
 

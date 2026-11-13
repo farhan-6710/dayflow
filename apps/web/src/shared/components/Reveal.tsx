@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, type ComponentProps, type ElementType } from "react";
 import { m, useAnimationControls, useInView, useReducedMotion } from "framer-motion";
 
-import { entranceDelay, type EntranceKind } from "@/shared/lib/entranceMotion";
+import { entranceDelay, entrancesReleased, type EntranceKind } from "@/shared/lib/entranceMotion";
 import { SkeletonContext } from "@/shared/lib/skeletonContext";
 
 const EASE_OUT_SOFT = [0.22, 1, 0.36, 1] as const;
@@ -34,17 +34,27 @@ export function Reveal({ kind = "enter", as = "div", ...props }: RevealProps) {
     if (still || !ready || !ref.current) {
       return;
     }
-    const { hidden, duration } = ENTRANCES[kind];
-    const blurs = "filter" in hidden;
-    void controls.start({
-      opacity: 1,
-      x: 0,
-      y: 0,
-      ...(blurs ? { filter: "blur(0px)" } : {}),
-      transition: { delay: entranceDelay(kind, ref.current.parentElement), duration, ease: EASE_OUT_SOFT },
-      // A leftover filter would trap fixed children and blur text rendering.
-      ...(blurs ? { transitionEnd: { filter: "none" } } : {}),
+    let cancelled = false;
+    // Waits while a shutter transition covers the screen, so the entrance is seen.
+    void entrancesReleased().then(() => {
+      if (cancelled || !ref.current) {
+        return;
+      }
+      const { hidden, duration } = ENTRANCES[kind];
+      const blurs = "filter" in hidden;
+      void controls.start({
+        opacity: 1,
+        x: 0,
+        y: 0,
+        ...(blurs ? { filter: "blur(0px)" } : {}),
+        transition: { delay: entranceDelay(kind, ref.current.parentElement), duration, ease: EASE_OUT_SOFT },
+        // A leftover filter would trap fixed children and blur text rendering.
+        ...(blurs ? { transitionEnd: { filter: "none" } } : {}),
+      });
     });
+    return () => {
+      cancelled = true;
+    };
   }, [controls, kind, ready, still]);
 
   if (still) {

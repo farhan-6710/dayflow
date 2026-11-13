@@ -14,6 +14,7 @@ Durable, project-wide context. App-specific notes live in `apps/<app>/docs/MEMOR
 - `project_for`: `null` = personal, UUID = client project. `raised_by`: `workspace` | `client`. Projects use `is_active`, never archive.
 - Brand copy is only in `shared/brand/brandManifest.json`.
 - Theme is not stored per user. Each app follows the device and remembers a manual choice locally. Migration 038 drops `profiles.theme_preference` and first redefines `handle_new_user()`, which inserted that column. The owner applies it, only after the new web build is live (the deployed old build still selects the column). Never applied by an agent.
+- Per-user on/off settings (page transitions, notification preferences) live in `user_settings`, added by migration 040 at the owner's request (2026-11-13). The owner applies it. Until then the web settings page shows a load error and toggles fail with an error toast.
 - Stored times are display text such as "10:00 AM". Keep that format so web and mobile agree.
 - Sign-out uses `scope: "local"`, so signing out never ends other sessions on the shared demo account.
 

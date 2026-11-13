@@ -8,6 +8,17 @@ export type Profile = {
   updated_at: string;
 };
 
+/** On/off preferences from `user_settings` (migration 040). */
+export type UserSettings = {
+  page_transitions: boolean;
+  in_app_reminders: boolean;
+  email_updates: boolean;
+  desktop_alerts: boolean;
+  weekly_digest: boolean;
+};
+
+export type UserSettingKey = keyof UserSettings;
+
 export type Client = {
   id: string;
   owner_user_id: string;

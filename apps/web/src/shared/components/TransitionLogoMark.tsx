@@ -30,7 +30,7 @@ export function TransitionLogoMark({ timing }: TransitionLogoMarkProps) {
         <m.div
           animate={{ scale: 0, opacity: 0 }}
           transition={{ delay: timing.logoExitDelay, duration: timing.logoExitDuration }}
-          className="flex size-60 items-center justify-center rounded-full border-4 border-foreground bg-background shadow-[0_0_60px_color-mix(in_oklab,var(--background)_30%,transparent)] dark:shadow-[0_0_60px_color-mix(in_oklab,var(--foreground)_30%,transparent)]"
+          className="flex size-60 items-center justify-center rounded-full border-2 border-foreground bg-background shadow-[0_0_60px_color-mix(in_oklab,var(--foreground)_21%,transparent)] dark:shadow-[0_0_60px_color-mix(in_oklab,var(--foreground)_16%,transparent)]"
         >
           <DayFlowLogo className="size-32" />
         </m.div>

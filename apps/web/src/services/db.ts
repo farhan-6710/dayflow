@@ -7,6 +7,11 @@ export const DB = {
     SELECT:
       "id, display_name, avatar_url, created_at, updated_at",
   },
+  USER_SETTINGS: {
+    TABLE: "user_settings",
+    SELECT:
+      "user_id, page_transitions, in_app_reminders, email_updates, desktop_alerts, weekly_digest",
+  },
   PROJECTS: {
     TABLE: "projects",
     SELECT:

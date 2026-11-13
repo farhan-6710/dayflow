@@ -5,6 +5,8 @@ const SHUTTER_EASE = [0.76, 0, 0.24, 1] as const;
 /** First load: same timings as ShopNow's WindowOpener. Shutters start closed and open after 1s. */
 export const APP_OPENER_ANIMATION = {
   MOUNT_CONTENT_DELAY_MS: 1000,
+  // Page entrances start 500ms into the 800ms opening, when the shutters are mostly open.
+  RELEASE_ENTRANCES_DELAY_MS: 1500,
   CLEANUP_DELAY_MS: 2500,
 
   SHUTTER: {
@@ -28,6 +30,8 @@ export const ROUTE_TRANSITION_ANIMATION = {
   // Opening sequence
   SHUTTER_OPEN_DELAY_MS: 600,
   CLEANUP_DELAY_MS: 2000,
+  // Page entrances start 250ms into the 400ms opening, when the shutters are mostly open.
+  RELEASE_ENTRANCES_DELAY_MS: 850,
 
   // Navigation runs once the shutters have closed.
   ROUTER_PUSH_DELAY_MS: 300,

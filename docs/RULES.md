@@ -4,7 +4,7 @@ Apply to web and mobile. Web conventions: [apps/web/docs/RULES.md](../apps/web/d
 
 ## Non-negotiable
 
-- **Never change the database**: no migrations, schema, RLS or data edits. Rebuilds read and write existing tables only. Exception: `scripts/migrations/038_drop_profiles_theme_preference.sql`, written at the owner's request. The owner applies it, never an agent.
+- **Never change the database**: no migrations, schema, RLS or data edits. Rebuilds read and write existing tables only. Exceptions, each written at the owner's request: `scripts/migrations/038_drop_profiles_theme_preference.sql` and `040_user_settings.sql`. The owner applies them, never an agent.
 - **RLS is the access contract.** Owners by `user_id` / `owner_user_id`; clients only through the portal RPCs in [DATABASE.md](./DATABASE.md). Clients write activities only with `raised_by = 'client'`.
 - **Never commit** `.env`, credentials or keys. Web uses `VITE_SUPABASE_*`, mobile uses `SUPABASE_*` in an untracked `env/dev.json`.
 - **Auth redirect paths stay exactly as listed** in [ARCHITECTURE.md](../apps/web/docs/ARCHITECTURE.md#auth-redirect-paths-keep-identical), including the mobile and desktop deep links.

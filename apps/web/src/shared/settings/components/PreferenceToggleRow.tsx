@@ -6,6 +6,7 @@ export function PreferenceToggleRow({
   title,
   description,
   checked,
+  disabled,
   onCheckedChange,
 }: PreferenceToggleRowProps) {
   return (
@@ -20,6 +21,7 @@ export function PreferenceToggleRow({
         id={id}
         className="relative mt-0.5 shrink-0 after:absolute after:-inset-3"
         checked={checked}
+        disabled={disabled}
         onCheckedChange={onCheckedChange}
       />
     </div>

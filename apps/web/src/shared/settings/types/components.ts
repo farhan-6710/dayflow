@@ -1,6 +1,8 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
+import type { UserSettingKey } from "@/shared/types/types";
+
 export type SettingsViewProps = {
   /** This portal's settings route; the email-change link returns here. */
   settingsPath: string;
@@ -20,7 +22,12 @@ export type PreferenceToggleRowProps = {
   title: string;
   description: string;
   checked: boolean;
+  disabled?: boolean;
   onCheckedChange: (checked: boolean) => void;
+};
+
+export type UserSettingToggleRowProps = {
+  settingKey: UserSettingKey;
 };
 
 export type EmailCardProps = {

@@ -47,6 +47,31 @@ function pageStart(kind: PageKind, parent: Element | null, now: number) {
   return start;
 }
 
+/** While held (a shutter transition covers the screen), entrances wait instead of playing unseen. */
+let held = false;
+let releaseWaiters: Array<() => void> = [];
+
+export function holdEntrances() {
+  held = true;
+}
+
+/** Lets waiting entrances schedule, in the order they mounted, so the cascade is unchanged. */
+export function releaseEntrances() {
+  held = false;
+  const waiters = releaseWaiters;
+  releaseWaiters = [];
+  waiters.forEach((resolve) => resolve());
+}
+
+export function entrancesReleased(): Promise<void> {
+  if (!held) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    releaseWaiters = [...releaseWaiters, resolve];
+  });
+}
+
 /** Seconds this element should wait before it plays. */
 export function entranceDelay(kind: EntranceKind, parent: Element | null) {
   const now = performance.now();

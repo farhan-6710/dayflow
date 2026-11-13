@@ -3,6 +3,7 @@ import { m } from "framer-motion";
 
 import { TransitionLogoMark } from "@/shared/components/TransitionLogoMark";
 import { ROUTE_TRANSITION_ANIMATION as ANIM } from "@/shared/constants/routeTransition";
+import { holdEntrances, releaseEntrances } from "@/shared/lib/entranceMotion";
 import type { RouteTransitionWindowProps } from "@/shared/types/components";
 
 /** Two shutters close over the page, then open around the logo mark and a line once the route has changed. */
@@ -12,6 +13,8 @@ export function RouteTransitionWindow({ isNavigating }: RouteTransitionWindowPro
 
   useEffect(() => {
     if (isNavigating) {
+      // The next page mounts behind the shutters; its entrances wait until they open.
+      holdEntrances();
       // eslint-disable-next-line react-hooks/set-state-in-effect -- restart the sequence
       setIsFinished(false);
       setOpenShutters(false);
@@ -21,12 +24,17 @@ export function RouteTransitionWindow({ isNavigating }: RouteTransitionWindowPro
       return;
     }
     const shutterTimer = window.setTimeout(() => setOpenShutters(true), ANIM.SHUTTER_OPEN_DELAY_MS);
+    const releaseTimer = window.setTimeout(releaseEntrances, ANIM.RELEASE_ENTRANCES_DELAY_MS);
     const cleanupTimer = window.setTimeout(() => setIsFinished(true), ANIM.CLEANUP_DELAY_MS);
     return () => {
       window.clearTimeout(shutterTimer);
+      window.clearTimeout(releaseTimer);
       window.clearTimeout(cleanupTimer);
     };
   }, [isNavigating, isFinished]);
+
+  // Never leave entrances held if the shell unmounts mid-transition.
+  useEffect(() => releaseEntrances, []);
 
   if (isFinished && !isNavigating) {
     return null;

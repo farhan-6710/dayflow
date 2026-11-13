@@ -3,24 +3,37 @@ import { m, useReducedMotion } from "framer-motion";
 
 import { TransitionLogoMark } from "@/shared/components/TransitionLogoMark";
 import { APP_OPENER_ANIMATION as ANIM } from "@/shared/constants/routeTransition";
+import { useUserSettings } from "@/shared/hooks/useUserSettings";
+import { holdEntrances, releaseEntrances } from "@/shared/lib/entranceMotion";
 import type { AppOpenerProps } from "@/shared/types/components";
 
 /** First load (ShopNow's WindowOpener): closed shutters with the logo mark, then they open on the app. */
 export function AppOpener({ children }: AppOpenerProps) {
   const reducedMotion = useReducedMotion();
+  const { settings } = useUserSettings();
+  // Decided once on load (from the setting mirrored in this browser); later toggles affect routes only.
+  const [enabled] = useState(() => !reducedMotion && settings.page_transitions);
   const [mountContent, setMountContent] = useState(false);
   const [animationFinished, setAnimationFinished] = useState(false);
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    // Runs before the content mounts, so its entrances wait for the shutters.
+    holdEntrances();
     const mountTimer = window.setTimeout(() => setMountContent(true), ANIM.MOUNT_CONTENT_DELAY_MS);
+    const releaseTimer = window.setTimeout(releaseEntrances, ANIM.RELEASE_ENTRANCES_DELAY_MS);
     const cleanupTimer = window.setTimeout(() => setAnimationFinished(true), ANIM.CLEANUP_DELAY_MS);
     return () => {
       window.clearTimeout(mountTimer);
+      window.clearTimeout(releaseTimer);
       window.clearTimeout(cleanupTimer);
+      releaseEntrances();
     };
-  }, []);
+  }, [enabled]);
 
-  if (reducedMotion) {
+  if (!enabled) {
     return children;
   }
 

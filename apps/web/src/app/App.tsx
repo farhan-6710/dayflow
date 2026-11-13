@@ -6,6 +6,7 @@ import { useTauriOAuthDeepLink } from "@/shared/auth/hooks/useTauriOAuthDeepLink
 import { AppOpener } from "@/shared/components/AppOpener";
 import { AuthProvider } from "@/shared/providers/AuthProvider";
 import { ThemeProvider } from "@/shared/providers/ThemeProvider";
+import { UserSettingsProvider } from "@/shared/providers/UserSettingsProvider";
 import { Toaster } from "@/shared/ui/sonner";
 
 function AppShell() {
@@ -25,9 +26,11 @@ export function App() {
       <LazyMotion features={domAnimation} strict>
         <AuthProvider>
           <ThemeProvider>
-            <AppOpener>
-              <AppShell />
-            </AppOpener>
+            <UserSettingsProvider>
+              <AppOpener>
+                <AppShell />
+              </AppOpener>
+            </UserSettingsProvider>
           </ThemeProvider>
         </AuthProvider>
       </LazyMotion>
