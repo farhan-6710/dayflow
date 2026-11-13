@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 
+import { AppOpener } from "@/shared/components/AppOpener";
 import { PageOutlet } from "@/shared/components/PageOutlet";
 import { RouteTransition } from "@/shared/components/RouteTransition";
 import { ShellHeader } from "@/shared/components/ShellHeader";
@@ -23,40 +24,44 @@ export function AppShellLayout({
   const breadcrumbs = useMemo(() => ({ trail, setTrail }), [trail]);
 
   return (
-    <UnsavedChangesProvider>
-      <BreadcrumbTrailContext.Provider value={breadcrumbs}>
-        <TooltipProvider delayDuration={200}>
-          <a
-            href="#main-content"
-            className="sr-only rounded-lg bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
-          >
-            Skip to content
-          </a>
-          <div className="fixed inset-0 flex min-w-0 overflow-hidden bg-background text-foreground">
-            <ShellSidebar
-              config={sidebarConfig}
-              collapsed={collapsed}
-              onToggleSidebar={toggle}
-            />
-            <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-              <ShellHeader
-                sidebarConfig={sidebarConfig}
-                signOutRedirect={signOutRedirect}
-                headerActions={headerActions}
-                onOpenMobileNav={() => setIsMobileNavOpen(true)}
+    // Signed-in pages only: the opener plays when the shell first mounts (a refresh or a sign-in),
+    // never on the auth screens.
+    <AppOpener>
+      <UnsavedChangesProvider>
+        <BreadcrumbTrailContext.Provider value={breadcrumbs}>
+          <TooltipProvider delayDuration={200}>
+            <a
+              href="#main-content"
+              className="sr-only rounded-lg bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
+            >
+              Skip to content
+            </a>
+            <div className="fixed inset-0 flex min-w-0 overflow-hidden bg-background text-foreground">
+              <ShellSidebar
+                config={sidebarConfig}
+                collapsed={collapsed}
+                onToggleSidebar={toggle}
               />
-              <PageOutlet sidebarConfig={sidebarConfig} />
+              <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+                <ShellHeader
+                  sidebarConfig={sidebarConfig}
+                  signOutRedirect={signOutRedirect}
+                  headerActions={headerActions}
+                  onOpenMobileNav={() => setIsMobileNavOpen(true)}
+                />
+                <PageOutlet sidebarConfig={sidebarConfig} />
+              </div>
             </div>
-          </div>
-          <ShellMobileNavSheet
-            config={sidebarConfig}
-            open={isMobileNavOpen}
-            onOpenChange={setIsMobileNavOpen}
-            description={mobileNavDescription}
-          />
-          <RouteTransition />
-        </TooltipProvider>
-      </BreadcrumbTrailContext.Provider>
-    </UnsavedChangesProvider>
+            <ShellMobileNavSheet
+              config={sidebarConfig}
+              open={isMobileNavOpen}
+              onOpenChange={setIsMobileNavOpen}
+              description={mobileNavDescription}
+            />
+            <RouteTransition />
+          </TooltipProvider>
+        </BreadcrumbTrailContext.Provider>
+      </UnsavedChangesProvider>
+    </AppOpener>
   );
 }

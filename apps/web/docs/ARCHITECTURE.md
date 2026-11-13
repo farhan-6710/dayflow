@@ -86,6 +86,7 @@ Google is the only OAuth provider.
 - `.htaccess` sends every route to `index.html`, so deep links and refreshes work on Apache.
 - Env vars are baked in at build time, so build with `apps/web/.env` present.
 - Keep the desktop bridge page live: released desktop builds use it.
+- **Vercel:** set the project's Root Directory to `apps/web`; `vercel.json` sets the Bun build, `dist` output and the SPA rewrite (the `.htaccess` is Apache-only and ignored there). Add `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` and `VITE_APP_ORIGIN` (the Vercel URL) in Vercel's env settings, then add that origin's auth redirect paths to the Supabase allow list.
 
 ### Desktop (Tauri)
 
