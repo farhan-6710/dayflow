@@ -9,7 +9,7 @@ import { USE_CASE_ITEMS, USE_CASES } from "@/features/site/constants/homeContent
 export function UseCasesSection() {
   return (
     <PageSection id="use-cases" tone="paper" icons={FLOATING_ICONS.useCases} defer>
-      <SectionIntro eyebrow={USE_CASES.pill} title={USE_CASES.title} lead={USE_CASES.lead} count={USE_CASE_ITEMS.length} />
+      <SectionIntro eyebrow={USE_CASES.pill} title={USE_CASES.title} accent={USE_CASES.accent} lead={USE_CASES.lead} count={USE_CASE_ITEMS.length} />
       <BlurIn delay={0.12} className="mt-4">
         <UseCasesCarousel />
       </BlurIn>

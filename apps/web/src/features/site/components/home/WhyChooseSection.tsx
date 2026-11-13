@@ -18,7 +18,7 @@ export function WhyChooseSection() {
           </div>
         </BlurIn>
         <div className="min-w-0">
-          <SectionIntro eyebrow={WHY.pill} title={WHY.title} />
+          <SectionIntro eyebrow={WHY.pill} title={WHY.title} accent={WHY.accent} />
           <ul className="mt-8 mb-0 grid list-none gap-6 p-0 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-7">
             {WHY.items.map((item, index) => (
               <BlurInItem

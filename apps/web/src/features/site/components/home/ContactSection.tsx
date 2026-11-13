@@ -37,7 +37,7 @@ function CardLink({ card }: { card: ContactCard }) {
 export function ContactSection() {
   return (
     <PageSection tone="paper" icons={FLOATING_ICONS.contact}>
-      <SectionIntro eyebrow="Get in touch" title="Questions, ideas or a bug to report?" lead="DayFlow is built in the open. Pick the way that fits what you need." center />
+      <SectionIntro eyebrow="Get in touch" title="Questions, ideas or a bug to report?" accent="ideas" lead="DayFlow is built in the open. Pick the way that fits what you need." center />
       <ul className="mt-10 mb-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map((card, index) => {
           const Icon = card.icon;

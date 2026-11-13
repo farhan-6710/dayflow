@@ -1,6 +1,15 @@
 import { CalendarCheck, FolderPlus, Handshake, UserPlus } from "lucide-react";
 
 import type { ProcessStep, SpotlightStat, UseCase } from "@/features/site/types/components";
+import { BRAND_TAGLINE } from "@/shared/brand/brandManifest";
+
+const TAGLINE_WORDS = BRAND_TAGLINE.split(" ");
+
+/** The tagline split before its last word ("flow."), which carries the accent wherever the tagline shows. */
+export const TAGLINE = {
+  lead: TAGLINE_WORDS.slice(0, -1).join(" "),
+  accent: TAGLINE_WORDS.at(-1) ?? "",
+};
 
 export const INTRO_STRIP = "Two portals, one workspace: see how DayFlow keeps you and your clients in step";
 
@@ -8,6 +17,7 @@ export const INTRO_STRIP = "Two portals, one workspace: see how DayFlow keeps yo
 export const SPOTLIGHT = {
   pill: "Why we built it",
   title: "One calm place for every client, project and day",
+  accent: "calm place",
   lead: "Freelance work spreads across chats, notes apps, calendars and spreadsheets. DayFlow brings it back together.",
   text: "Clients, projects, notes, tasks, meetings, calls and reminders share one workspace, and every client gets a portal to follow shared projects and raise requests. Nothing to stitch together, nothing to chase.",
   citation: "The DayFlow promise",
@@ -38,6 +48,7 @@ export const MARQUEE = [
 export const WHY = {
   pill: "Why DayFlow",
   title: "Built around the way freelancers work",
+  accent: "freelancers",
   items: [
     { num: "01", title: "One home for client work", text: "Clients, projects, tasks and notes share one workspace, so context is never a tab away." },
     { num: "02", title: "Clients stay in the loop", text: "A portal shows each client their shared projects and lets them raise tasks, meetings and calls." },
@@ -49,6 +60,7 @@ export const WHY = {
 export const PROCESS = {
   pill: "Working process",
   title: "From sign-up to a flowing day in four steps",
+  accent: "four steps",
 };
 
 export const PROCESS_STEPS: ProcessStep[] = [
@@ -62,6 +74,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export const USE_CASES = {
   pill: "Made for you",
   title: "Built for every kind of freelancer",
+  accent: "every kind",
   lead: "Typical ways freelancers shape one workspace around their work.",
 };
 
@@ -77,5 +90,6 @@ export const USE_CASE_ITEMS: UseCase[] = [
 export const CTA = {
   pill: "Start your journey",
   title: "Bring your freelance day into one flow",
+  accent: "one flow",
   text: "Open your workspace, add your first client and plan tomorrow in minutes.",
 };

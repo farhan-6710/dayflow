@@ -45,6 +45,8 @@ export type PageSectionProps = {
 export type SectionIntroProps = {
   eyebrow: string;
   title: string;
+  /** Exact words of `title` set in the accent with a drawn underline. */
+  accent?: string;
   lead?: string;
   count?: number;
   center?: boolean;

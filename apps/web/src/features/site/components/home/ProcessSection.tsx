@@ -8,7 +8,7 @@ import { PROCESS, PROCESS_STEPS } from "@/features/site/constants/homeContent";
 export function ProcessSection() {
   return (
     <PageSection tone="paper" icons={FLOATING_ICONS.process} defer>
-      <SectionIntro eyebrow={PROCESS.pill} title={PROCESS.title} count={PROCESS_STEPS.length} center />
+      <SectionIntro eyebrow={PROCESS.pill} title={PROCESS.title} accent={PROCESS.accent} count={PROCESS_STEPS.length} center />
       <ol className="mt-10 mb-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
         {PROCESS_STEPS.map((step, index) => {
           const Icon = step.icon;

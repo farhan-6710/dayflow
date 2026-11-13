@@ -14,7 +14,7 @@ export function FaqSection() {
         <BlurIn className="mx-auto w-40 sm:w-48 lg:mx-0">
           <DayflowImage name="icon-empty-search" className="h-auto w-full" />
         </BlurIn>
-        <SectionIntro eyebrow={FAQ.pill} title={FAQ.title} count={FAQ_ITEMS.length} />
+        <SectionIntro eyebrow={FAQ.pill} title={FAQ.title} accent={FAQ.accent} count={FAQ_ITEMS.length} />
       </div>
       <BlurIn delay={0.12} className="mt-10">
         <FaqPicker items={FAQ_ITEMS} />

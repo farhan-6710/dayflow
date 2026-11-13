@@ -1,98 +1,81 @@
+import { useRef, useState, type PointerEvent } from "react";
+import { ArrowRight } from "lucide-react";
+
 import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes";
 import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
+import { HeroBadge, HeroHeadline } from "@/features/site/components/home/HeroHeadline";
+import { HeroScreenTabs, HeroScreenWindow } from "@/features/site/components/home/HeroScreens";
 import { BlurIn } from "@/features/site/components/motion/BlurIn";
-import { ScreenFrame } from "@/features/site/components/section/ScreenFrame";
+import { GridBackground } from "@/features/site/components/section/GridBackground";
 import { SiteLinkButton } from "@/features/site/components/section/SiteLinkButton";
-import { SITE_SCREEN_ORDER, SITE_SCREEN_SIZE, SITE_SCREENS } from "@/features/site/constants/siteScreens";
-import { BRAND_DESCRIPTION, BRAND_TAGLINE } from "@/shared/brand/brandManifest";
-import { useThemeMode } from "@/shared/hooks/useThemeMode";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import { SITE_SCREEN_ORDER } from "@/features/site/constants/siteScreens";
+import type { SiteScreenId } from "@/features/site/types/components";
+import { BRAND_DESCRIPTION } from "@/shared/brand/brandManifest";
+import { Tabs } from "@/shared/ui/tabs";
 
-const FIRST_SCREEN = SITE_SCREEN_ORDER[0];
+/** Grid lines in the accent, shown only in a soft circle around the pointer (position set on pointer move). */
+const ACCENT_LINE = "color-mix(in oklab, var(--chart-1) 45%, transparent)";
+const POINTER_MASK = "radial-gradient(220px circle at var(--hero-x, -999px) var(--hero-y, -999px), black, transparent)";
 
-/** One pill per workspace page; the active one is raised like a card on the track. */
-function ScreenTabs() {
-  return (
-    <TabsList
-      aria-label="Workspace pages"
-      className="h-auto max-w-full flex-wrap gap-1 rounded-2xl border border-border bg-card p-1.5 sm:rounded-full"
-    >
-      {SITE_SCREEN_ORDER.map((id) => (
-        <TabsTrigger
-          key={id}
-          value={id}
-          className="flex-none rounded-full px-4 py-2 text-sm font-normal text-muted-foreground data-[state=active]:border-border data-[state=active]:bg-background data-[state=active]:shadow-sm dark:data-[state=active]:border-border dark:data-[state=active]:bg-background"
-        >
-          {SITE_SCREENS[id].label}
-        </TabsTrigger>
-      ))}
-    </TabsList>
-  );
+function isScreenId(value: string): value is SiteScreenId {
+  return (SITE_SCREEN_ORDER as string[]).includes(value);
 }
 
 /**
- * The workspace window under the hero: a slim title bar, then the selected page in the active theme, fading
- * out at the bottom. Every capture stays mounted so switching tabs crossfades instead of reloading.
+ * Centered hero: a badge, the tagline with an accent word, both portals, then tabs that switch the
+ * workspace window. A warm light falls from the top-left, and the grid lights up around the pointer.
  */
-function ScreenWindow() {
-  const { isDark } = useThemeMode();
-
-  return (
-    <div className="relative mx-auto w-full max-w-6xl">
-      <ScreenFrame>
-        {SITE_SCREEN_ORDER.map((id) => {
-          const screen = SITE_SCREENS[id];
-          return (
-            <TabsContent
-              key={id}
-              value={id}
-              forceMount
-              className="absolute inset-0 transition-opacity duration-500 data-[state=inactive]:pointer-events-none data-[state=inactive]:opacity-0"
-            >
-              <img
-                src={isDark ? screen.dark : screen.light}
-                alt={screen.alt}
-                width={SITE_SCREEN_SIZE.width}
-                height={SITE_SCREEN_SIZE.height}
-                fetchPriority={id === FIRST_SCREEN ? "high" : "low"}
-                decoding="async"
-                draggable={false}
-                className="size-full object-cover object-top select-none"
-              />
-            </TabsContent>
-          );
-        })}
-      </ScreenFrame>
-      {/* The window runs into the next section instead of ending on a hard edge. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent" />
-    </div>
-  );
-}
-
-/** Centered hero: tagline, description, both portals, then tabs that switch the workspace window below. */
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [screen, setScreen] = useState<SiteScreenId>(SITE_SCREEN_ORDER[0]);
+
+  // Writes CSS variables straight to the section so following the pointer never re-renders React.
+  function trackPointer(event: PointerEvent<HTMLElement>) {
+    const section = sectionRef.current;
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    section.style.setProperty("--hero-x", `${event.clientX - rect.left}px`);
+    section.style.setProperty("--hero-y", `${event.clientY - rect.top}px`);
+  }
+
   return (
-    <section className="relative overflow-hidden border-b border-border bg-background pt-16 lg:pt-24">
-      <Tabs defaultValue={FIRST_SCREEN} className="block">
+    <section
+      ref={sectionRef}
+      onPointerMove={trackPointer}
+      className="group/hero relative overflow-hidden border-b border-border bg-background pt-14 lg:pt-20"
+    >
+      <div aria-hidden="true" className="hero-shine pointer-events-none absolute inset-0" />
+      <GridBackground />
+      <GridBackground
+        lineColor={ACCENT_LINE}
+        mask={POINTER_MASK}
+        className="opacity-0 transition-opacity duration-500 group-hover/hero:opacity-100"
+      />
+
+      <Tabs value={screen} onValueChange={(value) => isScreenId(value) && setScreen(value)} className="relative block">
         <div className="site-container relative flex flex-col items-center text-center">
           <BlurIn immediate>
-            <h1 className="m-0 max-w-4xl font-heading text-[clamp(40px,7vw,80px)] leading-[1.05] tracking-tight text-balance">
-              {BRAND_TAGLINE}
-            </h1>
+            <HeroBadge />
           </BlurIn>
-          <BlurIn immediate delay={0.1}>
-            <p className="mx-auto mt-6 mb-0 max-w-2xl text-lg text-muted-foreground text-pretty">{BRAND_DESCRIPTION}</p>
+          <BlurIn immediate delay={0.05} className="mt-7">
+            <HeroHeadline />
           </BlurIn>
-          <BlurIn immediate delay={0.2} className="mt-9 flex flex-wrap justify-center gap-3">
-            <SiteLinkButton to={WORKSPACE_DASHBOARD_PATH} size="xl">Open Workspace</SiteLinkButton>
+          <BlurIn immediate delay={0.15}>
+            <p className="mx-auto mt-7 mb-0 max-w-2xl text-lg text-muted-foreground text-pretty">{BRAND_DESCRIPTION}</p>
+          </BlurIn>
+          <BlurIn immediate delay={0.25} className="mt-9 flex flex-wrap justify-center gap-3">
+            <SiteLinkButton to={WORKSPACE_DASHBOARD_PATH} size="xl" className="group">
+              Open Workspace
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+            </SiteLinkButton>
             <SiteLinkButton to={CLIENT_PORTAL_DASHBOARD_PATH} variant="outline" size="xl">Client Portal</SiteLinkButton>
           </BlurIn>
-          <BlurIn immediate delay={0.3} className="mt-12 flex max-w-full justify-center">
-            <ScreenTabs />
+          <BlurIn immediate delay={0.35} className="mt-12 flex max-w-full justify-center">
+            <HeroScreenTabs active={screen} />
           </BlurIn>
         </div>
-        <BlurIn immediate delay={0.4} y={40} duration={0.95} className="site-container relative mt-10">
-          <ScreenWindow />
+        <BlurIn immediate delay={0.45} y={40} duration={0.95} className="site-container relative mt-10">
+          <HeroScreenWindow />
         </BlurIn>
       </Tabs>
     </section>

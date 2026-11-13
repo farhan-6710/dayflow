@@ -3,6 +3,7 @@ import type { FaqItem } from "@/features/site/types/components";
 export const FAQ = {
   pill: "FAQs",
   title: "Frequently asked questions",
+  accent: "questions",
   aside: "Good to know",
 };
 

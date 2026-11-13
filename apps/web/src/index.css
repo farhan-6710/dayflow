@@ -91,6 +91,26 @@ phantom-ui[loading] :is(h1, h2, h3, h4, p, dt, dd, label) {
   }
 }
 
+/*
+ * Home hero: warm light falling from the top-left corner. An accent glow at the corner plus a faint
+ * diagonal beam in the text colour, so it reads as light on cream and as a soft glow on charcoal.
+ */
+@utility hero-shine {
+  background:
+    radial-gradient(55% 45% at 0% 0%, color-mix(in oklab, var(--chart-1) 16%, transparent) 0%, transparent 70%),
+    linear-gradient(128deg, color-mix(in oklab, var(--foreground) 7%, transparent) 0%, transparent 32%);
+  animation: hero-shine 9s ease-in-out infinite alternate;
+}
+
+@keyframes hero-shine {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @utility animate-stream-word {
   animation: stream-word 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -189,6 +209,7 @@ phantom-ui[loading] :is(h1, h2, h3, h4, p, dt, dd, label) {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
+  .hero-shine,
   .animate-stream-word,
   .animate-stream-char,
   .animate-message-in,

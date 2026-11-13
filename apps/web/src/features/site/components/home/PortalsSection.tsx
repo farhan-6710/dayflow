@@ -10,6 +10,7 @@ export function PortalsSection({ tone = "card" }: { tone?: "card" | "paper" }) {
       <SectionIntro
         eyebrow="Two portals"
         title="One for you, one for every client"
+        accent="every client"
         lead="Run the work from your workspace while each client follows along in a portal of their own."
         center
       />

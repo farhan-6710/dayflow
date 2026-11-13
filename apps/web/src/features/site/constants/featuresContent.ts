@@ -4,6 +4,7 @@ import type { FeatureChapterItem } from "@/features/site/types/components";
 export const FEATURES_BLOCK = {
   pill: "Our features",
   title: "Everything a freelance day needs",
+  accent: "freelance day",
   lead: "Five parts of one workspace, each built around the way client work actually moves.",
   cta: { label: "See all features" },
 };
