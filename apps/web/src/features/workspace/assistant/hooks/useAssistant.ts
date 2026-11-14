@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 
+import { loadChat, saveChat } from "@/features/workspace/assistant/utils/assistantSession";
 import { runAssistantTool } from "@/features/workspace/assistant/utils/assistantTools";
 import { streamAssistantTurn } from "@/services/assistantService";
 import { useAuth } from "@/shared/hooks/useAuth";
@@ -38,6 +39,23 @@ export function useAssistant() {
   const [error, setError] = useState<string | null>(null);
   const history = useRef<AssistantContent[]>([]);
   const displayName = profile?.display_name ?? "";
+  const userId = user?.id ?? null;
+  const restoredFor = useRef<string | null>(null);
+
+  // Restore this tab's chat after a refresh, once per signed-in user.
+  useEffect(() => {
+    if (!userId || restoredFor.current === userId) return;
+    restoredFor.current = userId;
+    const saved = loadChat(userId);
+    history.current = saved.history;
+    setMessages(saved.messages);
+  }, [userId]);
+
+  // Save once a turn has finished, never mid-stream.
+  useEffect(() => {
+    if (!userId || status !== "idle" || restoredFor.current !== userId) return;
+    saveChat(userId, { messages, history: history.current });
+  }, [userId, messages, status]);
 
   async function ask(question: string) {
     const trimmed = question.trim();

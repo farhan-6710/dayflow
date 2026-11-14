@@ -113,4 +113,6 @@ the normal services, so RLS limits the assistant to the user's own rows. `useAss
 tools, send results, until Gemini answers in text. Each turn streams: the function relays Gemini's SSE as
 NDJSON (`text` pieces, then `done` with the full turn), and `assistantService` reads it with plain `fetch`
 because `supabase.functions.invoke` waits for the whole body. New words fade in as they arrive. Replies link
-only to in-app paths returned by tools.
+only to in-app paths returned by tools. The chat (bubbles and model history) is kept in `sessionStorage` under
+`dayflow.assistant-chat:<user id>` after each finished turn (`assistant/utils/assistantSession.ts`), so it
+survives a refresh but not closing the tab; "New chat" clears it.

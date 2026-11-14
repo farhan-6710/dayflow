@@ -22,7 +22,7 @@ export function DashboardTodoList() {
   const rowHandlers = { onToggle: (todo: Parameters<typeof list.toggle>[0]) => void list.toggle(todo), onEdit: list.openEdit, onDelete: list.setTodoToDelete };
 
   const panel = (
-    <Reveal as="section" className={cn(panelClassName, "h-full min-w-0 p-4 sm:p-5")}>
+    <Reveal as="section" className={cn(panelClassName, "flex h-full min-w-0 flex-col p-4 sm:p-5")}>
       <PanelHeading
         icon={CircleCheck}
         title="Todo list"
@@ -41,13 +41,16 @@ export function DashboardTodoList() {
       {list.loading ? (
         <TableSkeleton rows={3} flush cells={[["A todo title goes here", "A short description of it"], "··"]} />
       ) : list.pending.length === 0 && list.completed.length === 0 && !list.error ? (
-        <EmptyState
-          bare
-          className="px-2 py-6"
-          image="icon-empty-todos"
-          title="Nothing on your list"
-          description="Add quick things to remember that don't need a date."
-        />
+        // Fills the panel's leftover height so the empty state sits in its vertical centre.
+        <div className="flex flex-1 items-center justify-center">
+          <EmptyState
+            bare
+            className="px-2 py-6"
+            image="icon-empty-todos"
+            title="Nothing on your list"
+            description="Add quick things to remember that don't need a date."
+          />
+        </div>
       ) : (
         <>
           <ul className="mt-2">

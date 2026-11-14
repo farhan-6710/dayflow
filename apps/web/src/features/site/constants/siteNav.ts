@@ -8,9 +8,9 @@ import {
 
 export const SITE_NAV_LINKS = [
   { label: "Home", to: SITE_HOME_PATH },
+  { label: "About", to: SITE_ABOUT_PATH },
   { label: "Features", to: SITE_FEATURES_PATH },
   { label: "How it works", to: SITE_HOW_IT_WORKS_PATH },
-  { label: "About", to: SITE_ABOUT_PATH },
   { label: "Contact", to: SITE_CONTACT_PATH },
 ];
 
