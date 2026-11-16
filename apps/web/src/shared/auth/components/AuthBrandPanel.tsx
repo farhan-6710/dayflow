@@ -10,10 +10,10 @@ export function AuthBrandPanel({ config }: AuthBrandPanelProps) {
     <aside className="hidden flex-col justify-between gap-8 border-r border-sidebar-border bg-sidebar p-10 text-sidebar-foreground lg:flex xl:p-14">
       <div className="flex items-center gap-2.5">
         <DayFlowLogo className="size-10" />
-        <div className="leading-none">
-          <p className="text-xl">{BRAND_NAME}</p>
-          <p className="mt-1 text-xs text-sidebar-foreground/70">{subtitle}</p>
-        </div>
+        <span className="min-w-0 leading-none">
+          <span className="block truncate text-xl">{BRAND_NAME}</span>
+          <span className="-mt-1 block truncate text-[11px] text-sidebar-foreground/70">{subtitle}</span>
+        </span>
       </div>
 
       <div className="max-w-lg">

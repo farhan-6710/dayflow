@@ -12,12 +12,12 @@ export function AuthShellLayout({ config, children }: AuthShellLayoutProps) {
         <div className="flex items-center justify-between lg:justify-end">
           <div className="flex items-center gap-2.5 lg:hidden">
             <DayFlowLogo className="size-10" />
-            <div className="leading-none">
-              <p className="text-xl">{BRAND_NAME}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
+            <span className="min-w-0 leading-none">
+              <span className="block truncate text-xl">{BRAND_NAME}</span>
+              <span className="-mt-1 block truncate text-[11px] text-muted-foreground">
                 {brandManifest.portals[config.portal].subtitle}
-              </p>
-            </div>
+              </span>
+            </span>
           </div>
           <ThemeToggle />
         </div>
