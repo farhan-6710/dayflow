@@ -1,5 +1,6 @@
 import { m } from "framer-motion";
 
+import { HeroSatellites } from "@/features/site/components/faux/HeroSatellites";
 import { ScreenFrame } from "@/features/site/components/section/ScreenFrame";
 import { SITE_SCREEN_ORDER, SITE_SCREEN_SIZE, SITE_SCREENS } from "@/features/site/constants/siteScreens";
 import type { SiteScreenId } from "@/features/site/types/components";
@@ -71,6 +72,7 @@ export function HeroScreenWindow() {
       </ScreenFrame>
       {/* The window runs into the next section instead of ending on a hard edge. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent" />
+      <HeroSatellites />
     </div>
   );
 }

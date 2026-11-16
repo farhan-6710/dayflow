@@ -6,8 +6,10 @@ import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
 import { HeroBadge, HeroHeadline } from "@/features/site/components/home/HeroHeadline";
 import { HeroScreenTabs, HeroScreenWindow } from "@/features/site/components/home/HeroScreens";
 import { BlurIn } from "@/features/site/components/motion/BlurIn";
+import { GridBeams } from "@/features/site/components/section/GridBeams";
 import { GridBackground } from "@/features/site/components/section/GridBackground";
 import { SiteLinkButton } from "@/features/site/components/section/SiteLinkButton";
+import { HERO_BEAMS } from "@/features/site/constants/heroBeams";
 import { SITE_SCREEN_ORDER } from "@/features/site/constants/siteScreens";
 import type { SiteScreenId } from "@/features/site/types/components";
 import { BRAND_DESCRIPTION } from "@/shared/brand/brandManifest";
@@ -23,7 +25,8 @@ function isScreenId(value: string): value is SiteScreenId {
 
 /**
  * Centered hero: a badge, the tagline with an accent word, both portals, then tabs that switch the
- * workspace window. A warm light falls from the top-left, and the grid lights up around the pointer.
+ * workspace window. A warm light falls from the top-left, coral beams run along the grid lines, and the
+ * grid lights up around the pointer.
  */
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -45,8 +48,10 @@ export function Hero() {
       className="group/hero relative overflow-hidden border-b border-border bg-background pt-14 lg:pt-20"
     >
       <div aria-hidden="true" className="hero-shine pointer-events-none absolute inset-0" />
-      <GridBackground />
+      <GridBackground cellSize={HERO_BEAMS.cellSize} />
+      <GridBeams config={HERO_BEAMS} />
       <GridBackground
+        cellSize={HERO_BEAMS.cellSize}
         lineColor={ACCENT_LINE}
         mask={POINTER_MASK}
         className="opacity-0 transition-opacity duration-500 group-hover/hero:opacity-100"
