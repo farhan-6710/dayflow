@@ -77,7 +77,7 @@ export async function handleDesktopOAuthCallback(rawUrl: string): Promise<void> 
 
 export function buildDesktopOAuthBridgeUrl(nextPath: string): string {
   const origin =
-    import.meta.env.VITE_APP_ORIGIN ?? "https://bisque-gull-237581.hostingersite.com";
+    import.meta.env.VITE_APP_ORIGIN ?? "https://dayflow-web-version.vercel.app";
   const url = new URL(DESKTOP_OAUTH_BRIDGE_PATH, origin);
   url.searchParams.set("next", nextPath);
   return url.toString();

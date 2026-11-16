@@ -1,18 +1,18 @@
-# Rules — DayFlow (both apps)
+# Rules — DayFlow (every app)
 
-Apply to web and mobile. Web conventions: [apps/web/docs/RULES.md](../apps/web/docs/RULES.md). Product: [PRD.md](./PRD.md) · Data: [DATABASE.md](./DATABASE.md) · Tokens: [theme.json](../shared/brand/theme.json).
+Web conventions: [apps/web/docs/RULES.md](../apps/web/docs/RULES.md). Product: [PRD.md](./PRD.md). Data: [DATABASE.md](./DATABASE.md). Tokens: [theme.json](../shared/brand/theme.json).
 
 ## Non-negotiable
 
-- **Never change the database**: no migrations, schema, RLS or data edits. Rebuilds read and write existing tables only. Exceptions, each written at the owner's request: `scripts/migrations/038_drop_profiles_theme_preference.sql` and `040_user_settings.sql`. The owner applies them, never an agent.
+- **Never change the database** from app work: no schema, RLS or data edits. Exceptions are SQL the owner asked for and applies by hand (see [DATABASE.md](./DATABASE.md)).
 - **RLS is the access contract.** Owners by `user_id` / `owner_user_id`; clients only through the portal RPCs in [DATABASE.md](./DATABASE.md). Clients write activities only with `raised_by = 'client'`.
-- **Never commit** `.env`, credentials or keys. Web uses `VITE_SUPABASE_*`, mobile uses `SUPABASE_*` in an untracked `env/dev.json`.
-- **Auth redirect paths stay exactly as listed** in [ARCHITECTURE.md](../apps/web/docs/ARCHITECTURE.md#auth-redirect-paths-keep-identical), including the mobile and desktop deep links.
-- **Migrations** are append-only in `scripts/migrations/`: never edit an applied one.
-- **Brand copy** comes only from `shared/brand/brandManifest.json`.
-- **Theme tokens** come from [theme.json](../shared/brand/theme.json). Change colours there, run `bun run theme:generate` in `apps/web`, then regenerate the logos and icons (see `apps/web/docs/DESIGN.md`).
+- **Never commit** `.env`, credentials or keys.
+- **Auth redirect paths** stay exactly as listed in [ARCHITECTURE.md](../apps/web/docs/ARCHITECTURE.md#auth-redirect-paths).
+- **Migrations** are append-only under `scripts/migrations/`.
+- **Brand copy** only from `shared/brand/brandManifest.json`.
+- **Theme tokens** only from [theme.json](../shared/brand/theme.json). After colour changes: `bun run theme:generate` in `apps/web`, then regenerate logos/icons (see [DESIGN.md](../apps/web/docs/DESIGN.md)).
 
 ## Working
 
-- Smallest change that solves the problem. No speculative abstractions.
-- Each app keeps its own `docs/` with TASKS and MEMORY. Update them when work lands. Create other markdown only when asked.
+- Smallest change that solves the problem.
+- Each app keeps its own `docs/` (`TASKS`, `MEMORY`). Update them when work lands. Create other markdown only when asked.

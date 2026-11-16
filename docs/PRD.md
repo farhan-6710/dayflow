@@ -1,42 +1,58 @@
 # PRD — DayFlow
 
 **Organize your day. Elevate your flow.**
-A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.
 
-## Goal
-
-Rebuild the DayFlow web app from scratch with better UI/UX, keeping every existing feature and the **existing Supabase database untouched**, so current data keeps working. Then build the app in Flutter for iOS and Android: the UI first with sample data ([plan](../apps/mobile/docs/DayFlow_Flutter_UI_Plan.md)), then the database connection.
+A workspace for freelancers to run clients, projects, tasks, notes, reminders and client requests in one place. One Supabase project serves web, desktop and mobile.
 
 ## Users
 
 | User | Entry | Needs |
 |------|-------|-------|
-| Workspace owner (freelancer) | `/workspace` | Run client work, personal tasks and daily operations |
+| Workspace owner | `/workspace` (web / desktop) | Run client work, personal tasks and daily ops |
 | Client | `/client-portal` | Follow shared projects; raise tasks, meetings and calls |
 
-## Scope
+## Platforms
 
-| In | Out (for now) |
-|----|---------------|
-| All routes and features of the old app, rebuilt in `apps/web/src/app/router.tsx` | Desktop (Tauri) |
-| Light + dark theme, responsive layouts | Any database, schema or RLS change |
-| Existing Google OAuth + email/password auth | Server-side notifications and email (needs a backend decision, see [TASKS.md](../apps/web/docs/TASKS.md)) |
+| Surface | Status |
+|---------|--------|
+| Web (`apps/web`) | Shipped — workspace, client portal, public site |
+| Desktop (Tauri in `apps/web/src-tauri`) | Shipped builds — [releases](https://github.com/farhan-6710/dayflow/releases) |
+| Mobile (`apps/mobile`, Flutter) | UI milestone with sample data; database comes later |
 
 ## Requirements
 
-- Two portals in one codebase, sharing one shell layout (header, left sidebar, main content).
-- Owner features: dashboard, tasks calendar, projects and notes, clients, client activities and chat, daily reminders, notifications, analytics, settings.
-- Client features: dashboard, shared projects, raise activities, notifications, analytics, settings.
-- Every list and detail screen has loading, empty and error states.
-- Deletes are always confirmed; mutations always give feedback.
+**Shared**
 
-## Success criteria
+- One database, untouched by app work. Existing accounts and data keep working.
+- Google OAuth and email/password auth. Desktop returns via `dayflow://`.
+- Brand copy only from `shared/brand/brandManifest.json`. Theme tokens only from `shared/brand/theme.json`.
 
-- Feature parity with the old web app, verified page by page against the spec.
-- Existing accounts and data load with no migration.
-- Both portals work on phone, tablet and desktop widths.
-- The same Supabase project keeps serving web and mobile.
+**Workspace**
 
-## References
+- Dashboard, tasks calendar, projects and notes, clients (with chat), client activities, reminders, notifications, analytics, settings, Tempo assistant.
+- Light and dark theme, responsive layouts, loading / empty / error states, confirmed deletes, mutation toasts.
 
-[ARCHITECTURE.md](../apps/web/docs/ARCHITECTURE.md) web structure, env, redirects, deploy · [DATABASE.md](./DATABASE.md) data contract
+**Client portal**
+
+- Dashboard, shared projects, raise activities, notifications, analytics, settings.
+- Clients never own projects; access only through portal RPCs and RLS.
+
+**Public site**
+
+- Marketing pages at `/`, `/features`, `/how-it-works`, `/about`, `/contact`.
+
+## Out of scope (for now)
+
+- Changing schema, RLS or migrations from app work (owner applies SQL by hand when needed).
+- Server-side reminder / task notification jobs and transactional product email.
+- Mobile push and live Supabase on Flutter (after the UI milestone).
+
+## Success
+
+- Web and desktop match the product above against real data.
+- Client portal works with a real client login.
+- Mobile UI matches the showcase; then connects to the same Supabase project.
+
+## Docs
+
+[DATABASE.md](./DATABASE.md) · [RULES.md](./RULES.md) · [MEMORY.md](./MEMORY.md) · [Web architecture](../apps/web/docs/ARCHITECTURE.md) · [Web tasks](../apps/web/docs/TASKS.md) · [Mobile tasks](../apps/mobile/docs/TASKS.md)

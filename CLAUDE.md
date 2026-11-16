@@ -1,24 +1,23 @@
 # DayFlow
 
-Freelancer workspace on one Supabase project: a web app (`apps/web`, rebuilt) and a mobile app (`apps/mobile`, Flutter, UI-only milestone). The database must never change.
+Freelancer workspace on one Supabase project: web (`apps/web`), desktop (Tauri inside web), and mobile (`apps/mobile`, Flutter — UI-only milestone). Apps must not change the database.
 
-This file holds what applies to every app. Each app has its own `docs/`, loaded by the `CLAUDE.md` inside that app's folder (`apps/web/CLAUDE.md`, `apps/mobile/CLAUDE.md`). When docs conflict, RULES wins.
+Shared context is here. Each app has its own `docs/`, loaded by that app’s `CLAUDE.md`. When docs conflict, [docs/RULES.md](./docs/RULES.md) wins.
 
-## Shared rules
+## Shared
+
 @docs/RULES.md
-
-## Product and data
 @docs/PRD.md
 @docs/DATABASE.md
 @docs/MEMORY.md
 
-Theme tokens: `shared/brand/theme.json` (edit it when changing colours, radius or shadows, then run `bun run theme:generate` in `apps/web`).
+Theme tokens: `shared/brand/theme.json` — edit colours there, then `bun run theme:generate` in `apps/web`.
 
 ## App docs
 
 | App | Docs | Loaded by |
 |-----|------|-----------|
 | Web | `apps/web/docs/` | `apps/web/CLAUDE.md` |
-| Mobile (Flutter) | `apps/mobile/docs/` | `apps/mobile/CLAUDE.md` |
+| Mobile | `apps/mobile/docs/` | `apps/mobile/CLAUDE.md` |
 
-Working in an app folder loads that app's docs. When working from the repo root, read `apps/<app>/CLAUDE.md` first.
+Working in an app folder loads that app’s docs. From the repo root, read `apps/<app>/CLAUDE.md` first.

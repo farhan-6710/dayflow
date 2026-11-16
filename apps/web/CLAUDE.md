@@ -1,6 +1,6 @@
 # DayFlow Web
 
-Web app in `apps/web`. Shared rules, product and database docs are in the root `CLAUDE.md` and `docs/`. When they conflict with the web docs, the shared RULES win.
+Web and desktop (Tauri) in `apps/web`. Shared product/data rules live in the root `CLAUDE.md` and `docs/`. When they conflict with these web docs, the shared [RULES](../../docs/RULES.md) win.
 
 ## Rules
 @docs/RULES.md

@@ -1,99 +1,74 @@
-# Design — DayFlow
+# Design — DayFlow Web
 
-Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Calm and readable; depth comes from soft shadows and spacing, not decoration.
+Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Calm and readable.
 
-**Tokens:** [theme.json](../../../shared/brand/theme.json) is the single source of truth for web and mobile, in hex. `bun run theme:generate` (in `apps/web`) writes `shared/brand/theme.css`, which `apps/web/src/index.css` imports, and `theme.ts`, unused until the Flutter app replaces it with Dart output. Never edit the generated files or copy token values into an app; `bun run build` fails if they are stale.
+**Tokens:** [theme.json](../../../shared/brand/theme.json) is the source of truth. In `apps/web`, `bun run theme:generate` writes `shared/brand/theme.css` (imported by `src/index.css`). Never edit generated files or hard-code token values; `bun run build` fails if they are stale.
+
+Shared rules: [docs/RULES.md](../../../docs/RULES.md). Conventions: [RULES.md](./RULES.md).
 
 ## Rules
 
-- Use semantic classes only: `bg-background`, `bg-card`, `text-muted-foreground`, `border-border`, `bg-primary`. No hex or raw `oklch()` in components.
-- The one hex exception is a project's own `color_hex` from the database.
-- Dark mode is the `.dark` class (next-themes, `attribute="class"`). Every screen must be checked in both themes.
-- Sidebar uses the `sidebar-*` tokens. Charts use `chart-1…5`.
+- Semantic classes only (`bg-background`, `bg-card`, `text-muted-foreground`, …). No hex in components except a project’s `color_hex` from the DB.
+- Dark mode: `.dark` via next-themes. Check every screen in both themes.
+- Sidebar uses `sidebar-*`. Charts use `chart-1…5`.
 
 ## Type
 
 | Token | Font | Use |
 |-------|------|-----|
 | `font-sans` | Ovo | UI |
-| `font-heading` | Young Serif | Page and panel headings (`h1`, `h2`) |
-| `font-serif` | Merriweather | Long text, notes, emphasis |
-| `font-mono` | Merriweather (token default) | Timer and numbers: add `tabular-nums` |
+| `font-heading` | Young Serif | `h1` / `h2` |
+| `font-serif` | Merriweather | Notes and long text |
+| `font-mono` | Merriweather | Timer / numbers — add `tabular-nums` |
 
-Load via `@fontsource/ovo`, `@fontsource/young-serif` (400 only), and `@fontsource/merriweather`. Ovo and Young Serif are single-weight, so never `font-bold` them.
+Ovo and Young Serif are single-weight — never `font-bold` them.
 
-## Shape and depth
+## Shape
 
-- Radius: `rounded-lg` (0.5rem) default, `rounded-xl` for large panels.
-- Shadows: `shadow-sm` cards, `shadow-md` popovers, `shadow-lg` dialogs.
-- Spacing on the 4px grid. Page gutter 16px on phones, 24px or more on desktop.
+- Radius: `rounded-lg` default, `rounded-xl` for large panels.
+- Shadows: `shadow-sm` / `shadow-md` / `shadow-lg`.
+- 4px spacing grid. Page gutter 16px phone, 24px+ desktop.
 
-## Status colours (tokens only)
+## Status colours
 
 | State | Token |
 |-------|-------|
 | To do / pending | `muted` |
-| In progress | `chart-1` (coral) |
-| Done / completed | `success` |
-| Active (`StatusPill`) | `success` |
-| Missed / overdue / destructive | `destructive` |
+| In progress | `chart-1` |
+| Done / active | `success` |
+| Missed / destructive | `destructive` |
 
-## Layout
+`destructive` fails AA as small text on paper — use it for icons/fills; keep small labels in foreground with a red icon.
 
-- **Shell:** left sidebar, header, scrollable main area. Sidebar collapses to icons on desktop and becomes a slide-in sheet on small screens.
-- **Header:** collapse toggle, `Breadcrumbs`, then page search, theme toggle, bell and a rounded user pill (avatar, first name, chevron) on the right. Breadcrumbs are home, the nav section, then the steps a detail page adds through `usePageBreadcrumbs`; the last is the current page. On phones they sit above the page, as the header has no room.
-- **Page:** `PageHeader` (heading, description, actions) then content. No eyebrow above the heading. At most one primary action per page, top right.
-- **Lists:** `SummaryStats` row, then a panel holding `ListingToolbar` (search on the left; `PillTabs` status tabs with counts and one filter on the right), the inset `DirectoryTable` (quiet column labels over a hairline, no fill, so the header reads as part of the rows) and `TablePagination` (7 rows a page). Table on desktop, stacked cards on phones. Only show numbers and statuses the database really has; no sample figures.
-- **Row actions:** every list row uses `RowActionsMenu` (kebab) for edit and delete, under a column named "Actions", never inline icon buttons. A row that opens something does so on click.
-- **Stat cards:** one column up to 640px, two above that, four from `xl`. Dashboard and analytics use `StatsCards`: label on the left and icon tile on the right on top, then the value and its caption on one row (`12/45 Still to do, all time`), then the trend chip if present. No divider under the value. List and detail pages use the compact `SummaryStats` (lucide icon in a circle).
-- **Reminders:** cards rather than a table, two a row above 640px and one below: title and description with the kebab top right, then the next date and time, then the seven repeat days. The card opens the edit dialog.
-- **3D art:** on auth screens, empty states, the sidebar quick-action card, and the not-a-client and error pages. Never in stat cards or page headers.
-- **Date filters:** one bordered bar with a dark active pill and the date range after a divider. On the dashboard it sits right of the heading from `xl`. Up to 640px it becomes two buttons side by side, a period dropdown and the date range, and the greeting shortens to "Hi". An applied range shows a cross and a divider on the left of its button, which clear it.
-- **Calendar:** Month, Week and Day tabs beside a selected-day panel, filling the window from `xl`. Week and day are hour timelines: `TIMELINE_START_HOUR` to `TIMELINE_END_HOUR`, opening at 8 AM. Tasks assume 60 minutes, overlapping tasks share the width, and tasks with no time sit in a "No time" row. Week headers scroll with their columns, so they stay aligned on phones.
-- **Detail pages:** a chip beside the heading (`leading`) and a meta line, one main action (edit) with less common actions in a menu. Below: `PillTabs` sections, `SummaryStats`, then a work column beside a 22rem rail (`DetailsPanel`, reference links). Panels start with `PanelHeading`. Tabs hide sections rather than unmount them, so nothing refetches. The note editor reads as a page: a sheet behind, a bookmark and a folded corner.
-- **Forms:** in dialogs; dirty forms use the unsaved-changes guard.
+## Layout patterns
 
-## Feedback states
+- **Shell:** collapsible sidebar (sheet on small screens), header, scrollable main.
+- **Header:** breadcrumbs, search, theme, bell, user pill. Phone breadcrumbs sit above the page.
+- **Page:** `PageHeader` then content. One primary action, top right.
+- **Lists:** `SummaryStats` → toolbar (search + status tabs) → `DirectoryTable` → `TablePagination` (7 rows). Cards on phones. Row actions only in `RowActionsMenu`.
+- **Stats:** `StatsCards` on dashboard/analytics; compact `SummaryStats` on list/detail.
+- **Detail:** chip + meta, section `PillTabs`, work column + 22rem rail. Tabs hide sections (stay mounted).
+- **Calendar:** Month / Week / Day; hour grid `TIMELINE_START_HOUR`–`TIMELINE_END_HOUR`; tasks default 60 minutes; no-time row.
+- **Reminders:** cards (not a table), two columns from 640px.
+- **3D art:** auth, empty states, sidebar quick action, error pages — never in stat cards or page headers.
+- **Forms:** dialogs + unsaved-changes guard.
 
-Every screen works down to 310px wide. Each data screen has a skeleton (loading), `EmptyState`, and `ErrorBanner`. Mutations show a toast; deletes use `ConfirmationModal`.
+## Feedback
 
-Skeletons use [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) through `shared/components/Phantom.tsx`, which measures the real layout and shimmers over it using the `muted` and `card` tokens. Prefer wrapping the real component (`StatsCards`, the calendar) over drawing a second layout. A panel that loads its own data wraps the whole panel in `Phantom`, toolbar included, so it shimmers still with the rest of the page instead of animating in late. `TableSkeleton` covers rows and `ChartSkeleton` covers chart panels; a detail screen composes these with its real `PageHeader` so the skeleton matches the page. Never add a generic screen skeleton: a screen shows exactly one skeleton, its own. While a route's code loads, `PageOutlet` keeps the previous page on screen. Render `Phantom` only while loading, because its host clips overflow. Phantom draws each element's box, so `Phantom` marks anything mixing text with child elements as one block, and `index.css` shrinks text elements to their words while loading. Keep padding off text elements that show in a skeleton, since it counts as bar height, and give values a `min-w` so a loading "0" isn't a sliver. Auth guards and auth pages keep the centred spinner, as there is no page layout to mirror yet.
-
-## Destructive text
-
-`destructive` is under 4.5:1 as small text on the paper surfaces. Use it for icons, fills and borders; keep small destructive labels in the foreground colour with a red icon.
+Every data screen: `Phantom` / `TableSkeleton` / `ChartSkeleton`, `EmptyState`, `ErrorBanner`. Toasts on mutations; `ConfirmationModal` on deletes. Works down to 310px. Render `Phantom` only while loading.
 
 ## Motion
 
-Blur, slide and fade on entrance, through `shared/components/Reveal.tsx` (framer-motion) and the scheduler in `shared/lib/entranceMotion.ts`. Timings come from Trail's dashboard. Entrance easing is `cubic-bezier(0.22, 1, 0.36, 1)` throughout. The sidebar's collapse and expand is the one other curve: width over 600ms with `cubic-bezier(0.32, 0.72, 0, 1)`. Switching theme from `ThemeToggle` uses the View Transitions API: the new theme is revealed as a circle growing from the toggle over 850ms with `cubic-bezier(0.65, 0, 0.35, 1)` (`theme-reveal` in `index.css`), skipped under reduced motion or where unsupported. The toggle stays clickable mid-animation; a second click finishes the running switch and starts the next.
-
-Route changes inside the shell play the shutter transition ported from ShopNow's `NavigationWindow` at the owner's request (`RouteTransitionWindow`, timings in `shared/constants/routeTransition.ts`). On a plain left click on an in-app link to another path, `useRouteTransition` catches the click in the capture phase. Two `background` shutters close over 400ms with `cubic-bezier(0.76, 0, 0.24, 1)`, and the route changes after 300ms. A `foreground` line then spreads across the screen, and the logo mark spins in from -25° in a circle with a 2px `foreground` border and a 60px `foreground` glow at 21% (16% in dark mode) (`TransitionLogoMark`, shared with the opener). The shutters open 600ms later. When the signed-in shell first mounts (a refresh of an inside page, or right after signing in) `AppShellLayout` plays `AppOpener` (ShopNow's `WindowOpener`); auth and other public pages never show it: shutters start closed with the line and mark, the app mounts after 1s, and the shutters open over 800ms. While either transition covers the screen, `Reveal` entrances are held (`holdEntrances` / `releaseEntrances` in `entranceMotion.ts`) and released when the shutters are mostly open: 500ms into the opener's opening and 250ms into a route's. They then cascade in mount order as usual, so they are seen rather than finishing behind the shutters. Both transitions follow the `page_transitions` setting (Settings → Appearance, saved in `user_settings`). The opener reads the copy mirrored in `localStorage` (`dayflow.user-settings`), because it plays before the account loads. Every settings toggle toasts a title and a description. It is skipped while a form is dirty, so the unsaved-changes prompt still works, and under reduced motion. Programmatic `navigate()` calls do not play it.
-
-| `kind` | Use | From | Duration | Stagger |
-|--------|-----|------|----------|---------|
-| `shell-left` | Sidebar items | x -20, fade | 450ms | 35ms |
-| `shell-down` | Header | y -14, fade | 450ms | 35ms |
-| `hero` | Page heading lines | y 12, blur 6px, fade | 700ms | 70ms |
-| `enter` | Panels and cards, once scrolled into view | y 24, blur 6px, fade | 750ms | 70ms |
-
-Page content starts 80ms after the shell. Each new group starts 85–90ms after the previous group's last start, without waiting for it to finish. Wrap a panel in `Reveal` rather than adding keyframes. The sign-in demo card is the one exception: it slides in from the right after 1 second. The demo buttons are the one place `success` (green) fills a button, to draw the eye there. `success`, `success-foreground` and `success-text` are the only tokens beyond the original paper-and-coral set: they also colour `StatusPill` and `SummaryStats` chips, and `success-text` is the readable green for small text. If an element has a CSS transform transition, as a hoverable card does, put `Reveal` on a wrapper. Nothing inside a skeleton animates, and reduced motion renders everything still. Otherwise hover and press states only. No decorative backgrounds.
+Entrance only through `Reveal` (+ `entranceMotion.ts`). Route shutter / opener follow `page_transitions` in `user_settings`. Skip under reduced motion and when a form is dirty. Website uses its own `BlurIn` (deliberate exception).
 
 ## Website
 
-The public pages (`features/site/`) copy the layout, spacing and motion of eatrrite.com's home sections at the owner's request, in DayFlow's tokens and type. The hero is DayFlow's own, and the site has no top bar.
+`features/site/` — marketing pages in DayFlow tokens. Brand strings from `brandManifest.json`. No invented people, reviews or user counts. Faux UI is illustration sample data, not product claims.
 
-- **Header:** a full-width bar that turns into a floating blurred pill once the page scrolls 40px (maxWidth, margin, padding and radius animate over 450ms). The links have a coral underline, and the "Open Workspace" button goes to the guarded workspace, which shows sign-in when signed out.
-- **Sections:** `PageSection` alternates `bg-card` and `bg-background`, with a bottom hairline and faint drifting lucide icons on desktop. `SectionIntro` stacks an italic serif eyebrow, the heading, a coral rule, the lead and a faded coral count. Eyebrows stay in `muted-foreground`, since coral fails contrast as small text.
-- **Home order (eatrrite's):** hero, intro strip, spotlight (eatrrite's founder spotlight), marquee, features rail (eatrrite's programs), why DayFlow, working process, FAQs, use cases (eatrrite's testimonials), start your journey. Inner pages open with `PageBanner` and reuse these sections.
-- **Motion:** the website's own `BlurIn` reveal (24px rise, 8px blur, 700ms, starting when the element's top passes a quarter of the screen) replaces `Reveal` there. That is a deliberate exception to "entrance motion only through `Reveal`". Feature chapters rise in with framer-motion (power3-out) as their art scales from 1.12 while scrolling. The use-case carousel is Embla with a 4.5s autoplay, which is off under reduced motion.
-- **Hero grid beams:** coral beams run along the hero grid's lines and zigzag at the crossings, only left and right of a clear band down the middle (`clearWidth`) so the heading and description stay unobstructed (`GridBeams`, a canvas over the grid, logic in `utils/gridBeams.ts`). Count, speed, tail length, glow, turn and zigzag chances and the fade mask are all in `constants/heroBeams.ts`; its `cellSize` is also the hero grid's, so the beams stay on the lines. They pause off screen and are not drawn under reduced motion. The pointer still lights the grid faintly in a circle around it.
-- **Faux UI:** the home page draws small product scenes in code (`features/site/components/faux/`), built to the stageshow rules: site tokens only, real words only on what the scene is about, placeholder bars elsewhere. Each plays once when it scrolls into view through `useFauxTimeline` and holds its finished state, which is also what reduced motion shows. Where they are: two cards on the hero window from `lg` (a time tracker ticking, notifications arriving under the bell, both paused off screen and still under reduced motion), the spotlight's "Today" agenda, the Why DayFlow bento (workspace window, client request, theme switch, portal access), a satellite card on each feature chapter screenshot, and a scene in each working-process card. Their names and figures are sample data inside illustrations, not claims about users.
-- **Content:** website copy lives in `features/site/constants/`. Brand name, tagline, description and portal features come from `brandManifest.json`. It contains no invented people, reviews, ratings or user counts.
+## Brand assets
+
+Logos/favicons in `apps/web/public/`. After theme colour changes: `theme:generate` → `scripts/recolor-logos.py` → `scripts/generate-tauri-icon.py`. WebP icons/illustrations under `public/images/dayflow/`; paths in `shared/constants/dayflowImages.ts`.
 
 ## Accessibility
 
-Visible focus ring (`ring` token), labelled icon buttons, keyboard-operable drag and drop, 40px minimum touch targets, WCAG AA contrast in both themes.
-
-## Brand
-
-Copy (name, tagline, descriptions, portal features) comes only from `shared/brand/brandManifest.json`. Logos and favicons are in `apps/web/public/`: charcoal or cream (`foreground`) with a coral (`chart-1`) check. To change their colours, edit `theme.json`, run `bun run theme:generate`, then `apps/web/scripts/recolor-logos.py`, then `apps/web/scripts/generate-tauri-icon.py` (desktop app icons). Mobile icons in `apps/mobile/images/` need regenerating too (see its MEMORY). 3D icons and illustrations ship as WebP in `apps/web/public/images/dayflow/{icons,illustrations}/`, one `-light` and one `-dark` file each; paths are in `shared/constants/dayflowImages.ts`.
+Visible focus ring, labelled icon buttons, keyboard drag-and-drop, ≥40px touch targets, WCAG AA in both themes.

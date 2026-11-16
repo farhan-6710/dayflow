@@ -1,120 +1,45 @@
-# Tasks — DayFlow Web Rebuild
+# Tasks — DayFlow Web
 
-Status: `[x]` done · `[ ]` to do · `[~]` blocked or needs a decision. Work top to bottom; verify each feature before the next.
+`[x]` done · `[ ]` to do · `[~]` needs a product / backend decision.
 
-## Phase 0: Prep
+Product: [PRD](../../../docs/PRD.md) · Structure: [ARCHITECTURE](./ARCHITECTURE.md).
 
-- [x] Old web app removed (commit `0e42896`); `.env` kept; DB untouched
-- [x] Route and feature spec, env, links and DB contract written (now in the code, ARCHITECTURE and the root DATABASE)
-- [x] Docs rewritten (awaiting review)
+## Done
 
-## Phase 1: Foundation
+- [x] Web rebuild: Vite + React 19 + TypeScript, theme, shell, both portals
+- [x] Auth: email/password, Google OAuth, demo login, client portal link
+- [x] Workspace: dashboard, tasks calendar, projects + notes, clients + chat, activities, reminders, notifications, analytics, settings
+- [x] Client portal: dashboard, projects, activities, notifications, analytics, settings
+- [x] Public website (`/`, features, how it works, about, contact)
+- [x] Tempo assistant (Gemini Edge Function + in-browser tools)
+- [x] `user_settings` (page transitions and related toggles)
+- [x] Desktop (Tauri): builds, branded icons, `dayflow://` deep link, releases pipeline artifacts
+- [x] Responsive, dark mode, a11y, loading / empty / error states
+- [x] Install / uninstall docs in [README](../../../README.md)
 
-- [x] Scaffold Vite + React 19 + TypeScript in `apps/web` (keep `.env`)
-- [x] Install dependencies listed in [ARCHITECTURE.md](./ARCHITECTURE.md)
-- [x] Tailwind 4 + `shadcn init` (alias `@/`, components in `shared/ui`)
-- [x] Apply [theme.json](../../../shared/brand/theme.json) to `src/index.css`; add Ovo + Merriweather fonts
-- [x] `@dayflow/brand` alias to `shared/brand`; SEO title and description from manifest
-- [x] `services/supabaseClient.ts` and `services/db.ts` (columns from old `db.ts` in git)
-- [x] Restore logos, favicons, 3D assets into `public/`
-- [x] ESLint, strict tsconfig, `bun run build` passing
+## Owner checks
 
-## Phase 2: App shell
-
-- [x] Generate icon and illustration sheets, slice into `public/images/dayflow/{icons,illustrations}`
-- [x] `AuthProvider`, `ThemeProvider`, Toaster, tooltip provider
-- [x] Router, `lazyRoutePage`, route constants, legacy redirects, `RouteErrorPage`
-- [x] Guards: `PublicRoute`, `ProtectedRoute`, `ClientPublicRoute`, `ClientProtectedRoute`
-- [x] `AppShellLayout`: header, collapsible sidebar, mobile nav sheet, main outlet, page transition
-- [x] `AppLayout` (8 nav items) and `ClientAppLayout` (5 nav items) configs
-- [x] Shared pieces: `PageHeader`, `EmptyState`, `ErrorBanner`, skeletons, `StatCard`, `DirectoryTable`, `ConfirmationModal`, `showToast`, unsaved-changes guard
-
-## Phase 3: Auth
-
-- [x] Workspace: login, sign up, forgot and reset password, demo login
-- [x] Google OAuth: popup callback and `/auth/oauth-callback` page
-- [x] Client portal: auth page, `/not-a-client`, link via `link_client_portal_user()`
-- [x] Settings (profile, email, password, theme), needed early for the user menu
-
-## Phase 4: Workspace features
-
-Each item: service → hook → page → states → verify.
-
-- [x] Projects and notes: list, detail, reference links, note editor with categories
-- [x] Clients: list, detail, create/edit/delete, chat
-- [x] Client activities (tasks, meetings, calls): shared block, both portals
-- [x] Tasks Calendar: month view, day panel, task CRUD, reorder, status legend
-- [x] Daily Reminders: weekly table, CRUD, disable-until
-- [x] Notifications: inbox (reminders, tasks), mark read, header bell badge
-- [x] Dashboard: date filters, stat cards, completion chart, todo list, time tracker, insight cards
-- [x] Analytics: stat cards, status pie, notes-per-project bar
-
-## Phase 5: Client portal
-
-- [x] Dashboard (stat cards, activities)
-- [x] Projects list and project detail with raise-activity flow
-- [x] Notifications (real inbox, replacing the empty placeholder)
-- [x] Analytics (client-specific, not the owner page)
-- [x] Settings
-
-## Phase 6: Polish and release
-
-- [x] Responsive pass: phone, tablet, desktop, both portals
-- [x] Dark mode pass on every screen
-- [x] Accessibility pass: focus, labels, keyboard drag and drop, contrast
-- [x] Loading, empty and error states audited on every page
-- [x] Parity check against the spec, page by page
-- [x] Production build verified locally
-- [ ] Deploy to Hostinger; confirm Supabase redirect URLs (needs the owner)
-- [ ] Verify the client portal with a real client login (needs the owner)
-
-## Phase 6b: Layout and motion pass
-
-- [x] Impeccable audit of every screen; layout, hierarchy and action placement reworked (theme and type unchanged)
-- [x] Skeletons moved to phantom-ui
-- [x] Entrance motion: blur, slide and fade with Trail's timings, through framer-motion
-- [ ] Verify the client portal screens with a real client login (needs the owner)
-
-## Phase 6c: Clients and projects redesign
-
-- [x] Clients and Projects lists: stats, status tabs, filter, search, pagination, Actions column
-- [x] Project detail: breadcrumb, section tabs, activity stats, details rail
-- [x] Note page: paper editor, note details rail
-- [x] Client detail: same system as project detail
-- [x] Reminders: Actions column
-- [ ] Client portal screens checked with a real client login (needs the owner)
-
-## Phase 6d: Calendar and dashboard redesign
-
-- [x] Tasks Calendar: month, week and day views, details sheet, add from an hour slot
-- [x] Dashboard: lucide stat cards, filters beside the heading, redesigned chart panel
-- [x] 3D art removed from stat cards and page headers everywhere
-- [x] Every workspace screen and the auth screens checked down to 310px
-- [x] Logos, favicons and mobile icons recoloured to the theme with a script
-- [x] Full-panel skeletons on every screen; header breadcrumbs, search on the right, user pill and menu; stat cards with icons on the right
-
-## Phase 7: Mobile
-
-Moved to Flutter, tracked in [apps/mobile/docs/TASKS.md](../../mobile/docs/TASKS.md).
-
-## Needs a decision (all conflict with "never change the database")
-
-- [~] Server-side notifications (cron / Edge Function) instead of the browser timer
-- [~] Task notifications (type exists, nothing creates them)
-- [~] Transactional email and per-user preferences
-- [~] Client-side chat in the portal (may need new RLS)
-- [~] Mobile push events
-
-## Phase 8: Public website
-
-- [x] Home, Features, How it works, About and Contact pages at `/`, outside the guards, following eatrrite.com's section layouts and motion
-- [x] Faux UI pass on the home page: hero satellites, spotlight agenda, Why DayFlow bento, feature-chapter satellites, process scenes
-- [ ] Owner review of the copy and layout
-- [ ] Real testimonials and a founder photo, if the owner wants eatrrite's original content types (needs consent)
+- [ ] Confirm Supabase redirect URLs for `https://dayflow-web-version.vercel.app`
+- [ ] Verify client portal with a real client login
+- [ ] Install a release build and test Google sign-in (`dayflow://` only works on the installed app)
+- [ ] Review public website copy and layout
 
 ## Later
 
-- [x] Desktop app (Tauri): `src-tauri/` set up, builds, branded icons
-- [ ] Install the built desktop app and test Google sign-in (the `dayflow://` link only works for the installed app on macOS)
-- [ ] Desktop notifications (`tauri-plugin-notification`); on Windows or Linux also `tauri-plugin-single-instance` so the sign-in link reaches the running app
-- [ ] Release automation
+- [ ] Desktop notifications (`tauri-plugin-notification`); on Windows/Linux also `tauri-plugin-single-instance` for the sign-in link
+- [ ] Release automation (tag → GitHub Release with `.dmg` / `.exe`)
+- [ ] Real testimonials / founder photo on the site only if the owner wants them (needs consent)
+
+## Needs a decision
+
+These need a backend or database change and conflict with “apps never change the DB” unless the owner asks:
+
+- [~] Server-side reminder / notification jobs (today: browser timer while a tab is open)
+- [~] Creating task notifications (type exists; nothing writes them)
+- [~] Transactional product email and richer notification preferences
+- [~] Client-side chat in the portal (may need RLS changes)
+- [~] Mobile push events
+
+## Mobile
+
+Tracked in [apps/mobile/docs/TASKS.md](../../mobile/docs/TASKS.md).
