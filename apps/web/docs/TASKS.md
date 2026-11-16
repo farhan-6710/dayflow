@@ -108,6 +108,7 @@ Moved to Flutter, tracked in [apps/mobile/docs/TASKS.md](../../mobile/docs/TASKS
 ## Phase 8: Public website
 
 - [x] Home, Features, How it works, About and Contact pages at `/`, outside the guards, following eatrrite.com's section layouts and motion
+- [x] Faux UI pass on the home page: spotlight agenda, Why DayFlow bento, feature-chapter satellites, process scenes
 - [ ] Owner review of the copy and layout
 - [ ] Real testimonials and a founder photo, if the owner wants eatrrite's original content types (needs consent)
 

@@ -2,6 +2,7 @@ import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
+import { FeatureSatellite } from "@/features/site/components/faux/FeatureSatellite";
 import { ScreenFrame } from "@/features/site/components/section/ScreenFrame";
 import { SiteLinkButton } from "@/features/site/components/section/SiteLinkButton";
 import { CHAPTER_EASE } from "@/features/site/constants/siteMotion";
@@ -25,6 +26,7 @@ export function FeatureChapter({ feature, index }: FeatureChapterProps) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={CHAPTER_VIEWPORT}
         transition={{ duration: 0.9, ease: CHAPTER_EASE }}
+        className="relative"
       >
         <ScreenFrame className="shadow-lg">
           <img
@@ -38,6 +40,7 @@ export function FeatureChapter({ feature, index }: FeatureChapterProps) {
             className="absolute inset-0 size-full object-cover object-top select-none"
           />
         </ScreenFrame>
+        <FeatureSatellite slug={feature.slug} />
       </m.div>
 
       <m.div
