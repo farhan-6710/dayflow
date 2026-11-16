@@ -115,6 +115,28 @@ function randomInt(min: number, max: number): number {
   return min + Math.floor(Math.random() * (max - min + 1));
 }
 
+type SeedStatus = "done" | "in_progress" | "missed";
+
+/** ~85–90% done; the rest split between missed and in_progress for demo charts. */
+function statusesForCount(count: number): SeedStatus[] {
+  if (count <= 0) return [];
+  const doneRatio = 0.85 + Math.random() * 0.05;
+  let done = Math.round(count * doneRatio);
+  done = Math.min(count, Math.max(0, done));
+  const rest = count - done;
+  let missed = Math.floor(rest / 2);
+  let inProgress = rest - missed;
+  if (rest >= 2 && (missed === 0 || inProgress === 0)) {
+    missed = 1;
+    inProgress = rest - 1;
+  }
+  return shuffle([
+    ...Array.from({ length: done }, () => "done" as const),
+    ...Array.from({ length: missed }, () => "missed" as const),
+    ...Array.from({ length: inProgress }, () => "in_progress" as const),
+  ]);
+}
+
 function dayBounds(year: number, month: number, day: number): { min: number; max: number } {
   const weekday = new Date(year, month - 1, day).getDay();
   const weekend = weekday === 0 || weekday === 6;
@@ -196,20 +218,24 @@ async function main() {
 
   const dailyCounts = countsForMonth(year, month, days);
   let added = 0;
+  const byStatus: Record<SeedStatus, number> = { done: 0, in_progress: 0, missed: 0 };
 
   for (let day = 1; day <= days; day += 1) {
     const dueDate = formatDate(year, month, day);
     const count = dailyCounts[day - 1] ?? MIN_TASKS_PER_DAY;
     const picked = shuffle(TASK_POOL).slice(0, count);
     const times = shuffle(TASK_TIMES);
+    const statuses = statusesForCount(picked.length);
     const rows = picked.map((task, slot) => {
       const dueTime = times[slot]!;
       const stamp = timestampFromDue(dueDate, dueTime);
+      const status = statuses[slot]!;
+      byStatus[status] += 1;
       return {
         user_id: userId,
         title: task.title,
         description: task.description,
-        status: "done" as const,
+        status,
         priority: "medium" as const,
         due_date: dueDate,
         due_time: dueTime,
@@ -226,8 +252,12 @@ async function main() {
   }
 
   const monthLabel = new Date(year, month - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
+  const donePct = added ? Math.round((byStatus.done / added) * 100) : 0;
   console.log(`Signed in as ${DEMO_ACCOUNT.email} (${userId})`);
-  console.log(`${monthLabel}: deleted ${deleted ?? 0}, inserted ${added} done tasks (${days} days).`);
+  console.log(
+    `${monthLabel}: deleted ${deleted ?? 0}, inserted ${added} tasks (${days} days) — ` +
+      `${byStatus.done} done (${donePct}%), ${byStatus.in_progress} in progress, ${byStatus.missed} missed.`,
+  );
 }
 
 try {

@@ -44,7 +44,15 @@ export const themeTokens = {
       "sidebar-accent": "#e9e4d8",
       "sidebar-accent-foreground": "#2e2e2e",
       "sidebar-border": "#d2cbbb",
-      "sidebar-ring": "#2e2e2e"
+      "sidebar-ring": "#2e2e2e",
+      "project-tangerine": "#cf7a45",
+      "project-rust": "#b0573a",
+      "project-blue": "#5577a3",
+      "project-emerald": "#4d8a6c",
+      "project-violet": "#7b679f",
+      "project-rose": "#b0637f",
+      "project-amber": "#c09040",
+      "project-slate": "#6f6a62"
     },
     "shadows": {
       "2xs": "0px 4px 10px 0px #0000000d",
@@ -99,7 +107,15 @@ export const themeTokens = {
       "sidebar-accent": "#212121",
       "sidebar-accent-foreground": "#d1cfc0",
       "sidebar-border": "#2c2c2c",
-      "sidebar-ring": "#d1cfc0"
+      "sidebar-ring": "#d1cfc0",
+      "project-tangerine": "#e08a55",
+      "project-rust": "#cf6b4b",
+      "project-blue": "#6a92cf",
+      "project-emerald": "#4fab86",
+      "project-violet": "#9682d2",
+      "project-rose": "#cf7a9b",
+      "project-amber": "#d4a64c",
+      "project-slate": "#8a857d"
     },
     "shadows": {
       "2xs": "0px 6px 15px 0px #00000026",

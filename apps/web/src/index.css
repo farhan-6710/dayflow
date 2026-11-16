@@ -92,6 +92,38 @@ phantom-ui[loading] :is(h1, h2, h3, h4, p, dt, dd, label) {
 }
 
 /*
+ * Project folder chip: the project's shade (`--chip`) lit from above, with a top highlight,
+ * a soft inner base and a tinted drop shadow so it sits slightly raised on paper and charcoal.
+ */
+@utility project-chip {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--chip) 88%, white) 0%,
+    var(--chip) 55%,
+    color-mix(in oklab, var(--chip) 90%, black) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 rgb(0 0 0 / 0.12),
+    0 1px 2px rgb(0 0 0 / 0.08),
+    0 4px 10px -3px color-mix(in oklab, var(--chip) 55%, transparent);
+
+  &:where(.dark *) {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--chip) 85%, white) 0%,
+      var(--chip) 60%,
+      color-mix(in oklab, var(--chip) 94%, black) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.2),
+      inset 0 -1px 0 rgb(0 0 0 / 0.18),
+      0 1px 2px rgb(0 0 0 / 0.4),
+      0 4px 14px -4px color-mix(in oklab, var(--chip) 40%, transparent);
+  }
+}
+
+/*
  * Home hero: warm light falling from the top-left corner. An accent glow at the corner plus a faint
  * diagonal beam in the text colour, so it reads as light on cream and as a soft glow on charcoal.
  */

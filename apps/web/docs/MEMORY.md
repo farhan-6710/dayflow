@@ -23,6 +23,7 @@ Short durable facts. Shared decisions: [docs/MEMORY.md](../../../docs/MEMORY.md)
 
 - Logos: `scripts/recolor-logos.py` then `scripts/generate-tauri-icon.py` after theme colour changes.
 - Shipped images are WebP; PNG masters live under `apps/web/design/` and are not deployed.
+- Demo month tasks: from `apps/web`, `bun run seed:present-month-tasks` (needs `EMAIL`/`PASSWORD` or `SEED_*` in `.env`). Only for the demo account. Rebuilds the current month (or `SEED_YEAR` / `SEED_MONTH`) with ~85–90% `done`, plus some `missed` and `in_progress` for dashboard charts.
 
 ## Docs
 

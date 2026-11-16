@@ -42,6 +42,14 @@
   --sidebar-accent-foreground: #2e2e2e;
   --sidebar-border: #d2cbbb;
   --sidebar-ring: #2e2e2e;
+  --project-tangerine: #cf7a45;
+  --project-rust: #b0573a;
+  --project-blue: #5577a3;
+  --project-emerald: #4d8a6c;
+  --project-violet: #7b679f;
+  --project-rose: #b0637f;
+  --project-amber: #c09040;
+  --project-slate: #6f6a62;
   --shadow-2xs: 0px 4px 10px 0px #0000000d;
   --shadow-xs: 0px 4px 10px 0px #0000000d;
   --shadow-sm: 0px 4px 10px 0px #0000001a, 0px 1px 2px -1px #0000001a;
@@ -101,6 +109,14 @@
   --sidebar-accent-foreground: #d1cfc0;
   --sidebar-border: #2c2c2c;
   --sidebar-ring: #d1cfc0;
+  --project-tangerine: #e08a55;
+  --project-rust: #cf6b4b;
+  --project-blue: #6a92cf;
+  --project-emerald: #4fab86;
+  --project-violet: #9682d2;
+  --project-rose: #cf7a9b;
+  --project-amber: #d4a64c;
+  --project-slate: #8a857d;
   --shadow-2xs: 0px 6px 15px 0px #00000026;
   --shadow-xs: 0px 6px 15px 0px #00000026;
   --shadow-sm: 0px 6px 15px 0px #0000004d, 0px 1px 2px -1px #0000004d;
@@ -153,6 +169,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-project-tangerine: var(--project-tangerine);
+  --color-project-rust: var(--project-rust);
+  --color-project-blue: var(--project-blue);
+  --color-project-emerald: var(--project-emerald);
+  --color-project-violet: var(--project-violet);
+  --color-project-rose: var(--project-rose);
+  --color-project-amber: var(--project-amber);
+  --color-project-slate: var(--project-slate);
 
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);

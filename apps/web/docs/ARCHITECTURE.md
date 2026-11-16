@@ -51,7 +51,8 @@ shared/brand/          brandManifest.json, theme.json (repo root)
 
 | Item | Where |
 |------|-------|
-| Env | `apps/web/.env`: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`; optional `VITE_APP_ORIGIN` (desktop OAuth bridge); `SEED_*` for local seeds only |
+| Env | `apps/web/.env`: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`; optional `VITE_APP_ORIGIN` (desktop OAuth bridge); `SEED_*` / `EMAIL`+`PASSWORD` for local seeds only |
+| Seeds | `bun run seed:present-month-tasks` — demo-account tasks for the current month (~85–90% done, rest missed / in progress). Optional `SEED_YEAR` / `SEED_MONTH`. |
 | Assistant | `supabase/functions/assistant` — `GEMINI_API_KEY` in `supabase/functions/.env`; model fixed to `gemini-3.5-flash-lite` |
 | Hosting | https://dayflow-web-version.vercel.app · Desktop: https://github.com/farhan-6710/dayflow/releases |
 | Demo | `dayflow.demo@gmail.com` / `Dayflow@1234` |

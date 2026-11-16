@@ -1,9 +1,11 @@
+import type { CSSProperties } from "react";
+
 import { FormDialogDeleteButton } from "@/shared/components/FormDialogDeleteButton";
 import { OptionDropdown } from "@/shared/components/OptionDropdown";
 import { SubmitButton } from "@/shared/components/SubmitButton";
 import { TextField } from "@/shared/components/TextField";
 import { formFieldGroupClassName, formLabelClassName } from "@/shared/constants/formStyles";
-import { PROJECT_COLOR_PRESETS } from "@/shared/constants/projectColors";
+import { PROJECT_COLOR_PRESETS, resolveProjectColor } from "@/shared/constants/projectColors";
 import { cn } from "@/shared/lib/utils";
 import { useProjectForm } from "@/shared/projects/hooks/useProjectForm";
 import type { ProjectFormDialogProps } from "@/shared/types/components";
@@ -68,10 +70,10 @@ export function ProjectFormDialog(props: ProjectFormDialogProps) {
                   className="flex size-10 items-center justify-center rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                 >
                   <span
-                    style={{ backgroundColor: color }}
+                    style={{ "--chip": resolveProjectColor(color) } as CSSProperties}
                     className={cn(
-                      "size-7 rounded-full transition-colors",
-                      form.color === color && "ring-2 ring-foreground ring-offset-2 ring-offset-popover",
+                      "project-chip size-7 rounded-full transition-colors",
+                      form.color === color && "outline-2 outline-offset-2 outline-foreground",
                     )}
                   />
                 </button>

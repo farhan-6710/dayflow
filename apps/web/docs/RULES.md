@@ -54,3 +54,4 @@ Shared rules (database, secrets, redirects): [docs/RULES.md](../../../docs/RULES
 
 - Follow [TASKS.md](./TASKS.md). Verify phone + desktop, light + dark.
 - Update TASKS and [MEMORY.md](./MEMORY.md) when work lands. Create other markdown only when asked.
+- Demo seed scripts (`scripts/seed-present-month-tasks.ts` and friends) may only target the shared demo account — never seed a personal login.

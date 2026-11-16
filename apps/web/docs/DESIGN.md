@@ -11,6 +11,7 @@ Shared rules: [docs/RULES.md](../../../docs/RULES.md). Conventions: [RULES.md](.
 - Semantic classes only (`bg-background`, `bg-card`, `text-muted-foreground`, …). No hex in components except a project’s `color_hex` from the DB.
 - Dark mode: `.dark` via next-themes. Check every screen in both themes.
 - Sidebar uses `sidebar-*`. Charts use `chart-1…5`.
+- Project colours: the stored `color_hex` is a key. `resolveProjectColor` (`shared/constants/projectColors.ts`) maps it to the nearest `project-*` token (light + dark in theme.json), greys to `project-slate`. `ProjectChip` adds the raised `project-chip` look. Never rewrite `color_hex` in the DB to restyle.
 
 ## Type
 
