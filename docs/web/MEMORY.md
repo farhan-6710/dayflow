@@ -1,6 +1,6 @@
 # Memory — DayFlow Web
 
-Short durable facts for web and desktop. Shared decisions: [docs/MEMORY.md](../../../docs/MEMORY.md). Work left: [TASKS.md](./TASKS.md).
+Short durable facts for web and desktop. Shared decisions: [docs/MEMORY.md](../MEMORY.md). Work left: [TASKS.md](./TASKS.md).
 
 ## Status
 

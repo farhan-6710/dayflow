@@ -2,7 +2,7 @@
 
 `[x]` done · `[ ]` to do · `[~]` needs a product / backend decision.
 
-Product: [PRD](../../../docs/PRD.md) · Structure: [ARCHITECTURE](./ARCHITECTURE.md).
+Product: [PRD](../PRD.md) · Structure: [ARCHITECTURE](./ARCHITECTURE.md).
 
 ## Done
 
@@ -15,7 +15,7 @@ Product: [PRD](../../../docs/PRD.md) · Structure: [ARCHITECTURE](./ARCHITECTURE
 - [x] `user_settings` (page transitions and related toggles)
 - [x] Desktop (Tauri): builds, branded icons, `dayflow://` deep link, releases pipeline artifacts
 - [x] Responsive, dark mode, a11y, loading / empty / error states
-- [x] Install / uninstall docs in [README](../../../README.md)
+- [x] Install / uninstall docs in [README](../../README.md)
 
 ## Owner checks
 
@@ -42,4 +42,4 @@ These need a backend or database change and conflict with “apps never change t
 
 ## Mobile
 
-Tracked in [apps/mobile/docs/TASKS.md](../../mobile/docs/TASKS.md).
+Tracked in [mobile TASKS](../mobile/TASKS.md).

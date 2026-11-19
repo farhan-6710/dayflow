@@ -2,7 +2,7 @@
 
 What the UI-only milestone builds. The visual specification is `images/DayFlow Mobile App Showcase.png`. Rules: [RULES.md](./RULES.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md). Progress: [TASKS.md](./TASKS.md).
 
-**What decides the look:** the reference image first, then this file, then the [web DESIGN](../../web/docs/DESIGN.md) for anything the image doesn't show. Colours come only from [theme.json](../../../shared/brand/theme.json); brand copy only from [brandManifest.json](../../../shared/brand/brandManifest.json).
+**What decides the look:** the reference image first, then this file, then the [web DESIGN](../web/DESIGN.md) for anything the image doesn't show. Colours come only from [theme.json](../../shared/brand/theme.json); brand copy only from [brandManifest.json](../../shared/brand/brandManifest.json).
 
 ## Screens
 

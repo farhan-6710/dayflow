@@ -1,6 +1,6 @@
 # Memory — DayFlow Mobile
 
-Short facts for future sessions. Project-wide decisions: [docs/MEMORY.md](../../../docs/MEMORY.md).
+Short facts for future sessions. Project-wide decisions: [docs/MEMORY.md](../MEMORY.md).
 
 ## Status
 

@@ -6,12 +6,28 @@ Freelancer workspace. One Supabase project (Auth, Postgres, RLS) serves three su
 - **Desktop** — `apps/web/src-tauri`: Tauri 2 shell around the web build.
 - **Mobile** — `apps/mobile`: Flutter. UI-only milestone with sample data; Supabase comes later.
 
-Shared rules, product and data are loaded below. Each app's `CLAUDE.md` loads that app's `docs/`; from the repo root, read `apps/<app>/CLAUDE.md` before working in an app. When docs conflict, [docs/RULES.md](./docs/RULES.md) wins.
+This is the only `CLAUDE.md`. It loads the shared docs and each app's docs below. When docs conflict, [docs/RULES.md](./docs/RULES.md) wins.
 
 @docs/RULES.md
 @docs/PRD.md
 @docs/DATABASE.md
 @docs/MEMORY.md
+
+Web and desktop:
+
+@docs/web/RULES.md
+@docs/web/ARCHITECTURE.md
+@docs/web/DESIGN.md
+@docs/web/TASKS.md
+@docs/web/MEMORY.md
+
+Mobile:
+
+@docs/mobile/RULES.md
+@docs/mobile/ARCHITECTURE.md
+@docs/mobile/UI_SPEC.md
+@docs/mobile/TASKS.md
+@docs/mobile/MEMORY.md
 
 ## Key directories
 
@@ -28,13 +44,13 @@ Shared rules, product and data are loaded below. Each app's `CLAUDE.md` loads th
 
 - Brand copy (name, tagline, descriptions, portal names and features) comes only from `shared/brand/brandManifest.json`. Never type brand text into code. Web reads it through `src/shared/brand/brandManifest.ts`; mobile reads the generated `lib/core/constants/brand_manifest.dart`. After editing the manifest, run `bun run brand:generate` in `apps/web`.
 - Colours and other tokens come only from `shared/brand/theme.json`. After editing it, run `bun run theme:generate` in `apps/web`; `bun run build` fails while the generated files are stale. Mobile copies the colours into `lib/core/theme/app_colors.dart` by hand.
-- Design details: [web DESIGN](./apps/web/docs/DESIGN.md), [mobile UI spec](./apps/mobile/docs/UI_SPEC.md).
+- Design details: [web DESIGN](./docs/web/DESIGN.md), [mobile UI spec](./docs/mobile/UI_SPEC.md).
 
 ## Conventions
 
 - Smallest change that solves the problem. Small, focused files; immutable data; no `any`.
-- Web: pages compose, hooks hold logic, services hold queries ([web RULES](./apps/web/docs/RULES.md)).
-- Mobile: screens compose widgets, sample data in `core/constants/sample_data/` ([mobile RULES](./apps/mobile/docs/RULES.md)).
+- Web: pages compose, hooks hold logic, services hold queries ([web RULES](./docs/web/RULES.md)).
+- Mobile: screens compose widgets, sample data in `core/constants/sample_data/` ([mobile RULES](./docs/mobile/RULES.md)).
 - Conventional commit messages (`feat:`, `fix:`, `docs:` …). Never commit `.env` or keys.
 
 ## Commands
@@ -69,7 +85,7 @@ flutter test
 
 - Web: `bun run lint`, `bunx tsc -b --noEmit` and `bun run build` pass. Check changed screens on phone and desktop widths, in light and dark.
 - Mobile: `dart format .`, `flutter analyze` and `flutter test` pass. Compare changed screens with the reference image, in light and dark.
-- Update the app's `docs/TASKS.md` and `docs/MEMORY.md` when work lands.
+- Update the app's `TASKS.md` and `MEMORY.md` in `docs/web/` or `docs/mobile/` when work lands.
 
 ## Docs
 
@@ -79,5 +95,5 @@ flutter test
 | [docs/DATABASE.md](./docs/DATABASE.md) | Tables, RPCs, the database contract |
 | [docs/RULES.md](./docs/RULES.md) | Shared non-negotiables |
 | [docs/MEMORY.md](./docs/MEMORY.md) | Shared decisions and ops |
-| [apps/web/docs/](./apps/web/docs/) | Web architecture (auth redirects, deploy, desktop), design, rules, tasks, memory |
-| [apps/mobile/docs/](./apps/mobile/docs/) | Mobile architecture, UI spec, rules, tasks, memory |
+| [docs/web/](./docs/web/) | Web architecture (auth redirects, deploy, desktop), design, rules, tasks, memory |
+| [docs/mobile/](./docs/mobile/) | Mobile architecture, UI spec, rules, tasks, memory |

@@ -1,6 +1,6 @@
 # Rules — DayFlow Web
 
-Shared rules (database, secrets, redirects): [docs/RULES.md](../../../docs/RULES.md). Product: [PRD.md](../../../docs/PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md) · Look: [DESIGN.md](./DESIGN.md).
+Shared rules (database, secrets, redirects): [docs/RULES.md](../RULES.md). Product: [PRD.md](../PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md) · Look: [DESIGN.md](./DESIGN.md).
 
 ## Non-negotiable (web)
 

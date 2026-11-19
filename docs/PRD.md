@@ -55,4 +55,4 @@ A workspace for freelancers to run clients, projects, tasks, notes, reminders an
 
 ## Docs
 
-[DATABASE.md](./DATABASE.md) · [RULES.md](./RULES.md) · [MEMORY.md](./MEMORY.md) · [Web architecture](../apps/web/docs/ARCHITECTURE.md) · [Web tasks](../apps/web/docs/TASKS.md) · [Mobile tasks](../apps/mobile/docs/TASKS.md)
+[DATABASE.md](./DATABASE.md) · [RULES.md](./RULES.md) · [MEMORY.md](./MEMORY.md) · [Web architecture](web/ARCHITECTURE.md) · [Web tasks](web/TASKS.md) · [Mobile tasks](mobile/TASKS.md)

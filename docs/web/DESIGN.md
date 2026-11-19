@@ -2,9 +2,9 @@
 
 Warm paper surfaces, charcoal primary, one coral accent, serif-forward type. Calm and readable.
 
-**Tokens:** [theme.json](../../../shared/brand/theme.json) is the source of truth. In `apps/web`, `bun run theme:generate` writes `shared/brand/theme.css` (imported by `src/index.css`). Never edit generated files or hard-code token values; `bun run build` fails if they are stale.
+**Tokens:** [theme.json](../../shared/brand/theme.json) is the source of truth. In `apps/web`, `bun run theme:generate` writes `shared/brand/theme.css` (imported by `src/index.css`). Never edit generated files or hard-code token values; `bun run build` fails if they are stale.
 
-Shared rules: [docs/RULES.md](../../../docs/RULES.md). Conventions: [RULES.md](./RULES.md).
+Shared rules: [docs/RULES.md](../RULES.md). Conventions: [RULES.md](./RULES.md).
 
 ## Rules
 

@@ -1,6 +1,6 @@
 # Architecture — DayFlow Web
 
-Shared product and data: [PRD](../../../docs/PRD.md) · [DATABASE](../../../docs/DATABASE.md) · [RULES](../../../docs/RULES.md).
+Shared product and data: [PRD](../PRD.md) · [DATABASE](../DATABASE.md) · [RULES](../RULES.md).
 
 ## System
 
@@ -88,7 +88,7 @@ bun run tauri:dev
 bun run tauri:build
 ```
 
-Output: `src-tauri/target/release/bundle/`. Config: `src-tauri/tauri.conf.json`. Install notes: [README](../../../README.md).
+Output: `src-tauri/target/release/bundle/`. Config: `src-tauri/tauri.conf.json`. Install notes: [README](../../README.md).
 
 ## Assistant (Flowy)
 

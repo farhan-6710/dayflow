@@ -1,6 +1,6 @@
 # Rules — DayFlow Mobile (Flutter)
 
-Shared rules: [docs/RULES.md](../../../docs/RULES.md). They win over this file. What to build: [UI_SPEC.md](./UI_SPEC.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
+Shared rules: [docs/RULES.md](../RULES.md). They win over this file. What to build: [UI_SPEC.md](./UI_SPEC.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ## This milestone is UI only
 
