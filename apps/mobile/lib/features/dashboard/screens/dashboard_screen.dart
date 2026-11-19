@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/navigation/app_scaffold.dart';
 import '../../../core/constants/app_assets.dart';
+import '../../../core/constants/brand_manifest.dart';
 import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/sample_data/dashboard_data.dart';
 import '../../../core/widgets/app_icon_button.dart';
@@ -12,7 +13,6 @@ import '../widgets/stat_list_card.dart';
 import '../widgets/task_completion_card.dart';
 import '../widgets/time_tracker_card.dart';
 import '../widgets/todo_list_card.dart';
-import '../../../core/constants/brand_manifest.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
