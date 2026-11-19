@@ -1,4 +1,5 @@
 import type { UserSettingKey, UserSettings } from "@/shared/types/types";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 /** Matches the column defaults in migration 040: a user with no row gets these. */
 export const DEFAULT_USER_SETTINGS: UserSettings = {
@@ -26,13 +27,13 @@ type SettingCopy = {
 export const USER_SETTING_COPY: Record<UserSettingKey, SettingCopy> = {
   page_transitions: {
     label: "Page transitions",
-    description: "Play the shutter animation when DayFlow opens and between pages.",
-    onDetail: "DayFlow will animate when it opens and between pages.",
+    description: `Play the shutter animation when ${BRAND_NAME} opens and between pages.`,
+    onDetail: `${BRAND_NAME} will animate when it opens and between pages.`,
     offDetail: "Pages now open instantly, without the shutter animation.",
   },
   in_app_reminders: {
     label: "In-app reminders",
-    description: "Show reminder alerts while you are signed in to DayFlow.",
+    description: `Show reminder alerts while you are signed in to ${BRAND_NAME}.`,
     onDetail: "Reminder alerts will show while you are signed in.",
     offDetail: "Reminder alerts won't show in the app.",
   },

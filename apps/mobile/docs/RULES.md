@@ -1,6 +1,6 @@
 # Rules — DayFlow Mobile (Flutter)
 
-Shared rules: [docs/RULES.md](../../../docs/RULES.md). They win over this file. Steps: [DayFlow_Flutter_UI_Plan.md](./DayFlow_Flutter_UI_Plan.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
+Shared rules: [docs/RULES.md](../../../docs/RULES.md). They win over this file. What to build: [UI_SPEC.md](./UI_SPEC.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ## This milestone is UI only
 
@@ -11,8 +11,8 @@ Shared rules: [docs/RULES.md](../../../docs/RULES.md). They win over this file. 
 ## Match the reference
 
 - `images/DayFlow Mobile App Showcase.png` is the visual specification: layout, spacing, sizes, type, icons, cards and navigation. Don't redesign it.
-- Where the plan and the image differ, the image wins (section 0 of the plan lists these).
-- Compare each screen with the image before finishing its phase, and fix mismatches.
+- Where the spec and the image differ, the image wins.
+- Compare each screen with the image before finishing, and fix mismatches.
 - The phone frames, status bars and top banner in the image are presentation only, and aren't built.
 
 ## Code
@@ -21,7 +21,7 @@ Shared rules: [docs/RULES.md](../../../docs/RULES.md). They win over this file. 
 - Split into widget classes, not helper methods that return widgets. Use `const` wherever possible.
 - Models are immutable.
 - Colours, radii and spacing come from `core/theme` and `core/constants`. No colour literals in features.
-- No package unless the plan's dependency test is met.
+- No package unless the dependency rule in [UI_SPEC.md](./UI_SPEC.md) is met.
 - Files are `snake_case.dart`, classes `PascalCase`. Follow [Effective Dart](https://dart.dev/effective-dart).
 
 ## UX
@@ -32,9 +32,9 @@ Shared rules: [docs/RULES.md](../../../docs/RULES.md). They win over this file. 
 - Ovo and Young Serif have one weight, so never bold them.
 - Motion is short and restrained, and respects reduced motion.
 
-## Each phase
+## Each change
 
-1. Say which files change, and build only that phase.
+1. Say which files change, and keep the change small.
 2. Run it on a phone simulator and compare it with the image.
-3. Run `dart format .` and `flutter analyze`.
+3. Run `dart format .`, `flutter analyze` and `flutter test`.
 4. Update [TASKS.md](./TASKS.md) and [MEMORY.md](./MEMORY.md), and state what's done and what's next.

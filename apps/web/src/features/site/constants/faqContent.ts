@@ -1,4 +1,5 @@
 import type { FaqItem } from "@/features/site/types/components";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 export const FAQ = {
   pill: "FAQs",
@@ -9,11 +10,11 @@ export const FAQ = {
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    q: "What is DayFlow?",
+    q: `What is ${BRAND_NAME}?`,
     a: "A workspace for freelancers to manage clients, projects, tasks, meetings, notes and reminders in one place, with a portal that keeps each client up to date.",
   },
   {
-    q: "Who is DayFlow for?",
+    q: `Who is ${BRAND_NAME} for?`,
     a: "Freelancers and independent professionals who run work for clients: designers, developers, writers, consultants and anyone juggling several clients at once.",
   },
   {

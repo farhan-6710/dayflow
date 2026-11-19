@@ -12,7 +12,7 @@ import { SiteLinkButton } from "@/features/site/components/section/SiteLinkButto
 import { HERO_BEAMS } from "@/features/site/constants/heroBeams";
 import { SITE_SCREEN_ORDER } from "@/features/site/constants/siteScreens";
 import type { SiteScreenId } from "@/features/site/types/components";
-import { BRAND_DESCRIPTION } from "@/shared/brand/brandManifest";
+import { BRAND_DESCRIPTION, brandManifest } from "@/shared/brand/brandManifest";
 import { Tabs } from "@/shared/ui/tabs";
 
 /** Grid lines in the accent, shown only in a soft circle around the pointer (position set on pointer move). */
@@ -73,7 +73,7 @@ export function Hero() {
               Open Workspace
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </SiteLinkButton>
-            <SiteLinkButton to={CLIENT_PORTAL_DASHBOARD_PATH} variant="outline" size="xl">Client Portal</SiteLinkButton>
+            <SiteLinkButton to={CLIENT_PORTAL_DASHBOARD_PATH} variant="outline" size="xl">{brandManifest.portals.client.name}</SiteLinkButton>
           </BlurIn>
           <BlurIn immediate delay={0.35} className="mt-12 flex max-w-full justify-center">
             <HeroScreenTabs active={screen} />

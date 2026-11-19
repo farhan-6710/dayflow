@@ -19,15 +19,3 @@ Short durable facts for every app. App detail: [web MEMORY](../apps/web/docs/MEM
 
 - Web: https://dayflow-web-version.vercel.app (Vercel, redeploys on push). Desktop: [GitHub Releases](https://github.com/farhan-6710/dayflow/releases).
 - Do not commit `.env` or secrets.
-
-## Docs map
-
-| Path | Role |
-|------|------|
-| [PRD.md](./PRD.md) | Product requirements |
-| [DATABASE.md](./DATABASE.md) | Tables, RPCs, contract |
-| [RULES.md](./RULES.md) | Shared rules |
-| [WEB_HANDOFF_FOR_MOBILE.md](./WEB_HANDOFF_FOR_MOBILE.md) | Short web → mobile handoff |
-| [apps/web/docs/](../apps/web/docs/) | Web architecture, design, rules, tasks, memory |
-| [apps/mobile/docs/](../apps/mobile/docs/) | Flutter architecture, rules, tasks, memory |
-| [theme.json](../shared/brand/theme.json) | Theme tokens (not a doc) |

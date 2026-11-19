@@ -1,12 +1,10 @@
 # Architecture — DayFlow Mobile (Flutter)
 
-A Flutter app for iOS and Android. The current milestone is **UI only**: local sample data, with no database, backend or accounts. The steps are in [DayFlow_Flutter_UI_Plan.md](./DayFlow_Flutter_UI_Plan.md).
-
-**What decides the look:** `images/DayFlow Mobile App Showcase.png` first, then the plan, then the [web DESIGN](../../web/docs/DESIGN.md) for anything the image doesn't show.
+A Flutter app for iOS and Android. The current milestone is **UI only**: local sample data, with no database, backend or accounts. What to build: [UI_SPEC.md](./UI_SPEC.md).
 
 ## Stack for this milestone
 
-Flutter SDK only. Local state uses `StatefulWidget` and `setState`, and animation uses Flutter's built-in implicit widgets. `fl_chart` and `intl` may be added only if the plan's dependency test is met. Fonts are bundled, and icons come from Material's outlined set.
+Flutter SDK only. Local state uses `StatefulWidget` and `setState`, and animation uses Flutter's built-in implicit widgets. No packages yet; see the dependency rule in [UI_SPEC.md](./UI_SPEC.md). Fonts are bundled, and icons come from Material's outlined set.
 
 ## Folders
 

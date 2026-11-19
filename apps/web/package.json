@@ -6,14 +6,15 @@
   "scripts": {
     "dev": "vite",
     "theme:generate": "node scripts/generate-theme.mjs",
-    "build": "node scripts/generate-theme.mjs --check && tsc -b && vite build",
+    "build": "node scripts/generate-theme.mjs --check && node scripts/generate-brand-dart.mjs --check && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "seed:nov-tasks": "bun scripts/seed-november-tasks.ts",
     "seed:present-month-tasks": "bun scripts/seed-present-month-tasks.ts",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri:build": "tauri build",
+    "brand:generate": "node scripts/generate-brand-dart.mjs"
   },
   "dependencies": {
     "@aejkatappaja/phantom-ui": "^1.6.1",

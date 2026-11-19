@@ -90,6 +90,6 @@ bun run tauri:build
 
 Output: `src-tauri/target/release/bundle/`. Config: `src-tauri/tauri.conf.json`. Install notes: [README](../../../README.md).
 
-## Assistant (Tempo)
+## Assistant (Flowy)
 
-Floating control (⌘J) → `features/workspace/assistant/`. Edge Function holds the key and tool declarations; the browser runs tools through normal services (RLS applies). Chat streams as NDJSON; session kept in `sessionStorage` per user.
+Floating control (⌘J) → `features/workspace/assistant/`. The name is `ASSISTANT_NAME` in `constants/assistantSuggestions.ts` and in `supabase/functions/assistant/assistantInstructions.ts`; change both together. Edge Function holds the key and tool declarations; the browser runs tools through normal services (RLS applies). Chat streams as NDJSON; session kept in `sessionStorage` per user.

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../core/constants/app_strings.dart';
+import '../core/constants/brand_manifest.dart';
 import '../core/theme/app_theme.dart';
 import '../features/auth/screens/sign_in_screen.dart';
 import 'app_shell.dart';
@@ -27,7 +27,7 @@ class _DayFlowAppState extends State<DayFlowApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: AppStrings.appName,
+      title: BrandManifest.name,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

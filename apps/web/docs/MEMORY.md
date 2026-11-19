@@ -1,38 +1,20 @@
 # Memory — DayFlow Web
 
-Short durable facts. Shared decisions: [docs/MEMORY.md](../../../docs/MEMORY.md). Work left: [TASKS.md](./TASKS.md).
+Short durable facts for web and desktop. Shared decisions: [docs/MEMORY.md](../../../docs/MEMORY.md). Work left: [TASKS.md](./TASKS.md).
 
 ## Status
 
-- Web rebuild and public site are shipped. Desktop builds at `0.1.x` under `src-tauri/` and [GitHub Releases](https://github.com/farhan-6710/dayflow/releases).
-- Old web tree recoverable from git commit `b1335f3` if needed.
+- Web and public site are shipped. Desktop is at `0.1.x` (`src-tauri/tauri.conf.json`), published on [GitHub Releases](https://github.com/farhan-6710/dayflow/releases).
+- The old web tree is recoverable from git commit `b1335f3` if needed.
 
 ## Decisions
 
-- Routes in `src/app/router.tsx`: workspace, client portal, public site.
-- Theme from [theme.json](../../../shared/brand/theme.json); choice is local (`DF-theme`), not per-user in the DB.
-- Sign-out uses `scope: "local"` (demo account is shared).
-- Reminder alerts: `useReminderAlerts` in the browser while a workspace tab is open — no server job yet.
-- Completion chart uses `tasks.updated_at` (no completed-at column).
-- Times stay display strings (`"10:00 AM"`) for mobile parity.
-- Projects: only `is_active` (no On Hold / Completed). Notes are plain text. No invented site testimonials.
-- Desktop id `com.dayflow.app` kept for releases. `serde_json` must stay in `Cargo.toml`.
+- Theme choice is stored locally under `DF-theme`, not in the database.
+- Reminder alerts run in the browser (`useReminderAlerts`) while a workspace tab is open. There is no server job.
+- The completion chart uses `tasks.updated_at`, because there is no completed-at column.
+- Projects have only `is_active` (no On Hold or Completed). Notes are plain text.
+- The public site has no invented people, reviews or user counts.
+- The assistant is named Flowy (see [ARCHITECTURE.md](./ARCHITECTURE.md#assistant-flowy)).
+- Desktop id `com.dayflow.app` is kept for releases. `serde_json` must stay in `src-tauri/Cargo.toml`.
 - Help & support links to GitHub issues (`shared/constants/support.ts`).
-
-## Ops
-
-- Logos: `scripts/recolor-logos.py` then `scripts/generate-tauri-icon.py` after theme colour changes.
-- Shipped images are WebP; PNG masters live under `apps/web/design/` and are not deployed.
-- Demo month tasks: from `apps/web`, `bun run seed:present-month-tasks` (needs `EMAIL`/`PASSWORD` or `SEED_*` in `.env`). Only for the demo account. Rebuilds the current month (or `SEED_YEAR` / `SEED_MONTH`) with ~85–90% `done`, plus some `missed` and `in_progress` for dashboard charts.
-
-## Docs
-
-| File | Role |
-|------|------|
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | Stack, folders, env, auth, deploy, Tauri, assistant |
-| [DESIGN.md](./DESIGN.md) | UI patterns and tokens usage |
-| [RULES.md](./RULES.md) | Web coding rules |
-| [TASKS.md](./TASKS.md) | Done / remaining |
-| [MEMORY.md](./MEMORY.md) | This file |
-
-Read order: [PRD](../../../docs/PRD.md) → [DATABASE](../../../docs/DATABASE.md) → [RULES](../../../docs/RULES.md) → ARCHITECTURE → RULES → DESIGN → TASKS.
+- Shipped images are WebP. PNG masters live under `apps/web/design/` and are not deployed.

@@ -1,4 +1,5 @@
 import type { FeatureChapterItem } from "@/features/site/types/components";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 /** "Our Features": eatrrite's "Our Programs" rail, one chapter per part of the workspace. */
 export const FEATURES_BLOCK = {
@@ -62,7 +63,7 @@ export const FEATURE_CHAPTERS: FeatureChapterItem[] = [
     benefits: [
       "Choose the days and the time once",
       "Pause a reminder until a date",
-      "Alerts arrive in your notifications while DayFlow is open",
+      `Alerts arrive in your notifications while ${BRAND_NAME} is open`,
     ],
   },
 ];

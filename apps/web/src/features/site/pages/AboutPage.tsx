@@ -5,12 +5,13 @@ import { SpotlightSection } from "@/features/site/components/home/SpotlightSecti
 import { UseCasesSection } from "@/features/site/components/home/UseCasesSection";
 import { WhyChooseSection } from "@/features/site/components/home/WhyChooseSection";
 import { useSiteTitle } from "@/features/site/hooks/useSiteTitle";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 export function AboutPage() {
   useSiteTitle("About");
   return (
     <>
-      <PageBanner title="About DayFlow" crumb="About" />
+      <PageBanner title={`About ${BRAND_NAME}`} crumb="About" />
       <SpotlightSection />
       <Marquee />
       <WhyChooseSection />

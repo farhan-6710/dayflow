@@ -10,12 +10,13 @@ import { FLOATING_ICONS } from "@/features/site/constants/floatingIcons";
 import { DESKTOP_RELEASES_URL } from "@/features/site/constants/siteNav";
 import type { ContactCard } from "@/features/site/types/components";
 import { SUPPORT_URL } from "@/shared/constants/support";
+import { BRAND_NAME, brandManifest } from "@/shared/brand/brandManifest";
 
 const CARDS: ContactCard[] = [
   { icon: LifeBuoy, title: "Help and support", text: "Report a problem or ask a question, and follow it to a fix.", label: "Open an issue", href: SUPPORT_URL, external: true },
-  { icon: Download, title: "Desktop app", text: "Download DayFlow for your desktop from the latest release.", label: "See releases", href: DESKTOP_RELEASES_URL, external: true },
+  { icon: Download, title: "Desktop app", text: `Download ${BRAND_NAME} for your desktop from the latest release.`, label: "See releases", href: DESKTOP_RELEASES_URL, external: true },
   { icon: LayoutDashboard, title: "Your workspace", text: "Already have an account? Pick up right where you left off.", label: "Open Workspace", href: WORKSPACE_DASHBOARD_PATH },
-  { icon: Users, title: "Client portal", text: "Invited by a freelancer? Sign in with the email they added.", label: "Open Client Portal", href: CLIENT_PORTAL_DASHBOARD_PATH },
+  { icon: Users, title: brandManifest.portals.client.name, text: "Invited by a freelancer? Sign in with the email they added.", label: "Open Client Portal", href: CLIENT_PORTAL_DASHBOARD_PATH },
 ];
 
 function CardLink({ card }: { card: ContactCard }) {
@@ -37,7 +38,7 @@ function CardLink({ card }: { card: ContactCard }) {
 export function ContactSection() {
   return (
     <PageSection tone="paper" icons={FLOATING_ICONS.contact}>
-      <SectionIntro eyebrow="Get in touch" title="Questions, ideas or a bug to report?" accent="ideas" lead="DayFlow is built in the open. Pick the way that fits what you need." center />
+      <SectionIntro eyebrow="Get in touch" title="Questions, ideas or a bug to report?" accent="ideas" lead={`${BRAND_NAME} is built in the open. Pick the way that fits what you need.`} center />
       <ul className="mt-10 mb-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map((card, index) => {
           const Icon = card.icon;

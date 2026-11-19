@@ -5,13 +5,14 @@ import { useUserDisplay } from "@/shared/hooks/useUserDisplay";
 import { SettingsCard } from "@/shared/settings/components/SettingsCard";
 import { useProfileForm } from "@/shared/settings/hooks/useProfileForm";
 import { getInitials } from "@/shared/utils/authUserDisplay";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 export function ProfileCard() {
   const form = useProfileForm();
   const { displayName, avatarUrl } = useUserDisplay();
 
   return (
-    <SettingsCard title="Profile" description="How your name and picture appear across DayFlow.">
+    <SettingsCard title="Profile" description={`How your name and picture appear across ${BRAND_NAME}.`}>
       <form onSubmit={form.handleSubmit} className="space-y-4">
         <div className="flex items-center gap-3">
           <UserAvatar

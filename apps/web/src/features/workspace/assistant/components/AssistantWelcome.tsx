@@ -1,6 +1,7 @@
 import { AssistantMark } from "@/features/workspace/assistant/components/AssistantMark";
 import { ASSISTANT_NAME, ASSISTANT_SUGGESTIONS } from "@/features/workspace/assistant/constants/assistantSuggestions";
 import type { AssistantWelcomeProps } from "@/features/workspace/assistant/types/components";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 /** Empty state: who the assistant is, and four questions it answers well. */
 export function AssistantWelcome({ name, onAsk }: AssistantWelcomeProps) {
@@ -14,7 +15,7 @@ export function AssistantWelcome({ name, onAsk }: AssistantWelcomeProps) {
           Hello, <span className="text-chart-1">{name || "there"}!</span>
         </h2>
         <p className="mt-2 max-w-[19rem] text-sm leading-relaxed text-muted-foreground">
-          I'm {ASSISTANT_NAME}, your DayFlow assistant. Ask me anything about your workspace, tasks, projects or how to get started!
+          I'm {ASSISTANT_NAME}, your {BRAND_NAME} assistant. Ask me anything about your workspace, tasks, projects or how to get started!
         </p>
       </div>
 

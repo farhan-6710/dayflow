@@ -11,7 +11,7 @@ Product: [PRD](../../../docs/PRD.md) · Structure: [ARCHITECTURE](./ARCHITECTURE
 - [x] Workspace: dashboard, tasks calendar, projects + notes, clients + chat, activities, reminders, notifications, analytics, settings
 - [x] Client portal: dashboard, projects, activities, notifications, analytics, settings
 - [x] Public website (`/`, features, how it works, about, contact)
-- [x] Tempo assistant (Gemini Edge Function + in-browser tools)
+- [x] Flowy assistant (Gemini Edge Function + in-browser tools)
 - [x] `user_settings` (page transitions and related toggles)
 - [x] Desktop (Tauri): builds, branded icons, `dayflow://` deep link, releases pipeline artifacts
 - [x] Responsive, dark mode, a11y, loading / empty / error states

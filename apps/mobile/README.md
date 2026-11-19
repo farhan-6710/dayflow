@@ -34,4 +34,4 @@ flutter test
 - Save and Delete show a message and change nothing.
 - Daily Reminders opens from the menu icon at the top left.
 
-Docs are in [docs/](./docs/): the [plan](./docs/DayFlow_Flutter_UI_Plan.md), [architecture](./docs/ARCHITECTURE.md), [rules](./docs/RULES.md), [tasks](./docs/TASKS.md) and [memory](./docs/MEMORY.md).
+Docs are in [docs/](./docs/): the [UI spec](./docs/UI_SPEC.md), [architecture](./docs/ARCHITECTURE.md), [rules](./docs/RULES.md), [tasks](./docs/TASKS.md) and [memory](./docs/MEMORY.md).

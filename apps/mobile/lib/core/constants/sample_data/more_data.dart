@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/models/menu_item.dart';
+import '../brand_manifest.dart';
 
 abstract final class MoreData {
   static const userName = 'Demo User';
@@ -17,12 +18,12 @@ abstract final class MoreData {
   static const portals = [
     MenuItem(
       icon: Icons.work_outline_rounded,
-      title: 'Workspace Portal',
+      title: BrandManifest.workspacePortalLabel,
       subtitle: 'Your owner workspace',
     ),
     MenuItem(
       icon: Icons.group_outlined,
-      title: 'Client Portal',
+      title: BrandManifest.clientPortalLabel,
       subtitle: 'View shared projects',
     ),
   ];

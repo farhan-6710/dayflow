@@ -5,6 +5,7 @@ import { SettingsCard } from "@/shared/settings/components/SettingsCard";
 import { UserSettingToggleRow } from "@/shared/settings/components/UserSettingToggleRow";
 import { Switch } from "@/shared/ui/switch";
 import { showToast } from "@/shared/utils/showToast";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 export function ThemeCard() {
   const { isDark, setDarkMode } = useThemeMode();
@@ -12,7 +13,7 @@ export function ThemeCard() {
   function handleChange(enabled: boolean) {
     setDarkMode(enabled);
     showToast("success", `Dark mode turned ${enabled ? "on" : "off"}`, {
-      description: `DayFlow now uses the ${enabled ? "dark" : "light"} theme in this browser.`,
+      description: `${BRAND_NAME} now uses the ${enabled ? "dark" : "light"} theme in this browser.`,
     });
   }
 

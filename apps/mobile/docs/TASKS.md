@@ -1,11 +1,10 @@
 # Tasks — DayFlow Mobile (Flutter)
 
-`[x]` done · `[ ]` to do · `[~]` on hold or blocked. Details of each phase: [DayFlow_Flutter_UI_Plan.md](./DayFlow_Flutter_UI_Plan.md).
+`[x]` done · `[ ]` to do · `[~]` on hold or blocked. What the UI covers: [UI_SPEC.md](./UI_SPEC.md).
 
 ## Setup
 
 - [x] Expo app removed
-- [x] Docs updated for the UI-only plan, and the plan checked against the reference image
 - [x] Disk space freed, Flutter 3.47.9 installed
 - [ ] Android tools: `flutter doctor` reports cmdline-tools missing and licenses not accepted, so Android hasn't been built yet
 
@@ -30,7 +29,7 @@
 ## Later milestone: connect the database
 
 - [ ] Connect Supabase, auth and real data, per [ARCHITECTURE.md](./ARCHITECTURE.md)
-- [ ] Generate Dart tokens from `shared/brand/theme.json`, then remove `theme.ts`
+- [ ] Generate `app_colors.dart` from `shared/brand/theme.json`. Then decide whether to stop generating `shared/brand/theme.ts`, an Expo-era file nothing imports
 - [ ] Scheduled reminder alerts
 - [ ] Decide the items in [MEMORY.md](./MEMORY.md)
 

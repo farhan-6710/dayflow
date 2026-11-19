@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_assets.dart';
 import '../../../core/constants/app_dimensions.dart';
-import '../../../core/constants/app_strings.dart';
+import '../../../core/constants/brand_manifest.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/theme/app_theme_extension.dart';
 
@@ -24,7 +24,7 @@ class AuthBrandHeader extends StatelessWidget {
               height: 36,
             ),
             Text(
-              AppStrings.appName,
+              BrandManifest.name,
               style: AppTextStyles.pageTitle.copyWith(
                 color: palette.foreground,
               ),

@@ -2,6 +2,7 @@ import { useRouteError } from "react-router";
 
 import { DayflowImage } from "@/shared/components/DayflowImage";
 import { Button } from "@/shared/ui/button";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 export function RouteErrorPage() {
   const error = useRouteError();
@@ -21,7 +22,7 @@ export function RouteErrorPage() {
         </h1>
         <p className="text-muted-foreground text-pretty">
           {isChunkError
-            ? "DayFlow was updated while this tab was open. Refresh to load the latest version."
+            ? `${BRAND_NAME} was updated while this tab was open. Refresh to load the latest version.`
             : "This page hit an unexpected error. Refresh to try again. Your saved work is safe."}
         </p>
       </div>

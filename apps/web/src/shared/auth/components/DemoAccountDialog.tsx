@@ -5,6 +5,7 @@ import { DEMO_ACCOUNT } from "@/shared/auth/constants/demoAccount";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/shared/ui/dialog";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 /** Coral, darkened in the light theme so it keeps 4.5:1 on the card. */
 const credentialClassName = "select-all font-medium text-[color-mix(in_oklab,var(--chart-1)_60%,var(--foreground))] dark:text-chart-1";
@@ -30,7 +31,7 @@ export function DemoAccountDialog() {
         <DialogHeader>
           <DialogTitle className="font-heading text-2xl leading-tight text-success-text">Just looking around?</DialogTitle>
           <DialogDescription className="text-pretty">
-            You don&apos;t need an account to try DayFlow. Continue with the shared demo account, which already has
+            You don&apos;t need an account to try {BRAND_NAME}. Continue with the shared demo account, which already has
             clients, projects and tasks in it.
           </DialogDescription>
         </DialogHeader>

@@ -4,7 +4,7 @@ Short facts for future sessions. Project-wide decisions: [docs/MEMORY.md](../../
 
 ## Status
 
-- 2026-11-05: the owner chose Flutter and removed the Expo app. The first milestone is UI only, matching `images/DayFlow Mobile App Showcase.png`, following `DayFlow_Flutter_UI_Plan.md`. The database comes later.
+- 2026-11-05: the owner chose Flutter and removed the Expo app. The first milestone is UI only, matching `images/DayFlow Mobile App Showcase.png`, described in `UI_SPEC.md`. The database comes later.
 - 2026-11-05: UI phases 1 to 9 built and checked on an iPhone 16e simulator (390 wide). Android hasn't been built.
 - The reference image's paper colour looks warmer than `theme.json`. Owner decided on 2026-11-05 to keep the `theme.json` colours, so don't match the image's tone.
 - `tileWarm` and `tileAmber` are the only colours not in `theme.json`. The reference needs them for icon tiles.

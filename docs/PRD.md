@@ -29,7 +29,7 @@ A workspace for freelancers to run clients, projects, tasks, notes, reminders an
 
 **Workspace**
 
-- Dashboard, tasks calendar, projects and notes, clients (with chat), client activities, reminders, notifications, analytics, settings, Tempo assistant.
+- Dashboard, tasks calendar, projects and notes, clients (with chat), client activities, reminders, notifications, analytics, settings, Flowy assistant.
 - Light and dark theme, responsive layouts, loading / empty / error states, confirmed deletes, mutation toasts.
 
 **Client portal**

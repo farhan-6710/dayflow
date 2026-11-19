@@ -12,6 +12,7 @@ import '../widgets/stat_list_card.dart';
 import '../widgets/task_completion_card.dart';
 import '../widgets/time_tracker_card.dart';
 import '../widgets/todo_list_card.dart';
+import '../../../core/constants/brand_manifest.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -23,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
       center: Image.asset(
         isDark ? AppAssets.logoDark : AppAssets.logoLight,
         height: 34,
-        semanticLabel: 'DayFlow',
+        semanticLabel: BrandManifest.name,
       ),
       actions: [
         AppIconButton(

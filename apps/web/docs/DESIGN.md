@@ -64,7 +64,7 @@ Entrance only through `Reveal` (+ `entranceMotion.ts`). Route shutter / opener f
 
 ## Website
 
-`features/site/` — marketing pages in DayFlow tokens. Brand strings from `brandManifest.json`. No invented people, reviews or user counts. Faux UI is illustration sample data, not product claims.
+`features/site/` — marketing pages in DayFlow tokens. Name, tagline and descriptions come from `brandManifest.json`; page copy lives in `features/site/constants/`. No invented people, reviews or user counts. Faux UI is illustration sample data, not product claims.
 
 ## Brand assets
 

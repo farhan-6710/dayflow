@@ -4,7 +4,7 @@ import { CLIENT_PORTAL_DASHBOARD_PATH } from "@/app/constants/clientPortalRoutes
 import { WORKSPACE_DASHBOARD_PATH } from "@/app/constants/workspaceRoutes";
 import { BlurIn } from "@/features/site/components/motion/BlurIn";
 import { DESKTOP_RELEASES_URL, SITE_NAV_LINKS } from "@/features/site/constants/siteNav";
-import { BRAND_DESCRIPTION, BRAND_NAME, BRAND_TAGLINE } from "@/shared/brand/brandManifest";
+import { BRAND_DESCRIPTION, BRAND_NAME, BRAND_TAGLINE, brandManifest } from "@/shared/brand/brandManifest";
 import { DayFlowLogo } from "@/shared/components/DayFlowLogo";
 import { SUPPORT_URL } from "@/shared/constants/support";
 
@@ -12,7 +12,7 @@ const link = "text-sm text-muted-foreground transition-colors hover:text-foregro
 
 const PORTAL_LINKS = [
   { label: "Workspace", to: WORKSPACE_DASHBOARD_PATH },
-  { label: "Client Portal", to: CLIENT_PORTAL_DASHBOARD_PATH },
+  { label: brandManifest.portals.client.name, to: CLIENT_PORTAL_DASHBOARD_PATH },
 ];
 
 function FooterTitle({ children }: { children: string }) {

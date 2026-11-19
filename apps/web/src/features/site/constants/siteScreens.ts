@@ -1,4 +1,5 @@
 import type { SiteScreen, SiteScreenId } from "@/features/site/types/components";
+import { BRAND_NAME } from "@/shared/brand/brandManifest";
 
 const SCREENS_DIR = "/images/dayflow/screens";
 
@@ -12,31 +13,31 @@ export const SITE_SCREENS: Record<SiteScreenId, SiteScreen> = {
   dashboard: {
     id: "dashboard",
     label: "Dashboard",
-    alt: "The DayFlow dashboard with stat cards, a task completion chart and a todo list",
+    alt: `The ${BRAND_NAME} dashboard with stat cards, a task completion chart and a todo list`,
     ...screenImages("dashboard"),
   },
   clients: {
     id: "clients",
     label: "Clients",
-    alt: "A client record in DayFlow with stats, projects, activities and contact details",
+    alt: `A client record in ${BRAND_NAME} with stats, projects, activities and contact details`,
     ...screenImages("clients"),
   },
   projects: {
     id: "projects",
     label: "Projects",
-    alt: "The DayFlow projects table with each project's client and status",
+    alt: `The ${BRAND_NAME} projects table with each project's client and status`,
     ...screenImages("projects"),
   },
   calendar: {
     id: "calendar",
     label: "Calendar",
-    alt: "The DayFlow tasks calendar in month view beside the selected day's tasks",
+    alt: `The ${BRAND_NAME} tasks calendar in month view beside the selected day's tasks`,
     ...screenImages("calendar"),
   },
   reminders: {
     id: "reminders",
     label: "Reminders",
-    alt: "DayFlow daily reminders, each with its next time and repeat days",
+    alt: `${BRAND_NAME} daily reminders, each with its next time and repeat days`,
     ...screenImages("reminders"),
   },
 };

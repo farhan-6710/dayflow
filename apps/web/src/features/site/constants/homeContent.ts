@@ -1,7 +1,7 @@
 import { CalendarCheck, FolderPlus, Handshake, UserPlus } from "lucide-react";
 
 import type { ProcessStep, SpotlightStat, UseCase } from "@/features/site/types/components";
-import { BRAND_TAGLINE } from "@/shared/brand/brandManifest";
+import { BRAND_NAME, BRAND_TAGLINE } from "@/shared/brand/brandManifest";
 
 const TAGLINE_WORDS = BRAND_TAGLINE.split(" ");
 
@@ -11,16 +11,16 @@ export const TAGLINE = {
   accent: TAGLINE_WORDS.at(-1) ?? "",
 };
 
-export const INTRO_STRIP = "Two portals, one workspace: see how DayFlow keeps you and your clients in step";
+export const INTRO_STRIP = `Two portals, one workspace: see how ${BRAND_NAME} keeps you and your clients in step`;
 
 /** Eatrrite's founder spotlight, told as why DayFlow exists (no invented people or numbers). */
 export const SPOTLIGHT = {
   pill: "Why we built it",
   title: "One calm place for every client, project and day",
   accent: "calm place",
-  lead: "Freelance work spreads across chats, notes apps, calendars and spreadsheets. DayFlow brings it back together.",
+  lead: `Freelance work spreads across chats, notes apps, calendars and spreadsheets. ${BRAND_NAME} brings it back together.`,
   text: "Clients, projects, notes, tasks, meetings, calls and reminders share one workspace, and every client gets a portal to follow shared projects and raise requests. Nothing to stitch together, nothing to chase.",
-  citation: "The DayFlow promise",
+  citation: `The ${BRAND_NAME} promise`,
   cta: "Explore features",
   badge: { note: "Workspace and client portal", role: "Built for freelancers" },
   seal: "CLIENTS · PROJECTS · TASKS · NOTES · ",
@@ -46,7 +46,7 @@ export const MARQUEE = [
 ];
 
 export const WHY = {
-  pill: "Why DayFlow",
+  pill: `Why ${BRAND_NAME}`,
   title: "Built around the way freelancers work",
   accent: "freelancers",
   items: [
