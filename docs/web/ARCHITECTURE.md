@@ -79,7 +79,7 @@ No global store. Server data is fetched in hooks and kept in component state. Cr
 
 ### SEO and sharing
 
-Static `index.html` only (WhatsApp and most crawlers do not run JS). Copy and URLs come from `brandManifest.json` (`siteUrl`, `seo.*`, `logo.*`). `siteUrl` is the Vercel URL above; change it when a custom domain goes live, and update the same URL in `public/robots.txt` and `public/sitemap.xml`.
+Static `index.html` only (WhatsApp and most crawlers do not run JS). Copy and URLs come from `brandManifest.json` (`siteUrl`, `seo.*`, `logo.*`). `siteUrl` is the Vercel URL above (also the desktop OAuth bridge origin when `VITE_APP_ORIGIN` is unset, via `BRAND_SITE_URL`); change it when a custom domain goes live, and update the same URL in `public/robots.txt` and `public/sitemap.xml`.
 
 | Piece | Where |
 |-------|-------|
