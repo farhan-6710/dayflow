@@ -1,6 +1,6 @@
-// Generated from shared/brand/brandManifest.json by apps/web/scripts/generate-brand-dart.mjs. Do not edit.
+// Generated from brandManifest.json by apps/web/scripts/generate-brand-dart.mjs. Do not edit.
 
-/** Brand copy for the Flutter app. Edit shared/brand/brandManifest.json, then run bun run brand:generate. */
+/** Brand copy for the Flutter app. Edit brandManifest.json, then run bun run brand:generate. */
 abstract final class BrandManifest {
   static const name = "DayFlow";
   static const tagline = "Organize your day. Elevate your flow.";

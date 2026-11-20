@@ -22,5 +22,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "../../shared/brand/**/*.json"]
+  "include": ["vite.config.ts", "../../brandManifest.json", "../../shared/brand/**/*.json"]
 }

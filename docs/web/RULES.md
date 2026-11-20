@@ -1,4 +1,4 @@
-# Rules — DayFlow Web
+# Rules — DayFlow (web)
 
 Shared rules (database, secrets, redirects): [docs/RULES.md](../RULES.md). Product: [PRD.md](../PRD.md) · Structure: [ARCHITECTURE.md](./ARCHITECTURE.md) · Look: [DESIGN.md](./DESIGN.md).
 

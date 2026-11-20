@@ -25,7 +25,7 @@ A workspace for freelancers to run clients, projects, tasks, notes, reminders an
 
 - One database, untouched by app work. Existing accounts and data keep working.
 - Google OAuth and email/password auth. Desktop returns via `dayflow://`.
-- Brand copy only from `shared/brand/brandManifest.json`. Theme tokens only from `shared/brand/theme.json`.
+- Brand copy only from `brandManifest.json` (repo root). Theme tokens only from `shared/brand/theme.json`.
 
 **Workspace**
 
@@ -51,8 +51,8 @@ A workspace for freelancers to run clients, projects, tasks, notes, reminders an
 
 - Web and desktop match the product above against real data.
 - Client portal works with a real client login.
-- Mobile UI matches the showcase; then connects to the same Supabase project.
+- Mobile UI matches the reference image (`apps/mobile/images/DayFlow Mobile App Showcase.png`); then connects to the same Supabase project.
 
 ## Docs
 
-[DATABASE.md](./DATABASE.md) · [RULES.md](./RULES.md) · [MEMORY.md](./MEMORY.md) · [Web architecture](web/ARCHITECTURE.md) · [Web tasks](web/TASKS.md) · [Mobile tasks](mobile/TASKS.md)
+[DATABASE.md](./DATABASE.md) · [RULES.md](./RULES.md) · [MEMORY.md](./MEMORY.md) · [Web architecture](web/ARCHITECTURE.md) · [Web design](web/DESIGN.md) · [Web tasks](web/TASKS.md) · [Mobile architecture](mobile/ARCHITECTURE.md) · [Mobile design](mobile/DESIGN.md) · [Mobile tasks](mobile/TASKS.md)

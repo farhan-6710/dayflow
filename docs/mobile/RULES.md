@@ -1,6 +1,6 @@
-# Rules — DayFlow Mobile (Flutter)
+# Rules — DayFlow (mobile)
 
-Shared rules: [docs/RULES.md](../RULES.md). They win over this file. What to build: [UI_SPEC.md](./UI_SPEC.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
+Shared rules: [docs/RULES.md](../RULES.md). They win over this file. Look: [DESIGN.md](./DESIGN.md). Structure: [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ## This milestone is UI only
 
@@ -21,7 +21,8 @@ Shared rules: [docs/RULES.md](../RULES.md). They win over this file. What to bui
 - Split into widget classes, not helper methods that return widgets. Use `const` wherever possible.
 - Models are immutable.
 - Colours, radii and spacing come from `core/theme` and `core/constants`. No colour literals in features.
-- No package unless the dependency rule in [UI_SPEC.md](./UI_SPEC.md) is met.
+- Brand copy comes from `core/constants/brand_manifest.dart` (generated from the root `brandManifest.json`; never edit it by hand).
+- No package unless the dependency rule in [DESIGN.md](./DESIGN.md#dependencies) is met.
 - Files are `snake_case.dart`, classes `PascalCase`. Follow [Effective Dart](https://dart.dev/effective-dart).
 
 ## UX

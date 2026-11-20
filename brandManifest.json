@@ -4,9 +4,26 @@
   "description": "A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.",
   "shortDescription": "A freelancer workspace for clients, projects, tasks, and day-to-day work.",
   "positioning": "freelancer-workspace",
+  "siteUrl": "https://dayflow-web-version.vercel.app",
+  "logo": {
+    "favicon": {
+      "light": "/favicon-light.png",
+      "dark": "/favicon-dark.png"
+    },
+    "appleTouch": "/apple-touch-icon.png"
+  },
   "seo": {
-    "title": "DayFlow — Freelancer Workspace",
-    "description": "A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place."
+    "title": "DayFlow | Freelancer Workspace",
+    "description": "A workspace built for freelancers to manage clients, projects, tasks, meetings, notes, reminders, and more — all in one place.",
+    "locale": "en_US",
+    "themeColor": "#e9e4d8",
+    "image": {
+      "url": "/share-card.jpg",
+      "width": 1200,
+      "height": 630,
+      "type": "image/jpeg",
+      "alt": "DayFlow: Organize your day. Elevate your flow. The workspace dashboard with tasks, projects and clients."
+    }
   },
   "promotionBanners": {
     "light": "/brand-promotion-banner-light.png",

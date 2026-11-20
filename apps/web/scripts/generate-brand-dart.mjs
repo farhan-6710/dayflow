@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generates apps/mobile/lib/core/constants/brand_manifest.dart from shared/brand/brandManifest.json.
+// Generates apps/mobile/lib/core/constants/brand_manifest.dart from brandManifest.json.
 // Usage: bun run brand:generate   (write)
 //        node scripts/generate-brand-dart.mjs --check  (exit 1 if output is stale)
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -7,7 +7,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
-const SOURCE = join(ROOT, "shared", "brand", "brandManifest.json");
+const SOURCE = join(ROOT, "brandManifest.json");
 const OUT_FILE = join(ROOT, "apps", "mobile", "lib", "core", "constants", "brand_manifest.dart");
 const CHECK = process.argv.includes("--check");
 
@@ -24,9 +24,9 @@ const constants = [
   ["clientPortalLabel", manifest.portals.client.label],
 ];
 
-const dart = `// Generated from shared/brand/brandManifest.json by apps/web/scripts/generate-brand-dart.mjs. Do not edit.
+const dart = `// Generated from brandManifest.json by apps/web/scripts/generate-brand-dart.mjs. Do not edit.
 
-/** Brand copy for the Flutter app. Edit shared/brand/brandManifest.json, then run bun run brand:generate. */
+/** Brand copy for the Flutter app. Edit brandManifest.json, then run bun run brand:generate. */
 abstract final class BrandManifest {
 ${constants.map(([name, value]) => `  static const ${name} = ${dartString(value)};`).join("\n")}
 }

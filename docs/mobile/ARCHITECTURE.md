@@ -1,22 +1,22 @@
-# Architecture — DayFlow Mobile (Flutter)
+# Architecture — DayFlow (mobile)
 
-A Flutter app for iOS and Android. The current milestone is **UI only**: local sample data, with no database, backend or accounts. What to build: [UI_SPEC.md](./UI_SPEC.md).
+A Flutter app for iOS and Android. The current milestone is **UI only**: local sample data, with no database, backend or accounts. What to build: [DESIGN.md](./DESIGN.md). Shared product and data: [PRD](../PRD.md).
 
 ## Stack for this milestone
 
-Flutter SDK only. Local state uses `StatefulWidget` and `setState`, and animation uses Flutter's built-in implicit widgets. No packages yet; see the dependency rule in [UI_SPEC.md](./UI_SPEC.md). Fonts are bundled, and icons come from Material's outlined set.
+Flutter SDK only. Local state uses `StatefulWidget` and `setState`, and animation uses Flutter's built-in implicit widgets. No packages yet beyond `flutter_lints`; see the dependency rule in [DESIGN.md](./DESIGN.md#dependencies). Dart SDK `^3.13.7` (`pubspec.yaml`), Material 3. Fonts (Ovo, Young Serif) are bundled, and icons come from Material's outlined set. No env vars or config files.
 
 ## Folders
 
 ```text
 apps/mobile/
   images/          app-icons, brand, icons, illustrations, the reference image
-  fonts/           Ovo, Young Serif, Merriweather
+  fonts/           Ovo, Young Serif
   lib/
     main.dart
     app/           app.dart, app_shell.dart, navigation/
     core/
-      constants/   strings, dimensions, assets, sample_data/
+      constants/   strings, dimensions, assets, brand_manifest.dart (generated), sample_data/
       theme/       colours, text styles, theme, theme extension
       utils/
       widgets/     shared base components
@@ -30,9 +30,19 @@ apps/mobile/
 
 Create a folder only when a real file needs it. Move a widget to `shared/` only once a second feature uses it.
 
-## Tokens
+## State and data flow
+
+`DayFlowApp` holds the theme mode and the signed-in flag in `setState`. Screens read sample data from `core/constants/sample_data/` and models from `shared/models/`. Nothing is persisted.
+
+## Tokens and brand
 
 Colours come from `shared/brand/theme.json`. For this milestone they are copied once into `core/theme/app_colors.dart`, and nowhere else. A later step can generate that file from the JSON, as the web does for CSS.
+
+Brand copy comes from `lib/core/constants/brand_manifest.dart`. It is generated from the root `brandManifest.json` by `bun run brand:generate` in `apps/web` (Flutter cannot import JSON from outside its package, so the generated file is the bridge). Do not edit it by hand.
+
+## Deploy
+
+Not released. Bundle id is `com.dayflow.dayflow` for now (see [MEMORY.md](./MEMORY.md)).
 
 ## When the database is connected (later milestone)
 

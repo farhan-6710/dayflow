@@ -1,6 +1,6 @@
 # Memory — DayFlow (shared)
 
-Short durable facts for every app. App detail: [web MEMORY](web/MEMORY.md) · [mobile MEMORY](mobile/MEMORY.md).
+Short durable facts and ops for every app. App detail: [web MEMORY](web/MEMORY.md) · [mobile MEMORY](mobile/MEMORY.md).
 
 ## Status
 
@@ -18,4 +18,6 @@ Short durable facts for every app. App detail: [web MEMORY](web/MEMORY.md) · [m
 ## Ops
 
 - Web: https://dayflow-web-version.vercel.app (Vercel, redeploys on push). Desktop: [GitHub Releases](https://github.com/farhan-6710/dayflow/releases).
+- Brand manifest lives at the repo root (`brandManifest.json`). Web imports it by relative path; mobile reads a generated Dart file because Flutter cannot import JSON from outside its package. `bun run build` fails if that file is stale.
+- Supabase: the owner applies SQL from `scripts/migrations/` by hand and deploys the `assistant` Edge Function (`GEMINI_API_KEY` secret).
 - Do not commit `.env` or secrets.

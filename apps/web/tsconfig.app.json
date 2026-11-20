@@ -29,5 +29,5 @@
       "@dayflow/brand/*": ["../../shared/brand/*"]
     }
   },
-  "include": ["src", "../../shared/brand/**/*.json"]
+  "include": ["src", "../../brandManifest.json", "../../shared/brand/**/*.json"]
 }

@@ -14,7 +14,8 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
-    "brand:generate": "node scripts/generate-brand-dart.mjs"
+    "brand:generate": "node scripts/generate-brand-dart.mjs",
+    "share-card": "bash scripts/share-card/render.sh"
   },
   "dependencies": {
     "@aejkatappaja/phantom-ui": "^1.6.1",

@@ -9,7 +9,7 @@ export function ThemeEffects() {
 
   useEffect(() => {
     document
-      .querySelector<HTMLLinkElement>('link[rel="icon"]')
+      .querySelector<HTMLLinkElement>('link[rel="icon"][data-app-theme]')
       ?.setAttribute("href", resolvedTheme === "dark" ? BRAND_FAVICON.dark : BRAND_FAVICON.light);
   }, [resolvedTheme]);
 
